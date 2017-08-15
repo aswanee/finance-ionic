@@ -15,11 +15,19 @@
         </ion-item>
     </ion-list> -->
     <ion-buttons *ngFor="let item of News?.result.V">
-        <button ion-button full color="dark">
-      {{item[1]+' '+item[2]}}
+        <button ion-button full color="dark" (click)="getdetails(item[0])" [hidden]="showdetails">
+     <h1> {{item[1]}} </h1>
+     <h2>{{item[2]}}</h2>
     </button>
     </ion-buttons>
-    <!-- <div *ngFor="let item of News?.result.V">
-        <button class="button button-block"> {{item[1]+' '+item[2]}} </button>
-    </div>
-</ion-content> -->
+
+    <ion-content *ngIf="showdetails">
+        <div class="header">
+            {{Newsbody?.result.V[1]}}
+        </div>
+        <div>
+            {{Newsbody?.result.V[6]}}
+        </div>
+        {{Newsbody?.result.V[3]}}
+    </ion-content>
+    <button ion-button full color="dark" (click)="back()" [hidden]="!showdetails">back</button>
