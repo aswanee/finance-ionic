@@ -36,14 +36,14 @@ export class StockService implements OnInit {
     //         // console.log(this.objs);
     //        } );
   }
-  getstock(nameobj: string, isArabic: boolean): Observable<SerResponse> {
+  getstock(nameobj: string[], isArabic: boolean): Observable<SerResponse> {
     console.log(nameobj.length);
      let link = 'https://www.arabfinance.com/apis/market/GetSimpleQuotesDetails?Codes=';
-    //  for (let i = 0 ; i < nameobj.length - 1 ; i++) {
-    //       link = link + nameobj[i] + ',';
-    //  }
-    // console.log(this.nameobj) egts,amer,orwe;
-     link = link + nameobj + '&isArabic=' + isArabic;
+     for (let i = 0 ; i < nameobj.length - 1 ; i++) {
+          link = link + nameobj[i] + ',';
+     }
+    // console.log(this.nameobj); // egts,amer,orwe;
+     link = link + nameobj[nameobj.length-1] + '&isArabic=' + isArabic;
      console.log(link);
       return this.http
       .get(link)

@@ -9,12 +9,17 @@
             <!-- <input type="radio" [(ngModel)]="arechosen[i]"> {{arechosen[i]}} -->
             <label class="item item-radio">
          {{item[0]}}
-      <ion-radio [(ngModel)]="arechosen[i]" ngDefaultControl></ion-radio>
+      <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}}</ion-checkbox>
          </label>
             <i class="radio-icon ion-checkmark"></i>
         </div>
     </div>
 
+    <div class="list" *ngIf="!editpressed">
+        <div *ngFor="let x of displayed">
+            {{x[0]+' '+x[1]+' '}}
+        </div>
+    </div>
 </ion-header>
 
 <ion-content padding>
