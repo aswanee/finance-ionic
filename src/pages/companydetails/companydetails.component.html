@@ -1,4 +1,7 @@
 <!--component html goes here -->
+<!-- <ion-content> -->
+ <!-- <page-chart [rouiterCode]="reuter"></page-chart>  -->
+
 <div>
     <div *ngIf="stockchosen">
         <button ion-button full color="dark" (click)="setasksbids()" [hidden]="showasksbids">Asks/Bids</button>
@@ -40,3 +43,4 @@
         <button ion-button full color="dark" (click)="resettrades()" [hidden]="!showtrades">back</button>
     </div>
 </div>
+<!-- </ion-content> -->
