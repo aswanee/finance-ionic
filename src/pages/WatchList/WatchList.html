@@ -2,16 +2,19 @@
     <ion-navbar>
         <ion-title>WatchList</ion-title>
     </ion-navbar>
-    <div class="list" *ngIf="editpressed">
+    
+</ion-header>
+
+<ion-content padding>
+
+<div class="list" *ngIf="editpressed">
         <button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
-        <div *ngFor="let item of List?.result ; let i=index">
-            <!-- <input type="radio" [(ngModel)]="arechosen[i]"> {{arechosen[i]}} -->
-            <label class="item item-radio">
-         {{item[0]}}
-      <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}}</ion-checkbox>
-         </label>
-            <i class="radio-icon ion-checkmark"></i>
-        </div>
+        <ion-list>
+            <ion-item *ngFor="let item of List?.result ; let i=index">
+                    <ion-label> {{item[0]}}</ion-label>
+                    <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}}     </ion-checkbox>
+            </ion-item>
+        </ion-list>
     </div>
 
     <div class="list" *ngIf="!editpressed">
@@ -26,22 +29,5 @@
         <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
         <button ion-button full color="dark" (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
     </div>
-</ion-header>
-
-<ion-content padding>
-    <!-- <h2>Welcome to Ionic!</h2>
-    <p>
-        This starter project comes with simple tabs-based layout for apps that are going to primarily use a Tabbed UI.
-    </p>
-    <p>
-        Take a look at the <code>src/pages/</code> directory to add or change tabs, update any existing page or create new pages.
-    </p> -->
 
 </ion-content>
-
-<!--
-<ion-buttons *ngFor="let x of displayed">
-        <button ion-button full color="dark" (click)="getdetails(item[0])" [hidden]="showdetails">
-     {{x[0]+' '+x[1]+' '}}
-    </button>
-    </ion-buttons> -->

@@ -49,11 +49,17 @@ ngOnInit() {
 ngOnChanges(changes: SimpleChanges) {
   //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
   //Add 'implements OnChanges' to the class.
+<<<<<<< HEAD
      //  console.log(changes['reuter'].currentValue);
 
   if (changes['reuter'] && changes['reuter'].currentValue) {
      // console.log(changes['reuter'].currentValue);
          this.StockService.getstockdetails(this.reuter,true).subscribe(data=>{
+=======
+
+  if (changes['reuter'] && changes['reuter'].currentValue) {
+      this.StockService.getstockdetails(this.reuter,true).subscribe(data=>{
+>>>>>>> dde40870842a410a303c5c97b1656872c2c742fd
       this.detailsresponse=data;
       console.log(this.detailsresponse);
     });
@@ -67,36 +73,35 @@ ngOnChanges(changes: SimpleChanges) {
      else {}
 }
   setasksbids(){
+    if(!this.showasksbids){
       this.AskBidService.getasks(this.reuter).subscribe(data=>{this.Asks=data;
-    console.log(this.Asks);
-    });
-    this.AskBidService.getbids(this.reuter).subscribe(data=>{this.Bids=data;
-     console.log(this.Bids);
-    })
-    this.showasksbids=true;
-    this.stockchosen=false;
-     this.send.emit(this.stockchosen);
-     console.log(this.stockchosen);
-     console.log(this.showasksbids);
-     console.log(this.Asks);
-  }
-  resetasksbids(){
-    this.showasksbids=false;
-    this.stockchosen=true;
-    this.send.emit(this.stockchosen);
+        console.log(this.Asks);
+      });
+      this.AskBidService.getbids(this.reuter).subscribe(data=>{this.Bids=data;
+        console.log(this.Bids);
+      })
+      this.showasksbids=true;
+      this.stockchosen=false;
+      this.send.emit(this.stockchosen);
+    }else{
+      this.showasksbids=false;
+      this.stockchosen=true;
+      this.send.emit(this.stockchosen);
+    }
   }
   settrades(){
+    if(!this.showtrades){
     this.GetService.getquotetrades(this.reuter,0).subscribe(data=>{this.Trades=data;
 
     });
     this.showtrades=true;
     this.stockchosen=false;
     this.send.emit(this.stockchosen);
-  }
-  resettrades(){
-    this.showtrades=false;
-    this.stockchosen=true;
-    this.send.emit(this.stockchosen);
+    }else{
+      this.showtrades=false;
+      this.stockchosen=true;
+      this.send.emit(this.stockchosen);
+    }
   }
   setnews(){
     this.CompanyService.getnewsrelated(this.reuter).subscribe(data=>{this.relNews=data;
@@ -105,19 +110,9 @@ ngOnChanges(changes: SimpleChanges) {
     this.showrelatednews=!this.showrelatednews;
   }
   getdetails(id){
-  this.id=id;
-//   const parsed = Number(id);
-//  this.CompanyService.getnewsdetails(parsed).subscribe(data  => {this.Newsbody = data;
-//               var div = document.createElement('div');
-//               div.innerHTML = this.Newsbody.result.V[3];
-//                this.elements = div;
-//                // document.writeln(this.elements.innerHTML);
-//                console.log(this.elements);
-//                document.getElementById('id').innerHTML = this.elements.innerHTML;
-//               // console.log(this.News);
-//            } );
- this.showdetails=!this.showdetails;
-}
+    this.id=id;
+    this.showdetails=!this.showdetails;
+  }
 // back(){
 //   this.showdetails=false;
 // }
