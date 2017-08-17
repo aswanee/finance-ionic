@@ -33,7 +33,7 @@
                       Trades
                     </button>
                 
-                    <ion-item  *ngIf="showtrades">
+                    <ion-item *ngIf="showtrades">
                             
                         <strong>Trades</strong>
                         
@@ -41,13 +41,28 @@
                             <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
                         </ion-list>
                     </ion-item>
-                    <button ion-item>
+
+                    
+                    <button ion-item (click)="setnews()" >
                       <ion-icon name="cafe" item-start></ion-icon>
                       Related News
                     </button>
                                 
-                  </ion-list>
-          <ion-item>
+                    <ion-item *ngIf="showrelatednews">
+                        <ion-buttons *ngFor="let item of relNews?.result.V">
+                                <button ion-button (click)="getdetails(item[0])" [hidden]="(!stockchosen)">
+                                    {{item[1]}}
+                                    {{item[2]}}
+                                </button>
+                        </ion-buttons>
+                        
+                        <div *ngIf="showdetails">
+                            <newsdetails [id]='id'></newsdetails>
+                        </div>
+                        </ion-item>
+                    
+                    </ion-list>
+        <ion-item>
             <ion-icon name="ion-social-usd" item-start small></ion-icon>
             <p>{{detailsresponse?.result[2]}}</p>
           </ion-item>
@@ -66,24 +81,3 @@
     
 
         </ion-card>
-<div>
-    <div *ngIf="stockchosen">
-        <h2>{{detailsresponse?.result[1]}}</h2>
-        <button ion-button full color="dark" (click)="settrades()" [hidden]="showtrades">trades</button>
-        <button ion-button full color="dark" (click)="setnews()">Related News</button>
-    </div>
-
-
-    <div *ngIf="showrelatednews">
-        <ion-buttons *ngFor="let item of relNews?.result.V">
-            <button ion-button full color="dark" (click)="getdetails(item[0])" [hidden]="(!stockchosen)">
-     <h1> {{item[1]}} </h1>
-     <h2>{{item[2]}}</h2>
-    </button>
-        </ion-buttons>
-    </div>
-    <div *ngIf="showdetails">
-        <newsdetails [id]='id'></newsdetails>
-    </div>
-
-</div>
