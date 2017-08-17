@@ -2,30 +2,75 @@
 <!-- <ion-content> -->
 
 
-  <page-chart *ngIf="reuter" [rouiterCode]="reuter"></page-chart>  
+  <ion-card>
+        
+        <ion-card-header>
+                {{reuter}}
+            </ion-card-header>
+            
+            <ion-item>
+                    <page-chart *ngIf="reuter" [rouiterCode]="reuter"></page-chart>  
+            </ion-item>  
+            
+            <ion-list>
+                    <button ion-item (click)="setasksbids()">
+                      <ion-icon name="cart" item-start></ion-icon>
+                      Asks
+                    </button>
+                
+<ion-item *ngIf="showasksbids">
+                        <strong>Asks</strong>
+                        <table *ngFor="let item of Asks?.result">
+                            {{item[0]+' '+item[1]+' '+item[2] }}
+                        </table>
+                        <strong>Bids</strong>
+                        <table *ngFor="let item of Bids?.result">
+                            {{item[0]+' '+item[1]+' '+item[2] }}
+                        </table>
+</ion-item>  
+                    <button ion-item (click)="settrades()">
+                      <ion-icon  name="medical" item-start></ion-icon>
+                      Trades
+                    </button>
+                
+                    <ion-item  *ngIf="showtrades">
+                            
+                        <strong>Trades</strong>
+                        
+                        <ion-list>
+                            <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
+                        </ion-list>
+                    </ion-item>
+                    <button ion-item>
+                      <ion-icon name="cafe" item-start></ion-icon>
+                      Related News
+                    </button>
+                                
+                  </ion-list>
+          <ion-item>
+            <ion-icon name="ion-social-usd" item-start small></ion-icon>
+            <p>{{detailsresponse?.result[2]}}</p>
+          </ion-item>
+        
+          <ion-item>
+            <ion-icon name="ion-social-usd" item-start small></ion-icon>
+            <h2>Per Change</h2>
+            <h2>{{detailsresponse?.result[3]}}</h2>
+            <h2>{{detailsresponse?.result[4]}}</h2>
+            <h2>{{detailsresponse?.result[5]}}</h2>
+        </ion-item>
+        
+          
+      
 
+    
+
+        </ion-card>
 <div>
     <div *ngIf="stockchosen">
-        <h1>{{reuter}}</h1>
         <h2>{{detailsresponse?.result[1]}}</h2>
-        <h2>{{detailsresponse?.result[2]}}</h2>
-        <h2>{{detailsresponse?.result[3]}}</h2>
-        <h2>{{detailsresponse?.result[4]}}</h2>
-        <h2>{{detailsresponse?.result[5]}}</h2>
-        <button ion-button full color="dark" (click)="setasksbids()" [hidden]="showasksbids">Asks/Bids</button>
         <button ion-button full color="dark" (click)="settrades()" [hidden]="showtrades">trades</button>
         <button ion-button full color="dark" (click)="setnews()">Related News</button>
-    </div>
-    <div *ngIf="showasksbids">
-        <strong>Asks</strong>
-        <table *ngFor="let item of Asks?.result">
-            {{item[0]+' '+item[1]+' '+item[2] }}
-        </table>
-        <strong>Bids</strong>
-        <table *ngFor="let item of Bids?.result">
-            {{item[0]+' '+item[1]+' '+item[2] }}
-        </table>
-        <button ion-button full color="dark" (click)="resetasksbids()" [hidden]="!showasksbids">back</button>
     </div>
 
 
@@ -40,14 +85,5 @@
     <div *ngIf="showdetails">
         <newsdetails [id]='id'></newsdetails>
     </div>
-    <div *ngIf="showtrades">
-        <strong>Trades</strong>
-        <!-- <ion-list [virtualScroll]="Trades?.result">
-            <ion-item *virtualItem="let item">{{item }}</ion-item>
-        </ion-list> -->
-        <ion-list>
-            <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
-        </ion-list>
-        <button ion-button full color="dark" (click)="resettrades()" [hidden]="!showtrades">back</button>
-    </div>
+
 </div>
