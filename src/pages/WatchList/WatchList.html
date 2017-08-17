@@ -8,7 +8,7 @@
 <ion-content padding>
 
 <div class="list" *ngIf="editpressed">
-        <button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
+        <button ion-button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
         <ion-list>
             <ion-item *ngFor="let item of List?.result ; let i=index">
                     <ion-label> {{item[0]}}</ion-label>
@@ -18,12 +18,14 @@
     </div>
 
     <div class="list" *ngIf="!editpressed">
-        <button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>
-        <ion-buttons *ngFor="let x of StockDetails?.result">
-            <button ion-button full color="dark" (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
-     {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}
-    </button>
-        </ion-buttons>
+        <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>
+        <ion-list>
+        <ion-item *ngFor="let x of StockDetails?.result">
+            <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
+                 {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}
+            </button>
+            </ion-item>
+        </ion-list>
     </div>
     <div *ngIf="hidewatchlast">
         <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
