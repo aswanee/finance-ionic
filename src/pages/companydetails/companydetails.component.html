@@ -1,9 +1,12 @@
 <!--component html goes here -->
-<!-- <ion-content> -->
- <!-- <page-chart [rouiterCode]="reuter"></page-chart>  -->
-
 <div>
     <div *ngIf="stockchosen">
+        <h1>{{reuter}}</h1>
+        <h2>{{detailsresponse?.result[1]}}</h2>
+        <h2>{{detailsresponse?.result[2]}}</h2>
+        <h2>{{detailsresponse?.result[3]}}</h2>
+        <h2>{{detailsresponse?.result[4]}}</h2>
+        <h2>{{detailsresponse?.result[5]}}</h2>
         <button ion-button full color="dark" (click)="setasksbids()" [hidden]="showasksbids">Asks/Bids</button>
         <button ion-button full color="dark" (click)="settrades()" [hidden]="showtrades">trades</button>
         <button ion-button full color="dark" (click)="setnews()">Related News</button>
@@ -43,4 +46,3 @@
         <button ion-button full color="dark" (click)="resettrades()" [hidden]="!showtrades">back</button>
     </div>
 </div>
-<!-- </ion-content> -->
