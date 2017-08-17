@@ -12,6 +12,9 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {CompanyService} from './company.service';
 import {HttpModule,Http} from '@angular/http';
+import {StockService} from './stock.service';
+import {AskBidService} from './asksbids.service';
+import {GetService} from './else.service';
 @NgModule({
   declarations: [
     MyApp,
@@ -37,7 +40,10 @@ import {HttpModule,Http} from '@angular/http';
   ],
   providers: [
     StatusBar,
+    StockService ,
+    AskBidService ,
     CompanyService ,
+    GetService ,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]

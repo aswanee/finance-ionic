@@ -1,0 +1,42 @@
+<!--component html goes here -->
+<div>
+    <div *ngIf="stockchosen">
+        <button ion-button full color="dark" (click)="setasksbids()" [hidden]="showasksbids">Asks/Bids</button>
+        <button ion-button full color="dark" (click)="settrades()" [hidden]="showtrades">trades</button>
+        <button ion-button full color="dark" (click)="setnews()">Related News</button>
+    </div>
+    <div *ngIf="showasksbids">
+        <strong>Asks</strong>
+        <table *ngFor="let item of Asks?.result">
+            {{item[0]+' '+item[1]+' '+item[2] }}
+        </table>
+        <strong>Bids</strong>
+        <table *ngFor="let item of Bids?.result">
+            {{item[0]+' '+item[1]+' '+item[2] }}
+        </table>
+        <button ion-button full color="dark" (click)="resetasksbids()" [hidden]="!showasksbids">back</button>
+    </div>
+
+
+    <div *ngIf="showrelatednews">
+        <ion-buttons *ngFor="let item of relNews?.result.V">
+            <button ion-button full color="dark" (click)="getdetails(item[0])" [hidden]="(!stockchosen)">
+     <h1> {{item[1]}} </h1>
+     <h2>{{item[2]}}</h2>
+    </button>
+        </ion-buttons>
+    </div>
+    <div *ngIf="showdetails">
+        <newsdetails [id]='id'></newsdetails>
+    </div>
+    <div *ngIf="showtrades">
+        <strong>Trades</strong>
+        <!-- <ion-list [virtualScroll]="Trades?.result">
+            <ion-item *virtualItem="let item">{{item }}</ion-item>
+        </ion-list> -->
+        <ion-list>
+            <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
+        </ion-list>
+        <button ion-button full color="dark" (click)="resettrades()" [hidden]="!showtrades">back</button>
+    </div>
+</div>
