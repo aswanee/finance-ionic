@@ -2,19 +2,30 @@
     <ion-navbar>
         <ion-title>WatchList</ion-title>
     </ion-navbar>
-    <button (click)="changepressed()" [hidden]="editpressed">Edit</button>
-    <button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
     <div class="list" *ngIf="editpressed">
+        <button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
         <div *ngFor="let item of List?.result ; let i=index">
             <!-- <input type="radio" [(ngModel)]="arechosen[i]"> {{arechosen[i]}} -->
             <label class="item item-radio">
          {{item[0]}}
-      <ion-radio [(ngModel)]="arechosen[i]" ngDefaultControl></ion-radio>
+      <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}}</ion-checkbox>
          </label>
             <i class="radio-icon ion-checkmark"></i>
         </div>
     </div>
 
+    <div class="list" *ngIf="!editpressed">
+        <button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>
+        <ion-buttons *ngFor="let x of StockDetails?.result">
+            <button ion-button full color="dark" (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
+     {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}
+    </button>
+        </ion-buttons>
+    </div>
+    <div *ngIf="hidewatchlast">
+        <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
+        <button ion-button full color="dark" (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
+    </div>
 </ion-header>
 
 <ion-content padding>
@@ -27,3 +38,10 @@
     </p> -->
 
 </ion-content>
+
+<!--
+<ion-buttons *ngFor="let x of displayed">
+        <button ion-button full color="dark" (click)="getdetails(item[0])" [hidden]="showdetails">
+     {{x[0]+' '+x[1]+' '}}
+    </button>
+    </ion-buttons> -->
