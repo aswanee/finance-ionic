@@ -38,7 +38,7 @@ export class GetService {
    getmarketdetails(cid: number= 1): Observable<Detailsresponse> {
  let link = 'https://www.arabfinance.com/apis/market/GetMarketInformation?CID=';
   link = link + cid ;
-     console.log(link);
+    // console.log(link);
       return this.http
       .get(link)
       .map( x => {
