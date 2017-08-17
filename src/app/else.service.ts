@@ -18,14 +18,14 @@ export class GetService {
   }
   getmarketsummary(): Observable<MarketDetails> {
       return this.http
-      .get('http://staging5.arabfinance.com/apis/market/GetMarketSummary?Schema=false')
+      .get('https://www.arabfinance.com/apis/market/GetMarketSummary?Schema=false')
       .map( x => {
       return  <MarketDetails>x.json();
     }).catch((t: Response) => t.json());
   }
 
    getquotetrades(code: string, id: number): Observable<Detailsresponse> {
- let link = 'http://staging5.arabfinance.com/apis/market/QuoteTrades?Code=';
+ let link = 'https://www.arabfinance.com/apis/market/QuoteTrades?Code=';
   link = link + code + '&lID=' + id ;
      console.log(link);
       return this.http
@@ -36,9 +36,9 @@ export class GetService {
     }).catch((t: Response) => t.json());
   }
    getmarketdetails(cid: number= 1): Observable<Detailsresponse> {
- let link = 'http://staging5.arabfinance.com/apis/market/GetMarketInformation?CID=';
+ let link = 'https://www.arabfinance.com/apis/market/GetMarketInformation?CID=';
   link = link + cid ;
-     console.log(link);
+    // console.log(link);
       return this.http
       .get(link)
       .map( x => {

@@ -1,4 +1,4 @@
-import { Component , OnInit ,Input,Output,EventEmitter} from '@angular/core';
+import { Component , OnInit ,Input,Output,EventEmitter , OnChanges,SimpleChange,SimpleChanges} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {StockService} from './../../app/stock.service';
 import {AskBidService} from './../../app/asksbids.service';
@@ -8,13 +8,18 @@ import {SerResponse} from './../../app/response.interface';
 import {Detailsresponse} from './../../app/details.interface';
 import {Newsresponse} from './../../app/newsresponse.interface';
 import {Newsdetailsresponse} from './../../app/newsdetailsresponse.interface';
+import { BehaviorSubject } from 'Rxjs'
+
 @Component({
     // moduleId: module.id,
     selector: 'companydetails',
     templateUrl: 'companydetails.component.html',
     // styleUrls: ['companydetails.component.scss']
 })
-export class CompanydetailsComponent implements OnInit{
+export class CompanydetailsComponent implements OnInit,OnChanges{
+
+// private _items = new BehaviorSubject<String[]>([]);
+
 @Input()reuter: string;
 @Input()id:string
 @Input()hidewatchlast:boolean
@@ -23,24 +28,44 @@ export class CompanydetailsComponent implements OnInit{
 @Output() sendhide: EventEmitter<boolean> = new EventEmitter<boolean>();
 // stockchosen:boolean=false;
 showasksbids:boolean=false;
+detailsresponse:Detailsresponse;
 showtrades:boolean=false;
 showrelatednews:boolean=false;
 showdetails:boolean=false;
 Asks:SerResponse;
 Bids:SerResponse;
+Stocksimple:SerResponse;
 Trades:Detailsresponse;
 relNews:Newsresponse;
-constructor(private CompanyService:CompanyService,private AskBidService:AskBidService,private GetService:GetService){
+constructor(private StockService:StockService , private CompanyService:CompanyService,private AskBidService:AskBidService,private GetService:GetService){
 
 }
 ngOnInit() {
   //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
   //Add 'implements OnInit' to the class.
+   // console.log(this.reuter);
 
-
-    this.showrelatednews=false;
 }
+ngOnChanges(changes: SimpleChanges) {
+  //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+  //Add 'implements OnChanges' to the class.
+       console.log(changes['reuter'].currentValue);
 
+  if (changes['reuter'] && changes['reuter'].currentValue) {
+     console.log(changes['reuter'].currentValue);
+         this.StockService.getstockdetails(this.reuter,true).subscribe(data=>{
+      this.detailsresponse=data;
+      console.log(this.detailsresponse);
+    });
+    let reuterarr:string[]=new Array();
+    reuterarr.push(this.reuter);
+    this.StockService.getstock(reuterarr,true).subscribe(data=>{
+      this.Stocksimple=data;
+      console.log(this.Stocksimple);
+    });
+        }
+     else {}
+}
   setasksbids(){
       this.AskBidService.getasks(this.reuter).subscribe(data=>{this.Asks=data;
     console.log(this.Asks);

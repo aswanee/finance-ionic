@@ -2,13 +2,13 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
+import { CommonModule } from '@angular/common';
+import {NewsdetailsComponent} from './../pages/newsdetails/newsdetails.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/WatchList/WatchList';
 import {LoginComponent} from './../pages/login/login.component';
 import { ChartPage } from '../pages/chart/chart';
-import { NewsdetailsComponent } from '../pages/newsdetails/newsdetails.component';
 import { CompanydetailsComponent } from '../pages/companydetails/companydetails.component';
 import { TabsPage } from '../pages/tabs/tabs';
 
