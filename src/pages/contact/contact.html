@@ -22,6 +22,12 @@
     </ion-buttons>
 
     <ion-content *ngIf="showdetails">
-        <newsdetails [id]='id'></newsdetails>
+        <div class="header">
+            {{Newsbody?.result.V[1]}}
+        </div>
+        <div>
+            {{Newsbody?.result.V[6]}}
+        </div>
+        {{Newsbody?.result.V[3]}}
     </ion-content>
     <button ion-button full color="dark" (click)="back()" [hidden]="!showdetails">back</button>

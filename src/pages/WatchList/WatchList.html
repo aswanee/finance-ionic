@@ -2,12 +2,16 @@
     <ion-navbar>
         <ion-title>WatchList</ion-title>
     </ion-navbar>
+<<<<<<< HEAD
     
 </ion-header>
 
 <ion-content padding>
 
 <div class="list" *ngIf="editpressed">
+=======
+    <div class="list" *ngIf="editpressed">
+>>>>>>> be05e6c9a8900fda8d39aba5b2a36c6637fe5449
         <button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
         <ion-list>
             <ion-item *ngFor="let item of List?.result ; let i=index">
@@ -29,4 +33,15 @@
         <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
         <button ion-button full color="dark" (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
     </div>
+</ion-header>
+
+<ion-content padding>
+    <!-- <h2>Welcome to Ionic!</h2>
+    <p>
+        This starter project comes with simple tabs-based layout for apps that are going to primarily use a Tabbed UI.
+    </p>
+    <p>
+        Take a look at the <code>src/pages/</code> directory to add or change tabs, update any existing page or create new pages.
+    </p> -->
+
 </ion-content>

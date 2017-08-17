@@ -11,8 +11,8 @@ import {LoginComponent} from './../pages/login/login.component';
 import { ChartPage } from '../pages/chart/chart';
 import { CompanydetailsComponent } from '../pages/companydetails/companydetails.component';
 import { TabsPage } from '../pages/tabs/tabs';
+import {MarketService} from './market.service';
 
-import { ChartModule } from 'angular2-highcharts';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -21,6 +21,7 @@ import {HttpModule,Http} from '@angular/http';
 import {StockService} from './stock.service';
 import {AskBidService} from './asksbids.service';
 import {GetService} from './else.service';
+import {ChartModule} from 'angular2-highcharts';
 
 
 @NgModule({
@@ -58,6 +59,7 @@ import {GetService} from './else.service';
     StockService ,
     AskBidService ,
     CompanyService ,
+    MarketService ,
     GetService ,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
