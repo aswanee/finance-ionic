@@ -7,7 +7,13 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/WatchList/WatchList';
 import {LoginComponent} from './../pages/login/login.component';
+import { ChartPage } from '../pages/chart/chart';
+import { NewsdetailsComponent } from '../pages/newsdetails/newsdetails.component';
+import { CompanydetailsComponent } from '../pages/companydetails/companydetails.component';
 import { TabsPage } from '../pages/tabs/tabs';
+
+import { ChartModule } from 'angular2-highcharts';
+
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import {CompanyService} from './company.service';
@@ -15,6 +21,8 @@ import {HttpModule,Http} from '@angular/http';
 import {StockService} from './stock.service';
 import {AskBidService} from './asksbids.service';
 import {GetService} from './else.service';
+
+
 @NgModule({
   declarations: [
     MyApp,
@@ -22,12 +30,16 @@ import {GetService} from './else.service';
     ContactPage,
     HomePage,
     LoginComponent ,
-    TabsPage
+    TabsPage,
+    NewsdetailsComponent,
+    CompanydetailsComponent,
+    ChartPage
   ],
   imports: [
     BrowserModule,
     HttpModule ,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    ChartModule.forRoot(require('highcharts'))
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -36,7 +48,10 @@ import {GetService} from './else.service';
     ContactPage,
     HomePage,
     LoginComponent ,
-    TabsPage
+    TabsPage,
+    NewsdetailsComponent,
+    CompanydetailsComponent,
+    ChartPage
   ],
   providers: [
     StatusBar,

@@ -5,11 +5,7 @@ import {News} from './../../app/news.interface';
 import {Newsbody} from './../../app/newsbody.interface';
 import {Newsresponse} from './../../app/newsresponse.interface';
 import {Newsdetailsresponse} from './../../app/newsdetailsresponse.interface';
-<<<<<<< HEAD
-
-=======
 import {Observable} from 'rxjs/Rx';
->>>>>>> fb8959b126b3ced9cc91a16a3db21b0a1ba669a8
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
