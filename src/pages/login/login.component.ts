@@ -1,5 +1,6 @@
 import { Component ,OnInit} from '@angular/core';
 import { NavController } from 'ionic-angular';
+import * as d3 from 'd3';
 
 @Component({
    //  moduleId: module.id,

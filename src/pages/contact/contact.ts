@@ -5,6 +5,7 @@ import {News} from './../../app/news.interface';
 import {Newsbody} from './../../app/newsbody.interface';
 import {Newsresponse} from './../../app/newsresponse.interface';
 import {Newsdetailsresponse} from './../../app/newsdetailsresponse.interface';
+
 @Component({
   selector: 'page-contact',
   templateUrl: 'contact.html'
