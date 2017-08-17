@@ -1,6 +1,8 @@
 <!--component html goes here -->
 <!-- <ion-content> -->
- <!-- <page-chart [rouiterCode]="reuter"></page-chart>  -->
+
+
+  <page-chart *ngIf="reuter" [rouiterCode]="reuter"></page-chart>  
 
 <div>
     <div *ngIf="stockchosen">
