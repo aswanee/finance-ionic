@@ -19,7 +19,7 @@
     </div>
     <div class="list" *ngIf="!editpressed ">
         <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>
-        <ion-list *ngIf="StockDetails">
+        <ion-list *ngIf="StockDetails && !showCompanyDetails">
             <ion-item *ngFor="let x of StockDetails?.result">
                 <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
                  {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}

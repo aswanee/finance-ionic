@@ -51,9 +51,6 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // console.log(this.reuter);
     this.editpressed = false;
     this.hidewatchlast = false;
     this.showCompanyDetails = false;
@@ -61,10 +58,8 @@ export class HomePage implements OnInit {
     this.storage.get("watchList").then(val => {
       this.StockService.getstock(val, true).subscribe(data => {
         this.StockDetails = data;
-        // this.displayed = val;
         this.dispnames = val;
         console.log(this.StockDetails.result);
-        // this.dispnames = this.StockDetails.result;
         for (let i = 0; i < this.StockDetails.result.length; i++) {
           this.StockDetails.result[i].push(this.dispnames[i]);
         }
