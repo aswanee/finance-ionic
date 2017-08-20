@@ -12,7 +12,7 @@ import { ChartPage } from "../pages/chart/chart";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
-
+import { LoginService } from "./login.service";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CompanyService } from "./company.service";
@@ -57,6 +57,7 @@ import { ChartModule } from "angular2-highcharts";
     StockService,
     AskBidService,
     CompanyService,
+    LoginService,
     MarketService,
     GetService,
     SplashScreen,
