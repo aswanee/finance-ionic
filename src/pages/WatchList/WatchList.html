@@ -21,16 +21,35 @@
         <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>
         <ion-list *ngIf="StockDetails && !showCompanyDetails">
             <ion-item *ngFor="let x of StockDetails?.result">
-                <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
-                 {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}
-            </button>
+                <!-- <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast"> -->
+                <button ion-item (click)="setstockchosen(x[3])">
+                    <ion-icon name="medical" item-start></ion-icon>
+                    {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}
+                    <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>                                        
+                  </button>
+                <!-- </button> -->
             </ion-item>
         </ion-list>
+        <!-- <ion-grid *ngIf="StockDetails && !showCompanyDetails">
+            <ion-row ion-item *ngFor="let x of StockDetails?.result">
+                <button ion-item (click)="setstockchosen(x[3])">
+                            <ion-col width-33 col-4> {{x[3]}} </ion-col>
+                            <ion-col width-33 col-4> {{x[0]}}</ion-col>
+                            <ion-col col-10> {{x[2]}}</ion-col>
+                            <ion-col col-4> {{x[1]}}</ion-col>
+                            <ion-col col-4>
+                                <ion-icon *ngIf="x[2]>0" name="md-arrow-up" color="secondary"></ion-icon>
+                                <ion-icon *ngIf="x[2]<0" name="md-arrow-down" color="danger"></ion-icon>
+                            </ion-col>
+                          </button>
+            </ion-row>
+        </ion-grid> -->
     </div>
 
     <div *ngIf="showCompanyDetails && reuter">
         <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
-        <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
+        <!-- <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button> -->
     </div>
 
 </ion-content>

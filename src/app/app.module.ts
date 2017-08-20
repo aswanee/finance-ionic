@@ -9,6 +9,7 @@ import { ContactPage } from "../pages/contact/contact";
 import { HomePage } from "../pages/WatchList/WatchList";
 import { LoginComponent } from "./../pages/login/login.component";
 import { ChartPage } from "../pages/chart/chart";
+import { MarketPage } from "../pages/market/market";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
@@ -34,14 +35,21 @@ import { IonicStorageModule } from "@ionic/storage";
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,
-    ChartPage
+    ChartPage,
+    MarketPage
   ],
   imports: [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
     ChartModule.forRoot(require("highcharts")),
-    IonicStorageModule.forRoot()
+    IonicStorageModule
+      .forRoot
+      // {
+      // name: "__mydb",
+      // driverOrder: ["sqlite", "websql", "indexeddb"]
+      // }
+      ()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,7 +61,8 @@ import { IonicStorageModule } from "@ionic/storage";
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,
-    ChartPage
+    ChartPage,
+    MarketPage
   ],
   providers: [
     StatusBar,
