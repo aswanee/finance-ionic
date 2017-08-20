@@ -18,7 +18,7 @@ import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { BehaviorSubject } from "Rxjs";
-
+import { TabsPage } from "../tabs/tabs";
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
@@ -49,9 +49,11 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     private StockService: StockService,
     private CompanyService: CompanyService,
     private AskBidService: AskBidService,
-    private GetService: GetService
+    private GetService: GetService,
+    private navCtrl: NavController
   ) {}
   ngOnInit() {
+    // this.navCtrl.push(CompanydetailsComponent);
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // console.log(this.reuter);
@@ -117,12 +119,8 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.id = id;
     this.showdetails = !this.showdetails;
   }
-  // back(){
-  //   this.showdetails=false;
-  // }
-  // resetstockchosen(){
-  //     this.stockchosen=false;
-  //     this.hidewatchlast=false||this.stockchosen;
-  //     this.sendhide.emit(this.hidewatchlast);
-  //   }
+
+  goback() {
+    this.navCtrl.setRoot(TabsPage);
+  }
 }
