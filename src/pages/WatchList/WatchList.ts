@@ -56,20 +56,24 @@ export class HomePage implements OnInit {
     this.showCompanyDetails = false;
 
     console.log("before retriveing storage");
-    this.storage.get("watchList").then(val => {
-      console.log("Got the storag data");
-      this.StockService.getstock(val, true).subscribe(data => {
-        this.StockDetails = data;
-        this.dispnames = val;
-        this.displayed = val;
-        console.log(this.StockDetails.result);
-        for (let i = 0; i < this.StockDetails.result.length; i++) {
-          this.StockDetails.result[i].push(this.dispnames[i]);
-        }
-        console.log(this.StockDetails);
-      });
-      this.editpressed = false;
-      this.hidewatchlast = this.editpressed || this.stockchosen;
+    this.storage.keys().then(keys => {
+      if (keys.length) {
+        this.storage.get("watchList").then(val => {
+          console.log("Got the storag data");
+          this.StockService.getstock(val, true).subscribe(data => {
+            this.StockDetails = data;
+            this.dispnames = val;
+            this.displayed = val;
+            console.log(this.StockDetails.result);
+            for (let i = 0; i < this.StockDetails.result.length; i++) {
+              this.StockDetails.result[i].push(this.dispnames[i]);
+            }
+            console.log(this.StockDetails);
+          });
+          this.editpressed = false;
+          this.hidewatchlast = this.editpressed || this.stockchosen;
+        });
+      }
     });
   }
 
