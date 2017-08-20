@@ -13,7 +13,7 @@ import { MarketPage } from "../pages/market/market";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
-import { LoginService } from "./login.service";
+
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CompanyService } from "./company.service";
@@ -69,7 +69,6 @@ import { IonicStorageModule } from "@ionic/storage";
     StockService,
     AskBidService,
     CompanyService,
-    LoginService,
     MarketService,
     GetService,
     SplashScreen,

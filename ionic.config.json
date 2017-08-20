@@ -1,12 +1,8 @@
 {
-    "name": "newproj",
-    "app_id": "",
-    "type": "ionic-angular",
-    "integrations": {
-        "cordova": {}
-    },
-    "proxies": [{
-        "path": "/apis/market/token",
-        "proxyUrl": "https://www.arabfinance.com/apis/market/token"
-    }]
+  "name": "newproj",
+  "app_id": "",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
 }
