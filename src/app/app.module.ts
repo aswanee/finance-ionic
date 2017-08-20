@@ -1,28 +1,26 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { MyApp } from './app.component';
-import { CommonModule } from '@angular/common';
-import {NewsdetailsComponent} from './../pages/newsdetails/newsdetails.component';
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/WatchList/WatchList';
-import {LoginComponent} from './../pages/login/login.component';
-import { ChartPage } from '../pages/chart/chart';
-import { CompanydetailsComponent } from '../pages/companydetails/companydetails.component';
-import { TabsPage } from '../pages/tabs/tabs';
-import {MarketService} from './market.service';
+import { NgModule, ErrorHandler } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { IonicApp, IonicModule, IonicErrorHandler } from "ionic-angular";
+import { MyApp } from "./app.component";
+import { CommonModule } from "@angular/common";
+import { NewsdetailsComponent } from "./../pages/newsdetails/newsdetails.component";
+import { AboutPage } from "../pages/about/about";
+import { ContactPage } from "../pages/contact/contact";
+import { HomePage } from "../pages/WatchList/WatchList";
+import { LoginComponent } from "./../pages/login/login.component";
+import { ChartPage } from "../pages/chart/chart";
+import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
+import { TabsPage } from "../pages/tabs/tabs";
+import { MarketService } from "./market.service";
 
-
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import {CompanyService} from './company.service';
-import {HttpModule,Http} from '@angular/http';
-import {StockService} from './stock.service';
-import {AskBidService} from './asksbids.service';
-import {GetService} from './else.service';
-import {ChartModule} from 'angular2-highcharts';
-
+import { StatusBar } from "@ionic-native/status-bar";
+import { SplashScreen } from "@ionic-native/splash-screen";
+import { CompanyService } from "./company.service";
+import { HttpModule, Http } from "@angular/http";
+import { StockService } from "./stock.service";
+import { AskBidService } from "./asksbids.service";
+import { GetService } from "./else.service";
+import { ChartModule } from "angular2-highcharts";
 
 @NgModule({
   declarations: [
@@ -30,7 +28,7 @@ import {ChartModule} from 'angular2-highcharts';
     AboutPage,
     ContactPage,
     HomePage,
-    LoginComponent ,
+    LoginComponent,
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,
@@ -38,9 +36,9 @@ import {ChartModule} from 'angular2-highcharts';
   ],
   imports: [
     BrowserModule,
-    HttpModule ,
+    HttpModule,
     IonicModule.forRoot(MyApp),
-    ChartModule.forRoot(require('highcharts'))
+    ChartModule.forRoot(require("highcharts"))
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -48,7 +46,7 @@ import {ChartModule} from 'angular2-highcharts';
     AboutPage,
     ContactPage,
     HomePage,
-    LoginComponent ,
+    LoginComponent,
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,
@@ -56,13 +54,13 @@ import {ChartModule} from 'angular2-highcharts';
   ],
   providers: [
     StatusBar,
-    StockService ,
-    AskBidService ,
-    CompanyService ,
-    MarketService ,
-    GetService ,
+    StockService,
+    AskBidService,
+    CompanyService,
+    MarketService,
+    GetService,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}

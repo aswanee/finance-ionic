@@ -45,6 +45,7 @@
     "@ionic/cli-plugin-cordova": "1.6.2",
     "@ionic/cli-plugin-ionic-angular": "1.4.1",
     "@types/d3": "^3.5.38",
+    "@types/node": "^8.0.24",
     "ionic": "3.9.1",
     "typescript": "2.3.4"
   },
