@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
@@ -12,7 +12,7 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
   selector: "page-home",
   templateUrl: "WatchList.html"
 })
-export class HomePage {
+export class HomePage implements OnInit {
   List: SerResponse;
   StockDetails: SerResponse;
   reuter: string;
@@ -23,6 +23,7 @@ export class HomePage {
   stockchosen: boolean = false;
   showasksbids: boolean = false;
   showtrades: boolean = false;
+  showCompanyDetails: boolean;
   hidewatchlast = this.stockchosen || this.editpressed;
   showrelatednews: boolean = false;
   arechosen: boolean[] = new Array();
@@ -45,6 +46,16 @@ export class HomePage {
       }
     });
   }
+
+  ngOnInit() {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    // console.log(this.reuter);
+    this.editpressed = false;
+    this.hidewatchlast = false;
+    this.showCompanyDetails = false;
+  }
+
   changepressed() {
     this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
@@ -53,47 +64,14 @@ export class HomePage {
     this.stockchosen = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
     this.reuter = reuter;
+    this.showCompanyDetails = true;
   }
-  //   this.CompanyService.getnewsrelated(reuter).subscribe(data=>{this.relNews=data;
-
-  //   });
-  //   this.AskBidService.getasks(reuter).subscribe(data=>{this.Asks=data;
-
-  //   });
-  //   this.AskBidService.getbids(reuter).subscribe(data=>{this.Bids=data;
-
-  //   });
-  //   this.GetService.getquotetrades(reuter,0).subscribe(data=>{this.Trades=data;
-
-  //   });
-  //   this.showrelatednews=false;
 
   resetstockchosen() {
     this.stockchosen = false;
+    this.showCompanyDetails = false;
     this.hidewatchlast = this.editpressed || this.stockchosen;
   }
-  // setasksbids(){
-  //   this.showasksbids=true;
-  //   this.stockchosen=false;
-  // }
-  // resetasksbids(){
-  //   this.showasksbids=false;
-  //   this.stockchosen=true;
-  // }
-  // settrades(){
-  //   this.showtrades=true;
-  //   this.stockchosen=false;
-  // }
-  // resettrades(){
-  //   this.showtrades=false;
-  //   this.stockchosen=true;
-  // }
-  // setnews(){
-  //   this.showrelatednews=!this.showrelatednews;
-  // }
-  // resetnews(){
-  //   this.showrelatednews=false;
-  // }
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
     console.log(this.stockchosen);
