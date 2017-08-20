@@ -8,6 +8,8 @@ import { SerResponse } from "./../../app/response.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
+import { Storage } from "@ionic/storage";
+
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
@@ -37,7 +39,8 @@ export class HomePage implements OnInit {
     private StockService: StockService,
     private CompanyService: CompanyService,
     private AskBidService: AskBidService,
-    private GetService: GetService
+    private GetService: GetService,
+    private storage: Storage
   ) {
     this.StockService.getnames(true).subscribe(data => {
       this.List = data;
@@ -54,12 +57,29 @@ export class HomePage implements OnInit {
     this.editpressed = false;
     this.hidewatchlast = false;
     this.showCompanyDetails = false;
+
+    this.storage.get("watchList").then(val => {
+      this.StockService.getstock(val, true).subscribe(data => {
+        this.StockDetails = data;
+        // this.displayed = val;
+        this.dispnames = val;
+        console.log(this.StockDetails.result);
+        // this.dispnames = this.StockDetails.result;
+        for (let i = 0; i < this.StockDetails.result.length; i++) {
+          this.StockDetails.result[i].push(this.dispnames[i]);
+        }
+        console.log(this.StockDetails);
+      });
+      this.editpressed = false;
+      this.hidewatchlast = this.editpressed || this.stockchosen;
+    });
   }
 
   changepressed() {
     this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
   }
+
   setstockchosen(reuter: string) {
     this.stockchosen = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
@@ -72,13 +92,16 @@ export class HomePage implements OnInit {
     this.showCompanyDetails = false;
     this.hidewatchlast = this.editpressed || this.stockchosen;
   }
+
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
     console.log(this.stockchosen);
   }
+
   gethidewatch(stockchosen) {
     this.hidewatchlast = stockchosen;
   }
+
   falsepressed() {
     this.displayed = [];
     this.dispnames = [];
@@ -88,6 +111,7 @@ export class HomePage implements OnInit {
         this.dispnames.push(this.List.result[i][0]);
       }
     }
+    this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
     console.log(this.arechosen);
     this.StockService.getstock(this.dispnames, true).subscribe(data => {

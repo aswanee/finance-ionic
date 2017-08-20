@@ -22,6 +22,8 @@ import { AskBidService } from "./asksbids.service";
 import { GetService } from "./else.service";
 import { ChartModule } from "angular2-highcharts";
 
+import { IonicStorageModule } from "@ionic/storage";
+
 @NgModule({
   declarations: [
     MyApp,
@@ -38,7 +40,8 @@ import { ChartModule } from "angular2-highcharts";
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    ChartModule.forRoot(require("highcharts"))
+    ChartModule.forRoot(require("highcharts")),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
