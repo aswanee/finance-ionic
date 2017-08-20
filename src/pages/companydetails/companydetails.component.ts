@@ -49,9 +49,17 @@ ngOnInit() {
 ngOnChanges(changes: SimpleChanges) {
   //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
   //Add 'implements OnChanges' to the class.
+<<<<<<< HEAD
+     //  console.log(changes['reuter'].currentValue);
+
+  if (changes['reuter'] && changes['reuter'].currentValue) {
+     // console.log(changes['reuter'].currentValue);
+         this.StockService.getstockdetails(this.reuter,true).subscribe(data=>{
+=======
 
   if (changes['reuter'] && changes['reuter'].currentValue) {
       this.StockService.getstockdetails(this.reuter,true).subscribe(data=>{
+>>>>>>> dde40870842a410a303c5c97b1656872c2c742fd
       this.detailsresponse=data;
       console.log(this.detailsresponse);
     });

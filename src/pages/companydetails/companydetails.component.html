@@ -2,6 +2,34 @@
 <!-- <ion-content> -->
 
 
+<<<<<<< HEAD
+<page-chart *ngIf="reuter" [rouiterCode]="reuter"></page-chart>
+
+<!--component html goes here -->
+<div>
+    <div *ngIf="stockchosen">
+        <h1>{{reuter}}</h1>
+        <h2>{{detailsresponse?.result[1]}}</h2>
+        <h2>{{detailsresponse?.result[2]}}</h2>
+        <h2>{{detailsresponse?.result[3]}}</h2>
+        <h2>{{detailsresponse?.result[4]}}</h2>
+        <h2>{{detailsresponse?.result[5]}}</h2>
+        <button ion-button full color="dark" (click)="setasksbids()" [hidden]="showasksbids">Asks/Bids</button>
+        <button ion-button full color="dark" (click)="settrades()" [hidden]="showtrades">trades</button>
+        <button ion-button full color="dark" (click)="setnews()">Related News</button>
+    </div>
+    <div *ngIf="showasksbids">
+        <strong>Asks</strong>
+        <table *ngFor="let item of Asks?.result">
+            {{item[0]+' '+item[1]+' '+item[2] }}
+        </table>
+        <strong>Bids</strong>
+        <table *ngFor="let item of Bids?.result">
+            {{item[0]+' '+item[1]+' '+item[2] }}
+        </table>
+        <button ion-button full color="dark" (click)="resetasksbids()" [hidden]="!showasksbids">back</button>
+    </div>
+=======
   <ion-card>
         
         <ion-card-header>
@@ -77,6 +105,7 @@
         
           
       
+>>>>>>> dde40870842a410a303c5c97b1656872c2c742fd
 
     
 
