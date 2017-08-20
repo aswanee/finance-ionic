@@ -9,14 +9,14 @@
 
 <div class="list" *ngIf="editpressed">
         <button ion-button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
-        <ion-list>
+        <ion-list *ngIf="List">
             <ion-item *ngFor="let item of List?.result ; let i=index">
                     <ion-label> {{item[0]}}</ion-label>
                     <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}}     </ion-checkbox>
             </ion-item>
         </ion-list>
-    </div>
 
+</div>
     <div class="list" *ngIf="!editpressed">
         <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>
         <ion-list>

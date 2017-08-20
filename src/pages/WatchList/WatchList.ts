@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {StockService} from './../../app/stock.service';
 import {AskBidService} from './../../app/asksbids.service';
@@ -12,7 +12,7 @@ import {Newsdetailsresponse} from './../../app/newsdetailsresponse.interface';
   selector: 'page-home',
   templateUrl: 'WatchList.html'
 })
-export class HomePage {
+export class HomePage implements OnInit{
 List:SerResponse;
 StockDetails:SerResponse;
 reuter:string;
@@ -38,6 +38,14 @@ dispnames:string[]=new Array();
   }
            } );
   }
+
+  ngOnInit() {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+     // console.log(this.reuter);
+    this.editpressed = false;
+  }
+
   changepressed() {
         this.editpressed = true;
         this.hidewatchlast=this.editpressed||this.stockchosen;
