@@ -42,7 +42,7 @@ import { IonicStorageModule } from "@ionic/storage";
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    ChartModule.forRoot(require("highcharts")),
+    ChartModule.forRoot(require("highcharts/highstock")),
     IonicStorageModule
       .forRoot
       // {
