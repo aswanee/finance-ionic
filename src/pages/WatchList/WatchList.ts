@@ -42,16 +42,15 @@ export class HomePage implements OnInit {
     private AskBidService: AskBidService,
     private GetService: GetService,
     private storage: Storage
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.StockService.getnames(true).subscribe(data => {
       this.List = data;
       for (let i = 0; i < this.List.result.length; i++) {
         this.arechosen[i] = false;
       }
     });
-  }
-
-  ngOnInit() {
     this.editpressed = false;
     this.hidewatchlast = false;
     this.showCompanyDetails = false;
