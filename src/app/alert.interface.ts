@@ -2,7 +2,7 @@ export interface alertresponse {
   Status: string;
   result: alert[][];
 }
-interface alert {
+export interface alert {
   AlertID: number;
   UserID: number;
   Code: string;
