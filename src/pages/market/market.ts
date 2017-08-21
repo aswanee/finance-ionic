@@ -3,7 +3,6 @@ import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
-
 /**
  * Generated class for the MarketPage page.
  *

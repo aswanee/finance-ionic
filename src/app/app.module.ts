@@ -22,7 +22,7 @@ import { StockService } from "./stock.service";
 import { AskBidService } from "./asksbids.service";
 import { GetService } from "./else.service";
 import { ChartModule } from "angular2-highcharts";
-
+import { LoginService } from "./login.service";
 import { IonicStorageModule } from "@ionic/storage";
 
 @NgModule({
@@ -69,6 +69,7 @@ import { IonicStorageModule } from "@ionic/storage";
     StockService,
     AskBidService,
     CompanyService,
+    LoginService,
     MarketService,
     GetService,
     SplashScreen,
