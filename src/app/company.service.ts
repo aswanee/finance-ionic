@@ -21,7 +21,8 @@ export class CompanyService extends ParentService {
   ): Observable<Newsresponse> {
     this.getlink();
     let temp = "";
-    temp = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    temp =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     this.link =
       this.link +
       "GetNews?lastPostingTime=" +
