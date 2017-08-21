@@ -19,6 +19,8 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { BehaviorSubject } from "rxjs";
 import { TabsPage } from "../tabs/tabs";
+import { HomePage } from "./../WatchList/WatchList";
+import { MarketPage } from "./../market/market";
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
@@ -30,6 +32,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
 
   @Input() reuter: string;
   @Input() id: string;
+  @Input() rootid: number;
   @Input() hidewatchlast: boolean;
   @Input() stockchosen;
   @Output() send: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -121,6 +124,10 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   }
 
   goback() {
-    this.navCtrl.setRoot(TabsPage);
+    if (this.rootid === 1) {
+      this.navCtrl.setRoot(MarketPage);
+    } else {
+      this.navCtrl.setRoot(HomePage);
+    }
   }
 }

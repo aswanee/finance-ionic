@@ -26,7 +26,7 @@
                     <ion-icon name="medical" item-start></ion-icon>
                     {{  x[3]+'      '+x[0]+'        '+x[1]+'            '+x[2]}}
                     <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
-                    <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>                                        
+                    <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                   </button>
                 <!-- </button> -->
             </ion-item>
@@ -48,7 +48,7 @@
     </div>
 
     <div *ngIf="showCompanyDetails && reuter">
-        <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
+        <companydetails [reuter]="reuter" [rootid]="rootid" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
         <!-- <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button> -->
     </div>
 

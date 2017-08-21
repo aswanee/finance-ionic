@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   Trades: Detailsresponse;
   editpressed: boolean = false;
   stockchosen: boolean = false;
+  rootid: number = 2;
   showasksbids: boolean = false;
   showtrades: boolean = false;
   showCompanyDetails: boolean;

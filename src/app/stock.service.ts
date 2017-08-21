@@ -12,19 +12,14 @@ import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/catch";
 import "rxjs/add/observable/throw";
+import { ParentService } from "./parentservice.service";
 @Injectable()
-export class StockService implements OnInit {
+export class StockService extends ParentService implements OnInit {
   stocks: Stock;
   objs: Stock[] = new Array();
   // nameobj: string [][] = new Array() ;
   substrings: string[] = new Array();
   names: string[] = new Array();
-  constructor(private http: Http) {
-    // for (let i = 0 ; i < 300; i++) {
-    //   let strigarr: string[] = new Array();
-    //     this.nameobj.push(strigarr);
-    // }
-  }
   ngOnInit() {
     //  this.getnames().subscribe(data  => {this.nameobj = data;
     //         console.log(this.nameobj);
@@ -37,36 +32,35 @@ export class StockService implements OnInit {
     //        } );
   }
   getstock(nameobj: string[], isArabic: boolean): Observable<SerResponse> {
-    console.log(nameobj.length);
-    let link =
-      "https://www.arabfinance.com/apis/market/GetSimpleQuotesDetails?Codes=";
+    // console.log(nameobj.length);
+    this.getlink();
+    this.link = this.link + "GetSimpleQuotesDetails?Codes=";
     for (let i = 0; i < nameobj.length - 1; i++) {
-      link = link + nameobj[i] + ",";
+      this.link = this.link + nameobj[i] + ",";
     }
     // console.log(this.nameobj); // egts,amer,orwe;
-    link = link + nameobj[nameobj.length - 1] + "&isArabic=" + isArabic;
-    console.log(link);
+    this.link =
+      this.link + nameobj[nameobj.length - 1] + "&isArabic=" + isArabic;
+    console.log(this.link);
     return this.http
-      .get(link)
+      .get(this.link)
       .map(x => {
         return <SerResponse>x.json();
       })
       .catch((t: Response) => t.json());
   }
   getstockwithupdate(nameobj: string, date: Date): Observable<SerResponse> {
-    console.log(nameobj.length);
-    let link =
-      "https://www.arabfinance.com/apis/market/GetSimpleQuotesDetailsWithLastUpdated?Codes=";
-    //  for (let i = 0 ; i < nameobj.length - 1 ; i++) {
-    //       link = link + nameobj[i] + ',';
-    //  }
-    // console.log(this.nameobj) egts,amer,orwe;
+    this.getlink();
     let temp = "";
     temp = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-    link = link + nameobj + "&lastUpdated=" + temp;
-    console.log(link);
+    this.link =
+      this.link +
+      "GetSimpleQuotesDetailsWithLastUpdated?Codes=" +
+      nameobj +
+      "&lastUpdated=" +
+      temp;
     return this.http
-      .get(link)
+      .get(this.link)
       .map(x => {
         return <SerResponse>x.json();
       })
@@ -76,16 +70,11 @@ export class StockService implements OnInit {
     nameobj: string,
     isArabic: boolean
   ): Observable<Detailsresponse> {
-    console.log(nameobj.length);
-    let link = "https://www.arabfinance.com/apis/market/GetQuoteDetails?Code=";
-    //  for (let i = 0 ; i < nameobj.length - 1 ; i++) {
-    //       link = link + nameobj[i] + ',';
-    //  }
-    // console.log(this.nameobj) egts,amer,orwe;
-    link = link + nameobj + "&isArabic=" + isArabic;
-    console.log(link);
+    this.getlink();
+    this.link =
+      this.link + "GetQuoteDetails?Code=" + nameobj + "&isArabic=" + isArabic;
     return this.http
-      .get(link)
+      .get(this.link)
       .map(x => {
         return <Detailsresponse>x.json();
       })
@@ -96,31 +85,35 @@ export class StockService implements OnInit {
     isArabic: boolean,
     date: Date
   ): Observable<Detailsupdateresponse> {
-    console.log(nameobj.length);
-    let link =
-      "https://www.arabfinance.com/apis/market/GetQuotesDetails?Codes=";
+    this.getlink();
     //  for (let i = 0 ; i < nameobj.length - 1 ; i++) {
     //       link = link + nameobj[i] + ',';
     //  }
     // console.log(this.nameobj) egts,amer,orwe;
     let temp = "";
     temp = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
-    link = link + nameobj + "&isArabic=" + isArabic + "&lastUpdated=" + temp;
-    console.log(link);
+    this.link =
+      this.link +
+      "GetQuotesDetails?Codes=" +
+      nameobj +
+      "&isArabic=" +
+      isArabic +
+      "&lastUpdated=" +
+      temp;
+    console.log(this.link);
     return this.http
-      .get(link)
+      .get(this.link)
       .map(x => {
         return <Detailsupdateresponse>x.json();
       })
       .catch((t: Response) => t.json());
   }
   getnames(isArabic: boolean): Observable<SerResponse> {
-    let link =
-      "https://www.arabfinance.com/apis/market/GetQuotesList?isArabic=" +
-      isArabic;
+    this.getlink();
+    this.link = this.link + "GetQuotesList?isArabic=" + isArabic;
     return (
       this.http
-        .get(link)
+        .get(this.link)
         // .get('./../assets/cmps.json')
         .map(x => <SerResponse>x.json())
         .catch((t: Response) => t.json())
@@ -133,17 +126,23 @@ export class StockService implements OnInit {
     isIntra: number
   ): Observable<Chartobjectresponse> {
     // console.log(nameobj.length);
-    let link =
-      "https://www.arabfinance.com/apis/market/GetSimpleChartWithinRange?Codes=";
+    this.getlink();
     let temp1 = "";
     temp1 = from.getFullYear() + "-" + from.getMonth() + "-" + from.getDate();
     let temp2 = "";
     temp2 = to.getFullYear() + "-" + to.getMonth() + "-" + to.getDate();
-    link =
-      link + codes + "&from=" + temp1 + "&to=" + temp2 + "&isIntra=" + isIntra;
-    console.log(link);
+    this.link =
+      this.link +
+      "GetSimpleChartWithinRange?Codes=" +
+      codes +
+      "&from=" +
+      temp1 +
+      "&to=" +
+      temp2 +
+      "&isIntra=" +
+      isIntra;
     return this.http
-      .get(link)
+      .get(this.link)
       .map(x => {
         return <Chartobjectresponse>x.json();
       })

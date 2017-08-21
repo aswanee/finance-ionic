@@ -27,6 +27,7 @@ export class MarketPage {
   EGX100: SerResponse;
   Indices: SerResponse[] = new Array();
   BP: SerResponse;
+  rootid: number = 1;
   BV: SerResponse;
   WP: SerResponse;
   constructor(
@@ -78,10 +79,11 @@ export class MarketPage {
     this.reuter = reuter;
     this.anotherbool = false;
   }
-  // resetstockchosen() {
-  //   this.stockchosen = false;
-  //   this.anotherbool = true;
-  // }
+
+  resetstockchosen() {
+    this.stockchosen = false;
+    this.anotherbool = true;
+  }
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
     console.log(this.stockchosen);
