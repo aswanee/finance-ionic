@@ -22,7 +22,7 @@ export class AlertPage {
   dispnames: any[][] = new Array();
   userAlerts: alertresponse;
   userId: number = 24186;
-  alertsLastDate = new Date();
+  alertsLastDate = new Date("1999-9-10");
   matchedAlerts: alert[];
   nonMatchedAlerts: alert[];
 
@@ -47,6 +47,7 @@ export class AlertPage {
       // console.log(data.result);
       this.dispnames = data.result;
     });
+    console.log(this.alertsLastDate);
     this.AlertService
       .getUseralerts(this.userId, this.alertsLastDate)
       .subscribe(data => {
