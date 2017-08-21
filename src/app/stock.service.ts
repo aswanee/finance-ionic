@@ -91,7 +91,8 @@ export class StockService extends ParentService implements OnInit {
     //  }
     // console.log(this.nameobj) egts,amer,orwe;
     let temp = "";
-    temp = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    temp =
+      date.getFullYear() + "-" + date.getMonth() + 1 + "-" + date.getDate();
     this.link =
       this.link +
       "GetQuotesDetails?Codes=" +

@@ -5,10 +5,9 @@ import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/catch";
+import { ParentService } from "./parentservice.service";
 @Injectable()
-export class LoginService {
-  constructor(private http: Http) {}
-
+export class LoginService extends ParentService {
   // login() {
   //   console.log("lohgin");
   //   // let body = JSON.stringify({});
@@ -46,6 +45,8 @@ export class LoginService {
   }
   //Rashed Need to search
   getmarketsummary(UserName: string, Password: string): Observable<token> {
+    this.debug = true;
+    this.getlink();
     let headers = new Headers();
     headers.append("username", UserName);
     headers.append("password", Password);
@@ -56,7 +57,7 @@ export class LoginService {
     // console.log(options.headers.get("username"));
     // console.log(options.headers.get("password"));
     let response = this.http
-      .post("http://staging5.arabfinance.com/apis/market/token", null, {
+      .post(this.link + "token", null, {
         headers: headers
       })
       .map(x => {
@@ -65,6 +66,7 @@ export class LoginService {
       })
       .catch((t: Response) => t.json());
     //  console.log(response);
+    this.debug = false;
     return response;
   }
 }

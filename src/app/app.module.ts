@@ -24,7 +24,7 @@ import { GetService } from "./else.service";
 import { ChartModule } from "angular2-highcharts";
 import { LoginService } from "./login.service";
 import { IonicStorageModule } from "@ionic/storage";
-
+import { AlertService } from "./alert.service";
 @NgModule({
   declarations: [
     MyApp,
@@ -68,6 +68,7 @@ import { IonicStorageModule } from "@ionic/storage";
     StatusBar,
     StockService,
     AskBidService,
+    AlertService,
     CompanyService,
     LoginService,
     MarketService,
