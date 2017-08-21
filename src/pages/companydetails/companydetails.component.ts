@@ -17,7 +17,7 @@ import { SerResponse } from "./../../app/response.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
-import { BehaviorSubject } from "Rxjs";
+import { BehaviorSubject } from "rxjs";
 import { TabsPage } from "../tabs/tabs";
 @Component({
   // moduleId: module.id,
