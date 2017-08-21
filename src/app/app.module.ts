@@ -6,6 +6,7 @@ import { CommonModule } from "@angular/common";
 import { NewsdetailsComponent } from "./../pages/newsdetails/newsdetails.component";
 import { AboutPage } from "../pages/about/about";
 import { ContactPage } from "../pages/contact/contact";
+import { AlertPage } from "../pages/alert/alert";
 import { HomePage } from "../pages/WatchList/WatchList";
 import { LoginComponent } from "./../pages/login/login.component";
 import { ChartPage } from "../pages/chart/chart";
@@ -36,7 +37,8 @@ import { IonicStorageModule } from "@ionic/storage";
     NewsdetailsComponent,
     CompanydetailsComponent,
     ChartPage,
-    MarketPage
+    MarketPage,
+    AlertPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +64,8 @@ import { IonicStorageModule } from "@ionic/storage";
     NewsdetailsComponent,
     CompanydetailsComponent,
     ChartPage,
-    MarketPage
+    MarketPage,
+    AlertPage
   ],
   providers: [
     StatusBar,
