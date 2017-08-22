@@ -19,12 +19,12 @@ export interface alert {
   IsDeleted: boolean;
   DoubleValue: number;
 }
-enum Type {
+export enum Type {
   AlertStockTypeIndex = 1,
   AlertStockTypeStock = 2,
   AlertStockTypeOTC = 3
 }
-enum Field {
+export enum Field {
   AlertFieldLastTrade = 1,
   AlertFieldNetChange = 2,
   AlertFieldPercentageChange = 3,
@@ -44,7 +44,7 @@ enum Field {
   AlertFieldIntradayHigh = 17,
   AlertFieldIntradayLow = 18
 }
-enum Criteria {
+export enum Criteria {
   AlertCriteriaLessThan = 1,
   AlertCriteriaEqual = 2,
   AlertCriteriaGreaterThan = 3
