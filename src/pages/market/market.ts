@@ -1,8 +1,10 @@
+import { language } from "./../WatchList/WatchList";
 import { Component, OnInit } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
+import { TranslatePipe, TranslateService } from "ng2-translate";
 /**
  * Generated class for the MarketPage page.
  *
@@ -12,6 +14,7 @@ import { SerResponse } from "./../../app/response.interface";
 
 @IonicPage()
 @Component({
+  moduleId: "./../../app/app.module.ts",
   selector: "page-market",
   templateUrl: "market.html"
 })
@@ -31,7 +34,8 @@ export class MarketPage {
   WP: SerResponse;
   constructor(
     public navCtrl: NavController,
-    private MarketService: MarketService
+    private MarketService: MarketService,
+    private TranslateService: TranslateService
   ) {}
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -72,6 +76,7 @@ export class MarketPage {
       console.log(this.WP);
     });
     console.log(this.Indices);
+    this.TranslateService.use(language);
   }
   setstockchosen(reuter: string) {
     this.stockchosen = true;

@@ -6,6 +6,8 @@ import { Newsbody } from "./../../app/newsbody.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
+import { TranslatePipe, TranslateService } from "ng2-translate";
+import { language } from "./../WatchList/WatchList";
 @Component({
   selector: "page-contact",
   templateUrl: "contact.html"
@@ -19,7 +21,8 @@ export class ContactPage implements OnInit {
   id: string;
   constructor(
     public navCtrl: NavController,
-    private CompanyService: CompanyService
+    private CompanyService: CompanyService,
+    private TranslateService: TranslateService
   ) {
     this.CompanyService.getnews(this.date, 100, false).subscribe(data => {
       this.News = data;
@@ -29,6 +32,7 @@ export class ContactPage implements OnInit {
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
+    this.TranslateService.use(language);
   }
   getdetails(id) {
     this.id = id;

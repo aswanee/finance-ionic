@@ -14,7 +14,11 @@ import { MarketPage } from "../pages/market/market";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
-
+import {
+  TranslateModule,
+  TranslateLoader,
+  TranslateStaticLoader
+} from "ng2-translate";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CompanyService } from "./company.service";
@@ -26,6 +30,12 @@ import { ChartModule } from "angular2-highcharts";
 import { LoginService } from "./login.service";
 import { IonicStorageModule } from "@ionic/storage";
 import { AlertService } from "./alert.service";
+export function HttpLoaderFactory(http: Http) {
+  return new TranslateStaticLoader(http);
+}
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http, "./../assets/", ".json");
+}
 @NgModule({
   declarations: [
     MyApp,
@@ -51,7 +61,13 @@ import { AlertService } from "./alert.service";
       // name: "__mydb",
       // driverOrder: ["sqlite", "websql", "indexeddb"]
       // }
-      ()
+      (),
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (http: Http) =>
+        new TranslateStaticLoader(http, "./../assets", ".json"),
+      deps: [Http]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [

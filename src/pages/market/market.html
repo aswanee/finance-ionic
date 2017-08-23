@@ -1,13 +1,13 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-            Market
+            {{'Market' | translate}}
         </ion-title>
     </ion-navbar>
 </ion-header>
 
 <ion-content padding *ngIf="!stockchosen&&anotherbool&&Indices&&BP&&WP&&BV">
-    <h1>Indices</h1>
+    <h1>{{'Indices'|translate}}</h1>
     <ion-buttons *ngFor="let x of Indices">
         <button ion-button full color="dark">
    {{  x?.result[0][0]+'        '+x?.result[0][1]+'            '+x?.result[0][2]+'   '+x?.result[0][3]+'  '+x?.result[0][4]+'   '+x?.result[0][5]}}

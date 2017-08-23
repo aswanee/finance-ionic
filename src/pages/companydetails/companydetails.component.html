@@ -15,27 +15,27 @@
     <ion-list>
         <button ion-item (click)="setasksbids()">
                       <ion-icon name="cart" item-start></ion-icon>
-                      Asks
+                      {{'Asks' | translate}}/{{'Bids' | translate}}
                     </button>
 
         <ion-item *ngIf="showasksbids">
-            <strong>Asks</strong>
+            <strong>{{'Asks' | translate}}</strong>
             <table *ngFor="let item of Asks?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
-            <strong>Bids</strong>
+            <strong>{{'Bids' | translate}}</strong>
             <table *ngFor="let item of Bids?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
         </ion-item>
         <button ion-item (click)="settrades()">
                       <ion-icon  name="medical" item-start></ion-icon>
-                      Trades
+                      {{'Trades' | translate}}
                     </button>
 
         <ion-item *ngIf="showtrades">
 
-            <strong>Trades</strong>
+            <strong>{{'Trades' | translate}}</strong>
 
             <ion-list>
                 <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
@@ -45,7 +45,7 @@
 
         <button ion-item (click)="setnews()">
                       <ion-icon name="cafe" item-start></ion-icon>
-                      Related News
+                      {{'Related News' | translate}}
                     </button>
 
         <ion-item *ngIf="showrelatednews">
@@ -80,7 +80,7 @@
 
     <ion-buttons>
         <button ion-button left class="loginnavbtn" (click)="goback()">
-          Back
+          {{'Back' | translate}}
         </button>
     </ion-buttons>
 
