@@ -17,6 +17,8 @@ import { TranslateService, TranslatePipe } from "ng2-translate";
 })
 export class HomePage implements OnInit {
   List: SerResponse;
+  displayList: string[] = new Array();
+  displayListDummy: string[] = new Array();
   StockDetails: SerResponse;
   reuter: string;
   Asks: SerResponse;
@@ -53,14 +55,13 @@ export class HomePage implements OnInit {
       this.List = data;
       for (let i = 0; i < this.List.result.length; i++) {
         this.arechosen[i] = false;
+        this.displayList.push(this.List.result[i][0]);
+        this.displayListDummy.push(this.List.result[i][0]);
       }
-
-      console.log(this.List.result[0]);
       this.editpressed = false;
       this.hidewatchlast = false;
       this.showCompanyDetails = false;
 
-      console.log("before retriveing storage");
       this.storage.keys().then(keys => {
         if (keys.length) {
           this.storage.get("watchList").then(val => {
@@ -174,5 +175,24 @@ export class HomePage implements OnInit {
   addToWatchlist() {
     this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
+  }
+
+  //used for searching
+  getItems(ev: any) {
+    this.displayListDummy = this.displayList;
+    if (this.displayListDummy) {
+      console.log(this.displayListDummy);
+    }
+    if (this.displayListDummy) {
+      // set val to the value of the searchbar
+      let val = ev.target.value;
+
+      // if the value is an empty string don't filter the items
+      if (val && val.trim() != "") {
+        this.displayListDummy = this.displayListDummy.filter(item => {
+          return item.toLowerCase().indexOf(val.toLowerCase()) > -1;
+        });
+      }
+    }
   }
 }

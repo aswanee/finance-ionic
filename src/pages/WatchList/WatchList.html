@@ -15,17 +15,25 @@
 
 
     <div class="list" *ngIf="editpressed">
-        <button ion-button (click)="falsepressed()" [hidden]="!editpressed"> {{'Save'|translate}} </button>
-        <ion-list *ngIf="List">
-            <ion-item *ngFor="let item of List?.result ; let i=index">
-                <ion-label> {{item[0]}}</ion-label>
+
+        <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
+        <ion-list>
+            <ion-item *ngFor="let item of displayListDummy; let i=index;">
+                <ion-label> {{item}}</ion-label>
                 <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}} </ion-checkbox>
             </ion-item>
+
         </ion-list>
+        <ion-fab style="position:fixed; margin-bottom:10%; margin-right: 3%;" bottom right>
+            <button (click)="falsepressed()" ion-fab><ion-icon name='checkmark'></ion-icon></button>
+        </ion-fab>
 
     </div>
     <div class="list" *ngIf="!editpressed ">
-        <button ion-button item-end clear icon-only (click)="addToWatchlist()"><ion-icon name='add-circle' is-active="false"></ion-icon></button>
+        <ion-fab bottom right>
+            <button clear (click)="addToWatchlist()" ion-fab><ion-icon name='add-circle'></ion-icon></button>
+        </ion-fab>
+        <!-- <button ion-button item-end clear icon-only (click)="addToWatchlist()"><ion-icon name='add-circle' is-active="false"></ion-icon></button> -->
         <!-- <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">{{'Edit'|translate}}</button> -->
         <ion-list *ngIf="StockDetails && !showCompanyDetails">
             <ion-item *ngFor="let x of StockDetails?.result; let i=index">
