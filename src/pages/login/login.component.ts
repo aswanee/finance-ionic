@@ -20,7 +20,7 @@ import { deleteresponse } from "./../../app/delete.interface";
 })
 export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
-  token: token;
+  token: token = null;
   Username: string;
   password: string;
   alertresponse: alertresponse;
@@ -120,7 +120,21 @@ export class LoginComponent implements OnInit {
   //   }
   // }
 
+  logout() {
+    // empty the token
+    usertoken = this.token;
+    //   console.log(data);
+    console.log("logged out");
+  }
+
   login() {
+    this.LoginService
+      .gettoken(this.loginForm.value.username, this.loginForm.value.password)
+      .subscribe(data => {
+        usertoken = data;
+        //   console.log(data);
+        console.log(usertoken);
+      });
     console.log(this.loginForm.value);
   }
 }
