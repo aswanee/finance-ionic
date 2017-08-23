@@ -24,6 +24,8 @@
         "@ionic-native/splash-screen": "3.12.1",
         "@ionic-native/status-bar": "3.12.1",
         "@ionic/storage": "2.0.1",
+        "@ngx-translate/core": "^7.2.0",
+        "@ngx-translate/http-loader": "^1.0.2",
         "ajv": "^5.2.2",
         "ajv-keywords": "^2.1.0",
         "angular2-highcharts": "^0.5.5",
@@ -38,7 +40,7 @@
         "ionic-angular": "3.6.0",
         "ionic-plugin-keyboard": "^2.2.1",
         "ionicons": "3.0.0",
-        "mocha": "^3.5.0",
+        "ng2-translate": "^5.0.0",
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
         "zone.js": "0.8.12"

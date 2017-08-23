@@ -1,6 +1,6 @@
 <ion-header>
     <ion-navbar>
-        <ion-title>WatchList</ion-title>
+        <ion-title>{{'WatchList'|translate}}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -10,7 +10,7 @@
     <button ion-button item-end clear icon-only (click)="addToWatchlist()"><ion-icon name='add-circle' is-active="false"></ion-icon></button>
 
     <div class="list" *ngIf="editpressed">
-        <button ion-button (click)="falsepressed()" [hidden]="!editpressed"> save </button>
+        <button ion-button (click)="falsepressed()" [hidden]="!editpressed"> {{'Save'|translate}} </button>
         <ion-list *ngIf="List">
             <ion-item *ngFor="let item of List?.result ; let i=index">
                 <ion-label> {{item[0]}}</ion-label>
@@ -20,7 +20,7 @@
 
     </div>
     <div class="list" *ngIf="!editpressed ">
-        <!--<button ion-button (click)="changepressed()" [hidden]="hidewatchlast">Edit</button>-->
+        <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">{{'Edit'|translate}}</button>
         <ion-list *ngIf="StockDetails && !showCompanyDetails">
             <ion-item *ngFor="let x of StockDetails?.result; let i=index">
                 <!-- <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast"> -->
@@ -46,7 +46,13 @@
                     <ion-icon *ngIf="x[2]<0" name="md-arrow-down" color="danger"></ion-icon>
                 </ion-col>
             </ion-row>
-        </ion-grid>-->
+        </ion-grid>
+        <button ion-item (click)="toen()">
+                      {{'BTN_ENGLISH'|translate}}
+                    </button>
+        <button ion-item (click)="toarab()">
+                      {{'BTN_Arabic'|translate}}
+                    </button>
     </div>
 
     <div *ngIf="showCompanyDetails && reuter">

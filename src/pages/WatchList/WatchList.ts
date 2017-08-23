@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+export let language: string = "en";
+import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
@@ -9,7 +10,7 @@ import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
-
+import { TranslateService, TranslatePipe } from "ng2-translate";
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
@@ -35,16 +36,19 @@ export class HomePage implements OnInit {
   Newsbody: Newsdetailsresponse;
   displayed: string[][] = new Array();
   dispnames: string[] = new Array();
+  language = "en";
   constructor(
     public navCtrl: NavController,
     private StockService: StockService,
     private CompanyService: CompanyService,
     private AskBidService: AskBidService,
     private GetService: GetService,
-    private storage: Storage
+    private storage: Storage,
+    private TranslateService: TranslateService
   ) {}
 
   ngOnInit() {
+    this.TranslateService.use(language);
     this.StockService.getnames(true).subscribe(data => {
       this.List = data;
       for (let i = 0; i < this.List.result.length; i++) {
@@ -93,7 +97,16 @@ export class HomePage implements OnInit {
       });
     });
   }
-
+  toarab() {
+    this.language = "ar";
+    language = this.language;
+    this.TranslateService.use(this.language);
+  }
+  toen() {
+    this.language = "en";
+    language = this.language;
+    this.TranslateService.use(this.language);
+  }
   changepressed() {
     this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;

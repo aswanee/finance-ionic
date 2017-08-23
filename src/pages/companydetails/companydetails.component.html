@@ -15,10 +15,11 @@
     <ion-list>
         <button ion-item (click)="setasksbids()">
                       <ion-icon name="cart" item-start></ion-icon>
-                      Asks
+                      {{'Asks' | translate}}/{{'Bids' | translate}}
                     </button>
 
         <ion-item *ngIf="showasksbids">
+<<<<<<< HEAD
 
             <!-- <ion-grid>
                 <ion-row ion-item *ngFor="let bid of Bids?.result; let ask of Asks?.result; ">
@@ -39,20 +40,33 @@
                 <button item-end clear color='dark' ion-button (click)="refreshAsks()"><ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon></button>
             </ion-item>
             <strong>Asks</strong>
+=======
+            <strong>{{'Asks' | translate}}</strong>
+>>>>>>> 43cad92845296c16c9d4a3cf8463706c4b102def
             <table *ngFor="let item of Asks?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
-            <strong>Bids</strong>
+            <strong>{{'Bids' | translate}}</strong>
             <table *ngFor="let item of Bids?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
         </ion-item>
         <button ion-item (click)="settrades()">
+<<<<<<< HEAD
             <ion-icon  name="cart" item-start></ion-icon>
             Trades
         </button>
+=======
+                      <ion-icon  name="medical" item-start></ion-icon>
+                      {{'Trades' | translate}}
+                    </button>
+>>>>>>> 43cad92845296c16c9d4a3cf8463706c4b102def
 
 
+<<<<<<< HEAD
+=======
+            <strong>{{'Trades' | translate}}</strong>
+>>>>>>> 43cad92845296c16c9d4a3cf8463706c4b102def
 
         <ion-item *ngIf="showtrades">
 
@@ -72,7 +86,7 @@
 
         <button ion-item (click)="setnews()">
                       <ion-icon name="cafe" item-start></ion-icon>
-                      Related News
+                      {{'Related News' | translate}}
                     </button>
 
         <ion-item *ngIf="showrelatednews">
@@ -120,7 +134,7 @@
 
     <ion-buttons>
         <button ion-button left class="loginnavbtn" (click)="goback()">
-          Back
+          {{'Back' | translate}}
         </button>
     </ion-buttons>
 
