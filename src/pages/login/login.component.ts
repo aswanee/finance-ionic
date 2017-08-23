@@ -14,6 +14,8 @@ import {
 } from "./../../app/alert.interface";
 import { add } from "./../../app/addresponse.interface";
 import { deleteresponse } from "./../../app/delete.interface";
+import { language } from "./../settings/settings";
+import { TranslatePipe, TranslateService } from "ng2-translate";
 @Component({
   selector: "login",
   templateUrl: "login.component.html"
@@ -47,7 +49,8 @@ export class LoginComponent implements OnInit {
     public navCtrl: NavController,
     private LoginService: LoginService,
     private AlertService: AlertService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private TranslateService: TranslateService
   ) {
     this.loginForm = this.formBuilder.group({
       username: ["", Validators.required],

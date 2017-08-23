@@ -19,6 +19,8 @@
   "BP":"Best Performers by price",
   "WP" : "Worst Performers by price",
   "BV" "Best Performers by volume" ,
-  "Alert" :"Alert"
-  
+  "Alerts" :"Alerts"
+    "Username":"Username",
+  "Password" :"Password" 
+
 }

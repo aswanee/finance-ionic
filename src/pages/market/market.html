@@ -13,19 +13,19 @@
    {{  x?.result[0][0]+'        '+x?.result[0][1]+'            '+x?.result[0][2]+'   '+x?.result[0][3]+'  '+x?.result[0][4]+'   '+x?.result[0][5]}}
   </button>
     </ion-buttons>
-    <h1>{{PerformersTable?.result[0].NameEn+' '+PerformersTable?.result[0].NameAr}}</h1>
+    <h1>{{'BP' | translate}}</h1>
     <ion-buttons *ngFor="let x of BP?.result">
         <button ion-button full color="dark" (click)="setstockchosen(x[0])">
    {{  x[0]+'        '+x[1]+'            '+x[2]+'   '+x[3]}}
   </button>
     </ion-buttons>
-    <h1>{{PerformersTable?.result[1].NameEn+' '+PerformersTable?.result[1].NameAr}}</h1>
+    <h1>{{'BV' | translate}}</h1>
     <ion-buttons *ngFor="let x of BV?.result">
         <button ion-button full color="dark" (click)="setstockchosen(x[0])">
    {{  x[0]+'        '+x[1]+'            '+x[2]+'   '+x[3]}}
   </button>
     </ion-buttons>
-    <h1>{{PerformersTable?.result[2].NameEn+' '+PerformersTable?.result[2].NameAr}}</h1>
+    <h1>{{'WP' | translate}}</h1>
     <ion-buttons *ngFor="let x of WP?.result">
         <button ion-button full color="dark" (click)="setstockchosen(x[0])">
    {{  x[0]+'        '+x[1]+'            '+x[2]+'   '+x[3]}}

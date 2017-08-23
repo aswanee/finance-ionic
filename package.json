@@ -24,8 +24,6 @@
         "@ionic-native/splash-screen": "3.12.1",
         "@ionic-native/status-bar": "3.12.1",
         "@ionic/storage": "2.0.1",
-        "@ngx-translate/core": "^7.2.0",
-        "@ngx-translate/http-loader": "^1.0.2",
         "ajv": "^5.2.2",
         "ajv-keywords": "^2.1.0",
         "angular2-highcharts": "^0.5.5",
@@ -65,8 +63,6 @@
             "ionic-plugin-keyboard": {},
             "cordova-sqlite-storage": {}
         },
-        "platforms": [
-            "android"
-        ]
+        "platforms": ["android"]
     }
 }
