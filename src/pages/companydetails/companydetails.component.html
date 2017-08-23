@@ -81,7 +81,7 @@
             </ion-item>
             <ion-list>
                 <ion-item *ngFor="let item of relNews?.result.V">
-                    <h3>{{item[1]}}</h3>
+                    <p style="font-size: 16px">{{item[1]}}</p>
                     <p>{{item[2]}}</p>
                     <p>
                         <button ion-button item-end (click)="getdetails(item[0])" color="dark" [hidden]="(!stockchosen)">
