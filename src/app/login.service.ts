@@ -44,7 +44,7 @@ export class LoginService extends ParentService {
     //Add 'implements OnInit' to the class.
   }
   //Rashed Need to search
-  getmarketsummary(UserName: string, Password: string): Observable<token> {
+  gettoken(UserName: string, Password: string): Observable<token> {
     this.debug = true;
     this.getlink();
     let headers = new Headers();
