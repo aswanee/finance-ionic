@@ -72,7 +72,7 @@
     </div>
     <div *ngIf="showCompanyDetails && reuter">
         <companydetails [reuter]="reuter" [rootid]="rootid" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
-        <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
+        <!-- <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button> -->
 
     </div>
 

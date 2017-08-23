@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+export let language: string = "en";
+import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-
+import { TranslateService, TranslatePipe } from "ng2-translate";
 /**
  * Generated class for the SettingsPage page.
  *
@@ -17,10 +18,29 @@ export class SettingsPage {
   pepperoni;
   sausage;
   mushrooms;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  language: string;
+  openlanguage: boolean = false;
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private TranslateService: TranslateService
+  ) {}
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad SettingsPage");
+  }
+  toarab() {
+    this.language = "ar";
+    language = this.language;
+    this.TranslateService.use(this.language);
+  }
+
+  toen() {
+    this.language = "en";
+    language = this.language;
+    this.TranslateService.use(this.language);
+  }
+  setopenlang() {
+    this.openlanguage = !this.openlanguage;
   }
 }

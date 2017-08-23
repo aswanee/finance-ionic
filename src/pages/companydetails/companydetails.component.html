@@ -38,7 +38,7 @@
             <ion-item>
                 <button item-end clear color='dark' ion-button (click)="refreshAsks()"><ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon></button>
             </ion-item>
-            <strong>Asks</strong>
+            <strong>{{'Asks' | translate}}</strong>
             <table *ngFor="let item of Asks?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
@@ -49,7 +49,7 @@
         </ion-item>
         <button ion-item (click)="settrades()">
             <ion-icon  name="cart" item-start></ion-icon>
-            Trades
+            {{'Trades' | translate}}
         </button>
 
 
@@ -98,7 +98,7 @@
             <p>
                 <button ion-button item-end (click)="showNews()" color="dark" [hidden]="(!stockchosen)">
                             <ion-icon name='arrow-back'></ion-icon>
-                            Back  
+                            Back
                         </button>
             </p>
         </ion-item>

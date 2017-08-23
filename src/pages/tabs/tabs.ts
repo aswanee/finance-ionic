@@ -7,7 +7,7 @@ import { MarketPage } from "../market/market";
 import { AlertPage } from "../alert/alert";
 import { SettingsPage } from "../settings/settings";
 import { LoginComponent } from "./../login/login.component";
-import { language } from "./../WatchList/WatchList";
+import { language } from "./../settings/settings";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 @Component({
   templateUrl: "tabs.html"
