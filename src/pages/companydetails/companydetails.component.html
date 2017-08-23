@@ -76,6 +76,9 @@
                     </button>
 
         <ion-item *ngIf="showrelatednews">
+            <ion-item>
+                <button item-end clear color='dark' ion-button (click)="refreshNews()"><ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon></button>
+            </ion-item>
             <ion-list>
                 <ion-item *ngFor="let item of relNews?.result.V">
                     <h3>{{item[1]}}</h3>

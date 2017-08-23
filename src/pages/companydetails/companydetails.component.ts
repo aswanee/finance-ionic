@@ -139,6 +139,12 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.showdetails = false;
   }
 
+  refreshNews() {
+    this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
+      this.relNews = data;
+    });
+  }
+
   setnews() {
     this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
       this.relNews = data;
