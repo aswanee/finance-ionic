@@ -50,20 +50,37 @@ export class HomePage implements OnInit {
       for (let i = 0; i < this.List.result.length; i++) {
         this.arechosen[i] = false;
       }
-    });
-    this.editpressed = false;
-    this.hidewatchlast = false;
-    this.showCompanyDetails = false;
 
-    console.log("before retriveing storage");
-    this.storage.keys().then(keys => {
-      if (keys.length) {
-        this.storage.get("watchList").then(val => {
-          console.log("Got the storag data");
-          this.StockService.getstock(val, true).subscribe(data => {
+      console.log(this.List.result[0]);
+      this.editpressed = false;
+      this.hidewatchlast = false;
+      this.showCompanyDetails = false;
+
+      console.log("before retriveing storage");
+      this.storage.keys().then(keys => {
+        if (keys.length) {
+          this.storage.get("watchList").then(val => {
+            console.log("Got the storag data");
+            this.StockService.getstock(val, true).subscribe(data => {
+              this.StockDetails = data;
+              this.dispnames = val;
+              this.displayed = val;
+              console.log(this.StockDetails.result);
+              for (let i = 0; i < this.StockDetails.result.length; i++) {
+                this.StockDetails.result[i].push(this.dispnames[i]);
+              }
+              console.log(this.StockDetails);
+            });
+            this.editpressed = false;
+            this.hidewatchlast = this.editpressed || this.stockchosen;
+          });
+        } else {
+          console.log("in else");
+          console.log(this.List.result[0]);
+          this.StockService.getstock(this.List[0], true).subscribe(data => {
             this.StockDetails = data;
-            this.dispnames = val;
-            this.displayed = val;
+            this.dispnames = this.List[0];
+            this.displayed = this.List[0];
             console.log(this.StockDetails.result);
             for (let i = 0; i < this.StockDetails.result.length; i++) {
               this.StockDetails.result[i].push(this.dispnames[i]);
@@ -72,8 +89,8 @@ export class HomePage implements OnInit {
           });
           this.editpressed = false;
           this.hidewatchlast = this.editpressed || this.stockchosen;
-        });
-      }
+        }
+      });
     });
   }
 
@@ -125,6 +142,16 @@ export class HomePage implements OnInit {
       console.log(this.StockDetails);
     });
     this.editpressed = false;
+    this.hidewatchlast = this.editpressed || this.stockchosen;
+  }
+
+  removeFromWatchlist(index: number) {
+    this.arechosen[index] = false;
+    // this.StockDetails.result[index].
+  }
+
+  addToWatchlist() {
+    this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
   }
 }
