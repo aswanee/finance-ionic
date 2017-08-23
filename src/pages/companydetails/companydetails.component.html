@@ -19,6 +19,25 @@
                     </button>
 
         <ion-item *ngIf="showasksbids">
+
+            <!-- <ion-grid>
+                <ion-row ion-item *ngFor="let bid of Bids?.result; let ask of Asks?.result; ">
+                    <ion-col *ngIf="bid" col-5> {{bid[0]}}</ion-col>
+                    <ion-col *ngIf="bid" col-5> {{bid[2]}}</ion-col>
+                    <ion-col *ngIf="bid" col-5> {{bid[1]}}</ion-col>
+
+                    <ion-col col-5></ion-col>
+
+                    <ion-col col-5></ion-col>
+                    <ion-col *ngIf="ask" col-5> {{ask[0]}}</ion-col>
+                    <ion-col *ngIf="ask" col-5> {{ask[2]}}</ion-col>
+                    <ion-col *ngIf="ask" col-5> {{ask[1]}}</ion-col>
+
+                </ion-row>
+            </ion-grid> -->
+            <ion-item>
+                <button item-end clear color='dark' ion-button (click)="refreshAsks()"><ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon></button>
+            </ion-item>
             <strong>Asks</strong>
             <table *ngFor="let item of Asks?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
@@ -29,17 +48,25 @@
             </table>
         </ion-item>
         <button ion-item (click)="settrades()">
-                      <ion-icon  name="medical" item-start></ion-icon>
-                      Trades
-                    </button>
+            <ion-icon  name="cart" item-start></ion-icon>
+            Trades
+        </button>
+
+
 
         <ion-item *ngIf="showtrades">
 
-            <strong>Trades</strong>
-
-            <ion-list>
+            <ion-item>
+                <button item-end clear color='dark' ion-button (click)="refreshTrades()"><ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon></button>
+            </ion-item>
+            <ion-list *ngIf="Trades?.result.length > 0">
                 <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
             </ion-list>
+            <ion-item>
+                <ion-icon name="sad" color='danger' style="margin-left: 10%; font-size: 30px;"></ion-icon>
+                &nbsp; &nbsp; &nbsp;
+                <strong> no trades yet </strong>
+            </ion-item>
         </ion-item>
 
 
@@ -49,33 +76,43 @@
                     </button>
 
         <ion-item *ngIf="showrelatednews">
-            <ion-buttons *ngFor="let item of relNews?.result.V">
-                <button ion-button (click)="getdetails(item[0])" [hidden]="(!stockchosen)">
-                                    {{item[1]}}
-                                    {{item[2]}}
-                                </button>
-            </ion-buttons>
+            <ion-list>
+                <ion-item *ngFor="let item of relNews?.result.V">
+                    <h3>{{item[1]}}</h3>
+                    <p>{{item[2]}}</p>
+                    <p>
+                        <button ion-button item-end (click)="getdetails(item[0])" color="dark" [hidden]="(!stockchosen)">
+                            Next
+                            <ion-icon name='arrow-forward'></ion-icon>
+                          </button>
+                    </p>
+                </ion-item>
+            </ion-list>
+        </ion-item>
 
-            <div *ngIf="showdetails">
-                <newsdetails [id]='id'></newsdetails>
-            </div>
+        <ion-item *ngIf="showdetails">
+            <newsdetails [id]='id'></newsdetails>
+            <p>
+                <button ion-button item-end (click)="showNews()" color="dark" [hidden]="(!stockchosen)">
+                            <ion-icon name='arrow-back'></ion-icon>
+                            Back  
+                        </button>
+            </p>
         </ion-item>
 
     </ion-list>
-    <ion-item>
+    <!-- <ion-item>
         <ion-icon name="ion-social-usd" item-start small></ion-icon>
         <p>{{detailsresponse?.result[2]}}</p>
-    </ion-item>
+    </ion-item> -->
 
-    <ion-item>
+    <!-- <ion-item>
         <ion-icon name="ion-social-usd" item-start small></ion-icon>
         <h2>Per Change</h2>
         <h2>{{detailsresponse?.result[3]}}</h2>
         <h2>{{detailsresponse?.result[4]}}</h2>
         <h2>{{detailsresponse?.result[5]}}</h2>
-    </ion-item>
-
-
+    </ion-item> -->
 
 
     <ion-buttons>

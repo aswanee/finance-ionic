@@ -112,6 +112,33 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       this.send.emit(this.stockchosen);
     }
   }
+
+  refreshTrades() {
+    this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
+      this.Trades = data;
+    });
+    this.showtrades = true;
+    this.stockchosen = false;
+    this.send.emit(this.stockchosen);
+  }
+
+  refreshAsks() {
+    this.AskBidService.getasks(this.reuter).subscribe(data => {
+      this.Asks = data;
+    });
+    this.AskBidService.getbids(this.reuter).subscribe(data => {
+      this.Bids = data;
+    });
+    this.showasksbids = true;
+    this.stockchosen = false;
+    this.send.emit(this.stockchosen);
+  }
+
+  showNews() {
+    this.showrelatednews = true;
+    this.showdetails = false;
+  }
+
   setnews() {
     this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
       this.relNews = data;
@@ -119,6 +146,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.showrelatednews = !this.showrelatednews;
   }
   getdetails(id) {
+    this.showrelatednews = false;
     this.id = id;
     this.showdetails = !this.showdetails;
   }
