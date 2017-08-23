@@ -7,7 +7,7 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
 import { TranslatePipe, TranslateService } from "ng2-translate";
-import { language } from "./../WatchList/WatchList";
+import { language } from "./../settings/settings";
 @Component({
   selector: "page-contact",
   templateUrl: "contact.html"

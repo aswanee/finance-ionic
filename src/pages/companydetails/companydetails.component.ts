@@ -22,7 +22,7 @@ import { TabsPage } from "../tabs/tabs";
 import { HomePage } from "./../WatchList/WatchList";
 import { MarketPage } from "./../market/market";
 import { TranslateService, TranslatePipe } from "ng2-translate";
-import { language } from "./../WatchList/WatchList";
+import { language } from "./../settings/settings";
 import { ToastController } from "ionic-angular";
 
 @Component({

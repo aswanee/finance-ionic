@@ -13,6 +13,12 @@
   "BTN_ENGLISH": "Translate to English",
   "BTN_Arabic": "Translate to Arabic",
   "Language":"Language",
-  "Indices":"Indices"
-
+  "Indices":"Indices" ,
+  "Settings" : "Settings",
+  "Change Language" : "Change Language",
+  "BP":"Best Performers by price",
+  "WP" : "Worst Performers by price",
+  "BV" "Best Performers by volume" ,
+  "Alert" :"Alert"
+  
 }

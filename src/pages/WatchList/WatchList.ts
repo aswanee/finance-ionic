@@ -1,4 +1,3 @@
-export let language: string = "en";
 import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
@@ -11,6 +10,7 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { TranslateService, TranslatePipe } from "ng2-translate";
+import { language } from "./../settings/settings";
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
@@ -97,17 +97,7 @@ export class HomePage implements OnInit {
       });
     });
   }
-  toarab() {
-    this.language = "ar";
-    language = this.language;
-    this.TranslateService.use(this.language);
-  }
 
-  toen() {
-    this.language = "en";
-    language = this.language;
-    this.TranslateService.use(this.language);
-  }
   changepressed() {
     this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;

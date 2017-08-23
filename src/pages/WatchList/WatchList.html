@@ -54,22 +54,12 @@
             </ion-row>
         </ion-grid>
 -->
-        <button ion-item (click)="toen()">
-                      {{'BTN_ENGLISH'|translate}}
-                    </button>
-        <button ion-item (click)="toarab()">
-                      {{'BTN_Arabic'|translate}}
-                    </button>
-<<<<<<< HEAD
-                -->
-    </div>
-=======
->>>>>>> 3f24b325ac0c38cad3ad4932caad79de67239b1c
+
 
     </div>
     <div *ngIf="showCompanyDetails && reuter">
         <companydetails [reuter]="reuter" [rootid]="rootid" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
-        <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
+        <!-- <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button> -->
 
     </div>
 

@@ -1,4 +1,4 @@
-import { language } from "./../WatchList/WatchList";
+import { language } from "./../settings/settings";
 import { Component, OnInit } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
