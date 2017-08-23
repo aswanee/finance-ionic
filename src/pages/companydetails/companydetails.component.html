@@ -19,30 +19,7 @@
                     </button>
 
         <ion-item *ngIf="showasksbids">
-<<<<<<< HEAD
-
-            <!-- <ion-grid>
-                <ion-row ion-item *ngFor="let bid of Bids?.result; let ask of Asks?.result; ">
-                    <ion-col *ngIf="bid" col-5> {{bid[0]}}</ion-col>
-                    <ion-col *ngIf="bid" col-5> {{bid[2]}}</ion-col>
-                    <ion-col *ngIf="bid" col-5> {{bid[1]}}</ion-col>
-
-                    <ion-col col-5></ion-col>
-
-                    <ion-col col-5></ion-col>
-                    <ion-col *ngIf="ask" col-5> {{ask[0]}}</ion-col>
-                    <ion-col *ngIf="ask" col-5> {{ask[2]}}</ion-col>
-                    <ion-col *ngIf="ask" col-5> {{ask[1]}}</ion-col>
-
-                </ion-row>
-            </ion-grid> -->
-            <ion-item>
-                <button item-end clear color='dark' ion-button (click)="refreshAsks()"><ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon></button>
-            </ion-item>
-            <strong>Asks</strong>
-=======
             <strong>{{'Asks' | translate}}</strong>
->>>>>>> 43cad92845296c16c9d4a3cf8463706c4b102def
             <table *ngFor="let item of Asks?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
@@ -52,21 +29,12 @@
             </table>
         </ion-item>
         <button ion-item (click)="settrades()">
-<<<<<<< HEAD
-            <ion-icon  name="cart" item-start></ion-icon>
-            Trades
-        </button>
-=======
                       <ion-icon  name="medical" item-start></ion-icon>
                       {{'Trades' | translate}}
                     </button>
->>>>>>> 43cad92845296c16c9d4a3cf8463706c4b102def
 
 
-<<<<<<< HEAD
-=======
-            <strong>{{'Trades' | translate}}</strong>
->>>>>>> 43cad92845296c16c9d4a3cf8463706c4b102def
+        <strong>{{'Trades' | translate}}</strong>
 
         <ion-item *ngIf="showtrades">
 
@@ -112,7 +80,7 @@
             <p>
                 <button ion-button item-end (click)="showNews()" color="dark" [hidden]="(!stockchosen)">
                             <ion-icon name='arrow-back'></ion-icon>
-                            Back  
+                            Back
                         </button>
             </p>
         </ion-item>
@@ -133,7 +101,7 @@
 
 
     <ion-buttons>
-        <button ion-button left class="loginnavbtn" (click)="goback()">
+        <button ion-button left (click)="goback()">
           {{'Back' | translate}}
         </button>
     </ion-buttons>

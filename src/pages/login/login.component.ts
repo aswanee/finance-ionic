@@ -104,7 +104,7 @@ export class LoginComponent implements OnInit, OnChanges {
       changes["password"].currentValue
     ) {
       this.LoginService
-        .getmarketsummary(this.Username, this.password)
+        .gettoken(this.Username, this.password)
         .subscribe(data => {
           usertoken = data;
           //   console.log(data);
