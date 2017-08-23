@@ -106,12 +106,6 @@ export class HomePage implements OnInit {
     this.showCompanyDetails = true;
   }
 
-  // resetstockchosen() {
-  //   this.stockchosen = false;
-  //   this.showCompanyDetails = false;
-  //   this.hidewatchlast = this.editpressed || this.stockchosen;
-  // }
-
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
     console.log(this.stockchosen);
@@ -130,6 +124,7 @@ export class HomePage implements OnInit {
         this.dispnames.push(this.List.result[i][0]);
       }
     }
+
     console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
@@ -146,10 +141,22 @@ export class HomePage implements OnInit {
   }
 
   removeFromWatchlist(index: number) {
-    this.arechosen[index] = false;
-    // this.StockDetails.result[index].
+    // Update saved watchlist
+    this.dispnames.splice(index, 1);
+    this.storage.set("watchList", this.dispnames);
+
+    // TODO: Add test here
+    this.storage.get("watchList").then(val => {
+      console.log(val);
+    });
+    // Update viewed watchlist
+    this.StockDetails.result.splice(index, 1);
+    console.log(this.StockDetails.result);
+
+    // TODO: mark in the adding list
   }
 
+  // We should remove the already added elements from the add to list
   addToWatchlist() {
     this.editpressed = true;
     this.hidewatchlast = this.editpressed || this.stockchosen;
