@@ -11,6 +11,9 @@ import { HomePage } from "../pages/WatchList/WatchList";
 import { LoginComponent } from "./../pages/login/login.component";
 import { ChartPage } from "../pages/chart/chart";
 import { MarketPage } from "../pages/market/market";
+
+import { SettingsPage } from "../pages/settings/settings";
+
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
@@ -48,7 +51,8 @@ export function createTranslateLoader(http: Http) {
     CompanydetailsComponent,
     ChartPage,
     MarketPage,
-    AlertPage
+    AlertPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -81,7 +85,8 @@ export function createTranslateLoader(http: Http) {
     CompanydetailsComponent,
     ChartPage,
     MarketPage,
-    AlertPage
+    AlertPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

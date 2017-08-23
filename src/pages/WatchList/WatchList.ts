@@ -102,6 +102,7 @@ export class HomePage implements OnInit {
     language = this.language;
     this.TranslateService.use(this.language);
   }
+
   toen() {
     this.language = "en";
     language = this.language;

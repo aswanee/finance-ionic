@@ -93,7 +93,7 @@ export class AlertService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
-  addalerts(
+  addalert(
     UserID: number,
     Code: string,
     Type: Type,
@@ -103,17 +103,9 @@ export class AlertService extends ParentService {
     Note: string
   ): Observable<add> {
     this.link = "http://staging5.arabfinance.com/apis/account/AddAlert";
-    // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     console.log(this.link);
-    // alert.Criteria = Criteria;
-    // alert.Type = Type;
-    // alert.Field = Field;
-    // alert.Note = Note;
-    // alert.Value = Value;
-    // alert.UserID = UserID;
-    // alert.Code = Code;
     let sent: string =
       "Alert={ UserID:" +
       UserID +

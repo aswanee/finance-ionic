@@ -12,7 +12,7 @@ import { NavController } from "ionic-angular";
 })
 export class MyApp {
   rootPage: any = TabsPage;
-
+  language: any;
   constructor(
     platform: Platform,
     statusBar: StatusBar,
