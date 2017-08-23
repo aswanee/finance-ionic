@@ -19,7 +19,26 @@
                     </button>
 
         <ion-item *ngIf="showasksbids">
-            <strong>{{'Asks' | translate}}</strong>
+
+            <!-- <ion-grid>
+                <ion-row ion-item *ngFor="let bid of Bids?.result; let ask of Asks?.result; ">
+                    <ion-col *ngIf="bid" col-5> {{bid[0]}}</ion-col>
+                    <ion-col *ngIf="bid" col-5> {{bid[2]}}</ion-col>
+                    <ion-col *ngIf="bid" col-5> {{bid[1]}}</ion-col>
+
+                    <ion-col col-5></ion-col>
+
+                    <ion-col col-5></ion-col>
+                    <ion-col *ngIf="ask" col-5> {{ask[0]}}</ion-col>
+                    <ion-col *ngIf="ask" col-5> {{ask[2]}}</ion-col>
+                    <ion-col *ngIf="ask" col-5> {{ask[1]}}</ion-col>
+
+                </ion-row>
+            </ion-grid> -->
+            <ion-item>
+                <button item-end clear color='dark' ion-button (click)="refreshAsks()"><ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon></button>
+            </ion-item>
+            <strong>Asks</strong>
             <table *ngFor="let item of Asks?.result">
                 {{item[0]+' '+item[1]+' '+item[2] }}
             </table>
@@ -29,12 +48,11 @@
             </table>
         </ion-item>
         <button ion-item (click)="settrades()">
-                      <ion-icon  name="medical" item-start></ion-icon>
-                      {{'Trades' | translate}}
-                    </button>
+            <ion-icon  name="cart" item-start></ion-icon>
+            Trades
+        </button>
 
 
-        <strong>{{'Trades' | translate}}</strong>
 
         <ion-item *ngIf="showtrades">
 

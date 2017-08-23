@@ -1,0 +1,34 @@
+<!--
+  Generated template for the SettingsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>settings</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label>Pepperoni</ion-label>
+      <ion-toggle [(ngModel)]="pepperoni"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Sausage</ion-label>
+      <ion-toggle [(ngModel)]="sausage" disabled="true"></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Mushrooms</ion-label>
+      <ion-toggle [(ngModel)]="mushrooms"></ion-toggle>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

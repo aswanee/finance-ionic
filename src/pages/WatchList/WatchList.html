@@ -1,6 +1,12 @@
 <ion-header>
     <ion-navbar>
         <ion-title>{{'WatchList'|translate}}</ion-title>
+        <ion-buttons right>
+
+            <p style="font-size: 12px;">Language
+            </p>
+            <ion-toggle [(ngModel)]="language"></ion-toggle>
+        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
@@ -54,6 +60,11 @@
         <button ion-item (click)="toarab()">
                       {{'BTN_Arabic'|translate}}
                     </button>
+<<<<<<< HEAD
+                -->
+    </div>
+=======
+>>>>>>> 3f24b325ac0c38cad3ad4932caad79de67239b1c
 
     </div>
     <div *ngIf="showCompanyDetails && reuter">

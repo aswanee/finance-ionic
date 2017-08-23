@@ -23,6 +23,8 @@ import { HomePage } from "./../WatchList/WatchList";
 import { MarketPage } from "./../market/market";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../WatchList/WatchList";
+import { ToastController } from "ionic-angular";
+
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
@@ -56,7 +58,8 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     private AskBidService: AskBidService,
     private GetService: GetService,
     private navCtrl: NavController,
-    private TranslateService: TranslateService
+    private TranslateService: TranslateService,
+    private toastCtrl: ToastController
   ) {}
   ngOnInit() {
     // this.navCtrl.push(CompanydetailsComponent);
@@ -124,6 +127,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.showtrades = true;
     this.stockchosen = false;
     this.send.emit(this.stockchosen);
+    this.refreshedToast("Trades");
   }
 
   refreshAsks() {
@@ -136,6 +140,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.showasksbids = true;
     this.stockchosen = false;
     this.send.emit(this.stockchosen);
+    this.refreshedToast("Asks and Bids");
   }
 
   showNews() {
@@ -146,6 +151,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   refreshNews() {
     this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
       this.relNews = data;
+      this.refreshedToast("News");
     });
   }
 
@@ -155,6 +161,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     });
     this.showrelatednews = !this.showrelatednews;
   }
+
   getdetails(id) {
     this.showrelatednews = false;
     this.id = id;
@@ -167,5 +174,19 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     } else {
       this.navCtrl.setRoot(HomePage);
     }
+  }
+
+  refreshedToast(refreshType: string) {
+    let toast = this.toastCtrl.create({
+      message: refreshType + " refreshed successfully",
+      duration: 3000,
+      position: "top"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }
