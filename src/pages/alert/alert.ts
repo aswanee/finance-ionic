@@ -19,6 +19,7 @@ import { alertresponse, alert } from "./../../app/alert.interface";
 })
 export class AlertPage {
   private alertForm: FormGroup;
+  addAlertForm: boolean = false;
   dispnames: any[][] = new Array();
   userAlerts: alertresponse;
   userId: number = 24186;
@@ -43,22 +44,24 @@ export class AlertPage {
   }
 
   ngOnInit() {
-    this.StockService.getnames(true).subscribe(data => {
-      // console.log(data.result);
-      this.dispnames = data.result;
-    });
     console.log(this.alertsLastDate);
+    this.getAlerts();
+  }
+
+  getAlerts() {
+    // TODO: should handle if a none user sent a that request.
+    // show sth like "you are not a user"
     this.AlertService
       .getUseralerts(this.userId, this.alertsLastDate)
       .subscribe(data => {
-        for (var index = 0; index < data.result.length; index++) {
-          var element = data.result[index];
-          console.log(element);
-        }
-        console.log(data);
+        this.matchedAlerts = data.result[0].filter(item => {
+          return item.IsMatched;
+        });
+        this.nonMatchedAlerts = data.result[0].filter(item => {
+          return !item.IsMatched;
+        });
       });
   }
-
   ionViewDidLoad() {
     console.log("ionViewDidLoad AlertPage");
   }
