@@ -62,7 +62,8 @@
             <ion-list *ngIf="Trades?.result.length > 0">
                 <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
             </ion-list>
-            <ion-item>
+
+            <ion-item *ngIf="Trades?.result.length===0 ">
                 <ion-icon name="sad" color='danger' style="margin-left: 10%; font-size: 30px;"></ion-icon>
                 &nbsp; &nbsp; &nbsp;
                 <strong> {{'No Trades Yet' | translate}} </strong>
