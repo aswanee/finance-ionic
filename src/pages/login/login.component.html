@@ -9,7 +9,7 @@
 
 <ion-content padding>
 
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <form *ngIf="!token" [formGroup]="loginForm" (ngSubmit)="login()">
         <ion-item>
             <ion-label>{{'Username' | translate}}</ion-label>
             <ion-input type="text" formControlName="username"></ion-input>
@@ -22,4 +22,7 @@
         <br>
         <button ion-button block type="submit">{{'Login'|translate}}</button>
     </form>
+    <ion-item *ngIf="token">
+        <h3> You are already logged in! </h3>
+    </ion-item>
 </ion-content>

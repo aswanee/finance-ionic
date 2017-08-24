@@ -14,13 +14,21 @@
             @ionicframework
         </ion-item>
     </ion-list> -->
-    <ion-buttons *ngFor="let item of News?.result.V">
-        <button ion-button full color="dark" (click)="getdetails(item[0])" [hidden]="showdetails">
+    <!-- <ion-buttons *ngFor="let item of News?.result.V">
+        <button ion-button full style="margin-top: 3%;" (click)="getdetails(item[0])" [hidden]="showdetails">
      <h1> {{item[1]}} </h1>
      <h2>{{item[2]}}</h2>
     </button>
-    </ion-buttons>
-
+    </ion-buttons> -->
+    <ion-list *ngIf="News?.result.V">
+        <ion-item *ngFor="let item of News?.result.V">
+            <button ion-button full color="light" style="margin-top: 3%;" (click)="getdetails(item[0])" [hidden]="showdetails">
+     <h1 color="dark"> 
+     {{ item[1] | limitTo: 20 }}   </h1>
+     <h2>{{item[2]}}</h2>
+        </button>
+        </ion-item>
+    </ion-list>
     <ion-content *ngIf="showdetails">
         <newsdetails [id]='id'></newsdetails>
     </ion-content>
