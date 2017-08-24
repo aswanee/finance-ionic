@@ -11,7 +11,7 @@ import { HomePage } from "../pages/WatchList/WatchList";
 import { LoginComponent } from "./../pages/login/login.component";
 import { ChartPage } from "../pages/chart/chart";
 import { MarketPage } from "../pages/market/market";
-
+import { TradeService } from "./trade.service";
 import { SettingsPage } from "../pages/settings/settings";
 
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
@@ -93,6 +93,7 @@ export function createTranslateLoader(http: Http) {
     StockService,
     AskBidService,
     AlertService,
+    TradeService,
     CompanyService,
     LoginService,
     MarketService,

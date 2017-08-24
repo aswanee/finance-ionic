@@ -45,19 +45,19 @@ export class LoginService extends ParentService {
   }
   //Rashed Need to search
   gettoken(UserName: string, Password: string): Observable<token> {
-    this.debug = true;
-    this.getlink();
+    this.link = "http://staging5.arabfinance.com/apis/account/token";
     let headers = new Headers();
-    headers.append("username", UserName);
-    headers.append("password", Password);
+    headers.append("Content-Type", "application/x-www-form-urlencoded");
     console.log(headers);
     console.log(headers.values());
     // let options = new RequestOptions({ headers: headers });
     // console.log(options);
     // console.log(options.headers.get("username"));
     // console.log(options.headers.get("password"));
+    let body = "auth={UserName:'" + UserName + "',Password:'" + Password + "'}";
+    console.log(body);
     let response = this.http
-      .post(this.link + "token", null, {
+      .post(this.link, body, {
         headers: headers
       })
       .map(x => {

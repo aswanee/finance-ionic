@@ -24,4 +24,4 @@
     <ion-content *ngIf="showdetails">
         <newsdetails [id]='id'></newsdetails>
     </ion-content>
-    <button ion-button full color="dark" (click)="back()" [hidden]="!showdetails">back</button>
+    <button ion-button full color="dark" (click)="back()" [hidden]="!showdetails">{{'Back' | translate}}</button>

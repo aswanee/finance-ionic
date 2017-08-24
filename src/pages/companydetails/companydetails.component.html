@@ -65,7 +65,7 @@
             <ion-item>
                 <ion-icon name="sad" color='danger' style="margin-left: 10%; font-size: 30px;"></ion-icon>
                 &nbsp; &nbsp; &nbsp;
-                <strong> no trades yet </strong>
+                <strong> {{'No Trades Yet' | translate}} </strong>
             </ion-item>
         </ion-item>
 
@@ -85,7 +85,7 @@
                     <p>{{item[2]}}</p>
                     <p>
                         <button ion-button item-end (click)="getdetails(item[0])" color="dark" [hidden]="(!stockchosen)">
-                            Next
+                            {{'Next' | translate}}
                             <ion-icon name='arrow-forward'></ion-icon>
                           </button>
                     </p>
