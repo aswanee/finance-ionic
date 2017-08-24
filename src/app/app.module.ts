@@ -33,6 +33,10 @@ import { ChartModule } from "angular2-highcharts";
 import { LoginService } from "./login.service";
 import { IonicStorageModule } from "@ionic/storage";
 import { AlertService } from "./alert.service";
+import { PopOverPageModule } from "../pages/pop-over/pop-over.module";
+//pipes
+import { LimitToPipe } from "./../pipes/limit-to/limit-to";
+
 export function HttpLoaderFactory(http: Http) {
   return new TranslateStaticLoader(http);
 }
@@ -53,7 +57,11 @@ export function createTranslateLoader(http: Http) {
     MarketPage,
     AlertPage,
     SettingsPage,
+<<<<<<< HEAD
     TradingPage
+=======
+    LimitToPipe
+>>>>>>> 7f74e403eec8a3f54edfa480e0b2c58152a1ebbb
   ],
   imports: [
     BrowserModule,
@@ -67,6 +75,7 @@ export function createTranslateLoader(http: Http) {
       // driverOrder: ["sqlite", "websql", "indexeddb"]
       // }
       (),
+    PopOverPageModule,
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (http: Http) =>
@@ -101,6 +110,7 @@ export function createTranslateLoader(http: Http) {
     MarketService,
     GetService,
     SplashScreen,
+    // LoginComponent,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

@@ -9,7 +9,7 @@ import {
 } from "./../../app/userorder.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { portfolioresponse } from "./../../app/portfolio.interface";
-import { usertoken } from "./../login/login.component";
+import { USERTOKEN } from "./../login/login.component";
 import { LoginService } from "./../../app/login.service";
 import { token } from "./../../app/token.interface";
 /**
@@ -32,7 +32,6 @@ export class SettingsPage implements OnInit {
   userorderresponse: userorderresponse;
   portfolioresponse: portfolioresponse;
   Detailsresponse: Detailsresponse;
-  usertoken: token;
   language: string;
   openlanguage: boolean = false;
   showabout = false;
@@ -46,10 +45,10 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.LoginService.gettoken("wesimy", "Otv@1234").subscribe(data => {
-      this.usertoken = data;
-      console.log(this.usertoken);
-    });
+    // this.LoginService.gettoken("wesimy", "Otv@1234").subscribe(data => {
+    //   this.usertoken = data;
+    //   console.log(this.usertoken);
+    // });
   }
   ionViewDidLoad() {
     console.log("ionViewDidLoad SettingsPage");

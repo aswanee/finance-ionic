@@ -1,38 +1,18 @@
+<!--
+  Generated template for the AboutPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
 <ion-header>
-    <ion-navbar>
-        <ion-title>
-            Market
-        </ion-title>
-    </ion-navbar>
+
+  <ion-navbar>
+    <ion-title>about</ion-title>
+  </ion-navbar>
+
 </ion-header>
 
-<ion-content padding *ngIf="!stockchosen&&anotherbool&&Indices&&BP&&WP&&BV">
-    <h1>Indices</h1>
-    <ion-buttons *ngFor="let x of Indices">
-        <button ion-button full color="dark">
-     {{  x?.result[0][0]+'        '+x?.result[0][1]+'            '+x?.result[0][2]+'   '+x?.result[0][3]+'  '+x?.result[0][4]+'   '+x?.result[0][5]}}
-    </button>
-    </ion-buttons>
-    <h1>{{PerformersTable?.result[0].NameEn+' '+PerformersTable?.result[0].NameAr}}</h1>
-    <ion-buttons *ngFor="let x of BP?.result">
-        <button ion-button full color="dark" (click)="setstockchosen(x[0])">
-     {{  x[0]+'        '+x[1]+'            '+x[2]+'   '+x[3]}}
-    </button>
-    </ion-buttons>
-    <h1>{{PerformersTable?.result[1].NameEn+' '+PerformersTable?.result[1].NameAr}}</h1>
-    <ion-buttons *ngFor="let x of BV?.result">
-        <button ion-button full color="dark" (click)="setstockchosen(x[0])">
-     {{  x[0]+'        '+x[1]+'            '+x[2]+'   '+x[3]}}
-    </button>
-    </ion-buttons>
-    <h1>{{PerformersTable?.result[2].NameEn+' '+PerformersTable?.result[2].NameAr}}</h1>
-    <ion-buttons *ngFor="let x of WP?.result">
-        <button ion-button full color="dark" (click)="setstockchosen(x[0])">
-     {{  x[0]+'        '+x[1]+'            '+x[2]+'   '+x[3]}}
-    </button>
-    </ion-buttons>
-</ion-content>
-<ion-content *ngIf="!anotherbool">
-    <companydetails [reuter]="reuter" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
-    <button ion-button full color="dark" (click)="resetstockchosen()" [hidden]="!stockchosen">back</button>
+
+<ion-content padding>
+  This is about page
 </ion-content>

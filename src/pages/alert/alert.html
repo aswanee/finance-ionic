@@ -7,14 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>alert</ion-title>
+    <ion-title>Alert</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <form [formGroup]="alertForm" (ngSubmit)="addAlert()">
+<ion-content no-bounce>
+  <form *ngIf="addAlertForm" [formGroup]="alertForm" (ngSubmit)="addAlert()">
     <ion-item>
       <ion-label>Reuter</ion-label>
       <ion-select *ngIf="dispnames" formControlName="reuter" multiple="false">
@@ -50,4 +50,33 @@
     </ion-item>
     <button ion-button type="submit" [disabled]="!alertForm.valid">Submit</button>
   </form>
+
+  <ion-slides pager>
+
+    <ion-slide>
+      <h2>Matched Alerts</h2>
+      <ion-list *ngIf="matchedAlerts">
+
+        <ion-item *ngFor="let alert of matchedAlerts">
+          <h3>
+            {{alert.Code}}
+          </h3>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      <h2>Not-Matched Alerts</h2>
+      <ion-list *ngIf="nonMatchedAlerts">
+
+        <ion-item *ngFor="let alert of nonMatchedAlerts">
+          <h3>
+            {{alert.Code}}
+          </h3>
+        </ion-item>
+      </ion-list>
+    </ion-slide>
+
+  </ion-slides>
+
 </ion-content>

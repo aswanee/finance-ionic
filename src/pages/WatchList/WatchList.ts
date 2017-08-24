@@ -40,7 +40,6 @@ export class HomePage implements OnInit {
   News: Newsresponse;
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
-  displayed: string[][] = new Array();
   dispnames: string[] = new Array();
   language = "en";
   constructor(
@@ -69,13 +68,12 @@ export class HomePage implements OnInit {
       this.showCompanyDetails = false;
 
       this.storage.keys().then(keys => {
-        if (keys.length) {
+        if (keys) {
           this.storage.get("watchList").then(val => {
             console.log("Got the storag data");
             this.StockService.getstock(val, true).subscribe(data => {
               this.StockDetails = data;
               this.dispnames = val;
-              this.displayed = val;
               console.log(this.StockDetails.result);
               for (let i = 0; i < this.StockDetails.result.length; i++) {
                 this.StockDetails.result[i].push(this.dispnames[i]);
@@ -86,12 +84,9 @@ export class HomePage implements OnInit {
             this.hidewatchlast = this.editpressed || this.stockchosen;
           });
         } else {
-          console.log("in else");
-          console.log(this.List.result[0]);
           this.StockService.getstock(this.List[0], true).subscribe(data => {
             this.StockDetails = data;
-            this.dispnames = this.List[0];
-            this.displayed = this.List[0];
+            this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
             console.log(this.StockDetails.result);
             for (let i = 0; i < this.StockDetails.result.length; i++) {
               this.StockDetails.result[i].push(this.dispnames[i]);
@@ -127,11 +122,9 @@ export class HomePage implements OnInit {
   }
 
   falsepressed() {
-    this.displayed = [];
     this.dispnames = [];
     for (let i = 0; i < this.List.result.length; i++) {
       if (this.map[this.List.result[i][0]] === true) {
-        this.displayed.push(this.List.result[i]);
         this.dispnames.push(this.List.result[i][0]);
       }
     }
@@ -175,7 +168,6 @@ export class HomePage implements OnInit {
   //used for searching
   getItems(ev: any) {
     // console.log(this.map);
-    console.log(this.map["AALR"]);
     this.displayListDummy = this.displayList;
     if (this.displayListDummy) {
       console.log(this.displayListDummy);

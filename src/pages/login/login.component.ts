@@ -1,10 +1,11 @@
-export let usertoken: token;
+export let USERTOKEN: token = null;
 import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { token } from "./../../app/token.interface";
 import { LoginService } from "./../../app/login.service";
-import { AlertService } from "./../../app/alert.service";
+import { Storage } from "@ionic/storage";
+
 import {
   alertresponse,
   alert,
@@ -22,7 +23,7 @@ import { TranslatePipe, TranslateService } from "ng2-translate";
 })
 export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
-  token: token = null;
+  token: boolean = null;
   Username: string;
   password: string;
   alertresponse: alertresponse;
@@ -48,9 +49,9 @@ export class LoginComponent implements OnInit {
   constructor(
     public navCtrl: NavController,
     private LoginService: LoginService,
-    private AlertService: AlertService,
     private formBuilder: FormBuilder,
-    private TranslateService: TranslateService
+    private TranslateService: TranslateService,
+    private storage: Storage
   ) {
     this.loginForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -58,6 +59,18 @@ export class LoginComponent implements OnInit {
     });
   }
   ngOnInit() {
+    this.storage.keys().then(keys => {
+      if (keys) {
+        console.log("keys");
+      }
+    });
+    // this.storage.keys().then(keys => {
+    //   if (keys.length) {
+    //     this.storage.get("token").then(val => {
+    //       this.token = val;
+    //     })
+    //   }
+    // });
     // this.AlertService.getUseralerts(24186, this.date).subscribe(data => {
     //   this.alertresponse = data;
     //   console.log(this.alertresponse);
@@ -123,21 +136,17 @@ export class LoginComponent implements OnInit {
   //   }
   // }
 
-  logout() {
-    // empty the token
-    usertoken = this.token;
-    //   console.log(data);
-    console.log("logged out");
-  }
-
   login() {
     this.LoginService
       .gettoken(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(data => {
-        usertoken = data;
+        this.storage.set("token", data);
+        this.token = true;
+        USERTOKEN = data;
         //   console.log(data);
-        console.log(usertoken);
+        // console.log(USERTOKEN);
+        // check if authentication error
+        this.navCtrl.pop();
       });
-    console.log(this.loginForm.value);
   }
 }
