@@ -39,13 +39,11 @@ export class LoginService extends ParentService {
   //       );
   //   });
   // }
-  ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-  }
+
   //Rashed Need to search
   gettoken(UserName: string, Password: string): Observable<token> {
-    this.link = "http://staging5.arabfinance.com/apis/account/token";
+    this.getunsecurelink();
+    this.link = this.link + "apis/account/token";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     console.log(headers);
@@ -66,7 +64,6 @@ export class LoginService extends ParentService {
       })
       .catch((t: Response) => t.json());
     //  console.log(response);
-    this.debug = false;
     return response;
   }
 }

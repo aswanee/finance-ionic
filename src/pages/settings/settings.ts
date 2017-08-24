@@ -35,6 +35,7 @@ export class SettingsPage implements OnInit {
   usertoken: token;
   language: string;
   openlanguage: boolean = false;
+  showabout = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -57,10 +58,10 @@ export class SettingsPage implements OnInit {
     this.language = "ar";
     language = this.language;
     this.TranslateService.use(this.language);
-    this.TradeService.GetPortfolio(this.usertoken, true).subscribe(data => {
-      this.portfolioresponse = data;
-      console.log(this.portfolioresponse);
-    });
+    // this.TradeService.GetPortfolio(this.usertoken, true).subscribe(data => {
+    //   this.portfolioresponse = data;
+    //   console.log(this.portfolioresponse);
+    // });
   }
 
   toen() {
@@ -70,5 +71,8 @@ export class SettingsPage implements OnInit {
   }
   setopenlang() {
     this.openlanguage = !this.openlanguage;
+  }
+  setshowabout() {
+    this.showabout = !this.showabout;
   }
 }

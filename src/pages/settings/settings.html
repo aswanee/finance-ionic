@@ -41,4 +41,9 @@
                       {{'BTN_Arabic'|translate}}
                     </button>
     </ion-content>
-</ion-content>
+    <button ion-item (click)=" setshowabout()">
+      {{'About Us title' | translate}}
+    </button>
+    <ion-content *ngIf="showabout">
+        {{'About Us' | translate}}
+    </ion-content>

@@ -1,0 +1,150 @@
+﻿<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Datalist Element Demo - CodePen</title>
+    <script src="scripts/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+
+
+
+        //var jqxhr = $.ajax({
+        //    type: "POST",
+        //    beforeSend: function(request) {
+        //        request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //    },
+        //    url: "https://www.arabfinance.com/apis/market/Token2",
+        //    data: "auth={username: 'wesimy',password: 'Otv@1234'}",
+        //    processData: false,
+        //    success: function(msg) {
+        //        $("#resultData").html(JSON.stringify(msg));
+        //    }
+        //});
+        
+        function ValidatePlaceOrder() {
+            var jqxhr = $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                },
+                url: "http://staging5.arabfinance.com/apis/trading/ValidatePlaceOrder?isArabic=true&updateOrder=false",
+                data: "Order={PriceType:'Limit',TimeTerm:'Week',BimsUserID:156001,ReutersCode:'EGTS',Side:'Buy',Price:1.01,Quantity:1,Username:'wesimy',ID:0,BimsID:0,Status:'Open',ExecutedQuantity:0}&" + UncodeToken("wesimy"),
+                processData: false,
+                success: function (msg) {
+                    $("#resultData").html(JSON.stringify(msg));
+                }
+            });
+
+        }
+
+        function GetUserOrders() {
+            var jqxhr = $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                },
+                url: "http://staging5.arabfinance.com/apis/trading/GetUserOrders?BimsUserID=156001&view=2&isArabic=true",
+                data: "auth={UserName:'wesimy',Password:'Otv@1234'}&" + UncodeToken("wesimy"),
+                processData: false,
+                success: function (msg) {
+                    $("#resultData").html(JSON.stringify(msg));
+                }
+            });
+
+        }
+
+        function GetUserPortfolio() {
+            var jqxhr = $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                },
+                url: "http://staging5.arabfinance.com/apis/trading/GetUserPortfolio?BimsUserID=156001&isArabic=true",
+                data: UncodeToken("wesimy"),
+                processData: false,
+                success: function (msg) {
+                    $("#resultData").html(JSON.stringify(msg));
+                }
+            });
+        }
+
+        function GetPortfolioSummary() {
+            var jqxhr = $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                },
+                url: "http://staging5.arabfinance.com/apis/trading/GetPortfolioSummary?bimsid=156001",
+                data: UncodeToken("wesimy"),
+                processData: false,
+                success: function (msg) {
+                    $("#resultData").html(JSON.stringify(msg));
+                }
+            });
+        }
+
+        function GetUserOrderHistory() {
+            var jqxhr = $.ajax({
+                type: "POST",
+                beforeSend: function (request) {
+                    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                },
+                url: "http://staging5.arabfinance.com/apis/trading/GetUserOrderHistory?bimsUserID=156001&orderID=630648&isArabic=true",
+                data: UncodeToken("wesimy"),
+                processData: false,
+                success: function (msg) {
+                    $("#resultData").html(JSON.stringify(msg));
+                }
+            });
+        }
+
+        function UncodeToken(username) {
+
+            var valu = "username=" + username + "&token=" + encodeURIComponent("Pj2Ay6OWmuPkKn7QVK1MhgbBP1rbmSk0ZQID9vx5DVTWRq72ZPXnhAZzKMAG96Jn");
+            return valu;
+        }
+        //GetPortfolioSummary();
+        GetUserPortfolio();
+        //GetUserOrders();
+        //GetUserOrderHistory();
+        //ValidatePlaceOrder()
+    </script>
+    <style>
+        .clip {
+            border: 1px solid red;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <br />
+    ======================================
+    <br />
+    <div id="page-wrapper">
+        <div>
+            <div class="clip">
+                <p>resultData</p>
+                <div id="resultData"></div>
+            </div>
+            <div class="clip">
+                <p>resultDone</p>
+                <div id="resultDone"></div>
+            </div>
+            <div class="clip">
+                <p>resultFail</p>
+                <div id="resultFail"></div>
+            </div>
+            <div class="clip">
+                <p>resultAlways</p>
+                <div id="resultAlways"></div>
+            </div>
+        </div>
+        <br />
+        ======================================
+        <br />
+</body>
+
+</html>
