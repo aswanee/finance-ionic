@@ -58,10 +58,10 @@ export class SettingsPage implements OnInit {
     this.language = "ar";
     language = this.language;
     this.TranslateService.use(this.language);
-    // this.TradeService.GetPortfolio(this.usertoken, true).subscribe(data => {
-    //   this.portfolioresponse = data;
-    //   console.log(this.portfolioresponse);
-    // });
+    this.TradeService.GetPortfolio(this.usertoken, true).subscribe(data => {
+      this.portfolioresponse = data;
+      console.log(this.portfolioresponse);
+    });
   }
 
   toen() {

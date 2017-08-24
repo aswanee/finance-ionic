@@ -9,6 +9,7 @@ import { SettingsPage } from "../settings/settings";
 import { LoginComponent } from "./../login/login.component";
 import { language } from "./../settings/settings";
 import { TranslateService, TranslatePipe } from "ng2-translate";
+import { TradingPage } from "./../trading/trading";
 @Component({
   templateUrl: "tabs.html"
 })
@@ -18,6 +19,7 @@ export class TabsPage implements OnInit {
   tab3Root = ContactPage;
   // tab4Root = LoginComponent;
   tab5Root = SettingsPage;
+  tabroot6 = TradingPage;
   constructor(private TranslateService: TranslateService) {}
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

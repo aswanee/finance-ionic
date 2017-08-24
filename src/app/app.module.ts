@@ -13,7 +13,7 @@ import { ChartPage } from "../pages/chart/chart";
 import { MarketPage } from "../pages/market/market";
 import { TradeService } from "./trade.service";
 import { SettingsPage } from "../pages/settings/settings";
-
+import { TradingPage } from "./../pages/trading/trading";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
@@ -52,7 +52,8 @@ export function createTranslateLoader(http: Http) {
     ChartPage,
     MarketPage,
     AlertPage,
-    SettingsPage
+    SettingsPage,
+    TradingPage
   ],
   imports: [
     BrowserModule,
@@ -86,7 +87,8 @@ export function createTranslateLoader(http: Http) {
     ChartPage,
     MarketPage,
     AlertPage,
-    SettingsPage
+    SettingsPage,
+    TradingPage
   ],
   providers: [
     StatusBar,
