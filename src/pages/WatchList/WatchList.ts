@@ -32,7 +32,11 @@ export class HomePage implements OnInit {
   showCompanyDetails: boolean;
   hidewatchlast = this.stockchosen || this.editpressed;
   showrelatednews: boolean = false;
-  arechosen: boolean[] = new Array();
+
+  // are chosen alias
+
+  map: { [reuter: string]: Boolean } = {};
+
   News: Newsresponse;
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
@@ -54,7 +58,9 @@ export class HomePage implements OnInit {
     this.StockService.getnames(true).subscribe(data => {
       this.List = data;
       for (let i = 0; i < this.List.result.length; i++) {
-        this.arechosen[i] = false;
+        // are chosen alias
+        this.map[this.List.result[i][0]] = false; // OK
+
         this.displayList.push(this.List.result[i][0]);
         this.displayListDummy.push(this.List.result[i][0]);
       }
@@ -124,7 +130,7 @@ export class HomePage implements OnInit {
     this.displayed = [];
     this.dispnames = [];
     for (let i = 0; i < this.List.result.length; i++) {
-      if (this.arechosen[i] === true) {
+      if (this.map[this.List.result[i][0]] === true) {
         this.displayed.push(this.List.result[i]);
         this.dispnames.push(this.List.result[i][0]);
       }
@@ -133,7 +139,6 @@ export class HomePage implements OnInit {
     console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
-    console.log(this.arechosen);
     this.StockService.getstock(this.dispnames, true).subscribe(data => {
       this.StockDetails = data;
       for (let i = 0; i < this.StockDetails.result.length; i++) {
@@ -169,6 +174,8 @@ export class HomePage implements OnInit {
 
   //used for searching
   getItems(ev: any) {
+    // console.log(this.map);
+    console.log(this.map["AALR"]);
     this.displayListDummy = this.displayList;
     if (this.displayListDummy) {
       console.log(this.displayListDummy);

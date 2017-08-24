@@ -20,9 +20,9 @@
         <ion-list>
             <ion-item *ngFor="let item of displayListDummy; let i=index;">
                 <ion-label> {{item}}</ion-label>
-                <ion-checkbox [(ngModel)]="arechosen[i]">{{arechosen[i]}} </ion-checkbox>
+                {{map[item]}}
+                <ion-checkbox [(ngModel)]="map[item]">{{ map[item] }}</ion-checkbox>
             </ion-item>
-
         </ion-list>
         <ion-fab style="position:fixed; margin-bottom:10%; margin-right: 3%;" bottom right>
             <button (click)="falsepressed()" ion-fab><ion-icon name='checkmark'></ion-icon></button>
