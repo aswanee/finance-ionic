@@ -5,6 +5,8 @@ import { LoginComponent } from "./../login/login.component";
 import { USERTOKEN } from "./../login/login.component";
 import { Storage } from "@ionic/storage";
 import { ToastController } from "ionic-angular";
+import { AboutPage } from "./../about/about";
+import { SettingsPage } from "./../settings/settings";
 
 @Component({
   template: `
@@ -12,9 +14,9 @@ import { ToastController } from "ionic-angular";
       <ion-list-header></ion-list-header>
       <button ion-item *ngIf="!loggedIn" (click)="login()">Login</button>
       <button ion-item *ngIf="loggedIn" (click)="logout()">Logout</button>
-      <button ion-item (click)="close()">Change language</button>
+      <button ion-item (click)="goToSettings()">Change language</button>
       <button ion-item (click)="close()">Contact us</button>
-      <button ion-item (click)="close()">About us</button>
+      <button ion-item (click)="goToAbout()">About us</button>
     </ion-list>
   `
 })
@@ -49,7 +51,15 @@ export class PopoverPage {
       this.close();
       this.menuToast("out");
     });
-    // Add toast here
+  }
+
+  goToAbout() {
+    this.navController.push(AboutPage);
+  }
+
+  goToSettings() {
+    this.navController.push(SettingsPage);
+    this.close();
   }
 
   login() {
