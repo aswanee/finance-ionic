@@ -14,18 +14,19 @@ import { ParentService } from "./parentservice.service";
 @Injectable()
 export class CompanyService extends ParentService {
   // Comapnies: Rouiter[]= new Array();
+
   getnews(
     date: Date,
     count: number,
     isArabic: boolean
   ): Observable<Newsresponse> {
-    this.getlink();
+    this.getsecurelink();
     let temp = "";
     temp =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     this.link =
       this.link +
-      "GetNews?lastPostingTime=" +
+      "apis/market/GetNews?lastPostingTime=" +
       temp +
       "&count=" +
       count +
@@ -40,8 +41,8 @@ export class CompanyService extends ParentService {
   }
 
   getnewsdetails(id: number): Observable<Newsdetailsresponse> {
-    this.getlink();
-    this.link = this.link + "GetNewsDetails?newsId=" + id;
+    this.getsecurelink();
+    this.link = this.link + "apis/market/GetNewsDetails?newsId=" + id;
     console.log(this.link);
     return this.http
       .get(this.link)
@@ -51,8 +52,8 @@ export class CompanyService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getnewsrelated(id: string): Observable<Newsresponse> {
-    this.getlink();
-    this.link = this.link + "GetNewsRelatedTo?Code=" + id;
+    this.getsecurelink();
+    this.link = this.link + "apis/market/GetNewsRelatedTo?Code=" + id;
     console.log(this.link);
     return this.http
       .get(this.link)

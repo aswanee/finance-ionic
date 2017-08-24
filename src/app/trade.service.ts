@@ -16,8 +16,8 @@ import {
 export class TradeService extends ParentService {
   GetPortfolioSummary(token: token): Observable<Detailsresponse> {
     // htis.getlink();
-    this.link =
-      "http://staging5.arabfinance.com/apis/trading/GetPortfolioSummary?bimsid=";
+    this.getunsecurelink();
+    this.link = this.link + "apis/trading/GetPortfolioSummary?bimsid=";
     // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -42,6 +42,7 @@ export class TradeService extends ParentService {
   }
   GetPortfolio(token: token, isArabic: boolean): Observable<portfolioresponse> {
     // htis.getlink();
+    this.getunsecurelink();
     this.link =
       "http://staging5.arabfinance.com/apis/trading/GetUserPortfolio?BimsUserID=";
     // console.log(link);
@@ -75,6 +76,7 @@ export class TradeService extends ParentService {
     orderid: number
   ): Observable<userorderhistoryresponse> {
     // htis.getlink();
+    this.getunsecurelink();
     this.link =
       "http://staging5.arabfinance.com/apis/trading/GetUserOrderHistory?bimsUserID=";
     // console.log(link);
@@ -117,6 +119,7 @@ export class TradeService extends ParentService {
     isArabic: boolean,
     view: number
   ): Observable<userorderresponse> {
+    this.getunsecurelink();
     // htis.getlink();
     this.link =
       "http://staging5.arabfinance.com/apis/trading/GetUserOrders?BimsUserID=";

@@ -14,8 +14,8 @@ import { ParentService } from "./parentservice.service";
 export class AlertService extends ParentService {
   getUseralerts(id: number, update: Date): Observable<alertresponse> {
     // htis.getlink();
-    this.link =
-      "http://staging5.arabfinance.com/apis/account/GetUserAlerts?UserID=";
+    this.getunsecurelink();
+    this.link = this.link + "apis/account/GetUserAlerts?UserID=";
     // console.log(link);
     let stringdate = "";
     stringdate =
@@ -35,8 +35,8 @@ export class AlertService extends ParentService {
       .catch((t: Response) => t.json());
   }
   deletealerts(id: number): Observable<deleteresponse> {
-    this.link =
-      "http://staging5.arabfinance.com/apis/account/DeleteAlert?alertIDs=";
+    this.getunsecurelink();
+    this.link = this.link + "apis/account/DeleteAlert?alertIDs=";
     // console.log(link);
     this.link = this.link + id;
     console.log(this.link);
@@ -58,7 +58,8 @@ export class AlertService extends ParentService {
     Value: number,
     Note: string
   ): Observable<deleteresponse> {
-    this.link = "http://staging5.arabfinance.com/apis/account/UpdateAlert";
+    this.getunsecurelink();
+    this.link = this.link + "apis/account/UpdateAlert";
     // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -102,7 +103,8 @@ export class AlertService extends ParentService {
     Value: number,
     Note: string
   ): Observable<add> {
-    this.link = "http://staging5.arabfinance.com/apis/account/AddAlert";
+    this.getunsecurelink();
+    this.link = this.link + "apis/account/AddAlert";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     console.log(this.link);
@@ -144,8 +146,8 @@ export class AlertService extends ParentService {
     Value: number,
     Note: string
   ): Observable<deleteresponse> {
-    this.link =
-      "http://staging5.arabfinance.com/apis/account/UpdateAlertViewedByTicker?UserID=";
+    this.getunsecurelink();
+    this.link = this.link + "apis/account/UpdateAlertViewedByTicker?UserID=";
     // console.log(link);
     this.link = this.link + id + "&Code=" + code;
     let headers = new Headers();

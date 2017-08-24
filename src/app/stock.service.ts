@@ -14,27 +14,17 @@ import "rxjs/add/operator/catch";
 import "rxjs/add/observable/throw";
 import { ParentService } from "./parentservice.service";
 @Injectable()
-export class StockService extends ParentService implements OnInit {
+export class StockService extends ParentService {
   stocks: Stock;
   objs: Stock[] = new Array();
   // nameobj: string [][] = new Array() ;
   substrings: string[] = new Array();
   names: string[] = new Array();
-  ngOnInit() {
-    //  this.getnames().subscribe(data  => {this.nameobj = data;
-    //         console.log(this.nameobj);
-    //         // this.names = this.nameobj.V;
-    //        }, Error => console.log(Error) );
-    //  this.getstock().subscribe(data  => {this.stocks = data;
-    //         this.objs.push(this.stocks);
-    //         // this.values = this.dummy;
-    //         // console.log(this.objs);
-    //        } );
-  }
+
   getstock(nameobj: string[], isArabic: boolean): Observable<SerResponse> {
     // console.log(nameobj.length);
-    this.getlink();
-    this.link = this.link + "GetSimpleQuotesDetails?Codes=";
+    this.getsecurelink();
+    this.link = this.link + "apis/market/GetSimpleQuotesDetails?Codes=";
     for (let i = 0; i < nameobj.length - 1; i++) {
       this.link = this.link + nameobj[i] + ",";
     }
@@ -50,12 +40,12 @@ export class StockService extends ParentService implements OnInit {
       .catch((t: Response) => t.json());
   }
   getstockwithupdate(nameobj: string, date: Date): Observable<SerResponse> {
-    this.getlink();
+    this.getsecurelink();
     let temp = "";
     temp = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
     this.link =
       this.link +
-      "GetSimpleQuotesDetailsWithLastUpdated?Codes=" +
+      "apis/market/GetSimpleQuotesDetailsWithLastUpdated?Codes=" +
       nameobj +
       "&lastUpdated=" +
       temp;
@@ -70,9 +60,13 @@ export class StockService extends ParentService implements OnInit {
     nameobj: string,
     isArabic: boolean
   ): Observable<Detailsresponse> {
-    this.getlink();
+    this.getsecurelink();
     this.link =
-      this.link + "GetQuoteDetails?Code=" + nameobj + "&isArabic=" + isArabic;
+      this.link +
+      "apis/market/GetQuoteDetails?Code=" +
+      nameobj +
+      "&isArabic=" +
+      isArabic;
     return this.http
       .get(this.link)
       .map(x => {
@@ -85,17 +79,17 @@ export class StockService extends ParentService implements OnInit {
     isArabic: boolean,
     date: Date
   ): Observable<Detailsupdateresponse> {
-    this.getlink();
     //  for (let i = 0 ; i < nameobj.length - 1 ; i++) {
     //       link = link + nameobj[i] + ',';
     //  }
     // console.log(this.nameobj) egts,amer,orwe;
+    this.getsecurelink();
     let temp = "";
     temp =
       date.getFullYear() + "-" + date.getMonth() + 1 + "-" + date.getDate();
     this.link =
       this.link +
-      "GetQuotesDetails?Codes=" +
+      "apis/market/GetQuotesDetails?Codes=" +
       nameobj +
       "&isArabic=" +
       isArabic +
@@ -110,8 +104,8 @@ export class StockService extends ParentService implements OnInit {
       .catch((t: Response) => t.json());
   }
   getnames(isArabic: boolean): Observable<SerResponse> {
-    this.getlink();
-    this.link = this.link + "GetQuotesList?isArabic=" + isArabic;
+    this.getsecurelink();
+    this.link = this.link + "apis/market/GetQuotesList?isArabic=" + isArabic;
     return (
       this.http
         .get(this.link)
@@ -126,15 +120,15 @@ export class StockService extends ParentService implements OnInit {
     to: Date,
     isIntra: number
   ): Observable<Chartobjectresponse> {
+    this.getsecurelink();
     // console.log(nameobj.length);
-    this.getlink();
     let temp1 = "";
     temp1 = from.getFullYear() + "-" + from.getMonth() + "-" + from.getDate();
     let temp2 = "";
     temp2 = to.getFullYear() + "-" + to.getMonth() + "-" + to.getDate();
     this.link =
       this.link +
-      "GetSimpleChartWithinRange?Codes=" +
+      "apis/market/GetSimpleChartWithinRange?Codes=" +
       codes +
       "&from=" +
       temp1 +

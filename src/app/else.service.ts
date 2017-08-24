@@ -16,9 +16,9 @@ export class GetService extends ParentService {
   // Comapnies: Rouiter[]= new Array();
 
   getmarketsummary(): Observable<MarketDetails> {
-    this.getlink();
+    this.getsecurelink();
     return this.http
-      .get(this.link + "GetMarketSummary?Schema=false")
+      .get(this.link + "apis/market/GetMarketSummary?Schema=false")
       .map(x => {
         return <MarketDetails>x.json();
       })
@@ -26,8 +26,9 @@ export class GetService extends ParentService {
   }
 
   getquotetrades(code: string, id: number): Observable<Detailsresponse> {
-    this.getlink();
-    this.link = this.link + "QuoteTrades?Code=" + code + "&lID=" + id;
+    this.getsecurelink();
+    this.link =
+      this.link + "apis/market/QuoteTrades?Code=" + code + "&lID=" + id;
     // console.log(link);
     return this.http
       .get(this.link)
@@ -38,8 +39,8 @@ export class GetService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getmarketdetails(cid: number = 1): Observable<Detailsresponse> {
-    this.getlink();
-    this.link = this.link + "GetMarketInformation?CID=" + cid;
+    this.getsecurelink();
+    this.link = this.link + "apis/market/GetMarketInformation?CID=" + cid;
     // console.log(link);
     return this.http
       .get(this.link)

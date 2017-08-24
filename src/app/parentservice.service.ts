@@ -4,12 +4,21 @@ import { Http } from "@angular/http";
 export class ParentService {
   constructor(protected http: Http) {}
   link: string;
-  debug: boolean = false;
-  getlink() {
-    if (this.debug === true) {
-      this.link = "http://staging5.arabfinance.com/apis/market/";
+  securedebug: boolean = false;
+  unsecuredebug: boolean = true;
+  getsecurelink() {
+    if (this.securedebug === true) {
+      this.link = "https://staging5.arabfinance.com/";
     } else {
-      this.link = "https://www.arabfinance.com/apis/market/";
+      this.link = "https://www.arabfinance.com/";
+    }
+  }
+  //apis/market/
+  getunsecurelink() {
+    if (this.unsecuredebug === true) {
+      this.link = "http://staging5.arabfinance.com/";
+    } else {
+      this.link = "http://www.arabfinance.com/";
     }
   }
 }

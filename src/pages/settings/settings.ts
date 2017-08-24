@@ -34,6 +34,7 @@ export class SettingsPage implements OnInit {
   Detailsresponse: Detailsresponse;
   language: string;
   openlanguage: boolean = false;
+  showabout = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -69,5 +70,8 @@ export class SettingsPage implements OnInit {
   }
   setopenlang() {
     this.openlanguage = !this.openlanguage;
+  }
+  setshowabout() {
+    this.showabout = !this.showabout;
   }
 }
