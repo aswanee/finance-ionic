@@ -57,7 +57,8 @@ export function createTranslateLoader(http: Http) {
     MarketPage,
     AlertPage,
     SettingsPage,
-    TradingPage
+    TradingPage,
+    LimitToPipe
   ],
   imports: [
     BrowserModule,
