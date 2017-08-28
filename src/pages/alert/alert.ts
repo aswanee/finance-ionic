@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnChanges, SimpleChanges } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { StockService } from "./../../app/stock.service";
@@ -35,6 +35,7 @@ export class AlertPage {
   newNonMatchedAlerts: alert[] = new Array();
   dummyAlert: alert;
   loggedin: boolean = false;
+  fetchedAlerts: boolean = false;
 
   constructor(
     public navCtrl: NavController,
@@ -51,6 +52,7 @@ export class AlertPage {
         keys.forEach(key => {
           if (key === "token") {
             this.storage.get(key).then(val => {
+              console.log(val);
               this.token = val;
               this.loggedin = true;
               this.userId = this.token.result.UserID;
@@ -62,11 +64,21 @@ export class AlertPage {
               this.matchedAlerts = val.m;
               this.nonMatchedAlerts = val.nm;
               this.alertsLastDate = val.lastUpdate;
+              this.fetchedAlerts = true;
             });
           }
         });
       }
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      changes["loggedin"].currentValue &&
+      changes["fetchedAlerts"].currentValue
+    ) {
+      this.getAlerts();
+    }
   }
 
   getAlerts() {

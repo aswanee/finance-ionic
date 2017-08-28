@@ -24,20 +24,19 @@
     <ion-item>
       <ion-label>Field</ion-label>
       <ion-select [(ngModel)]="feild" formControlName="feild" multiple="false">
-        <ion-option>Bacon</ion-option>
-        <ion-option>Black Olives</ion-option>
-        <ion-option>Extra Cheese</ion-option>
-        <ion-option>Mushrooms</ion-option>
-        <ion-option>Pepperoni</ion-option>
-        <ion-option>Sausage</ion-option>
+        <ion-option *ngFor="let option of Fields">{{option}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Types</ion-label>
+      <ion-select [(ngModel)]="type" formControlName="criteria" multiple="true">
+        <ion-option *ngFor="let option of Types">{{option}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label>Criteria</ion-label>
       <ion-select [(ngModel)]="criteria" formControlName="criteria" multiple="true">
-        <ion-option>Bacon</ion-option>
-        <ion-option>Black Olives</ion-option>
-        <ion-option>Extra Cheese</ion-option>
+        <ion-option *ngFor="let option of Criterias">{{option}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
