@@ -29,6 +29,25 @@
     </div>
 
     <ion-list *ngIf="StockDetails && !showCompanyDetails">
+        <ion-row>
+            <ion-col col-1>
+            </ion-col>
+            <ion-col col>
+                <p>Reuter</p>
+            </ion-col>
+            <ion-col col>
+                <p>Value</p>
+            </ion-col>
+            <ion-col col>
+                <p>Change</p>
+            </ion-col>
+            <ion-col col>
+                <p>Percentage</p>
+            </ion-col>
+            <ion-col col>
+                <p>Trend</p>
+            </ion-col>
+        </ion-row>
         <ion-item *ngFor="let x of StockDetails?.result; let i=index;">
             <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
                 <ion-col class="myCol"  col> {{x[3]}} </ion-col>

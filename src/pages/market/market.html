@@ -14,7 +14,16 @@
   </button>
     </ion-buttons>
     <ion-item *ngIf="showChart&&Indices">
-        <page-chart [rouiterCode]="Indices[index].result[0][0]"></page-chart>
+        <ion-buttons>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="lastFveDays">
+                    Last five days
+            </button>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="!lastFveDays">
+                 Last year       
+                </button>
+        </ion-buttons>
+        <page-chart [hidden]="!lastFveDays" [lastFiveDays]=true [rouiterCode]="Indices[index].result[0][0]"></page-chart>
+        <page-chart [hidden]="lastFveDays" [lastFiveDays]=false [rouiterCode]="Indices[index].result[0][0]"></page-chart>
     </ion-item>
 
     <h1>{{'BP' | translate}}</h1>

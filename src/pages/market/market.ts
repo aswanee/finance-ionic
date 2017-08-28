@@ -19,6 +19,7 @@ import { TranslatePipe, TranslateService } from "ng2-translate";
   templateUrl: "market.html"
 })
 export class MarketPage {
+  lastFveDays: boolean = false;
   index: number = 0;
   IndicesTable: MarketResponse;
   PerformersTable: MarketResponse;
@@ -98,5 +99,8 @@ export class MarketPage {
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
     console.log(this.stockchosen);
+  }
+  showLastFiveDays() {
+    this.lastFveDays = !this.lastFveDays;
   }
 }

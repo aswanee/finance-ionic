@@ -8,8 +8,17 @@
         {{reuter}}
     </ion-card-header>
 
-    <ion-item>
-        <page-chart *ngIf="reuter" [rouiterCode]="reuter"></page-chart>
+    <ion-item *ngIf="reuter">
+        <ion-buttons>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="lastFveDays">
+                            Last five days
+                    </button>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="!lastFveDays">
+                         Last year       
+                        </button>
+        </ion-buttons>
+        <page-chart [hidden]="!lastFveDays" [lastFiveDays]=true [rouiterCode]="reuter"></page-chart>
+        <page-chart [hidden]="lastFveDays" [lastFiveDays]=false [rouiterCode]="reuter"></page-chart>
     </ion-item>
     <div padding>
         <ion-segment [(ngModel)]="QueteParts">

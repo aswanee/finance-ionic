@@ -19,9 +19,10 @@ import "rxjs/Rx";
   templateUrl: "chart.html"
 })
 export class ChartPage {
-  link = "";
+  link: string = "";
   d = [];
   received_json;
+  @Input() lastFiveDays: boolean;
   @Input() rouiterCode: string = "";
   constructor(
     public navCtrl: NavController,
@@ -38,7 +39,8 @@ export class ChartPage {
 
   options: Object;
   ngOnInit() {
-    this.getchart(new Date()).subscribe(data => {
+    console.log(this.lastFiveDays);
+    this.getchart(this.lastFiveDays).subscribe(data => {
       this.received_json = data;
       var l = this.received_json.result.V.length;
       for (var index = 0; index < l; index++) {
@@ -61,15 +63,26 @@ export class ChartPage {
       };
     });
   }
-  getchart(date: Date): Observable<any> {
+
+  getchart(isIntra: boolean): Observable<any> {
     var date2 = new Date();
+    var date = new Date();
     this.link += this.rouiterCode;
     this.link += "&from=";
-    date2.setFullYear(date.getFullYear() - 1);
-    this.link += date2.toISOString().substring(0, 10);
-    this.link += "&to=";
-    this.link += date.toISOString().substring(0, 10);
-    this.link += "&isIntra=0";
+    if (isIntra) {
+      date2.setDate(date.getDay() - 5);
+      this.link += date2.toISOString().substring(0, 10);
+      this.link += "&to=";
+      this.link += date.toISOString().substring(0, 10);
+      this.link += "&isIntra=1";
+    } else {
+      date2.setFullYear(date.getFullYear() - 1);
+      this.link += date2.toISOString().substring(0, 10);
+      this.link += "&to=";
+      this.link += date.toISOString().substring(0, 10);
+      this.link += "&isIntra=0";
+    }
+    console.log(this.link);
     return this.http
       .get(this.link)
       .map(x => {
