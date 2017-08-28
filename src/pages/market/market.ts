@@ -19,10 +19,12 @@ import { TranslatePipe, TranslateService } from "ng2-translate";
   templateUrl: "market.html"
 })
 export class MarketPage {
+  index: number = 0;
   IndicesTable: MarketResponse;
   PerformersTable: MarketResponse;
   EGX30: SerResponse;
   EGX70: SerResponse;
+  showChart: boolean = false;
   stockchosen: boolean = false;
   anotherbool: boolean = true;
   reuter: string;
@@ -87,6 +89,11 @@ export class MarketPage {
   resetstockchosen() {
     this.stockchosen = false;
     this.anotherbool = true;
+  }
+
+  showHideChart(i: number) {
+    this.showChart = !this.showChart;
+    this.index = i;
   }
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;
