@@ -16,27 +16,131 @@
 <ion-item padding>
     <ion-buttons>
         <button ion-item (click)="getportfolio()">Show Portfolio</button>
+        <ion-item *ngIf="portfolioresponse && showportfolio&&token">
+            <ion-item *ngFor="let item of portfolioresponse?.result">
+                {{item.ReutersCode+' '+item.AvailableQuantity+' '+item.AveragePrice+item.PercentageChange}}
+            </ion-item>
+        </ion-item>
         <button ion-item (click)="getportfoliosummary()">Show Portfolio Summary</button>
+        <ion-item *ngIf="Detailsresponse && showsummary&&token">
+            <ion-item *ngFor="let item of Detailsresponse?.result">
+                {{item}}
+            </ion-item>
+        </ion-item>
         <button ion-item (click)="getorders()">Show Orders</button>
-
+        <ion-item *ngIf="userorderresponse && showorders&&token">
+            <ion-item *ngFor="let item of userorderresponse?.result">
+                {{item.ReutersCode+' '+item.Price}}
+                <button ion-item (click)="getorderhistory(item.ID)">View History</button>
+                <ion-item *ngIf="userorderhistoryresponse && showhistory&&token">{{userorderhistoryresponse?.result.ReutersCode+' '+userorderhistoryresponse?.result.Price}} </ion-item>
+            </ion-item>
+        </ion-item>
     </ion-buttons>
 </ion-item>
-<ion-item *ngIf="portfolioresponse && showportfolio">
-    <ion-item *ngFor="let item of portfolioresponse?.result">
-        {{item.ReutersCode+' '+item.AvailableQuantity+' '+item.AveragePrice+item.PercentageChange}}
-    </ion-item>
-</ion-item>
 
-<ion-item *ngIf="Detailsresponse && showsummary">
-    <ion-item *ngFor="let item of Detailsresponse?.result">
-        {{item}}
-    </ion-item>
-</ion-item>
 
-<ion-item *ngIf="userorderresponse && showorders">
-    <ion-item *ngFor="let item of userorderresponse?.result">
-        {{item.ReutersCode+' '+item.Price}}
-        <button ion-item (click)="getorderhistory(item.ID)">View History</button>
-        <ion-item *ngIf="userorderhistoryresponse && showhistory">{{userorderhistoryresponse?.result.ReutersCode+' '+userorderhistoryresponse?.result.Price}} </ion-item>
+
+
+
+<form>
+    <ion-item>
+        <ion-label>ReutersCode</ion-label>
+        <ion-input type="text"></ion-input>
     </ion-item>
-</ion-item>
+    <ion-item>
+        <ion-label>Price</ion-label>
+        <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Quantity</ion-label>
+        <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-segment>
+        <ion-segment-button>
+            Day
+        </ion-segment-button>
+        <ion-segment-button>
+            Week
+        </ion-segment-button>
+        <ion-segment-button>
+            Month
+        </ion-segment-button>
+    </ion-segment>
+
+    <ion-segment>
+        <ion-segment-button>
+            Buy
+        </ion-segment-button>
+        <ion-segment-button>
+            Sell
+        </ion-segment-button>
+        <ion-segment-button>
+            Sell T+0
+        </ion-segment-button>
+        <ion-segment-button>
+            Sell T+1
+        </ion-segment-button>
+    </ion-segment>
+
+    <ion-segment>
+        <ion-segment-button>
+            Market
+        </ion-segment-button>
+        <ion-segment-button>
+            Limit
+        </ion-segment-button>
+        <ion-segment-button>
+            Stop
+        </ion-segment-button>
+        <ion-segment-button>
+            Stop Limit
+        </ion-segment-button>
+    </ion-segment>
+
+    <button ion-button block type="submit">Make Order</button>
+</form>
+
+
+<form>
+    <ion-item>
+        <ion-label>ReutersCode</ion-label>
+        <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Price</ion-label>
+        <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Quantity</ion-label>
+        <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-segment>
+        <ion-segment-button>
+            Day
+        </ion-segment-button>
+        <ion-segment-button>
+            Week
+        </ion-segment-button>
+        <ion-segment-button>
+            Month
+        </ion-segment-button>
+    </ion-segment>
+
+
+    <ion-segment>
+        <ion-segment-button>
+            Market
+        </ion-segment-button>
+        <ion-segment-button>
+            Limit
+        </ion-segment-button>
+        <ion-segment-button>
+            Stop
+        </ion-segment-button>
+        <ion-segment-button>
+            Stop Limit
+        </ion-segment-button>
+    </ion-segment>
+
+    <button ion-button block type="submit">Update Order</button>
+</form>

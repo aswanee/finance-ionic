@@ -7,28 +7,27 @@ export interface userorderresponse {
   result: userorder[];
 }
 export interface userorderhistory {
-  _details: details[];
   BkeeperID: number;
   OrderReference: string;
-  PriceType: number;
-  TimeTerm: number;
+  PriceType: PriceType;
+  TimeTerm: TimeTerm;
   BimsUserID: number;
   ReutersCode: string;
-  Side: number;
+  Side: OrderSide;
   Price: number;
   Quantity: number;
   Username: string;
   ID: number;
   BimsID: number;
-  OrderDate: "string";
+  OrderDate: string;
   SymbolCode: string;
   CurrencyCode: string;
   ExpireAt: string;
-  Status: number;
+  Status: OrderStatus;
   ExecutedQuantity: number;
   details: details[];
 }
-interface userorder extends userorderhistory {
+export interface userorder extends userorderhistory {
   strOrderDate: Date;
   strExpireAt: Date;
 }
@@ -39,4 +38,50 @@ export interface details {
   Quantity: number;
   PriceType: number;
   strSentTime: Date;
+}
+
+export enum PriceType {
+  Market = 1,
+  Limit = 2,
+  Stop = 3,
+  StopLimit = 4
+}
+
+export enum TimeTerm {
+  Day = 2,
+  Date = 3,
+  Week = 4,
+  Month = 5,
+  Cancel = 6
+}
+
+export enum OrderSide {
+  Buy = 1,
+  Sell = 2,
+  Sell_T0 = 3,
+  Sell_T1 = 4
+}
+
+export enum OrderStatus {
+  Open = 1,
+  Completed = 2,
+  Expired = 3,
+  Canceled = 4,
+  PartiallyExecuted = 5,
+  PendingApproval = 6,
+  Rejected = 7,
+  Suspended = 8,
+  InvalidOrder = 9
+}
+export function checkupdatability(userorder: userorder): boolean {
+  if (
+    userorder.Status === 1 ||
+    userorder.Status === 5 ||
+    userorder.Status === 6 ||
+    userorder.Status === 8
+  ) {
+    return true;
+  } else {
+    return false;
+  }
 }

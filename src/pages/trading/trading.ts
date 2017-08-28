@@ -4,7 +4,9 @@ import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import {
   userorderhistoryresponse,
-  userorderresponse
+  userorderresponse,
+  userorder,
+  checkupdatability
 } from "./../../app/userorder.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { token } from "./../../app/token.interface";
@@ -40,7 +42,7 @@ export class TradingPage implements OnInit {
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.LoginService.gettoken("wesimy", "Otv@1234").subscribe(data => {
+    this.LoginService.gettoken("hkh", "Otv@1234").subscribe(data => {
       this.token = data;
       console.log(this.token);
     });
@@ -58,14 +60,14 @@ export class TradingPage implements OnInit {
   getportfoliosummary() {
     this.TradeService.GetPortfolioSummary(this.token).subscribe(data => {
       this.Detailsresponse = data;
-      console.log(this.portfolioresponse);
+      console.log(this.Detailsresponse);
     });
     this.showsummary = !this.showsummary;
   }
   getorders() {
     this.TradeService.getorders(this.token, true, 2).subscribe(data => {
       this.userorderresponse = data;
-      console.log(this.portfolioresponse);
+      console.log(this.userorderresponse);
     });
     this.showorders = !this.showorders;
   }
@@ -74,7 +76,7 @@ export class TradingPage implements OnInit {
       .getorderhistory(this.token, true, orderid)
       .subscribe(data => {
         this.userorderhistoryresponse = data;
-        console.log(this.portfolioresponse);
+        console.log(this.userorderhistoryresponse);
       });
     this.showhistory = !this.showhistory;
   }
