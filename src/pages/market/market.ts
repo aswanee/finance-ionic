@@ -5,6 +5,7 @@ import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
 import { TranslatePipe, TranslateService } from "ng2-translate";
+import { CompanydetailsComponent } from "./../companydetails/companydetails.component";
 /**
  * Generated class for the MarketPage page.
  *
@@ -85,6 +86,7 @@ export class MarketPage {
     this.stockchosen = true;
     this.reuter = reuter;
     this.anotherbool = false;
+    this.goToCompanyDeatils();
   }
 
   resetstockchosen() {
@@ -102,5 +104,12 @@ export class MarketPage {
   }
   showLastFiveDays() {
     this.lastFveDays = !this.lastFveDays;
+  }
+  goToCompanyDeatils() {
+    this.navCtrl.push(CompanydetailsComponent, {
+      reuter: this.reuter,
+      rootid: this.rootid,
+      stockchosen: this.stockchosen
+    });
   }
 }

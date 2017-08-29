@@ -42,17 +42,13 @@ export interface details {
 
 export enum PriceType {
   Market = 1,
-  Limit = 2,
-  Stop = 3,
-  StopLimit = 4
+  Limit = 2
 }
 
 export enum TimeTerm {
   Day = 2,
-  Date = 3,
   Week = 4,
-  Month = 5,
-  Cancel = 6
+  Month = 5
 }
 
 export enum OrderSide {

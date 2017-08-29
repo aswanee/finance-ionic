@@ -80,10 +80,10 @@ export class SettingsPage implements OnInit {
   ngOnInit() {
     // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     // Add 'implements OnInit' to the class.
-    this.LoginService.gettoken("hkh", "Otv@1234").subscribe(data => {
-      this.usertoken = data;
-      console.log(this.usertoken);
-    });
+    // this.LoginService.gettoken("hkh", "Otv@1234").subscribe(data => {
+    //   this.usertoken = data;
+    //   console.log(this.usertoken);
+    // });
   }
   ionViewDidLoad() {
     console.log("ionViewDidLoad SettingsPage");
@@ -92,12 +92,12 @@ export class SettingsPage implements OnInit {
     this.language = "ar";
     language = this.language;
     this.TranslateService.use(this.language);
-    this.TradeService
-      .CancelOrder(630914, true, 123456, this.usertoken)
-      .subscribe(data => {
-        this.CancelResponse = data;
-        console.log(this.CancelResponse);
-      });
+    // this.TradeService
+    //   .CancelOrder(630914, true, 123456, this.usertoken)
+    //   .subscribe(data => {
+    //     this.CancelResponse = data;
+    //     console.log(this.CancelResponse);
+    //   });
   }
 
   toen() {

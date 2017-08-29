@@ -11,7 +11,7 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
-import { CompanydetailsComponent} from '../companydetails/companydetails.component';
+import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
@@ -65,8 +65,8 @@ export class HomePage implements OnInit {
         this.displayListDummy.push(this.List.result[i][0]);
       }
       this.editpressed = false;
-      this.hidewatchlast = false;
-      this.showCompanyDetails = false;
+      // this.hidewatchlast = false;
+      // this.showCompanyDetails = false;
 
       this.storage.keys().then(keys => {
         if (keys) {
@@ -83,7 +83,7 @@ export class HomePage implements OnInit {
                   console.log(this.StockDetails);
                 });
                 this.editpressed = false;
-                this.hidewatchlast = this.editpressed || this.stockchosen;
+                //   this.hidewatchlast = this.editpressed || this.stockchosen;
               });
             } else {
               this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
@@ -98,7 +98,7 @@ export class HomePage implements OnInit {
                   console.log(this.StockDetails);
                 });
               this.editpressed = false;
-              this.hidewatchlast = this.editpressed || this.stockchosen;
+              // this.hidewatchlast = this.editpressed || this.stockchosen;
             }
           });
         } else {
@@ -113,7 +113,7 @@ export class HomePage implements OnInit {
             console.log(this.StockDetails);
           });
           this.editpressed = false;
-          this.hidewatchlast = this.editpressed || this.stockchosen;
+          //   this.hidewatchlast = this.editpressed || this.stockchosen;
         }
       });
     });
@@ -121,25 +121,25 @@ export class HomePage implements OnInit {
 
   changepressed() {
     this.editpressed = true;
-    this.hidewatchlast = this.editpressed || this.stockchosen;
+    //  this.hidewatchlast = this.editpressed || this.stockchosen;
   }
 
   setstockchosen(reuter: string) {
     this.stockchosen = true;
-    this.hidewatchlast = this.editpressed || this.stockchosen;
+    // this.hidewatchlast = this.editpressed || this.stockchosen;
     this.reuter = reuter;
-    this.showCompanyDetails = true;
+    // this.showCompanyDetails = true;
     this.goToCompanyDeatils();
   }
 
-  getstockchosen(stockchosen) {
-    this.stockchosen = stockchosen;
-    console.log(this.stockchosen);
-  }
+  // getstockchosen(stockchosen) {
+  //   this.stockchosen = stockchosen;
+  //   console.log(this.stockchosen);
+  // }
 
-  gethidewatch(stockchosen) {
-    this.hidewatchlast = stockchosen;
-  }
+  // gethidewatch(stockchosen) {
+  //   this.hidewatchlast = stockchosen;
+  // }
 
   falsepressed() {
     this.dispnames = [];
@@ -160,7 +160,7 @@ export class HomePage implements OnInit {
       console.log(this.StockDetails);
     });
     this.editpressed = false;
-    this.hidewatchlast = this.editpressed || this.stockchosen;
+    // this.hidewatchlast = this.editpressed || this.stockchosen;
   }
 
   removeFromWatchlist(index: number) {
@@ -182,7 +182,7 @@ export class HomePage implements OnInit {
   // We should remove the already added elements from the add to list
   addToWatchlist() {
     this.editpressed = true;
-    this.hidewatchlast = this.editpressed || this.stockchosen;
+    // this.hidewatchlast = this.editpressed || this.stockchosen;
   }
 
   //used for searching
@@ -205,7 +205,11 @@ export class HomePage implements OnInit {
     }
   }
 
-  goToCompanyDeatils(){
-    this.navCtrl.push(CompanydetailsComponent,{reuter: this.reuter, rootid: this.rootid, stockchosen: this.stockchosen})
+  goToCompanyDeatils() {
+    this.navCtrl.push(CompanydetailsComponent, {
+      reuter: this.reuter,
+      rootid: this.rootid,
+      stockchosen: this.stockchosen
+    });
   }
 }

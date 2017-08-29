@@ -236,7 +236,7 @@ export class TradeService extends ParentService {
       isArabic +
       "&updateOrder=" +
       UpdateOrder;
-    // console.log(link);
+    //console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
 

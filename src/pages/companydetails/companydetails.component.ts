@@ -37,7 +37,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   @Input() id: string;
   rootid: number;
   @Input() hidewatchlast: boolean;
-  stockchosen;
+  // stockchosen;
   @Output() send: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() sendhide: EventEmitter<boolean> = new EventEmitter<boolean>();
   // stockchosen:boolean=false;
@@ -53,7 +53,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   Trades: Detailsresponse;
   relNews: Newsresponse;
   reuter;
-  
+
   constructor(
     private StockService: StockService,
     private CompanyService: CompanyService,
@@ -62,11 +62,11 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     private navCtrl: NavController,
     private TranslateService: TranslateService,
     private toastCtrl: ToastController,
-    public navParams: NavParams    
+    public navParams: NavParams
   ) {
     this.reuter = navParams.get("reuter");
     this.rootid = navParams.get("rootid");
-    this.stockchosen = navParams.get("stockchosen");
+    // this.stockchosen = navParams.get("stockchosen");
   }
   ngOnInit() {
     // this.navCtrl.push(CompanydetailsComponent);
@@ -104,12 +104,12 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
         console.log(this.Bids);
       });
       this.showasksbids = true;
-      this.stockchosen = false;
-      this.send.emit(this.stockchosen);
+      // this.stockchosen = false;
+      // this.send.emit(this.stockchosen);
     } else {
       this.showasksbids = false;
-      this.stockchosen = true;
-      this.send.emit(this.stockchosen);
+      // this.stockchosen = true;
+      // this.send.emit(this.stockchosen);
     }
   }
   settrades() {
@@ -118,12 +118,12 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
         this.Trades = data;
       });
       this.showtrades = true;
-      this.stockchosen = false;
-      this.send.emit(this.stockchosen);
+      // this.stockchosen = false;
+      // this.send.emit(this.stockchosen);
     } else {
       this.showtrades = false;
-      this.stockchosen = true;
-      this.send.emit(this.stockchosen);
+      // this.stockchosen = true;
+      // this.send.emit(this.stockchosen);
     }
   }
 
@@ -132,8 +132,8 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       this.Trades = data;
     });
     this.showtrades = true;
-    this.stockchosen = false;
-    this.send.emit(this.stockchosen);
+    // this.stockchosen = false;
+    // this.send.emit(this.stockchosen);
     this.refreshedToast("Trades");
   }
 
@@ -145,8 +145,8 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       this.Bids = data;
     });
     this.showasksbids = true;
-    this.stockchosen = false;
-    this.send.emit(this.stockchosen);
+    // this.stockchosen = false;
+    // this.send.emit(this.stockchosen);
     this.refreshedToast("Asks and Bids");
   }
 
