@@ -59,6 +59,7 @@
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>
+            <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
         </ion-item>
     </ion-list>
     <!-- <button ion-item (click)="toen()">

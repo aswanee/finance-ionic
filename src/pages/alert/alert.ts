@@ -8,6 +8,7 @@ import { Storage } from "@ionic/storage";
 import { token } from "./../../app/token.interface";
 
 import { CreateAlertPage } from "./../create-alert/create-alert";
+import { UpdateAlertPage } from "./../update-alert/update-alert";
 
 /**
  * Generated class for the AlertPage page.
@@ -111,7 +112,8 @@ export class AlertPage {
 
   showcreateAlertForm() {
     this.navCtrl.push(CreateAlertPage, {
-      userId: this.userId
+      userId: this.userId,
+      update: false
     });
   }
 
@@ -120,5 +122,36 @@ export class AlertPage {
   }
   addAlert() {
     console.log(this.alertForm.value);
+  }
+
+  alertDetails(index: number, IsMatched: boolean) {
+    var alertId, reuter;
+    if (IsMatched) {
+      alertId = this.matchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    } else {
+      alertId = this.nonMatchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    }
+    this.navCtrl.push(UpdateAlertPage, {
+      userId: this.userId,
+      alertId: alertId,
+      reuter: reuter
+    });
+  }
+
+  deleteAlert(index: number, IsMatched: boolean) {
+    var alertId, reuter;
+    if (IsMatched) {
+      alertId = this.matchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    } else {
+      alertId = this.nonMatchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    }
+    this.AlertService.deletealerts(reuter).subscribe(data => {
+      // TODO: add toast here.
+      console.log(data.result);
+    });
   }
 }
