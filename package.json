@@ -63,6 +63,8 @@
             "ionic-plugin-keyboard": {},
             "cordova-sqlite-storage": {}
         },
-        "platforms": ["android"]
+        "platforms": [
+            "android"
+        ]
     }
 }
