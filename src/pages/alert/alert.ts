@@ -145,8 +145,27 @@ export class AlertPage {
   goBack() {
     this.navCtrl.pop();
   }
-  addAlert() {
-    console.log(this.alertForm.value);
+
+  refreshAlerts() {
+    this.AlertService
+      .getUseralerts(this.userId, this.alertsLastDate)
+      .subscribe(data => {
+        this.newMatchedAlerts = data.result[0].filter(item => {
+          return item.IsMatched;
+        });
+        this.newNonMatchedAlerts = data.result[0].filter(item => {
+          return !item.IsMatched;
+        });
+        console.log(this.newMatchedAlerts);
+        console.log(this.newNonMatchedAlerts);
+        if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
+          this.storage.set("alerts", {
+            m: this.newMatchedAlerts,
+            nm: this.newNonMatchedAlerts,
+            lastUpdate: new Date()
+          });
+        }
+      });
   }
 
   alertDetails(index: number, IsMatched: boolean) {
@@ -163,6 +182,7 @@ export class AlertPage {
       alertId: alertId,
       reuter: reuter
     });
+    this.refreshAlerts();
   }
 
   deleteAlert(index: number, IsMatched: boolean) {
@@ -189,6 +209,11 @@ export class AlertPage {
             return item.AlertID !== alertId;
           });
         }
+        this.storage.set("alerts", {
+          m: this.matchedAlerts,
+          nm: this.nonMatchedAlerts,
+          lastUpdate: new Date()
+        });
       }
     });
   }
