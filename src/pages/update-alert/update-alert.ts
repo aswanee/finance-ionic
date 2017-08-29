@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
-import { StockService } from "./../../app/stock.service";
 import { AlertService } from "./../../app/alert.service";
 import {
   alertresponse,
@@ -14,7 +13,7 @@ import { Storage } from "@ionic/storage";
 import { token } from "./../../app/token.interface";
 
 /**
- * Generated class for the CreateAlertPage page.
+ * Generated class for the UpdateAlertPage page.
  *
  * See http://ionicframework.com/docs/components/#navigation for more info
  * on Ionic pages and navigation.
@@ -22,12 +21,12 @@ import { token } from "./../../app/token.interface";
 
 @IonicPage()
 @Component({
-  selector: "page-create-alert",
-  templateUrl: "create-alert.html"
+  selector: "page-update-alert",
+  templateUrl: "update-alert.html"
 })
-export class CreateAlertPage {
+export class UpdateAlertPage {
   Types: String[] = ["Index", "Stock", "OTC"];
-  Fields: any = new Array(
+  Fields: String[] = [
     "Last Trade",
     "Net Change",
     "Percentage Change",
@@ -46,27 +45,22 @@ export class CreateAlertPage {
     "Value",
     "Intraday High",
     "Intraday Low"
-  );
-  Criterias: any = new Array("Less Than", "Equal", "Greater Than");
+  ];
+  Criterias: String[] = ["Less Than", "Equal", "Greater Than"];
 
   private alertForm: FormGroup;
-  types: Type;
-  types_num: number[];
-  fields: Field;
-  criterias: Criteria;
-  reuters: string[];
+
   userId: number;
-  update: boolean;
+  alertId: number;
+  reuter: string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private formBuilder: FormBuilder,
-    private StockService: StockService,
     private AlertService: AlertService
   ) {
     this.alertForm = this.formBuilder.group({
-      reuter: ["", Validators.required],
       feild: ["", Validators.required],
       type: ["", Validators.required],
       criteria: ["", Validators.required],
@@ -74,54 +68,28 @@ export class CreateAlertPage {
       note: [""]
     });
     this.userId = navParams.get("userId");
-    this.update = navParams.get("userId");
-  }
-
-  ngOnInit() {
-    this.StockService.getnames(true).subscribe(data => {
-      var d = data.result;
-      var length = d.length;
-      for (var index = 0; index < length; index++) {
-        this.reuters.push(d[index][0]);
-      }
-    });
-
-    console.log(Criteria.AlertCriteriaEqual);
+    this.alertId = navParams.get("alertId");
+    this.reuter = navParams.get("reuter");
   }
 
   ionViewDidLoad() {
-    console.log("ionViewDidLoad CreateAlertPage");
+    console.log("ionViewDidLoad UpdateAlertPage");
   }
-
-  addAlert() {
-    // if (this.reuters.indexOf(this.alertForm.value.reuter.toString()) > 0) {
-
-    console.log(this.reuters.indexOf(this.alertForm.value.reuter.toString()));
-    console.log(this.reuters);
+  updateAlert() {
     this.AlertService
-      .addalert(
+      .updatealerts(
         this.userId,
-        this.alertForm.value.reuter.toString(),
-        this.Fields.indexOf(this.alertForm.value.feild.toString()),
+        this.reuter,
+        this.alertId,
         this.Types.indexOf(this.alertForm.value.type.toString()),
+        this.Fields.indexOf(this.alertForm.value.feild.toString()),
         this.Criterias.indexOf(this.alertForm.value.criteria.toString()),
         this.alertForm.value.value,
-        this.alertForm.value.note
+        this.alertForm.value.note.toString()
       )
       .subscribe(data => {
         console.log(data);
         this.navCtrl.popToRoot();
       });
-
-    // } else {
-    // console.log("company not found");
-    // }
   }
-
-  // forbiddenNameValidator(nameRe: String): ValidatorFn {
-  //   return (control: AbstractControl): {[key: string]: any} => {
-  //     const forbidden = nameRe.test(control.value);
-  //     return forbidden ? {'forbiddenName': {value: control.value}} : null;
-  //   };
-  // }
 }

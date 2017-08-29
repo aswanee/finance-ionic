@@ -20,49 +20,34 @@
     <ion-slide>
       <h2>Matched Alerts</h2>
       <ion-list *ngIf="matchedAlerts">
-
-        <ion-item *ngFor="let alert of matchedAlerts">
-          <h3>
-            {{alert.Code}}
-            <ion-card>
-              <ion-card-header>
-                Explore Nearby
-              </ion-card-header>
-
-              <ion-list>
-                <button ion-item>
-                    <ion-icon name="cart" item-start></ion-icon>
-                    Shopping
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="medical" item-start></ion-icon>
-                    Hospital
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="cafe" item-start></ion-icon>
-                    Cafe
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="paw" item-start></ion-icon>
-                    Dog Park
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="beer" item-start></ion-icon>
-                    Pub
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="planet" item-start></ion-icon>
-                    Space
-                  </button>
-
-              </ion-list>
-            </ion-card>
-          </h3>
+        <ion-row>
+          <ion-col col>
+            <p>Reuter</p>
+          </ion-col>
+          <ion-col col>
+            <p>Type</p>
+          </ion-col>
+          <ion-col col>
+            <p>Value</p>
+          </ion-col>
+          <ion-col col>
+            <p>Mettime</p>
+          </ion-col>
+          <ion-col col>
+            <p>Field</p>
+          </ion-col>
+        </ion-row>
+        <ion-item *ngFor="let alert of matchedAlerts; let i=index;">
+          <button ion-button full clear color='dark' (click)="alertDetails(i, true)">
+                  <ion-col class="myCol"  col> {{alert.Code}} </ion-col>
+                  <ion-col class="myCol"  col> {{Types[alert.Type]}}</ion-col>
+                  <ion-col class="myCol"  col> {{alert.Value}}</ion-col>
+                  <ion-col class="myCol"  col> {{alert.MetTime}}</ion-col>
+                  <ion-col  col> 
+                    {{Fields[alert.Field]}}
+                  </ion-col>
+              </button>
+          <button ion-button item-end clear color="danger" icon-only (click)="deleteAlert(i, true)"><ion-icon name='trash' is-active="false"></ion-icon></button>
         </ion-item>
       </ion-list>
 
@@ -71,50 +56,34 @@
     <ion-slide>
       <h2>Not-Matched Alerts</h2>
       <ion-list *ngIf="nonMatchedAlerts">
-
-        <ion-item *ngFor="let alert of nonMatchedAlerts">
-          <h3>
-            {{alert.Code}}
-
-            <ion-card>
-              <ion-card-header>
-                Explore Nearby
-              </ion-card-header>
-
-              <ion-list>
-                <button ion-item>
-                    <ion-icon name="cart" item-start></ion-icon>
-                    Shopping
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="medical" item-start></ion-icon>
-                    Hospital
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="cafe" item-start></ion-icon>
-                    Cafe
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="paw" item-start></ion-icon>
-                    Dog Park
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="beer" item-start></ion-icon>
-                    Pub
-                  </button>
-
-                <button ion-item>
-                    <ion-icon name="planet" item-start></ion-icon>
-                    Space
-                  </button>
-
-              </ion-list>
-            </ion-card>
-          </h3>
+        <ion-row>
+          <ion-col col>
+            <p>Reuter</p>
+          </ion-col>
+          <ion-col col>
+            <p>Type</p>
+          </ion-col>
+          <ion-col col>
+            <p>Value</p>
+          </ion-col>
+          <ion-col col>
+            <p>SetTime</p>
+          </ion-col>
+          <ion-col col>
+            <p>Criteria</p>
+          </ion-col>
+        </ion-row>
+        <ion-item *ngFor="let alert of nonMatchedAlerts; let i=index;">
+          <button ion-button full color='dark' clear (click)="alertDetails(i, false)">
+                <ion-col col> {{alert.Code}} </ion-col>
+                <ion-col col> {{Types[alert.Type]}}</ion-col>
+                <ion-col  col> {{alert.Value}}</ion-col>
+                <ion-col  col> {{alert.SetTime}}</ion-col>
+                <ion-col  col> 
+                    {{Fields[alert.Field]}}
+                  </ion-col>
+            </button>
+          <button ion-button item-end clear color="danger" icon-only (click)="deleteAlert(i, false)"><ion-icon name='trash' is-active="false"></ion-icon></button>
         </ion-item>
       </ion-list>
 

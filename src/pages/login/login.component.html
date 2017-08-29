@@ -20,7 +20,7 @@
         </ion-item>
         <br>
         <br>
-        <button ion-button block type="submit">{{'Login'|translate}}</button>
+        <button ion-button block [disabled]="!loginForm.valid" type="submit">{{'Login'|translate}}</button>
     </form>
     <ion-item *ngIf="token">
         <h3> You are already logged in! </h3>

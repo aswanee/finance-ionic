@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Create Alert</ion-title>
+    <ion-title>Update Alert</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,11 +15,7 @@
 
 <ion-content padding>
   <br>
-  <form [formGroup]="alertForm" (ngSubmit)="addAlert()">
-    <ion-item>
-      <ion-label>Reuter</ion-label>
-      <ion-input type="text" formControlName="reuter"></ion-input>
-    </ion-item>
+  <form [formGroup]="alertForm" (ngSubmit)="updateAlert()">
     <ion-item>
       <ion-label>Field</ion-label>
       <ion-select [(ngModel)]="feild" formControlName="feild" multiple="false">

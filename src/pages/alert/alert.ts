@@ -8,6 +8,7 @@ import { Storage } from "@ionic/storage";
 import { token } from "./../../app/token.interface";
 
 import { CreateAlertPage } from "./../create-alert/create-alert";
+import { UpdateAlertPage } from "./../update-alert/update-alert";
 
 /**
  * Generated class for the AlertPage page.
@@ -36,6 +37,28 @@ export class AlertPage {
   dummyAlert: alert;
   loggedin: boolean = false;
   fetchedAlerts: boolean = false;
+  Types: String[] = ["Index", "Stock", "OTC"];
+  Fields: String[] = [
+    "Last Trade",
+    "Net Change",
+    "Percentage Change",
+    "VWAP",
+    "Best Bid",
+    "Best Ask",
+    "Bid Size",
+    "Ask Size",
+    "Volume",
+    "TurnOver",
+    "Transactions",
+    "High",
+    "Low",
+    "Total Bid Size",
+    "Total Ask Size",
+    "Value",
+    "Intraday High",
+    "Intraday Low"
+  ];
+  Criterias: String[] = ["Less Than", "Equal", "Greater Than"];
 
   constructor(
     public navCtrl: NavController,
@@ -82,8 +105,11 @@ export class AlertPage {
   }
 
   getAlerts() {
+    // TODO: Add alerts Notifications
+
     // TODO: should handle if a none user sent a that request.
     // show sth like "you are not a user"
+
     this.AlertService
       .getUseralerts(this.userId, this.alertsLastDate)
       .subscribe(data => {
@@ -111,14 +137,84 @@ export class AlertPage {
 
   showcreateAlertForm() {
     this.navCtrl.push(CreateAlertPage, {
-      userId: this.userId
+      userId: this.userId,
+      update: false
     });
   }
 
   goBack() {
     this.navCtrl.pop();
   }
-  addAlert() {
-    console.log(this.alertForm.value);
+
+  refreshAlerts() {
+    this.AlertService
+      .getUseralerts(this.userId, this.alertsLastDate)
+      .subscribe(data => {
+        this.newMatchedAlerts = data.result[0].filter(item => {
+          return item.IsMatched;
+        });
+        this.newNonMatchedAlerts = data.result[0].filter(item => {
+          return !item.IsMatched;
+        });
+        console.log(this.newMatchedAlerts);
+        console.log(this.newNonMatchedAlerts);
+        if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
+          this.storage.set("alerts", {
+            m: this.newMatchedAlerts,
+            nm: this.newNonMatchedAlerts,
+            lastUpdate: new Date()
+          });
+        }
+      });
+  }
+
+  alertDetails(index: number, IsMatched: boolean) {
+    var alertId, reuter;
+    if (IsMatched) {
+      alertId = this.matchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    } else {
+      alertId = this.nonMatchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    }
+    this.navCtrl.push(UpdateAlertPage, {
+      userId: this.userId,
+      alertId: alertId,
+      reuter: reuter
+    });
+    this.refreshAlerts();
+  }
+
+  deleteAlert(index: number, IsMatched: boolean) {
+    var alertId, reuter;
+    if (IsMatched) {
+      alertId = this.matchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    } else {
+      alertId = this.nonMatchedAlerts[index].AlertID;
+      reuter = this.matchedAlerts[index].Code;
+    }
+    console.log(alertId);
+    this.AlertService.deletealerts(alertId).subscribe(data => {
+      // TODO: add toast here.
+      console.log(data);
+
+      if (data.result) {
+        if (IsMatched) {
+          this.matchedAlerts = this.matchedAlerts.filter(item => {
+            return item.AlertID !== alertId;
+          });
+        } else {
+          this.nonMatchedAlerts = this.nonMatchedAlerts.filter(item => {
+            return item.AlertID !== alertId;
+          });
+        }
+        this.storage.set("alerts", {
+          m: this.matchedAlerts,
+          nm: this.nonMatchedAlerts,
+          lastUpdate: new Date()
+        });
+      }
+    });
   }
 }
