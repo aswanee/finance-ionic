@@ -8,7 +8,7 @@ import {
   SimpleChange,
   SimpleChanges
 } from "@angular/core";
-import { NavController } from "ionic-angular";
+import { NavController, NavParams } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
 import { CompanyService } from "./../../app/company.service";
@@ -34,11 +34,10 @@ import { ToastController } from "ionic-angular";
 export class CompanydetailsComponent implements OnInit, OnChanges {
   // private _items = new BehaviorSubject<String[]>([]);
 
-  @Input() reuter: string;
   @Input() id: string;
-  @Input() rootid: number;
+  rootid: number;
   @Input() hidewatchlast: boolean;
-  @Input() stockchosen;
+  stockchosen;
   @Output() send: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() sendhide: EventEmitter<boolean> = new EventEmitter<boolean>();
   // stockchosen:boolean=false;
@@ -53,6 +52,8 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   Stocksimple: SerResponse;
   Trades: Detailsresponse;
   relNews: Newsresponse;
+  reuter;
+  
   constructor(
     private StockService: StockService,
     private CompanyService: CompanyService,
@@ -60,8 +61,13 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     private GetService: GetService,
     private navCtrl: NavController,
     private TranslateService: TranslateService,
-    private toastCtrl: ToastController
-  ) {}
+    private toastCtrl: ToastController,
+    public navParams: NavParams    
+  ) {
+    this.reuter = navParams.get("reuter");
+    this.rootid = navParams.get("rootid");
+    this.stockchosen = navParams.get("stockchosen");
+  }
   ngOnInit() {
     // this.navCtrl.push(CompanydetailsComponent);
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

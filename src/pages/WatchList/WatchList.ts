@@ -11,6 +11,7 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
+import { CompanydetailsComponent} from '../companydetails/companydetails.component';
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
@@ -128,6 +129,7 @@ export class HomePage implements OnInit {
     this.hidewatchlast = this.editpressed || this.stockchosen;
     this.reuter = reuter;
     this.showCompanyDetails = true;
+    this.goToCompanyDeatils();
   }
 
   getstockchosen(stockchosen) {
@@ -201,5 +203,9 @@ export class HomePage implements OnInit {
         });
       }
     }
+  }
+
+  goToCompanyDeatils(){
+    this.navCtrl.push(CompanydetailsComponent,{reuter: this.reuter, rootid: this.rootid, stockchosen: this.stockchosen})
   }
 }
