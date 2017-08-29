@@ -17,7 +17,6 @@ import { AlertPage } from "./../alert/alert";
       <button ion-item *ngIf="loggedIn" (click)="logout()">Logout</button>
       <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">Alerts</button>      
       <button ion-item (click)="goToSettings()">Change language</button>
-      <button ion-item (click)="close()">Contact us</button>
       <button ion-item (click)="goToAbout()">About us</button>
     </ion-list>
   `

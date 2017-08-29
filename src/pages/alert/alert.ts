@@ -37,6 +37,28 @@ export class AlertPage {
   dummyAlert: alert;
   loggedin: boolean = false;
   fetchedAlerts: boolean = false;
+  Types: String[] = ["Index", "Stock", "OTC"];
+  Fields: String[] = [
+    "Last Trade",
+    "Net Change",
+    "Percentage Change",
+    "VWAP",
+    "Best Bid",
+    "Best Ask",
+    "Bid Size",
+    "Ask Size",
+    "Volume",
+    "TurnOver",
+    "Transactions",
+    "High",
+    "Low",
+    "Total Bid Size",
+    "Total Ask Size",
+    "Value",
+    "Intraday High",
+    "Intraday Low"
+  ];
+  Criterias: String[] = ["Less Than", "Equal", "Greater Than"];
 
   constructor(
     public navCtrl: NavController,
@@ -83,8 +105,11 @@ export class AlertPage {
   }
 
   getAlerts() {
+    // TODO: Add alerts Notifications
+
     // TODO: should handle if a none user sent a that request.
     // show sth like "you are not a user"
+
     this.AlertService
       .getUseralerts(this.userId, this.alertsLastDate)
       .subscribe(data => {
@@ -149,9 +174,22 @@ export class AlertPage {
       alertId = this.nonMatchedAlerts[index].AlertID;
       reuter = this.matchedAlerts[index].Code;
     }
-    this.AlertService.deletealerts(reuter).subscribe(data => {
+    console.log(alertId);
+    this.AlertService.deletealerts(alertId).subscribe(data => {
       // TODO: add toast here.
-      console.log(data.result);
+      console.log(data);
+
+      if (data.result) {
+        if (IsMatched) {
+          this.matchedAlerts = this.matchedAlerts.filter(item => {
+            return item.AlertID !== alertId;
+          });
+        } else {
+          this.nonMatchedAlerts = this.nonMatchedAlerts.filter(item => {
+            return item.AlertID !== alertId;
+          });
+        }
+      }
     });
   }
 }

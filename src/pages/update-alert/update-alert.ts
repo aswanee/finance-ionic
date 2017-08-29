@@ -26,7 +26,7 @@ import { token } from "./../../app/token.interface";
 })
 export class UpdateAlertPage {
   Types: String[] = ["Index", "Stock", "OTC"];
-  Fields: any = new Array(
+  Fields: String[] = [
     "Last Trade",
     "Net Change",
     "Percentage Change",
@@ -45,8 +45,8 @@ export class UpdateAlertPage {
     "Value",
     "Intraday High",
     "Intraday Low"
-  );
-  Criterias: any = new Array("Less Than", "Equal", "Greater Than");
+  ];
+  Criterias: String[] = ["Less Than", "Equal", "Greater Than"];
 
   private alertForm: FormGroup;
 

@@ -18,7 +18,7 @@ export class TabsPage implements OnInit {
   tab2Root = MarketPage;
   tab3Root = ContactPage;
   // tab4Root = LoginComponent;
-  tab5Root = SettingsPage;
+  // tab5Root = SettingsPage;
   tabroot6 = TradingPage;
   constructor(private TranslateService: TranslateService) {}
   ngOnInit() {
