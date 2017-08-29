@@ -9,7 +9,6 @@
 
 
     <div class="list" *ngIf="editpressed">
-
         <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
             <ion-item *ngFor="let item of displayListDummy; let i=index;">
@@ -18,52 +17,57 @@
                 <ion-checkbox [(ngModel)]="map[item]">{{ map[item] }}</ion-checkbox>
             </ion-item>
         </ion-list>
-        <ion-fab style="position:fixed; margin-bottom:5%; margin-right: 1%;" bottom right>
+        <ion-fab style="position:fixed; margin-bottom:6%; margin-right: 1%;" bottom right>
             <button (click)="falsepressed()" ion-fab><ion-icon name='checkmark'></ion-icon></button>
         </ion-fab>
 
     </div>
-    <div class="list" *ngIf="!editpressed ">
-        <ion-fab bottom right>
+    <div class="list" *ngIf="!editpressed && !showCompanyDetails ">
+        <ion-fab style="position:fixed; margin-bottom:6%; margin-right: 1%;" bottom right>
             <button clear (click)="addToWatchlist()" ion-fab><p style="font-size:30px;">+</p></button>
         </ion-fab>
-        <!-- <button ion-button item-end clear icon-only (click)="addToWatchlist()"><ion-icon name='add-circle' is-active="false"></ion-icon></button> -->
-        <!-- <button ion-button (click)="changepressed()" [hidden]="hidewatchlast">{{'Edit'|translate}}</button> -->
-        <ion-list *ngIf="StockDetails && !showCompanyDetails">
-            <ion-item *ngFor="let x of StockDetails?.result; let i=index">
-                <!-- <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast"> -->
-                <button ion-item (click)="setstockchosen(x[3])">
+    </div>
 
-          {{ x[3]+' '+x[0]+' '+x[1]+' '+x[2]}}
-                <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
-                <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
-                </button>
-                <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
-
-                <!-- </button> -->
-            </ion-item>
-        </ion-list>
-        <!--<ion-grid *ngIf="StockDetails && !showCompanyDetails">
-            <ion-row ion-item *ngFor="let x of StockDetails?.result">
-                <ion-col (click)="setstockchosen(x[3])" col-4> {{x[3]}} </ion-col>
-                <ion-col (click)="setstockchosen(x[3])" col-4> {{x[0]}}</ion-col>
-                <ion-col (click)="setstockchosen(x[3])" col-4> {{x[2]}}</ion-col>
-                <ion-col (click)="setstockchosen(x[3])" col-4> {{x[1]}}</ion-col>
-                <ion-col (click)="setstockchosen(x[3])" col-4>
-                    <ion-icon *ngIf="x[2]>0" name="md-arrow-up" color="secondary"></ion-icon>
-                    <ion-icon *ngIf="x[2]<0" name="md-arrow-down" color="danger"></ion-icon>
+    <ion-list *ngIf="StockDetails && !showCompanyDetails">
+        <ion-row>
+            <ion-col col-1>
+            </ion-col>
+            <ion-col col>
+                <p>Reuter</p>
+            </ion-col>
+            <ion-col col>
+                <p>Value</p>
+            </ion-col>
+            <ion-col col>
+                <p>Change</p>
+            </ion-col>
+            <ion-col col>
+                <p>Percentage</p>
+            </ion-col>
+            <ion-col col>
+                <p>Trend</p>
+            </ion-col>
+        </ion-row>
+        <ion-item *ngFor="let x of StockDetails?.result; let i=index;">
+            <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="hidewatchlast">
+                <ion-col class="myCol"  col> {{x[3]}} </ion-col>
+                <ion-col class="myCol"  col> {{x[0]}}</ion-col>
+                <ion-col class="myCol"  col> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  col> {{x[1]}}</ion-col>
+                <ion-col  col> 
+                    <ion-icon right *ngIf="x[2]>=0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
-            </ion-row>
-        </ion-grid>
--->
-        <!-- <button ion-item (click)="toen()">
+            </button>
+        </ion-item>
+    </ion-list>
+    <!-- <button ion-item (click)="toen()">
                       {{'BTN_ENGLISH'|translate}}
                     </button>
         <button ion-item (click)="toarab()">
                       {{'BTN_Arabic'|translate}}
                     </button> -->
 
-    </div>
     <div *ngIf="showCompanyDetails && reuter">
         <companydetails [reuter]="reuter" [rootid]="rootid" [stockchosen]="stockchosen" (send)="getstockchosen($event)"></companydetails>
         <!-- <button ion-button full clear (click)="resetstockchosen()" [hidden]="!stockchosen">back</button> -->

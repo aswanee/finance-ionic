@@ -8,121 +8,123 @@
         {{reuter}}
     </ion-card-header>
 
-    <ion-item>
-        <page-chart *ngIf="reuter" [rouiterCode]="reuter"></page-chart>
-    </ion-item>
-
-    <ion-list>
-        <button ion-item (click)="setasksbids()">
-                      <ion-icon name="cart" item-start></ion-icon>
-                      {{'Asks' | translate}}/{{'Bids' | translate}}
+    <ion-item *ngIf="reuter">
+        <ion-buttons>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="lastFveDays">
+                            Last five days
                     </button>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="!lastFveDays">
+                         Last year       
+                        </button>
+        </ion-buttons>
+        <page-chart [hidden]="!lastFveDays" [lastFiveDays]=true [rouiterCode]="reuter"></page-chart>
+        <page-chart [hidden]="lastFveDays" [lastFiveDays]=false [rouiterCode]="reuter"></page-chart>
+    </ion-item>
+    <div padding>
+        <ion-segment [(ngModel)]="QueteParts">
+            <ion-segment-button value="News" (click)="setnews()">
+                <ion-icon name="cart" item-start></ion-icon>
+                {{'Related News' | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="Orders" (click)="setasksbids()">
+                <ion-icon name="cart" item-start></ion-icon>
+                {{'Asks' | translate}}/{{'Bids' | translate}}
+            </ion-segment-button>
+            <ion-segment-button value="Trades" (click)="settrades()">
+                <ion-icon name="cart" item-start></ion-icon>
+                {{'Trades' | translate}}
+            </ion-segment-button>
+        </ion-segment>
+    </div>
+    <div [ngSwitch]="QueteParts">
+        <ion-list *ngSwitchCase="'Orders'">
+            <ion-item>
+                <button item-end clear color='dark' ion-button (click)="refreshAsks()">
+                                                <ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon>
+                                            </button>
+            </ion-item>
 
-        <ion-item *ngIf="showasksbids">
-
-            <!-- <ion-grid>
-                <ion-row ion-item *ngFor="let bid of Bids?.result; let ask of Asks?.result; ">
-                    <ion-col *ngIf="bid" col-5> {{bid[0]}}</ion-col>
-                    <ion-col *ngIf="bid" col-5> {{bid[2]}}</ion-col>
-                    <ion-col *ngIf="bid" col-5> {{bid[1]}}</ion-col>
-
-                    <ion-col col-5></ion-col>
-
-                    <ion-col col-5></ion-col>
-                    <ion-col *ngIf="ask" col-5> {{ask[0]}}</ion-col>
-                    <ion-col *ngIf="ask" col-5> {{ask[2]}}</ion-col>
-                    <ion-col *ngIf="ask" col-5> {{ask[1]}}</ion-col>
-
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-6>
+                        <table width="100%">
+                            <th colspan="3"><strong>{{'Asks' | translate}}</strong></th>
+                            <tr *ngFor="let item of Asks?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                                <td>{{item[0]}}</td>
+                                <td>{{item[1]}}</td>
+                                <td>{{item[2]}}</td>
+                            </tr>
+                        </table>
+                    </ion-col>
+                    <ion-col col-6>
+                        <table width="100%">
+                            <th colspan="3"><strong>{{'Bids' | translate}}</strong></th>
+                            <tr *ngFor="let item of Bids?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                                <td>{{item[0]}}</td>
+                                <td>{{item[1]}}</td>
+                                <td>{{item[2]}}</td>
+                            </tr>
+                        </table>
+                    </ion-col>
                 </ion-row>
-            </ion-grid> -->
-            <ion-item>
-                <button item-end clear color='dark' ion-button (click)="refreshAsks()"><ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon></button>
-            </ion-item>
-            <strong>{{'Asks' | translate}}</strong>
-            <table *ngFor="let item of Asks?.result">
-                {{item[0]+' '+item[1]+' '+item[2] }}
-            </table>
-            <strong>{{'Bids' | translate}}</strong>
-            <table *ngFor="let item of Bids?.result">
-                {{item[0]+' '+item[1]+' '+item[2] }}
-            </table>
-        </ion-item>
-        <button ion-item (click)="settrades()">
-            <ion-icon  name="cart" item-start></ion-icon>
-            {{'Trades' | translate}}
-        </button>
-
-
-
-        <ion-item *ngIf="showtrades">
+            </ion-grid>
+        </ion-list>
+        <ion-list *ngSwitchCase="'Trades'">
 
             <ion-item>
-                <button item-end clear color='dark' ion-button (click)="refreshTrades()"><ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon></button>
+                <button item-end clear color='dark' ion-button (click)="refreshTrades()">
+                                                <ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon>
+                                            </button>
             </ion-item>
-            <ion-list *ngIf="Trades?.result.length > 0">
-                <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
-            </ion-list>
+            <table width="100%">
+                <tr *ngFor="let item of Trades?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                    <td>{{item[0]}}</td>
+                    <td>{{item[1]}}</td>
+                    <td>{{item[2]}}</td>
+                    <td>{{item[3]}}</td>
+                </tr>
+            </table>
+            <!-- <ion-list *ngIf="Trades?.result.length > 0">
+                                            <ion-item *ngFor="let item of Trades?.result"> {{item }}</ion-item>
+                                        </ion-list> -->
 
             <ion-item *ngIf="Trades?.result.length===0 ">
                 <ion-icon name="sad" color='danger' style="margin-left: 10%; font-size: 30px;"></ion-icon>
                 &nbsp; &nbsp; &nbsp;
                 <strong> {{'No Trades Yet' | translate}} </strong>
             </ion-item>
-        </ion-item>
-
-
-        <button ion-item (click)="setnews()">
-                      <ion-icon name="cafe" item-start></ion-icon>
-                      {{'Related News' | translate}}
-                    </button>
-
-        <ion-item *ngIf="showrelatednews">
+        </ion-list>
+        <ion-list *ngSwitchCase="'News'">
             <ion-item>
                 <button item-end clear color='dark' ion-button (click)="refreshNews()"><ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon></button>
             </ion-item>
-            <ion-list>
+            <ion-list inset color="secondary">
                 <ion-item *ngFor="let item of relNews?.result.V">
                     <p style="font-size: 16px">{{item[1]}}</p>
                     <p>{{item[2]}}</p>
                     <p>
                         <button ion-button item-end (click)="getdetails(item[0])" color="dark" [hidden]="(!stockchosen)">
-                            {{'Next' | translate}}
-                            <ion-icon name='arrow-forward'></ion-icon>
-                          </button>
+                                                        {{'Next' | translate}}
+                                                        <ion-icon name='arrow-forward'></ion-icon>
+                                                      </button>
                     </p>
+                    <ion-item *ngIf="showdetails">
+                        <newsdetails [id]='id'></newsdetails>
+                        <p>
+                            <button ion-button item-end (click)="showNews()" color="dark" [hidden]="(!stockchosen)">
+                                                                <ion-icon name='arrow-back'></ion-icon>
+                                                                    Back
+                                                            </button>
+                        </p>
+                    </ion-item>
                 </ion-item>
             </ion-list>
-        </ion-item>
-
-        <ion-item *ngIf="showdetails">
-            <newsdetails [id]='id'></newsdetails>
-            <p>
-                <button ion-button item-end (click)="showNews()" color="dark" [hidden]="(!stockchosen)">
-                            <ion-icon name='arrow-back'></ion-icon>
-                            Back
-                        </button>
-            </p>
-        </ion-item>
-
-    </ion-list>
-    <!-- <ion-item>
-        <ion-icon name="ion-social-usd" item-start small></ion-icon>
-        <p>{{detailsresponse?.result[2]}}</p>
-    </ion-item> -->
-
-    <!-- <ion-item>
-        <ion-icon name="ion-social-usd" item-start small></ion-icon>
-        <h2>Per Change</h2>
-        <h2>{{detailsresponse?.result[3]}}</h2>
-        <h2>{{detailsresponse?.result[4]}}</h2>
-        <h2>{{detailsresponse?.result[5]}}</h2>
-    </ion-item> -->
-
-
+        </ion-list>
+    </div>
     <ion-buttons>
         <button ion-button left (click)="goback()">
-          {{'Back' | translate}}
-        </button>
+                          {{'Back' | translate}}
+                        </button>
     </ion-buttons>
 
 </ion-card>

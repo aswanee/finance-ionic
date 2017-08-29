@@ -43,6 +43,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   @Output() sendhide: EventEmitter<boolean> = new EventEmitter<boolean>();
   // stockchosen:boolean=false;
   showasksbids: boolean = false;
+  lastFveDays: boolean = true;
   detailsresponse: Detailsresponse;
   showtrades: boolean = false;
   showrelatednews: boolean = false;
@@ -188,5 +189,9 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     });
 
     toast.present();
+  }
+
+  showLastFiveDays() {
+    this.lastFveDays = !this.lastFveDays;
   }
 }

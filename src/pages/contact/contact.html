@@ -20,7 +20,7 @@
      <h2>{{item[2]}}</h2>
     </button>
     </ion-buttons> -->
-    <ion-list *ngIf="News?.result.V">
+    <ion-list *ngIf="News?.result.V &&!showdetails">
         <ion-item *ngFor="let item of News?.result.V">
             <button ion-button full color="light" style="margin-top: 3%;" (click)="getdetails(item[0])" [hidden]="showdetails">
      <h1 color="dark"> 
@@ -31,5 +31,5 @@
     </ion-list>
     <ion-content *ngIf="showdetails">
         <newsdetails [id]='id'></newsdetails>
+        <button ion-button full (click)="back()" [hidden]="!showdetails">{{'Back' | translate}}</button>
     </ion-content>
-    <button ion-button full color="dark" (click)="back()" [hidden]="!showdetails">{{'Back' | translate}}</button>

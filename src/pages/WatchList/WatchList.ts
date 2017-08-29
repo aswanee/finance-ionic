@@ -69,22 +69,40 @@ export class HomePage implements OnInit {
 
       this.storage.keys().then(keys => {
         if (keys) {
-          this.storage.get("watchList").then(val => {
-            console.log("Got the storag data");
-            this.StockService.getstock(val, true).subscribe(data => {
-              this.StockDetails = data;
-              this.dispnames = val;
-              console.log(this.StockDetails.result);
-              for (let i = 0; i < this.StockDetails.result.length; i++) {
-                this.StockDetails.result[i].push(this.dispnames[i]);
-              }
-              console.log(this.StockDetails);
-            });
-            this.editpressed = false;
-            this.hidewatchlast = this.editpressed || this.stockchosen;
+          keys.forEach(key => {
+            if (key === "watchList") {
+              this.storage.get("watchList").then(val => {
+                this.StockService.getstock(val, true).subscribe(data => {
+                  this.StockDetails = data;
+                  this.dispnames = val;
+                  console.log(this.StockDetails.result);
+                  for (let i = 0; i < this.StockDetails.result.length; i++) {
+                    this.StockDetails.result[i].push(this.dispnames[i]);
+                  }
+                  console.log(this.StockDetails);
+                });
+                this.editpressed = false;
+                this.hidewatchlast = this.editpressed || this.stockchosen;
+              });
+            } else {
+              this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
+              this.StockService
+                .getstock(this.dispnames, true)
+                .subscribe(data => {
+                  this.StockDetails = data;
+                  console.log(this.StockDetails.result);
+                  for (let i = 0; i < this.StockDetails.result.length; i++) {
+                    this.StockDetails.result[i].push(this.dispnames[i]);
+                  }
+                  console.log(this.StockDetails);
+                });
+              this.editpressed = false;
+              this.hidewatchlast = this.editpressed || this.stockchosen;
+            }
           });
         } else {
-          this.StockService.getstock(this.List[0], true).subscribe(data => {
+          this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
+          this.StockService.getstock(this.dispnames, true).subscribe(data => {
             this.StockDetails = data;
             this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
             console.log(this.StockDetails.result);

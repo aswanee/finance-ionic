@@ -7,49 +7,13 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Alert</ion-title>
+    <ion-title>Alerts</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content no-bounce>
-  <form *ngIf="addAlertForm" [formGroup]="alertForm" (ngSubmit)="addAlert()">
-    <ion-item>
-      <ion-label>Reuter</ion-label>
-      <ion-select *ngIf="dispnames" formControlName="reuter" multiple="false">
-        <ion-option>Bacon</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Field</ion-label>
-      <ion-select [(ngModel)]="feild" formControlName="feild" multiple="false">
-        <ion-option>Bacon</ion-option>
-        <ion-option>Black Olives</ion-option>
-        <ion-option>Extra Cheese</ion-option>
-        <ion-option>Mushrooms</ion-option>
-        <ion-option>Pepperoni</ion-option>
-        <ion-option>Sausage</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Criteria</ion-label>
-      <ion-select [(ngModel)]="criteria" formControlName="criteria" multiple="true">
-        <ion-option>Bacon</ion-option>
-        <ion-option>Black Olives</ion-option>
-        <ion-option>Extra Cheese</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-label>Value</ion-label>
-      <ion-input type="number" formControlName="value"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label>Note</ion-label>
-      <ion-textarea type="text" formControlName="note"></ion-textarea>
-    </ion-item>
-    <button ion-button type="submit" [disabled]="!alertForm.valid">Submit</button>
-  </form>
+<ion-content padding>
 
   <ion-slides pager>
 
@@ -60,9 +24,48 @@
         <ion-item *ngFor="let alert of matchedAlerts">
           <h3>
             {{alert.Code}}
+            <ion-card>
+              <ion-card-header>
+                Explore Nearby
+              </ion-card-header>
+
+              <ion-list>
+                <button ion-item>
+                    <ion-icon name="cart" item-start></ion-icon>
+                    Shopping
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="medical" item-start></ion-icon>
+                    Hospital
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="cafe" item-start></ion-icon>
+                    Cafe
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="paw" item-start></ion-icon>
+                    Dog Park
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="beer" item-start></ion-icon>
+                    Pub
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="planet" item-start></ion-icon>
+                    Space
+                  </button>
+
+              </ion-list>
+            </ion-card>
           </h3>
         </ion-item>
       </ion-list>
+
     </ion-slide>
 
     <ion-slide>
@@ -72,11 +75,55 @@
         <ion-item *ngFor="let alert of nonMatchedAlerts">
           <h3>
             {{alert.Code}}
+
+            <ion-card>
+              <ion-card-header>
+                Explore Nearby
+              </ion-card-header>
+
+              <ion-list>
+                <button ion-item>
+                    <ion-icon name="cart" item-start></ion-icon>
+                    Shopping
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="medical" item-start></ion-icon>
+                    Hospital
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="cafe" item-start></ion-icon>
+                    Cafe
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="paw" item-start></ion-icon>
+                    Dog Park
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="beer" item-start></ion-icon>
+                    Pub
+                  </button>
+
+                <button ion-item>
+                    <ion-icon name="planet" item-start></ion-icon>
+                    Space
+                  </button>
+
+              </ion-list>
+            </ion-card>
           </h3>
         </ion-item>
       </ion-list>
-    </ion-slide>
 
+    </ion-slide>
   </ion-slides>
+  <button clear block ion-button (click)="goBack()">Back</button>
 
 </ion-content>
+
+<ion-fab style="position:fixed; margin-bottom:6%; margin-right: 1%;" bottom right>
+  <button clear (click)="showcreateAlertForm()" ion-fab><p style="font-size:30px;">+</p></button>
+</ion-fab>

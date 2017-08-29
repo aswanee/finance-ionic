@@ -17,6 +17,7 @@ import { TradingPage } from "./../pages/trading/trading";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
+import { CreateAlertPage } from "../pages/create-alert/create-alert";
 import {
   TranslateModule,
   TranslateLoader,
@@ -58,7 +59,8 @@ export function createTranslateLoader(http: Http) {
     AlertPage,
     SettingsPage,
     TradingPage,
-    LimitToPipe
+    LimitToPipe,
+    CreateAlertPage
   ],
   imports: [
     BrowserModule,
@@ -94,7 +96,8 @@ export function createTranslateLoader(http: Http) {
     MarketPage,
     AlertPage,
     SettingsPage,
-    TradingPage
+    TradingPage,
+    CreateAlertPage
   ],
   providers: [
     StatusBar,

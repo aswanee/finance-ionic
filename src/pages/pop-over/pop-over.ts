@@ -35,11 +35,9 @@ export class PopoverPage {
   ngOnInit() {
     this.storage.keys().then(keys => {
       if (keys) {
-        console.log(keys);
         keys.forEach(key => {
           if (key === "token") {
             this.loggedIn = true;
-            console.log("found a token");
           }
         });
       }

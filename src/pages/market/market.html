@@ -8,11 +8,24 @@
 
 <ion-content padding *ngIf="!stockchosen&&anotherbool&&Indices&&BP&&WP&&BV">
     <h1>{{'Indices'|translate}}</h1>
-    <ion-buttons *ngFor="let x of Indices">
-        <button ion-button full color="dark">
+    <ion-buttons *ngFor="let x of Indices; let i=index;">
+        <button ion-button (click)="showHideChart(i)" full color="dark">
    {{  x?.result[0][0]+'        '+x?.result[0][1]+'            '+x?.result[0][2]+'   '+x?.result[0][3]+'  '+x?.result[0][4]+'   '+x?.result[0][5]}}
   </button>
     </ion-buttons>
+    <ion-item *ngIf="showChart&&Indices">
+        <ion-buttons>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="lastFveDays">
+                    Last five days
+            </button>
+            <button ion-button (click)="showLastFiveDays()" [disabled]="!lastFveDays">
+                 Last year       
+                </button>
+        </ion-buttons>
+        <page-chart [hidden]="!lastFveDays" [lastFiveDays]=true [rouiterCode]="Indices[index].result[0][0]"></page-chart>
+        <page-chart [hidden]="lastFveDays" [lastFiveDays]=false [rouiterCode]="Indices[index].result[0][0]"></page-chart>
+    </ion-item>
+
     <h1>{{'BP' | translate}}</h1>
     <ion-buttons *ngFor="let x of BP?.result">
         <button ion-button full color="dark" (click)="setstockchosen(x[0])">

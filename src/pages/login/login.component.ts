@@ -140,6 +140,7 @@ export class LoginComponent implements OnInit {
     this.LoginService
       .gettoken(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(data => {
+        console.log(data);
         this.storage.set("token", data);
         this.token = true;
         USERTOKEN = data;
