@@ -8,6 +8,7 @@ import { ToastController } from "ionic-angular";
 import { AboutPage } from "./../about/about";
 import { SettingsPage } from "./../settings/settings";
 import { AlertPage } from "./../alert/alert";
+import { HomePage } from "./../WatchList/WatchList";
 
 @Component({
   template: `
@@ -29,7 +30,9 @@ export class PopoverPage {
     private navController: NavController,
     private storage: Storage,
     private toastCtrl: ToastController
-  ) {}
+  ) {
+    // this.navController.setRoot(HomePage);
+  }
 
   ngOnInit() {
     this.storage.keys().then(keys => {
@@ -47,6 +50,9 @@ export class PopoverPage {
     this.loggedIn = false;
     this.storage.remove("token").then(val => {
       console.log("logged out");
+
+      // TODO: should pop to the home page, not working.
+      this.navController.popToRoot();
       this.close();
       this.menuToast("out");
     });

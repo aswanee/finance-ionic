@@ -12,13 +12,8 @@
 
 </ion-header>
 
-
-
-
-
-
 <ion-content>
-    <ion-buttons>
+    <ion-buttons *ngIf="loggedIn">
         <button ion-item (click)="getportfolio()">Show Portfolio</button>
         <ion-grid *ngIf="portfolioresponse && showportfolio&&token">
             <ion-row *ngFor="let item of portfolioresponse?.result">
@@ -110,8 +105,7 @@
         <button ion-item (click)="ChangeInsert()">Add Order</button>
     </ion-buttons>
 
-
-    <ion-card *ngIf="showInsert">
+    <ion-card *ngIf="showInsert && loggedIn">
         <ion-card-header>
             Insert Order
         </ion-card-header>
@@ -200,8 +194,76 @@
         <ion-row>{{showTimeTerm(userorderhistoryresponse?.result.TimeTerm)}}</ion-row>
     </ion-grid>
 </ion-content>
+<ion-item *ngIf="!loggedIn">
+    <h2 style="text-align:center">You are not logged In</h2>
+    <br>
 
+    <button ion-button block (click)="gotoLogin()">Login</button>
+</ion-item>
 <!-- <form>
+=======
+    <form *ngIf="showInsert && loggedIn">
+        <ion-item>
+            <ion-label>ReutersCode</ion-label>
+            <ion-input [(ngModel)]="userorder.ReutersCode" name="Code"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label>Quantity</ion-label>
+            <ion-input [(ngModel)]="userorder.Quantity" name="Quantity"></ion-input>
+        </ion-item>
+        <ion-segment>
+            <ion-segment-button value="Day" (click)="ChooseDay()">
+                Day
+            </ion-segment-button>
+            <ion-segment-button value="Week" (click)="ChooseWeek()">
+                Week
+            </ion-segment-button>
+            <ion-segment-button value="Month" (click)="ChooseMonth()">
+                Month
+            </ion-segment-button>
+        </ion-segment>
+
+        <ion-segment>
+            <ion-segment-button value="Buy" (click)="ChooseBuy()">
+                Buy
+            </ion-segment-button>
+            <ion-segment-button value="Sell" (click)="ChooseSell()">
+                Sell
+            </ion-segment-button>
+            <ion-segment-button value="SellT0" (click)="ChooseSellT0()">
+                Sell T+0
+            </ion-segment-button>
+            <ion-segment-button value="SellT1" (click)="ChooseSellT1()">
+                Sell T+1
+            </ion-segment-button>
+        </ion-segment>
+
+        <ion-segment>
+            <ion-segment-button value="Market" (click)="ChooseMarket()">
+                Market
+            </ion-segment-button>
+            <ion-segment-button value="Limit" (click)="ChooseLimit()">
+                Limit
+            </ion-segment-button>
+
+        </ion-segment>
+        <ion-item *ngIf="EnablePrice">
+            <ion-label>Price</ion-label>
+            <ion-input [(ngModel)]="userorder.Price" name="Price"></ion-input>
+        </ion-item>
+
+        <button ion-button block type="submit" (click)="CreateUpdateOrder()">Make Order</button>
+    </form>
+
+    <ion-item *ngIf="!loggedIn">
+        <h2 style="text-align:center">You are not logged In</h2>
+        <br>
+
+        <button ion-button block (click)="gotoLogin()">Login</button>
+    </ion-item>
+    <!-- <form>
+>>>>>>> 76c3eb88b2cfea788380f3b819c4d8624eb5ebb8
         <ion-item>
             <ion-label>ReutersCode</ion-label>
             <ion-input type="text" id="UCode"></ion-input>

@@ -5,7 +5,6 @@ import { ContactPage } from "../contact/contact";
 import { HomePage } from "../WatchList/WatchList";
 import { MarketPage } from "../market/market";
 import { AlertPage } from "../alert/alert";
-import { SettingsPage } from "../settings/settings";
 import { LoginComponent } from "./../login/login.component";
 import { language } from "./../settings/settings";
 import { TranslateService, TranslatePipe } from "ng2-translate";
@@ -17,8 +16,6 @@ export class TabsPage implements OnInit {
   tab1Root = HomePage;
   tab2Root = MarketPage;
   tab3Root = ContactPage;
-  // tab4Root = LoginComponent;
-  // tab5Root = SettingsPage;
   tabroot6 = TradingPage;
   constructor(private TranslateService: TranslateService) {}
   ngOnInit() {

@@ -76,29 +76,14 @@ export class HomePage implements OnInit {
                 this.StockService.getstock(val, true).subscribe(data => {
                   this.StockDetails = data;
                   this.dispnames = val;
-                  console.log(this.StockDetails.result);
-                  for (let i = 0; i < this.StockDetails.result.length; i++) {
+
+                  for (let i = 0; i < data.result.length; i++) {
                     this.StockDetails.result[i].push(this.dispnames[i]);
                   }
-                  console.log(this.StockDetails);
                 });
                 this.editpressed = false;
                 //   this.hidewatchlast = this.editpressed || this.stockchosen;
               });
-            } else {
-              this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-              this.StockService
-                .getstock(this.dispnames, true)
-                .subscribe(data => {
-                  this.StockDetails = data;
-                  console.log(this.StockDetails.result);
-                  for (let i = 0; i < this.StockDetails.result.length; i++) {
-                    this.StockDetails.result[i].push(this.dispnames[i]);
-                  }
-                  console.log(this.StockDetails);
-                });
-              this.editpressed = false;
-              // this.hidewatchlast = this.editpressed || this.stockchosen;
             }
           });
         } else {
@@ -113,7 +98,6 @@ export class HomePage implements OnInit {
             console.log(this.StockDetails);
           });
           this.editpressed = false;
-          //   this.hidewatchlast = this.editpressed || this.stockchosen;
         }
       });
     });
@@ -121,25 +105,13 @@ export class HomePage implements OnInit {
 
   changepressed() {
     this.editpressed = true;
-    //  this.hidewatchlast = this.editpressed || this.stockchosen;
   }
 
   setstockchosen(reuter: string) {
     this.stockchosen = true;
-    // this.hidewatchlast = this.editpressed || this.stockchosen;
     this.reuter = reuter;
-    // this.showCompanyDetails = true;
     this.goToCompanyDeatils();
   }
-
-  // getstockchosen(stockchosen) {
-  //   this.stockchosen = stockchosen;
-  //   console.log(this.stockchosen);
-  // }
-
-  // gethidewatch(stockchosen) {
-  //   this.hidewatchlast = stockchosen;
-  // }
 
   falsepressed() {
     this.dispnames = [];
@@ -160,7 +132,6 @@ export class HomePage implements OnInit {
       console.log(this.StockDetails);
     });
     this.editpressed = false;
-    // this.hidewatchlast = this.editpressed || this.stockchosen;
   }
 
   removeFromWatchlist(index: number) {
