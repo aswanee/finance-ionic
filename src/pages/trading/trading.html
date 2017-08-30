@@ -193,13 +193,14 @@
         <ion-row>{{showOrderStatus(userorderhistoryresponse?.result.Status)}}</ion-row>
         <ion-row>{{showTimeTerm(userorderhistoryresponse?.result.TimeTerm)}}</ion-row>
     </ion-grid>
-</ion-content>
-<ion-item *ngIf="!loggedIn">
-    <h2 style="text-align:center">You are not logged In</h2>
-    <br>
+    <ion-item *ngIf="!loggedIn">
+        <h2 style="text-align:center">You are not logged In</h2>
+        <br>
 
-    <button ion-button block (click)="gotoLogin()">Login</button>
-</ion-item>
+        <button ion-button block (click)="gotoLogin()">Login</button>
+    </ion-item>
+</ion-content>
+
 <!-- <form>
 =======
     <form *ngIf="showInsert && loggedIn">
