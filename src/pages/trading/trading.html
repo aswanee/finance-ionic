@@ -12,13 +12,8 @@
 
 </ion-header>
 
-
-
-
-
-
 <ion-content>
-    <ion-buttons>
+    <ion-buttons *ngIf="loggedIn">
         <button ion-item (click)="getportfolio()">Show Portfolio</button>
         <ion-grid *ngIf="portfolioresponse && showportfolio&&token">
             <ion-row *ngFor="let item of portfolioresponse?.result">
@@ -113,7 +108,7 @@
         <button ion-item (click)="ChangeInsert()">Add Order</button>
     </ion-buttons>
 
-    <form *ngIf="showInsert">
+    <form *ngIf="showInsert && loggedIn">
         <ion-item>
             <ion-label>ReutersCode</ion-label>
             <ion-input [(ngModel)]="userorder.ReutersCode" name="Code"></ion-input>
@@ -167,7 +162,12 @@
         <button ion-button block type="submit" (click)="CreateUpdateOrder()">Make Order</button>
     </form>
 
+    <ion-item *ngIf="!loggedIn">
+        <h2 style="text-align:center">You are not logged In</h2>
+        <br>
 
+        <button ion-button block (click)="gotoLogin()">Login</button>
+    </ion-item>
     <!-- <form>
         <ion-item>
             <ion-label>ReutersCode</ion-label>
@@ -205,5 +205,7 @@
 
         <button ion-button block type="submit">Update Order</button>
     </form>
-</ion-content> -->
+ -->
     <!-- (click)="UpdateOrder()" -->
+
+</ion-content>

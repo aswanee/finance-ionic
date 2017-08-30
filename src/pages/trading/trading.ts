@@ -2,6 +2,9 @@ import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
+import { AlertController } from "ionic-angular";
+import { LoginComponent } from "./../login/login.component";
+
 import {
   userorderhistoryresponse,
   userorderresponse,
@@ -74,13 +77,22 @@ export class TradingPage implements OnInit {
   showInsert = false;
   ShowUpdate = false;
   EnablePrice = true;
+  timeout: number;
+  loggedIn: boolean = false;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private LoginService: LoginService,
     private TradeService: TradeService,
-    private storage: Storage
-  ) {}
+    private storage: Storage,
+    public alertCtrl: AlertController
+  ) {
+    setTimeout(() => {
+      if (!this.loggedIn) {
+        this.showAlert();
+      }
+    }, 1000);
+  }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -93,6 +105,7 @@ export class TradingPage implements OnInit {
         keys.forEach(key => {
           if (key === "token") {
             this.storage.get(key).then(val => {
+              this.setLoggedIn();
               this.token = val;
               console.log(this.token);
             });
@@ -101,6 +114,53 @@ export class TradingPage implements OnInit {
       }
     });
   }
+
+  setLoggedIn() {
+    this.loggedIn = true;
+  }
+
+  checkLogin() {
+    this.storage.keys().then(keys => {
+      if (keys) {
+        keys.forEach(key => {
+          if (key === "token") {
+            this.storage.get(key).then(val => {
+              this.setLoggedIn();
+              this.token = val;
+              console.log(this.token);
+            });
+          }
+        });
+      }
+    });
+  }
+
+  gotoLogin() {
+    this.navCtrl.push(LoginComponent);
+    // check when he comes bach if he did login
+    this.checkLogin();
+  }
+
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: "Not a user!",
+      subTitle: "You are not logged in!",
+      buttons: [
+        {
+          text: "Login",
+          handler: data => {
+            this.navCtrl.push(LoginComponent);
+          }
+        },
+        {
+          text: "Cancel",
+          handler: data => {}
+        }
+      ]
+    });
+    alert.present();
+  }
+
   ionViewDidLoad() {
     console.log("ionViewDidLoad TradingPage");
   }
