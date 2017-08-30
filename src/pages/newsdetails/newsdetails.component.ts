@@ -5,6 +5,7 @@ import { Newsbody } from "./../../app/newsbody.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
+import { NavController, NavParams } from "ionic-angular";
 @Component({
   // moduleId: module.id,
   selector: "newsdetails",
@@ -12,10 +13,16 @@ import { Observable } from "rxjs/Rx";
   // styleUrls: ['newsdetails.component.scss']
 })
 export class NewsdetailsComponent implements OnInit {
-  @Input() id: string;
+  id: string;
   Newsbody: Newsdetailsresponse;
   elements: Element;
-  constructor(private CompanyService: CompanyService) {}
+  constructor(
+    private CompanyService: CompanyService,
+    private NavController: NavController,
+    public navParams: NavParams
+  ) {
+    this.id = navParams.get("id");
+  }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.

@@ -15,7 +15,10 @@ import {
 import {
   ValidationResponse,
   CancelResponse,
-  OrderOperationResult
+  OrderOperationResult,
+  Place,
+  PlaceOrderStatus,
+  PlaceResponse
 } from "./../../app/Validate.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { token } from "./../../app/token.interface";
@@ -67,12 +70,36 @@ export class TradingPage implements OnInit {
     strOrderDate: null,
     strExpireAt: null
   };
+
+  updateuserorder: userorder = {
+    PriceType: 0 /*Market -  Limited*/,
+    TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
+    BimsUserID: 0,
+    ReutersCode: "",
+    Side: 0 /*(2)Buy -(3) Sell -(4) Sell Same Day -(5) T+1*/,
+    Price: 0,
+    Quantity: 0,
+    Username: "",
+    CurrencyCode: "EGP",
+    Status: 1 /*(1)Open, (2)Completed, (3)Expired, (4)Cancelled, (5)Partially Executed, (6)Pending Approval, (7)Rejected, (8)Suspended, (9)Invalid Order, (-2)Cancelled With Error*/,
+    ExecutedQuantity: 0,
+    details: [],
+    ID: 0,
+    BimsID: 0,
+    OrderDate: null,
+    SymbolCode: "",
+    ExpireAt: null,
+    BkeeperID: 4527,
+    OrderReference: "",
+    strOrderDate: null,
+    strExpireAt: null
+  };
   ValidationResponse: ValidationResponse;
-  Updateresponse: ValidationResponse;
-  Createresponse: ValidationResponse;
+  Updateresponse: PlaceResponse;
+  Createresponse: PlaceResponse;
   CancelResponse: CancelResponse;
   showInsert = false;
-  ShowUpdate = false;
+  ShowUpdate: boolean[] = new Array();
   EnablePrice = true;
   constructor(
     public navCtrl: NavController,
@@ -113,7 +140,7 @@ export class TradingPage implements OnInit {
     this.showorders = false;
     this.showhistory = false;
     this.showInsert = false;
-    this.ShowUpdate = false;
+    // this.ShowUpdate = false;
   }
   getportfoliosummary() {
     this.TradeService.GetPortfolioSummary(this.token).subscribe(data => {
@@ -126,12 +153,15 @@ export class TradingPage implements OnInit {
     this.TradeService.getorders(this.token, true, 2).subscribe(data => {
       this.userorderresponse = data;
       console.log(this.userorderresponse);
+      for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+        this.ShowUpdate[i] = false;
+      }
     });
     this.showorders = !this.showorders;
     this.showportfolio = false;
     this.showhistory = false;
     this.showInsert = false;
-    this.ShowUpdate = false;
+    // this.ShowUpdate = false;
   }
   getorderhistory(orderid) {
     this.TradeService
@@ -144,11 +174,13 @@ export class TradingPage implements OnInit {
     this.showportfolio = false;
     this.showorders = false;
     this.showInsert = false;
-    this.ShowUpdate = false;
+    for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+      this.ShowUpdate[i] = false;
+    }
     this.showsummary = false;
   }
   CreateUpdateOrder() {
-    this.InitializeUserOrder();
+    // this.InitializeUserOrder();
     if (this.EnablePrice) {
       // this.userorder.Price = Number(
       //   document.getElementById("Price").textContent
@@ -167,6 +199,7 @@ export class TradingPage implements OnInit {
       this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
     }
     this.userorder.Username = this.token.result.UserName;
+    console.log(this.userorder);
     this.TradeService
       .ValidateOrder(true, false, this.userorder, this.token)
       .subscribe(data => {
@@ -213,43 +246,65 @@ export class TradingPage implements OnInit {
       .subscribe(data => {
         this.Createresponse = data;
         console.log(this.Createresponse);
-        alert(this.Createresponse.result.Message);
+        console.log(this.Createresponse);
+        alert(this.Createresponse.result.OutMessages);
       });
   }
   UpdateOrder(order: userorder) {
-    this.userorder = order;
+    // console.log(this.userorder);
+
+    this.updateuserorder.Username = this.token.result.UserName;
+    // console.log(this.userorder);
+    //  console.log(order);
+    //  console.log(this.token.result.UserName);
     if (this.EnablePrice) {
     } else {
-      this.userorder.Price = 0;
+      this.updateuserorder.Price = 0;
     }
     // order.Quantity = Number(document.getElementById("UQuantity").textContent);
     // order.ReutersCode = document.getElementById("UCode").textContent;
     //order.Username = this.token.result.UserName;
     //this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
     this.TradeService
-      .ValidateOrder(true, true, this.userorder, this.token)
+      .ValidateOrder(true, true, this.updateuserorder, this.token)
       .subscribe(data => {
         this.ValidationResponse = data;
         console.log(this.ValidationResponse);
+        if (
+          this.ValidationResponse.result.Result.toString() ===
+          OrderOperationResult[OrderOperationResult.Success]
+        ) {
+          this.pincode = Number(
+            prompt(
+              this.ValidationResponse.result.Message +
+                "Please enter the Pin code"
+            )
+          );
+          this.TradeService
+            .PlaceOrder(
+              true,
+              true,
+              this.updateuserorder,
+              this.token,
+              this.pincode
+            )
+            .subscribe(data => {
+              this.Updateresponse = data;
+              alert(this.Updateresponse.result.OutMessages);
+              console.log(this.Updateresponse);
+              console.log(this.Updateresponse.result.Status.toString());
+              console.log(PlaceOrderStatus[PlaceOrderStatus.Completed]);
+              if (
+                this.Updateresponse.result.Status.toString() ===
+                PlaceOrderStatus[PlaceOrderStatus.Completed]
+              ) {
+                order = Object.assign({}, this.updateuserorder);
+              }
+            });
+        } else {
+          alert(this.ValidationResponse.result.Message);
+        }
       });
-    if (
-      this.ValidationResponse.result.Result.toString() ===
-      OrderOperationResult[OrderOperationResult.Success]
-    ) {
-      this.pincode = Number(
-        prompt(
-          this.ValidationResponse.result.Message + "Please enter the Pin code"
-        )
-      );
-      this.TradeService
-        .PlaceOrder(true, true, this.userorder, this.token, this.pincode)
-        .subscribe(data => {
-          this.Updateresponse = data;
-          alert(this.Updateresponse.result.Message);
-        });
-    } else {
-      alert(this.ValidationResponse.result.Message);
-    }
   }
   CancelOrder(orderid: number) {
     this.pincode = Number(prompt("please enter your pin code"));
@@ -257,38 +312,55 @@ export class TradingPage implements OnInit {
       .CancelOrder(orderid, true, this.pincode, this.token)
       .subscribe(data => {
         this.CancelResponse = data;
+        console.log(this.CancelResponse);
         alert(this.CancelResponse.result.Message);
       });
   }
 
   ChooseDay() {
     this.userorder.TimeTerm = TimeTerm.Day;
+    this.updateuserorder.TimeTerm = TimeTerm.Day;
+    console.log("day");
+    console.log(this.userorder.TimeTerm);
   }
   ChooseWeek() {
     this.userorder.TimeTerm = TimeTerm.Week;
+    this.updateuserorder.TimeTerm = TimeTerm.Week;
   }
   ChooseMonth() {
     this.userorder.TimeTerm = TimeTerm.Month;
+    this.updateuserorder.TimeTerm = TimeTerm.Month;
   }
   ChooseMarket() {
     this.userorder.PriceType = PriceType.Market;
+    this.updateuserorder.PriceType = PriceType.Market;
     this.EnablePrice = false;
   }
   ChooseLimit() {
     this.userorder.PriceType = PriceType.Limit;
+    this.updateuserorder.PriceType = PriceType.Limit;
     this.EnablePrice = true;
+    console.log("limit");
+    console.log(this.userorder.PriceType);
   }
   ChooseBuy() {
     this.userorder.Side = OrderSide.Buy;
+    this.updateuserorder.Side = OrderSide.Buy;
+    console.log(this.userorder.Side);
+    console.log("buy");
   }
   ChooseSell() {
     this.userorder.Side = OrderSide.Sell;
+    this.updateuserorder.Side = OrderSide.Sell;
   }
   ChooseSellT0() {
     this.userorder.Side = OrderSide.Sell_T0;
+    // this.updateuserorder.Side = OrderSide.Sell_T0;
+    this.updateuserorder.Side = OrderSide.Sell_T0;
   }
   ChooseSellT1() {
     this.userorder.Side = OrderSide.Sell_T1;
+    this.updateuserorder.Side = OrderSide.Sell_T1;
   }
   checkupdatability(userorder: userorder): boolean {
     if (
@@ -302,45 +374,64 @@ export class TradingPage implements OnInit {
       return false;
     }
   }
-  ChangeUpdate() {
-    this.ShowUpdate = !this.ShowUpdate;
+  ChangeUpdate(id: number, order: userorder) {
     this.showportfolio = false;
     this.showhistory = false;
     this.showsummary = false;
     this.showInsert = false;
-    this.showorders = false;
+    // this.showorders = false;
+    for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+      if (id === i) {
+        this.ShowUpdate[i] = !this.ShowUpdate[i];
+        this.updateuserorder = Object.assign({}, order);
+      } else {
+        this.ShowUpdate[i] = false;
+      }
+    }
   }
   ChangeInsert() {
     this.showInsert = !this.showInsert;
     this.showportfolio = false;
     this.showhistory = false;
     this.showsummary = false;
-    this.ShowUpdate = false;
+    // this.ShowUpdate = false;
     this.showorders = false;
   }
-  InitializeUserOrder() {
-    this.userorder = {
-      PriceType: 0 /*Market -  Limited*/,
-      TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
-      BimsUserID: 0,
-      ReutersCode: "",
-      Side: 0 /*(2)Buy -(3) Sell -(4) Sell Same Day -(5) T+1*/,
-      Price: 0,
-      Quantity: 0,
-      Username: "",
-      CurrencyCode: "EGP",
-      Status: 1 /*(1)Open, (2)Completed, (3)Expired, (4)Cancelled, (5)Partially Executed, (6)Pending Approval, (7)Rejected, (8)Suspended, (9)Invalid Order, (-2)Cancelled With Error*/,
-      ExecutedQuantity: 0,
-      details: [],
-      ID: 0,
-      BimsID: 0,
-      OrderDate: null,
-      SymbolCode: "",
-      ExpireAt: null,
-      BkeeperID: 4527,
-      OrderReference: "",
-      strOrderDate: null,
-      strExpireAt: null
-    };
+  // InitializeUserOrder() {
+  //  // this.userorder = {
+  //   //  PriceType: 0 /*Market -  Limited*/,
+  //   //  TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
+  //     BimsUserID: 0,
+  //   //  ReutersCode: "",
+  //     // Side: 0 /*(2)Buy -(3) Sell -(4) Sell Same Day -(5) T+1*/,
+  //   //  Price: 0,
+  //  //   Quantity: 0,
+  //     Username: "",
+  //     CurrencyCode: "EGP",
+  //     Status: 1 /*(1)Open, (2)Completed, (3)Expired, (4)Cancelled, (5)Partially Executed, (6)Pending Approval, (7)Rejected, (8)Suspended, (9)Invalid Order, (-2)Cancelled With Error*/,
+  //     ExecutedQuantity: 0,
+  //     details: [],
+  //     ID: 0,
+  //     BimsID: 0,
+  //     OrderDate: null,
+  //     SymbolCode: "",
+  //     ExpireAt: null,
+  //     BkeeperID: 4527,
+  //     OrderReference: "",
+  //     strOrderDate: null,
+  //     strExpireAt: null
+  // //  };
+  // }
+  showTimeTerm(Term: TimeTerm): string {
+    return TimeTerm[Term];
+  }
+  showOrderStatus(Status: OrderStatus): string {
+    return OrderStatus[Status];
+  }
+  showOrderSide(Side: OrderSide): string {
+    return OrderSide[Side];
+  }
+  showPriceType(Price: PriceType): string {
+    return PriceType[Price];
   }
 }

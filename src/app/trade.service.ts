@@ -17,7 +17,12 @@ import {
   PriceType,
   TimeTerm
 } from "./userorder.interface";
-import { ValidationResponse, CancelResponse } from "./Validate.interface";
+import {
+  ValidationResponse,
+  CancelResponse,
+  PlaceOrderStatus,
+  PlaceResponse
+} from "./Validate.interface";
 @Injectable()
 export class TradeService extends ParentService {
   GetPortfolioSummary(token: token): Observable<Detailsresponse> {
@@ -166,7 +171,7 @@ export class TradeService extends ParentService {
     order: userorder,
     token: token,
     Pin: number
-  ): Observable<ValidationResponse> {
+  ): Observable<PlaceResponse> {
     this.getunsecurelink();
     this.link =
       this.link +
@@ -219,7 +224,7 @@ export class TradeService extends ParentService {
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {
-        return <ValidationResponse>x.json();
+        return <PlaceResponse>x.json();
       })
       .catch((t: Response) => t.json());
   }

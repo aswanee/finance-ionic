@@ -24,7 +24,7 @@ import { MarketPage } from "./../market/market";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
 import { ToastController } from "ionic-angular";
-
+import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
@@ -172,6 +172,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   getdetails(id) {
     this.showrelatednews = false;
     this.id = id;
+    this.goToNewsDeatils();
     this.showdetails = !this.showdetails;
   }
 
@@ -199,5 +200,10 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
 
   showLastFiveDays() {
     this.lastFveDays = !this.lastFveDays;
+  }
+  goToNewsDeatils() {
+    this.navCtrl.push(NewsdetailsComponent, {
+      id: this.id
+    });
   }
 }

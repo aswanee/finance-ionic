@@ -8,6 +8,7 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
 import { TranslatePipe, TranslateService } from "ng2-translate";
 import { language } from "./../settings/settings";
+import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 @Component({
   selector: "page-contact",
   templateUrl: "contact.html"
@@ -36,6 +37,7 @@ export class ContactPage implements OnInit {
   }
   getdetails(id) {
     this.id = id;
+    this.goToNewsDeatils();
     //   const parsed = Number(id);
     //  this.CompanyService.getnewsdetails(parsed).subscribe(data  => {this.Newsbody = data;
     //               var div = document.createElement('div');
@@ -48,7 +50,12 @@ export class ContactPage implements OnInit {
     //            } );
     this.showdetails = true;
   }
-  back() {
-    this.showdetails = false;
+  // back() {
+  //   this.showdetails = false;
+  // }
+  goToNewsDeatils() {
+    this.navCtrl.push(NewsdetailsComponent, {
+      id: this.id
+    });
   }
 }
