@@ -57,7 +57,6 @@
                     <button ion-item (click)="ChangeUpdate(i,item)" [hidden]="!checkupdatability(item)">Update</button>
                 </ion-col>
 
-
                 <form *ngIf="ShowUpdate[i]">
                     <ion-item>
                         <ion-label>ReutersCode</ion-label>
@@ -67,34 +66,35 @@
                         <ion-label>Quantity</ion-label>
                         <ion-input [(ngModel)]="updateuserorder.Quantity" name="UQuantity"></ion-input>
                     </ion-item>
-                    <ion-segment>
-                        <ion-segment-button value="UDay" (click)="ChooseDay()">
-                            Day
-                        </ion-segment-button>
-                        <ion-segment-button value="UWeek" (click)="ChooseWeek()">
-                            Week
-                        </ion-segment-button>
-                        <ion-segment-button value="UMonth" (click)="ChooseMonth()">
-                            Month
-                        </ion-segment-button>
-                    </ion-segment>
-
-
-                    <ion-segment>
-                        <ion-segment-button value="UMarket" (click)="ChooseMarket()">
-                            Market
-                        </ion-segment-button>
-                        <ion-segment-button value="ULimit" (click)="ChooseLimit()">
-                            Limit
-                        </ion-segment-button>
-                    </ion-segment>
+                    <ion-item>
+                        <ion-segment>
+                            <ion-segment-button value="UDay" (click)="ChooseDay()">
+                                Day
+                            </ion-segment-button>
+                            <ion-segment-button value="UWeek" (click)="ChooseWeek()">
+                                Week
+                            </ion-segment-button>
+                            <ion-segment-button value="UMonth" (click)="ChooseMonth()">
+                                Month
+                            </ion-segment-button>
+                        </ion-segment>
+                    </ion-item>
+                    <ion-item>
+                        <ion-segment>
+                            <ion-segment-button value="UMarket" (click)="ChooseMarket()">
+                                Market
+                            </ion-segment-button>
+                            <ion-segment-button value="ULimit" (click)="ChooseLimit()">
+                                Limit
+                            </ion-segment-button>
+                        </ion-segment>
+                    </ion-item>
                     <ion-item *ngIf="EnablePrice">
                         <ion-label>Price</ion-label>
                         <ion-input ion-input [(ngModel)]="updateuserorder.Price" name="UPrice"></ion-input>
                     </ion-item>
                     <button ion-button block type="submit" (click)="UpdateOrder(item)">Update Order</button>
                 </form>
-
 
                 <ion-col>
                     <button ion-item [hidden]="!checkupdatability(item)" (click)="CancelOrder(item.ID)">Cancel</button>
