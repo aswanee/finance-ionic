@@ -20,7 +20,7 @@ export class CompanyService extends ParentService {
     count: number,
     isArabic: boolean
   ): Observable<Newsresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     let temp = "";
     temp =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -41,7 +41,7 @@ export class CompanyService extends ParentService {
   }
 
   getnewsdetails(id: number): Observable<Newsdetailsresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/GetNewsDetails?newsId=" + id;
     console.log(this.link);
     return this.http
@@ -52,7 +52,7 @@ export class CompanyService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getnewsrelated(id: string): Observable<Newsresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/GetNewsRelatedTo?Code=" + id;
     console.log(this.link);
     return this.http

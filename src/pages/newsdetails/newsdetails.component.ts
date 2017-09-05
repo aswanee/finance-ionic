@@ -10,7 +10,7 @@ import { NavController, NavParams } from "ionic-angular";
   // moduleId: module.id,
   selector: "newsdetails",
   templateUrl: "newsdetails.component.html"
-  // styleUrls: ['newsdetails.component.scss']
+  // styleUrls: ["newsdetails.component.scss"]
 })
 export class NewsdetailsComponent implements OnInit {
   id: string;

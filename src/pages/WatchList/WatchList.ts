@@ -154,6 +154,9 @@ export class HomePage implements OnInit {
   addToWatchlist() {
     this.editpressed = true;
     // this.hidewatchlast = this.editpressed || this.stockchosen;
+    // for (let i = 0; i < this.displayListDummy.length; i++) {
+    //   this.map[this.displayListDummy[i]] = false;
+    // }
   }
 
   //used for searching

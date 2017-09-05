@@ -8,7 +8,7 @@
 <ion-content padding>
 
 
-    <div class="list" *ngIf="editpressed">
+    <div class="list" *ngIf="editpressed && displayListDummy">
         <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
             <ion-item *ngFor="let item of displayListDummy; let i=index;">
@@ -28,7 +28,7 @@
         </ion-fab>
     </div>
 
-    <ion-list *ngIf="StockDetails ">
+    <ion-list *ngIf="StockDetails && !editpressed">
         <ion-item>
             <ion-row>
                 <ion-col col-1>
