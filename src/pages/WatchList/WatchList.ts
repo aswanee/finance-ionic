@@ -114,18 +114,26 @@ export class HomePage implements OnInit {
   }
 
   falsepressed() {
-    this.dispnames = [];
+    // if (this.List.result.length > 0) {
+    //   this.dispnames = [];
+    // }
+
     for (let i = 0; i < this.List.result.length; i++) {
-      if (this.map[this.List.result[i][0]] === true) {
-        this.dispnames.push(this.List.result[i][0]);
+      console.log(this.map[this.displayListDummy[i]]);
+
+      if (this.map[this.displayListDummy[i]] === true) {
+        console.log(this.map[this.displayListDummy[i]]);
+        this.dispnames.push(this.displayListDummy[i]);
         this.displayListDummy[i] = this.displayListDummy[
           this.displayListDummy.length - 1
         ];
         this.displayListDummy.pop();
+        console.log(this.displayListDummy);
+
         console.log("saved");
       }
     }
-
+    this.displayList = this.displayListDummy;
     console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
@@ -141,11 +149,12 @@ export class HomePage implements OnInit {
 
   removeFromWatchlist(index: number) {
     // Update saved watchlist
-    if (this.initialized == false) {
+    if (this.initialized === false) {
       this.displayListDummy.push(this.dispnames[index]);
     }
-    this.displayList.sort();
+    this.displayListDummy.sort();
     this.map[this.dispnames[index]] = false;
+    this.displayList = this.displayListDummy;
     console.log("removed");
     console.log(this.map[this.dispnames[index]]);
     console.log(this.dispnames[index]);
@@ -166,12 +175,12 @@ export class HomePage implements OnInit {
   addToWatchlist() {
     this.editpressed = true;
     if (this.initialized === true) {
-      console.log(this.List.result.length);
+      console.log(this.displayListDummy.length);
       console.log("initialized");
       for (let k = 0; k < this.dispnames.length; k++) {
         for (let i = 0; i < this.List.result.length; i++) {
           if (this.dispnames[k] === this.displayListDummy[i]) {
-            this.map[this.List.result[i][0]] = true;
+            this.map[this.displayListDummy[i]] = true;
             console.log(this.List.result[i][0]);
             console.log(this.displayListDummy[i]);
             console.log(this.dispnames[k]);
@@ -179,6 +188,7 @@ export class HomePage implements OnInit {
               this.displayListDummy.length - 1
             ];
             this.displayListDummy.pop();
+            console.log(this.displayListDummy);
             break;
           }
         }
@@ -189,23 +199,25 @@ export class HomePage implements OnInit {
     // for (let i = 0; i < this.displayListDummy.length; i++) {
     //   this.map[this.displayListDummy[i]] = false;
     // }
+
     this.displayListDummy.sort();
+    this.displayList = this.displayListDummy;
   }
 
   //used for searching
   getItems(ev: any) {
     // console.log(this.map);
-    this.displayListDummy = this.displayList;
-    if (this.displayListDummy) {
+    this.displayList = this.displayListDummy;
+    if (this.displayList) {
       console.log(this.displayListDummy);
     }
-    if (this.displayListDummy) {
+    if (this.displayList) {
       // set val to the value of the searchbar
       let val = ev.target.value;
 
       // if the value is an empty string don't filter the items
       if (val && val.trim() != "") {
-        this.displayListDummy = this.displayListDummy.filter(item => {
+        this.displayList = this.displayList.filter(item => {
           return item.toLowerCase().indexOf(val.toLowerCase()) > -1;
         });
       }
