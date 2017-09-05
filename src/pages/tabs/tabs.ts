@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 
 import { AboutPage } from "../about/about";
-import { ContactPage } from "../contact/contact";
+import { NewsPage } from "../News/News";
 import { HomePage } from "../WatchList/WatchList";
 import { MarketPage } from "../market/market";
 import { AlertPage } from "../alert/alert";
@@ -15,7 +15,7 @@ import { TradingPage } from "./../trading/trading";
 export class TabsPage implements OnInit {
   tab1Root = HomePage;
   tab2Root = MarketPage;
-  tab3Root = ContactPage;
+  tab3Root = NewsPage;
   tabroot6 = TradingPage;
   constructor(private TranslateService: TranslateService) {}
   ngOnInit() {

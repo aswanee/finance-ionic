@@ -11,9 +11,9 @@ import { language } from "./../settings/settings";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 @Component({
   selector: "page-contact",
-  templateUrl: "contact.html"
+  templateUrl: "News.html"
 })
-export class ContactPage implements OnInit {
+export class NewsPage implements OnInit {
   News: Newsresponse;
   Newsbody: Newsdetailsresponse;
   showdetails = false;

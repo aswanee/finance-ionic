@@ -5,7 +5,7 @@ import { MyApp } from "./app.component";
 import { CommonModule } from "@angular/common";
 import { NewsdetailsComponent } from "./../pages/newsdetails/newsdetails.component";
 import { AboutPage } from "../pages/about/about";
-import { ContactPage } from "../pages/contact/contact";
+import { NewsPage } from "../pages/News/News";
 import { AlertPage } from "../pages/alert/alert";
 import { HomePage } from "../pages/WatchList/WatchList";
 import { LoginComponent } from "./../pages/login/login.component";
@@ -50,7 +50,7 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
+    NewsPage,
     HomePage,
     LoginComponent,
     TabsPage,
@@ -81,7 +81,7 @@ export function createTranslateLoader(http: Http) {
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (http: Http) =>
-        new TranslateStaticLoader(http, "./../assets", ".json"),
+        new TranslateStaticLoader(http, "./../assets/", ".json"),
       deps: [Http]
     })
   ],
@@ -89,7 +89,7 @@ export function createTranslateLoader(http: Http) {
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
+    NewsPage,
     HomePage,
     LoginComponent,
     TabsPage,
