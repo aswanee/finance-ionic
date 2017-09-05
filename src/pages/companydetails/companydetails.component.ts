@@ -53,6 +53,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   Trades: Detailsresponse;
   relNews: Newsresponse;
   reuter;
+  TradesArray: string[][] = new Array();
 
   constructor(
     private StockService: StockService,
@@ -116,6 +117,19 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     if (!this.showtrades) {
       this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
         this.Trades = data;
+        for (let i = 0; i < this.Trades.result.length; i++) {
+          this.TradesArray[i] = new Array();
+        }
+        for (let i = 0; i < this.Trades.result.length; i++) {
+          this.TradesArray[i] = this.Trades.result[i].split(",");
+
+          this.TradesArray[i][
+            this.TradesArray[i].length - 1
+          ] = this.TradesArray[i][this.TradesArray[i].length - 1].substring(
+            0,
+            this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
+          );
+        }
       });
       this.showtrades = true;
       // this.stockchosen = false;

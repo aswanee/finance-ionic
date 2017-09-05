@@ -33,7 +33,7 @@ export class HomePage implements OnInit {
   showCompanyDetails: boolean;
   hidewatchlast = this.stockchosen || this.editpressed;
   showrelatednews: boolean = false;
-
+  initialized: boolean = true;
   // are chosen alias
 
   map: { [reuter: string]: Boolean } = {};
@@ -118,6 +118,11 @@ export class HomePage implements OnInit {
     for (let i = 0; i < this.List.result.length; i++) {
       if (this.map[this.List.result[i][0]] === true) {
         this.dispnames.push(this.List.result[i][0]);
+        this.displayListDummy[i] = this.displayListDummy[
+          this.displayListDummy.length - 1
+        ];
+        this.displayListDummy.pop();
+        console.log("saved");
       }
     }
 
@@ -136,9 +141,16 @@ export class HomePage implements OnInit {
 
   removeFromWatchlist(index: number) {
     // Update saved watchlist
+    if (this.initialized == false) {
+      this.displayListDummy.push(this.dispnames[index]);
+    }
+    this.displayList.sort();
+    this.map[this.dispnames[index]] = false;
+    console.log("removed");
+    console.log(this.map[this.dispnames[index]]);
+    console.log(this.dispnames[index]);
     this.dispnames.splice(index, 1);
     this.storage.set("watchList", this.dispnames);
-
     // TODO: Add test here
     this.storage.get("watchList").then(val => {
       console.log(val);
@@ -153,10 +165,31 @@ export class HomePage implements OnInit {
   // We should remove the already added elements from the add to list
   addToWatchlist() {
     this.editpressed = true;
+    if (this.initialized === true) {
+      console.log(this.List.result.length);
+      console.log("initialized");
+      for (let k = 0; k < this.dispnames.length; k++) {
+        for (let i = 0; i < this.List.result.length; i++) {
+          if (this.dispnames[k] === this.displayListDummy[i]) {
+            this.map[this.List.result[i][0]] = true;
+            console.log(this.List.result[i][0]);
+            console.log(this.displayListDummy[i]);
+            console.log(this.dispnames[k]);
+            this.displayListDummy[i] = this.displayListDummy[
+              this.displayListDummy.length - 1
+            ];
+            this.displayListDummy.pop();
+            break;
+          }
+        }
+      }
+      this.initialized = false;
+    }
     // this.hidewatchlast = this.editpressed || this.stockchosen;
     // for (let i = 0; i < this.displayListDummy.length; i++) {
     //   this.map[this.displayListDummy[i]] = false;
     // }
+    this.displayListDummy.sort();
   }
 
   //used for searching
