@@ -30,7 +30,7 @@
                     {{item.PercentageChange}}
                 </ion-col>
                 <ion-col>
-                    {{item.GainLossPercentage}}
+                    {{item.GainLossPercentage | aroundTo: 2 }}
                 </ion-col>
             </ion-row>
         </ion-grid>

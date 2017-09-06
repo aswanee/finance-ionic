@@ -21,8 +21,14 @@ import { CompanydetailsComponent } from "./../companydetails/companydetails.comp
 })
 export class MarketPage {
   lastFveDays: boolean = false;
+  // lstFveDays70: boolean = false;
+  // lstFveDays100: boolean = false;
+
   index: number = 0;
   IndicesTable: MarketResponse;
+  show30: boolean = false;
+  show70: boolean = false;
+  show100: boolean = false;
   PerformersTable: MarketResponse;
   EGX30: SerResponse;
   EGX70: SerResponse;
@@ -36,6 +42,8 @@ export class MarketPage {
   rootid: number = 1;
   BV: SerResponse;
   WP: SerResponse;
+  dorefresh = true;
+  initialized = false;
   constructor(
     public navCtrl: NavController,
     private MarketService: MarketService,
@@ -55,17 +63,17 @@ export class MarketPage {
     this.MarketService.getindices("EGX30").subscribe(data => {
       this.EGX30 = data;
       console.log(this.EGX30);
-      this.Indices.push(this.EGX30);
+      //  this.Indices.push(this.EGX30);
     });
     this.MarketService.getindices("EGX70").subscribe(data => {
       this.EGX70 = data;
       console.log(this.EGX70);
-      this.Indices.push(this.EGX70);
+      //  this.Indices.push(this.EGX70);
     });
     this.MarketService.getindices("EGX100").subscribe(data => {
       this.EGX100 = data;
       console.log(this.EGX100);
-      this.Indices.push(this.EGX100);
+      //   this.Indices.push(this.EGX100);
     });
     this.MarketService.getperformers("BP", true).subscribe(data => {
       this.BP = data;
@@ -81,6 +89,60 @@ export class MarketPage {
     });
     console.log(this.Indices);
     this.TranslateService.use(language);
+    this.initialized = true;
+  }
+  ionViewDidEnter() {
+    this.dorefresh = true;
+    this.refresh();
+  }
+  ionViewWillLeave() {
+    this.dorefresh = false;
+  }
+  refresh() {
+    //  setTimeout(() => {
+    //     }, 1000);
+    this.Indices = new Array();
+    this.MarketService.getindicestable().subscribe(data => {
+      this.IndicesTable = data;
+      console.log(this.IndicesTable);
+    });
+    this.MarketService.getperformerstable().subscribe(data => {
+      this.PerformersTable = data;
+      console.log(this.PerformersTable);
+    });
+    this.MarketService.getindices("EGX30").subscribe(data => {
+      this.EGX30 = data;
+      console.log(this.EGX30);
+      // this.Indices.push(this.EGX30);
+    });
+    this.MarketService.getindices("EGX70").subscribe(data => {
+      this.EGX70 = data;
+      console.log(this.EGX70);
+      // this.Indices.push(this.EGX70);
+    });
+    this.MarketService.getindices("EGX100").subscribe(data => {
+      this.EGX100 = data;
+      console.log(this.EGX100);
+      //  this.Indices.push(this.EGX100);
+    });
+    this.MarketService.getperformers("BP", true).subscribe(data => {
+      this.BP = data;
+      console.log(this.BP);
+    });
+    this.MarketService.getperformers("BV", true).subscribe(data => {
+      this.BV = data;
+      console.log(this.BV);
+    });
+    this.MarketService.getperformers("WP", true).subscribe(data => {
+      this.WP = data;
+      console.log(this.WP);
+    });
+    if (this.dorefresh) {
+      setTimeout(() => {
+        this.refresh();
+      }, 10000);
+      console.log("refresh");
+    }
   }
   setstockchosen(reuter: string) {
     this.stockchosen = true;
@@ -97,6 +159,25 @@ export class MarketPage {
   showHideChart(i: number) {
     this.showChart = !this.showChart;
     this.index = i;
+    switch (i) {
+      case 0:
+        this.show30 = true;
+        this.show70 = false;
+        this.show100 = false;
+        break;
+      case 1:
+        this.show30 = false;
+        this.show70 = true;
+        this.show100 = false;
+        break;
+      case 2:
+        this.show30 = false;
+        this.show70 = false;
+        this.show100 = true;
+        break;
+      default:
+        break;
+    }
   }
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;

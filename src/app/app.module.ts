@@ -39,6 +39,7 @@ import { AlertService } from "./alert.service";
 import { PopOverPageModule } from "../pages/pop-over/pop-over.module";
 //pipes
 import { LimitToPipe } from "./../pipes/limit-to/limit-to";
+import { aroundToPipe } from "./../pipes/around-to/around-to";
 
 export function HttpLoaderFactory(http: Http) {
   return new TranslateStaticLoader(http);
@@ -63,7 +64,8 @@ export function createTranslateLoader(http: Http) {
     TradingPage,
     LimitToPipe,
     CreateAlertPage,
-    UpdateAlertPage
+    UpdateAlertPage,
+    aroundToPipe
   ],
   imports: [
     BrowserModule,

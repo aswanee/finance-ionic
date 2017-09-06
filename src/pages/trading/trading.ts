@@ -37,10 +37,33 @@ import { Storage } from "@ionic/storage";
 @IonicPage()
 @Component({
   selector: "page-trading",
-  templateUrl: "trading.html"
+  templateUrl: "trading.html",
+  styles:[`.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+    background-color: lightblue;
+    border-color: #488aff;
+    border-style: solid;
+    border-width: 1px;
+    background-color: #e0e0e0;
+}
+.text-input-md {
+    border: 1px solid darkgrey;
+}`]
+//segment-button segment-activated
 })
 export class TradingPage implements OnInit {
-  token: token;
+  //token: token;
+  private _token:token;
+  get token():token {    
+      var t :token =null  ;
+      try{
+          t = <token>window['token']
+      }
+      catch(e){
+        alert(e);
+      }
+      return t
+  }
+
   userorderhistoryresponse: userorderhistoryresponse;
   userorderresponse: userorderresponse;
   portfolioresponse: portfolioresponse;
@@ -113,87 +136,49 @@ export class TradingPage implements OnInit {
     private TradeService: TradeService,
     private storage: Storage,
     public alertCtrl: AlertController
-  ) {
-    setTimeout(() => {
-      if (!this.loggedIn) {
+  ) 
+  {
         this.showAlert();
       }
-    }, 1000);
-  }
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.LoginService.gettoken("hkh", "Otv@1234").subscribe(data => {
-    //   this.token = data;
-    //   console.log(this.token);
-    // });
-    this.storage.keys().then(keys => {
-      if (keys) {
-        keys.forEach(key => {
-          if (key === "token") {
-            this.storage.get(key).then(val => {
-              this.setLoggedIn();
-              this.token = val;
               console.log(this.token);
-            });
-          }
-        });
-      }
-    });
-  }
-
-  setLoggedIn() {
-    this.loggedIn = true;
-  }
-
-  checkLogin() {
-    this.storage.keys().then(keys => {
-      if (keys) {
-        keys.forEach(key => {
-          if (key === "token") {
-            this.storage.get(key).then(val => {
-              this.setLoggedIn();
-              this.token = val;
-              console.log(this.token);
-            });
-          }
-        });
-      }
-    });
   }
 
   gotoLogin() {
-    this.navCtrl.push(LoginComponent);
+
     // check when he comes bach if he did login
-    this.checkLogin();
+    //this.checkLogin();
+    if(this.token==null)
+      {
+        this.navCtrl.push(LoginComponent);
+      }
   }
 
   showAlert() {
-    let alert = this.alertCtrl.create({
-      title: "Not a user!",
-      subTitle: "You are not logged in!",
-      buttons: [
+    this.loggedIn = false;
+    if (this.token==null)
         {
-          text: "Login",
-          handler: data => {
-            this.navCtrl.push(LoginComponent);
-          }
-        },
-        {
-          text: "Cancel",
-          handler: data => {}
+        setTimeout(() => {
+            this.showAlert();
+        }, 1000);
         }
-      ]
-    });
-    alert.present();
+      else
+        this.loggedIn = true;
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad TradingPage");
   }
   getportfolio() {
+    /* bn Rashed*/
+    //this.checkLogin();
     this.TradeService.GetPortfolio(this.token, true).subscribe(data => {
       this.portfolioresponse = data;
+      if(this.portfolioresponse.Status=="UnauthorizedOrOverrideToken")
+        {
+          window['token'] = null;
+          this.gotoLogin()
+        }
       console.log(this.portfolioresponse);
     });
     this.showportfolio = !this.showportfolio;
@@ -205,6 +190,11 @@ export class TradingPage implements OnInit {
   getportfoliosummary() {
     this.TradeService.GetPortfolioSummary(this.token).subscribe(data => {
       this.Detailsresponse = data;
+      if(this.Detailsresponse.status=="UnauthorizedOrOverrideToken")
+        {
+          window['token'] = null;
+          this.gotoLogin()
+        }
       console.log(this.Detailsresponse);
     });
     this.showsummary = !this.showsummary;
@@ -213,9 +203,17 @@ export class TradingPage implements OnInit {
     this.TradeService.getorders(this.token, true, 2).subscribe(data => {
       this.userorderresponse = data;
       console.log(this.userorderresponse);
+      if(this.userorderresponse.Status=="UnauthorizedOrOverrideToken")
+        {
+          window['token'] = null;
+          this.gotoLogin()
+        }
+        else
+          {
       for (let i = 0; i < this.userorderresponse.Status.length; i++) {
         this.ShowUpdate[i] = false;
       }
+          }
     });
     this.showorders = !this.showorders;
     this.showportfolio = false;
@@ -229,6 +227,11 @@ export class TradingPage implements OnInit {
       .subscribe(data => {
         this.userorderhistoryresponse = data;
         console.log(this.userorderhistoryresponse);
+        if(this.userorderhistoryresponse.Status=="UnauthorizedOrOverrideToken")
+          {
+            window['token'] = null;
+            this.gotoLogin()
+          }
       });
     this.showhistory = !this.showhistory;
     this.showportfolio = false;

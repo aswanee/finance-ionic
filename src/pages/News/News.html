@@ -7,30 +7,11 @@
 </ion-header>
 
 <ion-content>
-    <!-- <ion-list>
-        <ion-list-header>Follow us on Twitter</ion-list-header>
-        <ion-item>
-            <ion-icon name="ionic" item-left></ion-icon>
-            @ionicframework
-        </ion-item>
-    </ion-list> -->
-    <!-- <ion-buttons *ngFor="let item of News?.result.V">
-        <button ion-button full style="margin-top: 3%;" (click)="getdetails(item[0])" [hidden]="showdetails">
-     <h1> {{item[1]}} </h1>
-     <h2>{{item[2]}}</h2>
-    </button>
-    </ion-buttons> -->
     <ion-list *ngIf="News?.result.V">
         <ion-item *ngFor="let item of News?.result.V" (click)="getdetails(item[0])">
-            <p color="dark">
-                {{ item[1] | limitTo: 50 }} </p>
-            <br>
-            <p>{{item[2]}}
-            </p>
-
+     <p color="dark">{{ item[1] | limitTo: 50 }}</p>
+     <br/>
+     <p>{{item[2]}}</p>
         </ion-item>
     </ion-list>
-    <!-- <ion-content *ngIf="showdetails"> -->
-    <!-- <newsdetails [id]='id'></newsdetails>
-        <button ion-button full (click)="back()" [hidden]="!showdetails">{{'Back' | translate}}</button> -->
 </ion-content>

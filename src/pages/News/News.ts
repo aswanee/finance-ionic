@@ -9,6 +9,7 @@ import { Observable } from "rxjs/Rx";
 import { TranslatePipe, TranslateService } from "ng2-translate";
 import { language } from "./../settings/settings";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
+import { Events } from "ionic-angular";
 @Component({
   selector: "page-contact",
   templateUrl: "News.html"
@@ -19,11 +20,14 @@ export class NewsPage implements OnInit {
   showdetails = false;
   date: Date = new Date("2017-7-1");
   elements: Element;
+  initialized = false;
   id: string;
+  dorefresh: boolean = true;
   constructor(
     public navCtrl: NavController,
     private CompanyService: CompanyService,
-    private TranslateService: TranslateService
+    private TranslateService: TranslateService,
+    public events: Events
   ) {
     this.CompanyService.getnews(this.date, 100, false).subscribe(data => {
       this.News = data;
@@ -34,6 +38,31 @@ export class NewsPage implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.TranslateService.use(language);
+    this.initialized = true;
+  }
+  ionViewDidEnter() {
+    this.dorefresh = true;
+    this.refresh();
+  }
+  ionViewWillLeave() {
+    this.dorefresh = false;
+  }
+  refresh() {
+    //  setTimeout(() => {
+    //     }, 1000);
+    if (this.initialized && this.News) {
+      this.date = new Date(this.News.result.V[0][2]);
+    }
+    this.CompanyService.getnews(this.date, 100, false).subscribe(data => {
+      this.News = data;
+      // console.log(this.News);
+    });
+    if (this.dorefresh) {
+      setTimeout(() => {
+        this.refresh();
+      }, 1000);
+      console.log("refresh");
+    }
   }
   getdetails(id) {
     this.id = id;

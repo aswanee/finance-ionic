@@ -34,6 +34,7 @@ export class HomePage implements OnInit {
   hidewatchlast = this.stockchosen || this.editpressed;
   showrelatednews: boolean = false;
   initialized: boolean = true;
+  initializedref: boolean = false;
   // are chosen alias
 
   map: { [reuter: string]: Boolean } = {};
@@ -101,6 +102,7 @@ export class HomePage implements OnInit {
         }
       });
     });
+    this.initializedref = true;
   }
 
   changepressed() {
