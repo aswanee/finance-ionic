@@ -21,10 +21,10 @@
             <ion-col col>
                 <p>{{'Change' |translate}}</p>
             </ion-col>
-            <ion-col col>
-                <p>{{'Percentage' |translate}}</p>
+            <ion-col col *ngIf="this.isSmall">
+                <p>{{'Percentage' | translate}}</p>
             </ion-col>
-            <ion-col col>
+            <ion-col col *ngIf="this.isSmall">
                 <p>{{'Trend' | translate}}</p>
             </ion-col>
         </ion-row>

@@ -1,6 +1,5 @@
-import { language } from "./../settings/settings";
-import { isArabic } from "./../settings/settings";
-import { Component, OnInit } from "@angular/core";
+import { language , isArabic} from "./../settings/settings";
+import { Component, OnInit,HostListener } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
@@ -35,6 +34,7 @@ export class MarketPage {
   EGX70: SerResponse;
   showChart: boolean = false;
   stockchosen: boolean = false;
+  isSmall: boolean = false;
   anotherbool: boolean = true;
   reuter: string;
   EGX100: SerResponse;
@@ -50,6 +50,11 @@ export class MarketPage {
     private MarketService: MarketService,
     private TranslateService: TranslateService
   ) {}
+  @HostListener('window:resize', ['$event'])
+  onResize(event){
+     console.log("Width: " + event.target.innerWidth);
+     this.isSmall = event.target.innerWidth < 414? true : false;
+  }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
