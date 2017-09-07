@@ -21,10 +21,10 @@
             <ion-col col>
                 <p>{{'Change' |translate}}</p>
             </ion-col>
-            <ion-col col *ngIf="this.isSmall">
+            <ion-col col >
                 <p>{{'Percentage' | translate}}</p>
             </ion-col>
-            <ion-col col *ngIf="this.isSmall">
+            <ion-col col >
                 <p>{{'Trend' | translate}}</p>
             </ion-col>
         </ion-row>
@@ -37,8 +37,8 @@
                 <ion-col col> {{EGX30?.result[0][1]}}</ion-col>
                 <ion-col col> {{EGX30?.result[0][2]}}</ion-col>
                 <ion-col  col> {{EGX30?.result[0][3]}}</ion-col>
-                <!-- <ion-col  col> {{EGX30?.result[0][4]}}</ion-col>
-                <ion-col  col> {{EGX30?.result[0][5]}}</ion-col> -->
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][4]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][5]}}</ion-col> 
                 <ion-col  col>
                     <ion-icon right *ngIf="EGX30?.result[0][2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="EGX30?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
@@ -50,8 +50,8 @@
                 <ion-col col> {{EGX70?.result[0][1]}}</ion-col>
                 <ion-col col> {{EGX70?.result[0][2]}}</ion-col>
                 <ion-col  col> {{EGX70?.result[0][3]}}</ion-col>
-                <!-- <ion-col  col> {{EGX70?.result[0][4]}}</ion-col>
-                <ion-col  col> {{EGX70?.result[0][5]}}</ion-col> -->
+                 <ion-col  col *ngIf="!this.isSmall"> {{EGX70?.result[0][4]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX70?.result[0][5]}}</ion-col> 
                 <ion-col  col>
                     <ion-icon right *ngIf="EGX70?.result[0][2]> 0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="EGX70?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
@@ -64,8 +64,8 @@
                 <ion-col col> {{EGX100?.result[0][1]}}</ion-col>
                 <ion-col col> {{EGX100?.result[0][2]}}</ion-col>
                 <ion-col  col> {{EGX100?.result[0][3]}}</ion-col>
-                <!-- <ion-col  col> {{EGX100?.result[0][4]}}</ion-col>
-                <ion-col  col> {{EGX100?.result[0][5]}}</ion-col> -->
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX100?.result[0][4]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX100?.result[0][5]}}</ion-col> 
                 <ion-col  col>
                     <ion-icon right *ngIf="EGX100?.result[0][2]> 0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="EGX100?.result[0][2] < 0" name="md-trending-down" color="danger"></ion-icon>
