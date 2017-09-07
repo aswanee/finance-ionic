@@ -58,6 +58,19 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.TranslateService.use(language);
+    // this.storage.keys().then (
+    //   keys=>{
+    //     if(keys){
+
+    //     }
+    //    window['token'] = data;
+    // });
+    this.storage.get("token").then(val => {
+      window["token"] = val;
+      console.log(val);
+    });
+    console.log(window["token"]);
+    console.log(this.storage.get("token"));
     this.StockService.getnames(isArabic).subscribe(data => {
       this.List = data;
       console.log(this.List);

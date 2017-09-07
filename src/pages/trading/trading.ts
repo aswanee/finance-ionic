@@ -15,6 +15,7 @@ import {
   OrderStatus,
   PriceType
 } from "./../../app/userorder.interface";
+import { OrderhistoryPage } from "./../orderhistory/orderhistory";
 import {
   ValidationResponse,
   CancelResponse,
@@ -151,7 +152,12 @@ export class TradingPage implements OnInit {
       this.navCtrl.push(LoginComponent);
     }
   }
-
+  goToorderHistory(orderid) {
+    this.navCtrl.push(OrderhistoryPage, {
+      token: this.token,
+      orderid: orderid
+    });
+  }
   showAlert() {
     this.loggedIn = false;
     if (this.token == null) {
@@ -212,26 +218,7 @@ export class TradingPage implements OnInit {
     // this.ShowUpdate = false;
   }
   getorderhistory(orderid) {
-    this.TradeService
-      .getorderhistory(this.token, isArabic, orderid)
-      .subscribe(data => {
-        this.userorderhistoryresponse = data;
-        console.log(this.userorderhistoryresponse);
-        if (
-          this.userorderhistoryresponse.Status == "UnauthorizedOrOverrideToken"
-        ) {
-          window["token"] = null;
-          this.gotoLogin();
-        }
-      });
-    this.showhistory = !this.showhistory;
-    this.showportfolio = false;
-    this.showorders = false;
-    this.showInsert = false;
-    for (let i = 0; i < this.userorderresponse.Status.length; i++) {
-      this.ShowUpdate[i] = false;
-    }
-    this.showsummary = false;
+    this.goToorderHistory(orderid);
   }
   CreateUpdateOrder() {
     // this.InitializeUserOrder();
@@ -476,6 +463,7 @@ export class TradingPage implements OnInit {
   //     strExpireAt: null
   // //  };
   // }
+
   showTimeTerm(Term: TimeTerm): string {
     return TimeTerm[Term];
   }

@@ -19,7 +19,7 @@ import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
 import { CreateAlertPage } from "../pages/create-alert/create-alert";
 import { UpdateAlertPage } from "../pages/update-alert/update-alert";
-
+import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
 import {
   TranslateModule,
   TranslateLoader,
@@ -62,6 +62,7 @@ export function createTranslateLoader(http: Http) {
     AlertPage,
     SettingsPage,
     TradingPage,
+    OrderhistoryPage,
     LimitToPipe,
     CreateAlertPage,
     UpdateAlertPage,
@@ -103,7 +104,8 @@ export function createTranslateLoader(http: Http) {
     SettingsPage,
     TradingPage,
     CreateAlertPage,
-    UpdateAlertPage
+    UpdateAlertPage,
+    OrderhistoryPage
   ],
   providers: [
     StatusBar,
