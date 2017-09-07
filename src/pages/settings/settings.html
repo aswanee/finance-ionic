@@ -30,20 +30,14 @@
             <ion-toggle [(ngModel)]="mushrooms"></ion-toggle>
         </ion-item>
     </ion-list> -->
-    <button ion-item (click)="setopenlang()">
+    <!-- <button ion-item (click)="setopenlang()">
       {{'Change Language' | translate}}
-    </button>
-    <ion-content *ngIf="openlanguage">
+    </button> -->
+    <ion-content>
         <button ion-item (click)="toen()">
                       {{'BTN_ENGLISH'|translate}}
                     </button>
         <button ion-item (click)="toarab()">
                       {{'BTN_Arabic'|translate}}
                     </button>
-    </ion-content>
-    <button ion-item (click)=" setshowabout()">
-      {{'About Us title' | translate}}
-    </button>
-    <ion-content *ngIf="showabout">
-        {{'About Us' | translate}}
     </ion-content>
