@@ -170,6 +170,15 @@ export class TradingPage implements OnInit {
   ionViewDidLoad() {
     console.log("ionViewDidLoad TradingPage");
   }
+  ionViewWillLeave() {
+    this.showhistory = false;
+    this.showInsert = false;
+    this.showorders = false;
+    this.showportfolio = false;
+    for (let i = 0; i < this.ShowUpdate.length; i++) {
+      this.ShowUpdate[i] = false;
+    }
+  }
   getportfolio() {
     /* bn Rashed*/
     //this.checkLogin();
@@ -181,12 +190,31 @@ export class TradingPage implements OnInit {
       }
       console.log(this.portfolioresponse);
     });
+    this.refreshPortfolio();
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
     this.showhistory = false;
     this.showInsert = false;
     // this.ShowUpdate = false;
   }
+
+  refreshPortfolio() {
+    this.TradeService.GetPortfolio(this.token, isArabic).subscribe(data => {
+      this.portfolioresponse = data;
+      if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
+        window["token"] = null;
+        this.gotoLogin();
+      }
+      console.log(this.portfolioresponse);
+    });
+    if (this.showportfolio) {
+      setTimeout(() => {
+        this.refreshPortfolio();
+      }, 1000);
+      console.log("refresh port");
+    }
+  }
+
   getportfoliosummary() {
     this.TradeService.GetPortfolioSummary(this.token).subscribe(data => {
       this.Detailsresponse = data;
@@ -216,7 +244,30 @@ export class TradingPage implements OnInit {
     this.showhistory = false;
     this.showInsert = false;
     // this.ShowUpdate = false;
+    this.refreshOrders();
   }
+
+  refreshOrders() {
+    this.TradeService.getorders(this.token, isArabic, 2).subscribe(data => {
+      this.userorderresponse = data;
+      console.log(this.userorderresponse);
+      if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
+        window["token"] = null;
+        this.gotoLogin();
+      } else {
+        for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+          this.ShowUpdate[i] = false;
+        }
+      }
+    });
+    if (this.showorders) {
+      setTimeout(() => {
+        this.refreshOrders();
+      }, 1000);
+      console.log("refreshorders");
+    }
+  }
+
   getorderhistory(orderid) {
     this.goToorderHistory(orderid);
   }
