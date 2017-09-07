@@ -1,4 +1,5 @@
 import { language } from "./../settings/settings";
+import { isArabic } from "./../settings/settings";
 import { Component, OnInit } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
@@ -75,15 +76,15 @@ export class MarketPage {
       console.log(this.EGX100);
       //   this.Indices.push(this.EGX100);
     });
-    this.MarketService.getperformers("BP", true).subscribe(data => {
+    this.MarketService.getperformers("BP", isArabic).subscribe(data => {
       this.BP = data;
       console.log(this.BP);
     });
-    this.MarketService.getperformers("BV", true).subscribe(data => {
+    this.MarketService.getperformers("BV", isArabic).subscribe(data => {
       this.BV = data;
       console.log(this.BV);
     });
-    this.MarketService.getperformers("WP", true).subscribe(data => {
+    this.MarketService.getperformers("WP", isArabic).subscribe(data => {
       this.WP = data;
       console.log(this.WP);
     });
@@ -125,15 +126,15 @@ export class MarketPage {
       console.log(this.EGX100);
       //  this.Indices.push(this.EGX100);
     });
-    this.MarketService.getperformers("BP", true).subscribe(data => {
+    this.MarketService.getperformers("BP", isArabic).subscribe(data => {
       this.BP = data;
       console.log(this.BP);
     });
-    this.MarketService.getperformers("BV", true).subscribe(data => {
+    this.MarketService.getperformers("BV", isArabic).subscribe(data => {
       this.BV = data;
       console.log(this.BV);
     });
-    this.MarketService.getperformers("WP", true).subscribe(data => {
+    this.MarketService.getperformers("WP", isArabic).subscribe(data => {
       this.WP = data;
       console.log(this.WP);
     });

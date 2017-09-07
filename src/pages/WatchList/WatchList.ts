@@ -11,6 +11,7 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
+import { isArabic } from "./../settings/settings";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 @Component({
   selector: "page-home",
@@ -75,7 +76,7 @@ export class HomePage implements OnInit {
           keys.forEach(key => {
             if (key === "watchList") {
               this.storage.get("watchList").then(val => {
-                this.StockService.getstock(val, true).subscribe(data => {
+                this.StockService.getstock(val, isArabic).subscribe(data => {
                   this.StockDetails = data;
                   this.dispnames = val;
 
@@ -90,15 +91,17 @@ export class HomePage implements OnInit {
           });
         } else {
           this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-          this.StockService.getstock(this.dispnames, true).subscribe(data => {
-            this.StockDetails = data;
-            this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-            console.log(this.StockDetails.result);
-            for (let i = 0; i < this.StockDetails.result.length; i++) {
-              this.StockDetails.result[i].push(this.dispnames[i]);
-            }
-            console.log(this.StockDetails);
-          });
+          this.StockService
+            .getstock(this.dispnames, isArabic)
+            .subscribe(data => {
+              this.StockDetails = data;
+              this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
+              console.log(this.StockDetails.result);
+              for (let i = 0; i < this.StockDetails.result.length; i++) {
+                this.StockDetails.result[i].push(this.dispnames[i]);
+              }
+              console.log(this.StockDetails);
+            });
           this.editpressed = false;
         }
       });
@@ -116,7 +119,7 @@ export class HomePage implements OnInit {
     //  setTimeout(() => {
     //     }, 1000);
 
-    this.StockService.getstock(this.dispnames, true).subscribe(data => {
+    this.StockService.getstock(this.dispnames, isArabic).subscribe(data => {
       this.StockDetails = data;
       for (let i = 0; i < this.StockDetails.result.length; i++) {
         this.StockDetails.result[i].push(this.dispnames[i]);
@@ -164,7 +167,7 @@ export class HomePage implements OnInit {
     console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
-    this.StockService.getstock(this.dispnames, true).subscribe(data => {
+    this.StockService.getstock(this.dispnames, isArabic).subscribe(data => {
       this.StockDetails = data;
       for (let i = 0; i < this.StockDetails.result.length; i++) {
         this.StockDetails.result[i].push(this.dispnames[i]);

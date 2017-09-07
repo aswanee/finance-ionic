@@ -8,6 +8,7 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
 import { TranslatePipe, TranslateService } from "ng2-translate";
 import { language } from "./../settings/settings";
+import { isArabic } from "./../settings/settings";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 @Component({
@@ -29,7 +30,7 @@ export class NewsPage implements OnInit {
     private TranslateService: TranslateService,
     public events: Events
   ) {
-    this.CompanyService.getnews(this.date, 100, false).subscribe(data => {
+    this.CompanyService.getnews(this.date, 100, isArabic).subscribe(data => {
       this.News = data;
       // console.log(this.News);
     });
@@ -53,7 +54,7 @@ export class NewsPage implements OnInit {
     if (this.initialized && this.News) {
       this.date = new Date(this.News.result.V[0][2]);
     }
-    this.CompanyService.getnews(this.date, 100, false).subscribe(data => {
+    this.CompanyService.getnews(this.date, 100, isArabic).subscribe(data => {
       this.News = data;
       // console.log(this.News);
     });
