@@ -35,6 +35,7 @@ export class HomePage implements OnInit {
   showrelatednews: boolean = false;
   initialized: boolean = true;
   initializedref: boolean = false;
+  dorefresh = false;
   // are chosen alias
 
   map: { [reuter: string]: Boolean } = {};
@@ -104,7 +105,31 @@ export class HomePage implements OnInit {
     });
     this.initializedref = true;
   }
+  ionViewDidEnter() {
+    this.dorefresh = true;
+    this.refresh();
+  }
+  ionViewWillLeave() {
+    this.dorefresh = false;
+  }
+  refresh() {
+    //  setTimeout(() => {
+    //     }, 1000);
 
+    this.StockService.getstock(this.dispnames, true).subscribe(data => {
+      this.StockDetails = data;
+      for (let i = 0; i < this.StockDetails.result.length; i++) {
+        this.StockDetails.result[i].push(this.dispnames[i]);
+      }
+      // console.log(this.News);
+    });
+    if (this.dorefresh) {
+      setTimeout(() => {
+        this.refresh();
+      }, 1000);
+      console.log("refresh");
+    }
+  }
   changepressed() {
     this.editpressed = true;
   }

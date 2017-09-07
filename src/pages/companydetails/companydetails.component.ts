@@ -173,6 +173,19 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   refreshAutoTrades() {
     this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
       this.Trades = data;
+      for (let i = 0; i < this.Trades.result.length; i++) {
+        this.TradesArray[i] = new Array();
+      }
+      for (let i = 0; i < this.Trades.result.length; i++) {
+        this.TradesArray[i] = this.Trades.result[i].split(",");
+
+        this.TradesArray[i][this.TradesArray[i].length - 1] = this.TradesArray[
+          i
+        ][this.TradesArray[i].length - 1].substring(
+          0,
+          this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
+        );
+      }
     });
     if (this.showtrades) {
       setTimeout(() => {
