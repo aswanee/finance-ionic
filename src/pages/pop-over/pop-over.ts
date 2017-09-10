@@ -50,7 +50,6 @@ export class PopoverPage {
     this.loggedIn = false;
     this.storage.remove("token").then(val => {
       console.log("logged out");
-
       // TODO: should pop to the home page, not working.
       this.navController.popToRoot();
       this.close();

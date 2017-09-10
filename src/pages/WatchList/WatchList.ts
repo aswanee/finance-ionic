@@ -12,6 +12,7 @@ import { Storage } from "@ionic/storage";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
+
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"

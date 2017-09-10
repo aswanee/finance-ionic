@@ -137,6 +137,7 @@ export class TradingPage implements OnInit {
 
   gotoLogin() {
     this.navCtrl.push(LoginComponent);
+
     // check when he comes bach if he did login
     this.checkLogin();
   }
