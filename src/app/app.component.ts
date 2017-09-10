@@ -1,21 +1,24 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, ViewChild, Inject } from "@angular/core";
 import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
-
 import { TabsPage } from "../pages/tabs/tabs";
 import { AboutPage } from "../pages/about/about";
-import { NavController } from "ionic-angular";
 import {
+  IonicPage,
+  NavController,
+  NavParams,
   PopoverController,
-  ToastController,
-  AlertController
+  AlertController,
+  ToastController
 } from "ionic-angular";
+
 import { PopoverPage } from "../pages/pop-over/pop-over";
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
+  @ViewChild(NavController) nav;
   rootPage: any = TabsPage;
   language: any;
   alert: any;
@@ -24,7 +27,7 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public popoverCtrl: PopoverController,
-    public navCtrl: NavController,
+    // public navCtrl: Nav,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController
   ) {
@@ -53,8 +56,8 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
       platform.registerBackButtonAction(() => {
-        if (this.navCtrl.canGoBack()) {
-          this.navCtrl.pop();
+        if (this.nav.canGoBack()) {
+          this.nav.pop();
         } else {
           if (this.alert) {
             this.alert.dismiss();
