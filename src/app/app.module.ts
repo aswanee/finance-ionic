@@ -25,6 +25,7 @@ import {
   TranslateLoader,
   TranslateStaticLoader
 } from "ng2-translate";
+import { LanguagePipe } from "./../pipes/Language/Language.pipe";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CompanyService } from "./company.service";
@@ -66,7 +67,8 @@ export function createTranslateLoader(http: Http) {
     LimitToPipe,
     CreateAlertPage,
     UpdateAlertPage,
-    aroundToPipe
+    aroundToPipe,
+    LanguagePipe
   ],
   imports: [
     BrowserModule,

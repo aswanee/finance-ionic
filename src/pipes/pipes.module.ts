@@ -1,9 +1,10 @@
-import { NgModule } from '@angular/core';
-import { LimitToPipe } from './../pipes/limit-to/limit-to';
-import { aroundToPipe } from './../pipes/around-to/around-to';
+import { NgModule } from "@angular/core";
+import { LimitToPipe } from "./../pipes/limit-to/limit-to";
+import { aroundToPipe } from "./../pipes/around-to/around-to";
+import { LanguagePipe } from "./Language/Language.pipe";
 @NgModule({
-	declarations: [LimitToPipe , aroundToPipe],
-	imports: [],
-	exports: [LimitToPipe , aroundToPipe]
+  declarations: [LimitToPipe, aroundToPipe, LanguagePipe],
+  imports: [],
+  exports: [LimitToPipe, aroundToPipe, LanguagePipe]
 })
 export class PipesModule {}

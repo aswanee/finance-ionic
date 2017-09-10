@@ -1,4 +1,10 @@
-import { Component, OnInit, OnChanges, SimpleChanges, HostListener } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  HostListener
+} from "@angular/core";
 import { NavController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
@@ -13,7 +19,7 @@ import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
 import { isArabic } from "./../settings/settings";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
-
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
@@ -57,10 +63,10 @@ export class HomePage implements OnInit {
     private storage: Storage,
     private TranslateService: TranslateService
   ) {}
-  @HostListener('window:resize', ['$event'])
-  onResize(event){
-     console.log("Width: " + event.target.innerWidth);
-     this.isSmall = event.target.innerWidth < 414? true : false;
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    console.log("Width: " + event.target.innerWidth);
+    this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
     this.TranslateService.use(language);

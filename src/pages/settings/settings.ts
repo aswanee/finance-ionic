@@ -22,6 +22,8 @@ import { portfolioresponse } from "./../../app/portfolio.interface";
 import { USERTOKEN } from "./../login/login.component";
 import { LoginService } from "./../../app/login.service";
 import { token } from "./../../app/token.interface";
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { HomePage } from "./../WatchList/WatchList";
 /**
  * Generated class for the SettingsPage page.
  *
@@ -93,7 +95,8 @@ export class SettingsPage implements OnInit {
     this.language = "ar";
     isArabic = true;
     language = this.language;
-    this.TranslateService.use(this.language);
+    this.gotoWatchList();
+    // this.TranslateService.use(this.language);
     // this.TradeService
     //   .CancelOrder(630914, true, 123456, this.usertoken)
     //   .subscribe(data => {
@@ -106,13 +109,17 @@ export class SettingsPage implements OnInit {
     this.language = "en";
     isArabic = false;
     language = this.language;
-    this.TranslateService.use(this.language);
+    // this.TranslateService.use(this.language);
+    this.gotoWatchList();
   }
   setopenlang() {
     this.openlanguage = !this.openlanguage;
   }
   setshowabout() {
     this.showabout = !this.showabout;
+  }
+  gotoWatchList() {
+    this.navCtrl.pop();
   }
 }
 //  {

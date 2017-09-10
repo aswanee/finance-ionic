@@ -78,8 +78,8 @@ export class OrderhistoryPage implements OnInit {
   showPriceType(Price: PriceType): string {
     return PriceType[Price];
   }
-  showPlaceType(PlaceType: PlaceType) {
-    return PlaceType[PlaceType];
+  showPlaceType(Place: PlaceType) {
+    return PlaceType[Place];
   }
   // ChangeDate(string) {
   //   string.start;
