@@ -2,9 +2,13 @@
   z-index: 100;
   position: fixed;
 }
-.odd{
+.odd {
   background-color: #ffffff;
 }
-.even{
-  background-color: #EAEAF1;
+.even {
+  background-color: #eaeaf1;
+}
+.button-inner {
+  flex-flow: row;
+  white-space: normal;
 }

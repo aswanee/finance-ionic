@@ -146,11 +146,6 @@ export class TradingPage implements OnInit {
   }
 
   gotoLogin() {
-<<<<<<< HEAD
-    this.navCtrl.push(LoginComponent);
-
-=======
->>>>>>> b95b317f528ff56682960b43d71de6ad6eb9dc6c
     // check when he comes bach if he did login
     //this.checkLogin();
     if (this.token == null) {

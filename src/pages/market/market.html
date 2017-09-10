@@ -7,25 +7,25 @@
 </ion-header>
 
 <ion-content padding *ngIf="Indices&&BP&&WP&&BV">
-    <ion-item style="margin-bottom: 3%">
-        <h1 style="text-align:center; margin-top:5%"> {{'Indices'|translate}}</h1>
+    <ion-item style="margin-bottom: 3%; margin-top: 10%">
+        <h2 style="text-align:center;"> {{'Indices'|translate}}</h2>
         <ion-row>
             <ion-col col-1>
             </ion-col>
             <ion-col col>
-                <p>{{'Reuter'|translate}}</p>
+                <p style="font-size:0.2em">{{'Reuter'|translate}}</p>
             </ion-col>
             <ion-col col>
-                <p>{{'Value' |translate}}</p>
+                <p style="font-size:0.2em">{{'Value' |translate}}</p>
             </ion-col>
             <ion-col col>
-                <p>{{'Change' |translate}}</p>
+                <p style="font-size:0.2em">{{'Change' |translate}}</p>
             </ion-col>
-            <ion-col col >
-                <p>{{'Percentage' | translate}}</p>
+            <ion-col col>
+                <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
             </ion-col>
-            <ion-col col >
-                <p>{{'Trend' | translate}}</p>
+            <ion-col col>
+                <p style="font-size:0.2em">{{'Trend' | translate}}</p>
             </ion-col>
         </ion-row>
         <ion-buttons *ngIf="EGX30&&EGX70&&EGX100">
@@ -33,12 +33,12 @@
    {{  x?.result[0][0]+'        '+x?.result[0][1]+'            '+x?.result[0][2]+'   '+x?.result[0][3]+'  '+x?.result[0][4]+'   '+x?.result[0][5]}}
   </button> -->
             <button ion-button full clear (click)="showHideChart(0)">
-                <ion-col  col> {{EGX30?.result[0][0]}} </ion-col>
-                <ion-col col> {{EGX30?.result[0][1]}}</ion-col>
-                <ion-col col> {{EGX30?.result[0][2]}}</ion-col>
-                <ion-col  col> {{EGX30?.result[0][3]}}</ion-col>
-                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][4]}}</ion-col>
-                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][5]}}</ion-col> 
+                <ion-col  col> {{EGX30?.result[0][0] | limitTo:4 }} </ion-col>
+                <ion-col col> {{EGX30?.result[0][1] | limitTo:4}}</ion-col>
+                <ion-col col> {{EGX30?.result[0][2] | limitTo:4 }}</ion-col>
+                <ion-col  col> {{EGX30?.result[0][3] | limitTo:4}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][4] | limitTo:4}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][5] | limitTo:4 }}</ion-col> 
                 <ion-col  col>
                     <ion-icon right *ngIf="EGX30?.result[0][2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="EGX30?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
@@ -81,37 +81,43 @@
                  Last year
                 </button>
             </ion-buttons>
-            <page-chart [hidden]="!(lastFveDays&&!show70&&!show100)" [lastFiveDays]=true [rouiterCode]="EGX30.result[0][0]"></page-chart>
-            <page-chart [hidden]="lastFveDays||show70||show100" [lastFiveDays]=false [rouiterCode]="EGX30.result[0][0]"></page-chart>
-            <page-chart [hidden]="!(lastFveDays&&!show30&&!show100)" [lastFiveDays]=true [rouiterCode]="EGX70.result[0][0]"></page-chart>
-            <page-chart [hidden]="lastFveDays||show30||show100" [lastFiveDays]=false [rouiterCode]="EGX70.result[0][0]"></page-chart>
-            <page-chart [hidden]="!(lastFveDays&&!show30&&!show70)" [lastFiveDays]=true [rouiterCode]="EGX100.result[0][0]"></page-chart>
-            <page-chart [hidden]="lastFveDays||show30||show70" [lastFiveDays]=false [rouiterCode]="EGX100.result[0][0]"></page-chart>
+            <page-chart [hidden]="!(lastFveDays&&!show70&&!show100)" [lastFiveDays]=true [rouiterCode]="EGX30.result[0][0]">
+            </page-chart>
+            <page-chart [hidden]="lastFveDays||show70||show100" [lastFiveDays]=false [rouiterCode]="EGX30.result[0][0]">
+            </page-chart>
+            <page-chart [hidden]="!(lastFveDays&&!show30&&!show100)" [lastFiveDays]=true [rouiterCode]="EGX70.result[0][0]">
+            </page-chart>
+            <page-chart [hidden]="lastFveDays||show30||show100" [lastFiveDays]=false [rouiterCode]="EGX70.result[0][0]">
+            </page-chart>
+            <page-chart [hidden]="!(lastFveDays&&!show30&&!show70)" [lastFiveDays]=true [rouiterCode]="EGX100.result[0][0]">
+            </page-chart>
+            <page-chart [hidden]="lastFveDays||show30||show70" [lastFiveDays]=false [rouiterCode]="EGX100.result[0][0]">
+            </page-chart>
 
 
         </ion-item>
     </ion-item>
 
     <ion-item style="margin-top: 1%">
-        <h1 style="text-align:center">{{'BP' | translate}}</h1>
+        <h2 style="text-align:center">{{'BP' | translate}}</h2>
         <ion-item>
             <ion-row>
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Reuter' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Reuter' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Value' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Value' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Change' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Change' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Percentage' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Trend' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Trend' | translate}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -133,25 +139,25 @@
         </ion-buttons>
     </ion-item>
     <ion-item>
-        <h1 style="text-align:center">{{'BV' | translate}}</h1>
+        <h2 style="text-align:center">{{'BV' | translate}}</h2>
         <ion-item>
             <ion-row>
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Reuter' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Reuter' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{Value | translate}}</p>
+                    <p style="font-size:0.2em">{{'Value' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Change' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Change' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Percentage' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Trend' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Trend' | translate}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -176,25 +182,25 @@
         </ion-buttons>
     </ion-item>
     <ion-item style="margin-bottom: 3%">
-        <h1 style="text-align:center">{{'WP' | translate}}</h1>
+        <h2 style="text-align:center">{{'WP' | translate}}</h2>
         <ion-item>
             <ion-row>
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Reuter' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Reuter' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Value' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Value' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Change' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Change' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Percentage' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Trend' | translate}}</p>
+                    <p style="font-size:0.2em">{{'Trend' | translate}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>

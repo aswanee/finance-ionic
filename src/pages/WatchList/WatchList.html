@@ -52,26 +52,27 @@
                 </ion-col>
             </ion-row>
         </ion-item>
-        <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;"  [ngClass]="{ odd: odd, even: even }" class="row">
+        <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }"
+            class="row">
             <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="editpressed">
                 <ion-col class="myCol"  col *ngIf="x[2]>0" > {{x[3]}}
                 <br>
-                {{x[4]}}
                 </ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]>0" > {{x[0]}}</ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[1]}}</ion-col>
 
                 <ion-col class="myCol"  col *ngIf="x[2]<0" > {{x[3]}}
-                  <br>
-                {{x[4]}} </ion-col>
+                    <br>
+                    
+                 </ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]<0" > {{x[0]}}</ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[1]}}</ion-col>
 
                 <ion-col class="myCol"  col *ngIf="x[2]==0"> {{x[3]}}
                   <br>
-                {{x[4]}} </ion-col>
+                 </ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[0]}}</ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
                 <ion-col class="myCol"  col *ngIf="x[2]==0"> {{x[1]}}</ion-col>
@@ -80,6 +81,7 @@
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>
+            <p>{{x[4] | limitTo: 30}}</p>
             <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
         </ion-item>
     </ion-list>
