@@ -1,18 +1,13 @@
 <!--component html goes here -->
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{Newsbody?.result.V[1]}}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
 <ion-content>
-    <ion-item>
-        <h2>{{Newsbody?.result.V[1]}}
-        </h2>
-    </ion-item>
-    <ion-item>
-
-        <p>
-            {{Newsbody?.result.V[6]}}
-        </p>
-    </ion-item>
-
-    <!-- <script>
-            document.write("this.elements.innerHTML");
-        </script> -->
+        <ion-item >{{Newsbody?.result.V[1]}}</ion-item>
+        <p >{{Newsbody?.result.V[6]}}</p>
     <ion-item id="id"></ion-item>
 </ion-content>

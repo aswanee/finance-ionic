@@ -8,7 +8,7 @@ export class ParentService {
   unsecuredebug: boolean = true;
   getsecurelink() {
     if (this.securedebug === true) {
-      this.link = "https://staging5.arabfinance.com/";
+      this.link = "http://staging5.arabfinance.com/";
     } else {
       this.link = "https://www.arabfinance.com/";
     }
@@ -18,7 +18,7 @@ export class ParentService {
     if (this.unsecuredebug === true) {
       this.link = "http://staging5.arabfinance.com/";
     } else {
-      this.link = "http://www.arabfinance.com/";
+      this.link = "https://www.arabfinance.com/";
     }
   }
 }

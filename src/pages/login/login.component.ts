@@ -64,82 +64,14 @@ export class LoginComponent implements OnInit {
         console.log("keys");
       }
     });
-    // this.storage.keys().then(keys => {
-    //   if (keys.length) {
-    //     this.storage.get("token").then(val => {
-    //       this.token = val;
-    //     })
-    //   }
-    // });
-    // this.AlertService.getUseralerts(24186, this.date).subscribe(data => {
-    //   this.alertresponse = data;
-    //   console.log(this.alertresponse);
-    // });
-    // this.AlertService
-    //   .addalerts(
-    //     2486,
-    //     "ORWE",
-    //     Type.AlertStockTypeIndex,
-    //     Field.AlertFieldBestAsk,
-    //     Criteria.AlertCriteriaEqual,
-    //     5,
-    //     "hello"
-    //   )
-    //   .subscribe(data => {
-    //     this.add = data;
-    //     console.log(this.add);
-    //     console.log(this.alert);
-    //   });
-    // this.AlertService
-    //   .updatealertswithticker(
-    //     24186,
-    //     "ORTE",
-    //     2816,
-    //     Type.AlertStockTypeIndex,
-    //     Field.AlertFieldBestBid,
-    //     Criteria.AlertCriteriaLessThan,
-    //     5,
-    //     "hello"
-    //   )
-    //   .subscribe(data => {
-    //     this.deleteresponse = data;
-    //     console.log(this.deleteresponse);
-    //   });
-    //   .subscribe(data => {
-    //     this.deleteresponse = data;
-    //     console.log(this.deleteresponse);
-    //     console.log(this.alert);
-    //   });
-    // this.AlertService.deletealerts(2817).subscribe(data => {
-    //   this.deleteresponse = data;
-    //   console.log(this.deleteresponse);
-    // });
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-  //   //Add 'implements OnChanges' to the class.
-  //   if (
-  //     changes["Username"] &&
-  //     changes["Username"].currentValue &&
-  //     changes["password"] &&
-  //     changes["password"].currentValue
-  //   ) {
-  //     this.LoginService
-  //       .getmarketsummary(this.Username, this.password)
-  //       .subscribe(data => {
-  //         usertoken = data;
-  //         //   console.log(data);
-  //         console.log(usertoken);
-  //       });
-  //   } else {
-  //   }
-  // }
 
   login() {
     this.LoginService
       .gettoken(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(data => {
+        window['token'] = data;
         console.log(data);
         this.storage.set("token", data);
         this.token = true;

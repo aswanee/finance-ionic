@@ -13,39 +13,66 @@
             <ion-col col-1>
             </ion-col>
             <ion-col col>
-                <p>Reuter</p>
+                <p>{{'Reuter'|translate}}</p>
             </ion-col>
             <ion-col col>
-                <p>Value</p>
+                <p>{{'Value' |translate}}</p>
             </ion-col>
             <ion-col col>
-                <p>Change</p>
+                <p>{{'Change' |translate}}</p>
             </ion-col>
-            <ion-col col>
-                <p>Percentage</p>
+            <ion-col col >
+                <p>{{'Percentage' | translate}}</p>
             </ion-col>
-            <ion-col col>
-                <p>Trend</p>
+            <ion-col col >
+                <p>{{'Trend' | translate}}</p>
             </ion-col>
         </ion-row>
-        <ion-buttons *ngFor="let x of Indices; let i=index;">
+        <ion-buttons *ngIf="EGX30&&EGX70&&EGX100">
             <!-- <button ion-button (click)="showHideChart(i)" full color="dark">
    {{  x?.result[0][0]+'        '+x?.result[0][1]+'            '+x?.result[0][2]+'   '+x?.result[0][3]+'  '+x?.result[0][4]+'   '+x?.result[0][5]}}
   </button> -->
-            <button ion-button full clear (click)="showHideChart(i)">
-                <ion-col  col> {{x?.result[0][0]}} </ion-col>
-                <ion-col col> {{x?.result[0][1]}}</ion-col>
-                <ion-col col> {{x?.result[0][2]}}</ion-col>
-                <ion-col  col> {{x?.result[0][3]}}</ion-col>
-                <ion-col  col> {{x?.result[0][4]}}</ion-col>
-                <ion-col  col> {{x?.result[0][5]}}</ion-col>
+            <button ion-button full clear (click)="showHideChart(0)">
+                <ion-col  col> {{EGX30?.result[0][0]}} </ion-col>
+                <ion-col col> {{EGX30?.result[0][1]}}</ion-col>
+                <ion-col col> {{EGX30?.result[0][2]}}</ion-col>
+                <ion-col  col> {{EGX30?.result[0][3]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][4]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][5]}}</ion-col> 
                 <ion-col  col>
-                    <ion-icon right *ngIf="x[2]>=0" name="md-trending-up" color="secondary"></ion-icon>
-                    <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                    <ion-icon right *ngIf="EGX30?.result[0][2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="EGX30?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
+                </ion-col>
+            </button>
+
+            <button ion-button full clear (click)="showHideChart(1)">
+                <ion-col  col> {{EGX70?.result[0][0]}} </ion-col>
+                <ion-col col> {{EGX70?.result[0][1]}}</ion-col>
+                <ion-col col> {{EGX70?.result[0][2]}}</ion-col>
+                <ion-col  col> {{EGX70?.result[0][3]}}</ion-col>
+                 <ion-col  col *ngIf="!this.isSmall"> {{EGX70?.result[0][4]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX70?.result[0][5]}}</ion-col> 
+                <ion-col  col>
+                    <ion-icon right *ngIf="EGX70?.result[0][2]> 0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="EGX70?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
+                </ion-col>
+            </button>
+
+
+            <button ion-button full clear (click)="showHideChart(2)">
+                <ion-col  col> {{EGX100?.result[0][0]}} </ion-col>
+                <ion-col col> {{EGX100?.result[0][1]}}</ion-col>
+                <ion-col col> {{EGX100?.result[0][2]}}</ion-col>
+                <ion-col  col> {{EGX100?.result[0][3]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX100?.result[0][4]}}</ion-col>
+                <ion-col  col *ngIf="!this.isSmall"> {{EGX100?.result[0][5]}}</ion-col> 
+                <ion-col  col>
+                    <ion-icon right *ngIf="EGX100?.result[0][2]> 0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon *ngIf="EGX100?.result[0][2] < 0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>
         </ion-buttons>
-        <ion-item *ngIf="showChart&&Indices">
+        <ion-item *ngIf="showChart&&EGX30&&EGX70&&EGX100">
             <ion-buttons>
                 <button ion-button (click)="showLastFiveDays()" [disabled]="lastFveDays">
                     Last five days
@@ -54,8 +81,14 @@
                  Last year
                 </button>
             </ion-buttons>
-            <page-chart [hidden]="!lastFveDays" [lastFiveDays]=true [rouiterCode]="Indices[index].result[0][0]"></page-chart>
-            <page-chart [hidden]="lastFveDays" [lastFiveDays]=false [rouiterCode]="Indices[index].result[0][0]"></page-chart>
+            <page-chart [hidden]="!(lastFveDays&&!show70&&!show100)" [lastFiveDays]=true [rouiterCode]="EGX30.result[0][0]"></page-chart>
+            <page-chart [hidden]="lastFveDays||show70||show100" [lastFiveDays]=false [rouiterCode]="EGX30.result[0][0]"></page-chart>
+            <page-chart [hidden]="!(lastFveDays&&!show30&&!show100)" [lastFiveDays]=true [rouiterCode]="EGX70.result[0][0]"></page-chart>
+            <page-chart [hidden]="lastFveDays||show30||show100" [lastFiveDays]=false [rouiterCode]="EGX70.result[0][0]"></page-chart>
+            <page-chart [hidden]="!(lastFveDays&&!show30&&!show70)" [lastFiveDays]=true [rouiterCode]="EGX100.result[0][0]"></page-chart>
+            <page-chart [hidden]="lastFveDays||show30||show70" [lastFiveDays]=false [rouiterCode]="EGX100.result[0][0]"></page-chart>
+
+
         </ion-item>
     </ion-item>
 
@@ -66,19 +99,19 @@
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p>Reuter</p>
+                    <p>{{'Reuter' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Value</p>
+                    <p>{{'Value' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Change</p>
+                    <p>{{'Change' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Percentage</p>
+                    <p>{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Trend</p>
+                    <p>{{'Trend' | translate}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -86,10 +119,14 @@
             <button ion-button full clear (click)="setstockchosen(x[0])">
                 <ion-col class="myCol"  col> {{x[0]}} </ion-col>
                 <ion-col class="myCol"  col> {{x[1]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[1]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]<0 "col style="color:red"> {{x[3]}}</ion-col>
+                  <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]>0 "col style="color:green"> {{x[3]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]==0 "col > {{x[3]}}</ion-col>
                 <ion-col  col>
-                    <ion-icon right *ngIf="x[2]>=0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>
@@ -102,19 +139,19 @@
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p>Reuter</p>
+                    <p>{{'Reuter' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Value</p>
+                    <p>{{Value | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Change</p>
+                    <p>{{'Change' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Percentage</p>
+                    <p>{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Trend</p>
+                    <p>{{'Trend' | translate}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -125,10 +162,14 @@
             <button ion-button full clear (click)="setstockchosen(x[0])">
                 <ion-col class="myCol"  col> {{x[0]}} </ion-col>
                 <ion-col class="myCol"  col> {{x[1]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[1]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]<0 "col style="color:red"> {{x[3]}}</ion-col>
+                  <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]>0 "col style="color:green"> {{x[3]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]==0 "col > {{x[3]}}</ion-col>
                 <ion-col  col>
-                    <ion-icon right *ngIf="x[2]>=0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>
@@ -141,19 +182,19 @@
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p>Reuter</p>
+                    <p>{{'Reuter' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Value</p>
+                    <p>{{'Value' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Change</p>
+                    <p>{{'Change' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Percentage</p>
+                    <p>{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Trend</p>
+                    <p>{{'Trend' | translate}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -161,10 +202,14 @@
             <button ion-button full clear (click)="setstockchosen(x[0])">
                 <ion-col class="myCol"  col> {{x[0]}} </ion-col>
                 <ion-col class="myCol"  col> {{x[1]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[1]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]<0 "col style="color:red"> {{x[3]}}</ion-col>
+                  <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]>0 "col style="color:green"> {{x[3]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
+                <ion-col class="myCol"  *ngIf="x[2]==0 "col > {{x[3]}}</ion-col>
                 <ion-col  col>
-                    <ion-icon right *ngIf="x[2]>=0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>

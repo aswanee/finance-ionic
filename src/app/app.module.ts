@@ -5,7 +5,7 @@ import { MyApp } from "./app.component";
 import { CommonModule } from "@angular/common";
 import { NewsdetailsComponent } from "./../pages/newsdetails/newsdetails.component";
 import { AboutPage } from "../pages/about/about";
-import { ContactPage } from "../pages/contact/contact";
+import { NewsPage } from "../pages/News/News";
 import { AlertPage } from "../pages/alert/alert";
 import { HomePage } from "../pages/WatchList/WatchList";
 import { LoginComponent } from "./../pages/login/login.component";
@@ -19,7 +19,7 @@ import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
 import { CreateAlertPage } from "../pages/create-alert/create-alert";
 import { UpdateAlertPage } from "../pages/update-alert/update-alert";
-
+import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
 import {
   TranslateModule,
   TranslateLoader,
@@ -39,6 +39,7 @@ import { AlertService } from "./alert.service";
 import { PopOverPageModule } from "../pages/pop-over/pop-over.module";
 //pipes
 import { LimitToPipe } from "./../pipes/limit-to/limit-to";
+import { aroundToPipe } from "./../pipes/around-to/around-to";
 
 export function HttpLoaderFactory(http: Http) {
   return new TranslateStaticLoader(http);
@@ -50,7 +51,7 @@ export function createTranslateLoader(http: Http) {
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
+    NewsPage,
     HomePage,
     LoginComponent,
     TabsPage,
@@ -61,9 +62,11 @@ export function createTranslateLoader(http: Http) {
     AlertPage,
     SettingsPage,
     TradingPage,
+    OrderhistoryPage,
     LimitToPipe,
     CreateAlertPage,
-    UpdateAlertPage
+    UpdateAlertPage,
+    aroundToPipe
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,7 @@ export function createTranslateLoader(http: Http) {
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (http: Http) =>
-        new TranslateStaticLoader(http, "./../assets", ".json"),
+        new TranslateStaticLoader(http, "./../assets/", ".json"),
       deps: [Http]
     })
   ],
@@ -89,7 +92,7 @@ export function createTranslateLoader(http: Http) {
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
+    NewsPage,
     HomePage,
     LoginComponent,
     TabsPage,
@@ -101,7 +104,8 @@ export function createTranslateLoader(http: Http) {
     SettingsPage,
     TradingPage,
     CreateAlertPage,
-    UpdateAlertPage
+    UpdateAlertPage,
+    OrderhistoryPage
   ],
   providers: [
     StatusBar,

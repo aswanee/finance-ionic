@@ -8,37 +8,6 @@ import "rxjs/add/operator/catch";
 import { ParentService } from "./parentservice.service";
 @Injectable()
 export class LoginService extends ParentService {
-  // login() {
-  //   console.log("lohgin");
-  //   // let body = JSON.stringify({});
-  //   let headers = new Headers({
-  //     "Content-Type": "application/x-www-form-urlencoded"
-  //   });
-  //   // headers.append("Content-Type", "application/json");
-  //   headers.append("username", "wesimy");
-  //   headers.append("password", "Otv@1234");
-  //   // headers.append("access-control-allow-credentials", "true");
-  //   return new Promise(resolve => {
-  //     this.http
-  //       .post("apis/market/token", {
-  //         headers: JSON.stringify(headers)
-  //       })
-  //       .map(response => response.json())
-  //       .subscribe(
-  //         response => {
-  //           console.log(response);
-  //           if (response) {
-  //             resolve(response);
-  //           } else {
-  //             resolve(false);
-  //           }
-  //         },
-  //         error => {
-  //           resolve(false);
-  //         }
-  //       );
-  //   });
-  // }
 
   //Rashed Need to search
   gettoken(UserName: string, Password: string): Observable<token> {
@@ -48,10 +17,7 @@ export class LoginService extends ParentService {
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     console.log(headers);
     console.log(headers.values());
-    // let options = new RequestOptions({ headers: headers });
-    // console.log(options);
-    // console.log(options.headers.get("username"));
-    // console.log(options.headers.get("password"));
+
     let body = "auth={UserName:'" + UserName + "',Password:'" + Password + "'}";
     console.log(body);
     let response = this.http

@@ -8,11 +8,13 @@
 <ion-content padding>
 
 
-    <div class="list" *ngIf="editpressed">
+    <div class="list" *ngIf="editpressed && displayListDummy &&displayList">
         <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-            <ion-item *ngFor="let item of displayListDummy; let i=index;">
-                <ion-label> {{item}}</ion-label>
+            <ion-item *ngFor="let item of displayList; let i=index;">
+                <ion-label> {{item}}
+                    <br>{{searchList(item)}}
+                </ion-label>
                 {{map[item]}}
                 <ion-checkbox [(ngModel)]="map[item]">{{ map[item] }}</ion-checkbox>
             </ion-item>
@@ -28,36 +30,53 @@
         </ion-fab>
     </div>
 
-    <ion-list *ngIf="StockDetails ">
+    <ion-list *ngIf="StockDetails && !editpressed">
         <ion-item>
             <ion-row>
-                <ion-col col-1>
+                <ion-col col>
+                    <p>{{'Reuter'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Reuter</p>
+                    <p>{{'Value'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Value</p>
+                    <p>{{'Change'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Change</p>
+                    <p>{{'Percentage'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Percentage</p>
+                    <p>{{'Trend'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>Trend</p>
                 </ion-col>
             </ion-row>
         </ion-item>
-        <ion-item *ngFor="let x of StockDetails?.result; let i=index;">
+        <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;"  [ngClass]="{ odd: odd, even: even }" class="row">
             <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="editpressed">
-                <ion-col class="myCol"  col> {{x[3]}} </ion-col>
-                <ion-col class="myCol"  col> {{x[0]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col> {{x[1]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]>0" > {{x[3]}}
+                <br>
+                {{x[4]}}
+                </ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]>0" > {{x[0]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[1]}}</ion-col>
+
+                <ion-col class="myCol"  col *ngIf="x[2]<0" > {{x[3]}}
+                  <br>
+                {{x[4]}} </ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]<0" > {{x[0]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[1]}}</ion-col>
+
+                <ion-col class="myCol"  col *ngIf="x[2]==0"> {{x[3]}}
+                  <br>
+                {{x[4]}} </ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[0]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
+                <ion-col class="myCol"  col *ngIf="x[2]==0"> {{x[1]}}</ion-col>
                 <ion-col  col>
-                    <ion-icon right *ngIf="x[2]>=0" name="md-trending-up" color="secondary"></ion-icon>
+                    <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>

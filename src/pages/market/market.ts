@@ -1,5 +1,5 @@
-import { language } from "./../settings/settings";
-import { Component, OnInit } from "@angular/core";
+import { language , isArabic} from "./../settings/settings";
+import { Component, OnInit,HostListener } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
@@ -21,13 +21,20 @@ import { CompanydetailsComponent } from "./../companydetails/companydetails.comp
 })
 export class MarketPage {
   lastFveDays: boolean = false;
+  // lstFveDays70: boolean = false;
+  // lstFveDays100: boolean = false;
+
   index: number = 0;
   IndicesTable: MarketResponse;
+  show30: boolean = false;
+  show70: boolean = false;
+  show100: boolean = false;
   PerformersTable: MarketResponse;
   EGX30: SerResponse;
   EGX70: SerResponse;
   showChart: boolean = false;
   stockchosen: boolean = false;
+  isSmall: boolean = false;
   anotherbool: boolean = true;
   reuter: string;
   EGX100: SerResponse;
@@ -36,11 +43,18 @@ export class MarketPage {
   rootid: number = 1;
   BV: SerResponse;
   WP: SerResponse;
+  dorefresh = true;
+  initialized = false;
   constructor(
     public navCtrl: NavController,
     private MarketService: MarketService,
     private TranslateService: TranslateService
   ) {}
+  @HostListener('window:resize', ['$event'])
+  onResize(event){
+     console.log("Width: " + event.target.innerWidth);
+     this.isSmall = event.target.innerWidth < 414? true : false;
+  }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -55,32 +69,86 @@ export class MarketPage {
     this.MarketService.getindices("EGX30").subscribe(data => {
       this.EGX30 = data;
       console.log(this.EGX30);
-      this.Indices.push(this.EGX30);
+      //  this.Indices.push(this.EGX30);
     });
     this.MarketService.getindices("EGX70").subscribe(data => {
       this.EGX70 = data;
       console.log(this.EGX70);
-      this.Indices.push(this.EGX70);
+      //  this.Indices.push(this.EGX70);
     });
     this.MarketService.getindices("EGX100").subscribe(data => {
       this.EGX100 = data;
       console.log(this.EGX100);
-      this.Indices.push(this.EGX100);
+      //   this.Indices.push(this.EGX100);
     });
-    this.MarketService.getperformers("BP", true).subscribe(data => {
+    this.MarketService.getperformers("BP", isArabic).subscribe(data => {
       this.BP = data;
       console.log(this.BP);
     });
-    this.MarketService.getperformers("BV", true).subscribe(data => {
+    this.MarketService.getperformers("BV", isArabic).subscribe(data => {
       this.BV = data;
       console.log(this.BV);
     });
-    this.MarketService.getperformers("WP", true).subscribe(data => {
+    this.MarketService.getperformers("WP", isArabic).subscribe(data => {
       this.WP = data;
       console.log(this.WP);
     });
     console.log(this.Indices);
     this.TranslateService.use(language);
+    this.initialized = true;
+  }
+  ionViewDidEnter() {
+    this.dorefresh = true;
+    this.refresh();
+  }
+  ionViewWillLeave() {
+    this.dorefresh = false;
+  }
+  refresh() {
+    //  setTimeout(() => {
+    //     }, 1000);
+    this.Indices = new Array();
+    this.MarketService.getindicestable().subscribe(data => {
+      this.IndicesTable = data;
+      console.log(this.IndicesTable);
+    });
+    this.MarketService.getperformerstable().subscribe(data => {
+      this.PerformersTable = data;
+      console.log(this.PerformersTable);
+    });
+    this.MarketService.getindices("EGX30").subscribe(data => {
+      this.EGX30 = data;
+      console.log(this.EGX30);
+      // this.Indices.push(this.EGX30);
+    });
+    this.MarketService.getindices("EGX70").subscribe(data => {
+      this.EGX70 = data;
+      console.log(this.EGX70);
+      // this.Indices.push(this.EGX70);
+    });
+    this.MarketService.getindices("EGX100").subscribe(data => {
+      this.EGX100 = data;
+      console.log(this.EGX100);
+      //  this.Indices.push(this.EGX100);
+    });
+    this.MarketService.getperformers("BP", isArabic).subscribe(data => {
+      this.BP = data;
+      console.log(this.BP);
+    });
+    this.MarketService.getperformers("BV", isArabic).subscribe(data => {
+      this.BV = data;
+      console.log(this.BV);
+    });
+    this.MarketService.getperformers("WP", isArabic).subscribe(data => {
+      this.WP = data;
+      console.log(this.WP);
+    });
+    if (this.dorefresh) {
+      setTimeout(() => {
+        this.refresh();
+      }, 10000);
+      console.log("refresh");
+    }
   }
   setstockchosen(reuter: string) {
     this.stockchosen = true;
@@ -97,6 +165,25 @@ export class MarketPage {
   showHideChart(i: number) {
     this.showChart = !this.showChart;
     this.index = i;
+    switch (i) {
+      case 0:
+        this.show30 = true;
+        this.show70 = false;
+        this.show100 = false;
+        break;
+      case 1:
+        this.show30 = false;
+        this.show70 = true;
+        this.show100 = false;
+        break;
+      case 2:
+        this.show30 = false;
+        this.show70 = false;
+        this.show100 = true;
+        break;
+      default:
+        break;
+    }
   }
   getstockchosen(stockchosen) {
     this.stockchosen = stockchosen;

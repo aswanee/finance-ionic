@@ -32,7 +32,7 @@ export interface userorder extends userorderhistory {
   strExpireAt: Date;
 }
 export interface details {
-  PlaceType: number;
+  PlaceType: PlaceType;
   SentTime: string;
   Price: number;
   Quantity: number;
@@ -80,4 +80,9 @@ export function checkupdatability(userorder: userorder): boolean {
   } else {
     return false;
   }
+}
+export enum PlaceType {
+  Place = 22,
+  Update = 25,
+  Cancel = 26
 }

@@ -1,0 +1,17 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>
+            {{'News' | translate}}
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list *ngIf="News?.result.V">
+        <ion-item *ngFor="let item of News?.result.V" (click)="getdetails(item[0])">
+     <p color="dark">{{ item[1] | limitTo: 50 }}</p>
+     <br/>
+     <p>{{item[2]}}</p>
+        </ion-item>
+    </ion-list>
+</ion-content>

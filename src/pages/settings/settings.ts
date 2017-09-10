@@ -1,4 +1,5 @@
 export let language: string = "en";
+export let isArabic: boolean = false;
 import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TranslateService, TranslatePipe } from "ng2-translate";
@@ -90,6 +91,7 @@ export class SettingsPage implements OnInit {
   }
   toarab() {
     this.language = "ar";
+    isArabic = true;
     language = this.language;
     this.TranslateService.use(this.language);
     // this.TradeService
@@ -102,6 +104,7 @@ export class SettingsPage implements OnInit {
 
   toen() {
     this.language = "en";
+    isArabic = false;
     language = this.language;
     this.TranslateService.use(this.language);
   }

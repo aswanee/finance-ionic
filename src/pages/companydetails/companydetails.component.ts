@@ -24,7 +24,7 @@ import { MarketPage } from "./../market/market";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
 import { ToastController } from "ionic-angular";
-
+import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
@@ -42,6 +42,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   @Output() sendhide: EventEmitter<boolean> = new EventEmitter<boolean>();
   // stockchosen:boolean=false;
   showasksbids: boolean = false;
+  shownews = false;
   lastFveDays: boolean = true;
   detailsresponse: Detailsresponse;
   showtrades: boolean = false;
@@ -53,7 +54,10 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   Trades: Detailsresponse;
   relNews: Newsresponse;
   reuter;
-
+  TradesArray: string[][] = new Array();
+  asksbidsinitialized = false;
+  tradesinitialized = false;
+  newsinitialized = false;
   constructor(
     private StockService: StockService,
     private CompanyService: CompanyService,
@@ -93,40 +97,103 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     } else {
     }
   }
+  ionViewWillLeave() {
+    this.showasksbids = false;
+    this.shownews = false;
+    this.showtrades = false;
+  }
   setasksbids() {
-    if (!this.showasksbids) {
-      this.AskBidService.getasks(this.reuter).subscribe(data => {
-        this.Asks = data;
-        console.log(this.Asks);
-      });
-      this.AskBidService.getbids(this.reuter).subscribe(data => {
-        this.Bids = data;
-        console.log(this.Bids);
-      });
-      this.showasksbids = true;
-      // this.stockchosen = false;
-      // this.send.emit(this.stockchosen);
-    } else {
-      this.showasksbids = false;
-      // this.stockchosen = true;
-      // this.send.emit(this.stockchosen);
+    this.AskBidService.getasks(this.reuter).subscribe(data => {
+      this.Asks = data;
+      console.log(this.Asks);
+    });
+    this.AskBidService.getbids(this.reuter).subscribe(data => {
+      this.Bids = data;
+      console.log(this.Bids);
+    });
+    this.showasksbids = true;
+    this.showtrades = false;
+    this.shownews = false;
+    this.refreshAsksBids();
+
+    // this.stockchosen = false;
+    // this.send.emit(this.stockchosen);
+
+    // console.log("refasksbids");
+
+    // this.showasksbids = false;
+    // this.stockchosen = true;
+    // this.send.emit(this.stockchosen);
+  }
+  refreshAsksBids() {
+    this.AskBidService.getasks(this.reuter).subscribe(data => {
+      this.Asks = data;
+    });
+    this.AskBidService.getbids(this.reuter).subscribe(data => {
+      this.Bids = data;
+    });
+    if (this.showasksbids) {
+      setTimeout(() => {
+        this.refreshAsksBids();
+      }, 1000);
+      console.log("refreshasksbids");
     }
+
+    //this.showasksbids = true;
+    // this.stockchosen = false;
+    // this.send.emit(this.stockchosen);
+    //this.refreshedToast("Asks and Bids");
   }
   settrades() {
-    if (!this.showtrades) {
-      this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
-        this.Trades = data;
-      });
-      this.showtrades = true;
-      // this.stockchosen = false;
-      // this.send.emit(this.stockchosen);
-    } else {
-      this.showtrades = false;
-      // this.stockchosen = true;
-      // this.send.emit(this.stockchosen);
+    this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
+      this.Trades = data;
+      for (let i = 0; i < this.Trades.result.length; i++) {
+        this.TradesArray[i] = new Array();
+      }
+      for (let i = 0; i < this.Trades.result.length; i++) {
+        this.TradesArray[i] = this.Trades.result[i].split(",");
+
+        this.TradesArray[i][this.TradesArray[i].length - 1] = this.TradesArray[
+          i
+        ][this.TradesArray[i].length - 1].substring(
+          0,
+          this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
+        );
+      }
+    });
+    this.showtrades = true;
+    this.showasksbids = false;
+    this.shownews = false;
+    this.refreshAutoTrades();
+    // this.stockchosen = false;
+    // this.send.emit(this.stockchosen);
+    // this.stockchosen = true;
+    // this.send.emit(this.stockchosen);
+  }
+  refreshAutoTrades() {
+    this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
+      this.Trades = data;
+      for (let i = 0; i < this.Trades.result.length; i++) {
+        this.TradesArray[i] = new Array();
+      }
+      for (let i = 0; i < this.Trades.result.length; i++) {
+        this.TradesArray[i] = this.Trades.result[i].split(",");
+
+        this.TradesArray[i][this.TradesArray[i].length - 1] = this.TradesArray[
+          i
+        ][this.TradesArray[i].length - 1].substring(
+          0,
+          this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
+        );
+      }
+    });
+    if (this.showtrades) {
+      setTimeout(() => {
+        this.refreshAutoTrades();
+      }, 1000);
+      console.log("refreshtrades");
     }
   }
-
   refreshTrades() {
     this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
       this.Trades = data;
@@ -166,12 +233,27 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
       this.relNews = data;
     });
-    this.showrelatednews = !this.showrelatednews;
+    this.shownews = true;
+    this.showasksbids = false;
+    this.showtrades = false;
+    this.refreshAutoNews();
   }
-
+  refreshAutoNews() {
+    this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
+      this.relNews = data;
+      // this.refreshedToast("News");
+    });
+    if (this.shownews) {
+      setTimeout(() => {
+        this.refreshAutoNews();
+      }, 1000);
+      console.log("refreshnews");
+    }
+  }
   getdetails(id) {
     this.showrelatednews = false;
     this.id = id;
+    this.goToNewsDeatils();
     this.showdetails = !this.showdetails;
   }
 
@@ -199,5 +281,10 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
 
   showLastFiveDays() {
     this.lastFveDays = !this.lastFveDays;
+  }
+  goToNewsDeatils() {
+    this.navCtrl.push(NewsdetailsComponent, {
+      id: this.id
+    });
   }
 }

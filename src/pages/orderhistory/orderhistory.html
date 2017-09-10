@@ -1,0 +1,71 @@
+<!--
+  Generated template for the OrderhistoryPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+    <ion-navbar>
+        <ion-title>{{"Order#"+orderid}}</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<h1>{{userorderhistoryresponse?.result.ReutersCode}}</h1>
+<ion-grid *ngIf="userorderhistoryresponse">
+    <h1>details</h1>
+    <ion-row>
+        <ion-col>
+            Status:
+        </ion-col>
+        <ion-col>
+            {{showOrderStatus(userorderhistoryresponse?.result.Status)}}
+        </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>Executed Quantity:</ion-col>
+        <ion-col>
+            {{userorderhistoryresponse?.result.ExecutedQuantity}}
+        </ion-col>
+    </ion-row>
+    <!-- <ion-col>
+        {{userorderhistoryresponse?.result.}}
+    </ion-col>
+    <ion-col>
+        {{userorderhistoryresponse?.result.ExpireAt}}
+    </ion-col> -->
+</ion-grid>
+<h1>Actions</h1>
+<ion-grid *ngFor="let item of userorderhistoryresponse?.result.details ">
+    <ion-item>
+        <ion-row>
+            <ion-col>PlaceType: </ion-col>
+            <ion-col> {{showPlaceType(item.PlaceType)}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col> Price:</ion-col>
+            <ion-col> {{item.Price}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>PriceType:</ion-col>
+            <ion-col> {{showPriceType(item.PriceType)}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>Quantity:</ion-col>
+            <ion-col> {{item.Quantity}} </ion-col>
+        </ion-row>
+    </ion-item>
+    <ion-item>
+        <ion-row>
+            <ion-col>Sent Time:</ion-col>
+            <ion-col>{{item.strSentTime}}</ion-col>
+        </ion-row>
+    </ion-item>
+</ion-grid>
