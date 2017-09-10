@@ -28,23 +28,7 @@ export class LoginComponent implements OnInit {
   password: string;
   alertresponse: alertresponse;
   add: add;
-  alert: alert = {
-    AlertID: null,
-    UserID: null,
-    Code: "",
-    Type: null,
-    Field: null,
-    Criteria: null,
-    Value: null,
-    SetTime: "",
-    MetTime: "",
-    Note: "",
-    Viewed: null,
-    IsMatched: null,
-    LastUpdated: "",
-    IsDeleted: null,
-    DoubleValue: null
-  };
+
   deleteresponse: deleteresponse;
   constructor(
     public navCtrl: NavController,
@@ -66,12 +50,11 @@ export class LoginComponent implements OnInit {
     });
   }
 
-
   login() {
     this.LoginService
       .gettoken(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(data => {
-        window['token'] = data;
+        window["token"] = data;
         console.log(data);
         this.storage.set("token", data);
         this.token = true;

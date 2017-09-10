@@ -19,34 +19,67 @@
                 <ion-checkbox [(ngModel)]="map[item]">{{ map[item] }}</ion-checkbox>
             </ion-item>
         </ion-list>
-        <ion-fab style="position:fixed; margin-bottom:6%; margin-right: 1%;" bottom right>
+        <ion-fab style="position:fixed; margin-bottom:12%; margin-right: 1%;" bottom right>
             <button (click)="falsepressed()" ion-fab><ion-icon name='checkmark'></ion-icon></button>
         </ion-fab>
 
     </div>
     <div class="list" *ngIf="!editpressed ">
-        <ion-fab style="position:fixed; margin-bottom:6%; margin-right: 1%;" bottom right>
+        <ion-fab style="position:fixed; margin-bottom:12%; margin-right: 1%;" bottom right>
             <button clear (click)="addToWatchlist()" ion-fab><p style="font-size:30px;">+</p></button>
         </ion-fab>
+        <!-- <ion-fab right bottom>
+            <button ion-fab style="position:fixed; z-index:100;" (click)="addToWatchlist()" color="light"><ion-icon name="add"></ion-icon></button>
+             <ion-fab-list side="left"> 
+                <button ion-fab><ion-icon name="logo-facebook"></ion-icon></button>
+                <button ion-fab><ion-icon name="logo-twitter"></ion-icon></button>
+                <button ion-fab><ion-icon name="logo-vimeo"></ion-icon></button>
+                <button ion-fab><ion-icon name="logo-googleplus"></ion-icon></button>
+            </ion-fab-list> 
+        </ion-fab>-->
+
     </div>
 
     <ion-list *ngIf="StockDetails && !editpressed">
         <ion-item>
+            <ion-row *ngIf="!isSmall">
+
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Reuter'|translate}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Value'|translate}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Change'|translate}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Percentage'|translate | limitTo:5}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Trend'|translate}}</p>
+                </ion-col>
+                <ion-col col>
+                </ion-col>
+
+            </ion-row>
+        </ion-item>
+        <ion-item *ngIf="isSmall">
             <ion-row>
                 <ion-col col>
-                    <p>{{'Reuter'|translate}}</p>
+                    <p style="font-size:0.8em">{{'Reuter'|translate |limitTo:3}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Value'|translate}}</p>
+                    <p style="font-size:0.8em">{{'Value'|translate |limitTo:3}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Change'|translate}}</p>
+                    <p style="font-size:0.8em">{{'Change'|translate |limitTo:3}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Percentage'|translate}}</p>
+                    <p style="font-size:0.8em">{{'Percentage'|translate |limitTo:3}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Trend'|translate}}</p>
+                    <p style="font-size:0.8em">{{'Trend'|translate |limitTo:3}}</p>
                 </ion-col>
                 <ion-col col>
                 </ion-col>
@@ -55,33 +88,29 @@
         <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }"
             class="row">
             <button ion-button full clear (click)="setstockchosen(x[3])" [hidden]="editpressed">
-                <ion-col class="myCol"  col *ngIf="x[2]>0" > {{x[3]}}
-                <br>
+                <ion-col col *ngIf="x[2]>0" > {{x[3]}}
                 </ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]>0" > {{x[0]}}</ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]>0" style="color:green"> {{x[1]}}</ion-col>
+                <ion-col col *ngIf="x[2]>0" > {{x[0]}}</ion-col>
+                <ion-col col *ngIf="x[2]>0" style="color:green"> {{x[2]}}</ion-col>
+                <ion-col col *ngIf="x[2]>0" style="color:green"> {{x[1]}}%</ion-col>
 
-                <ion-col class="myCol"  col *ngIf="x[2]<0" > {{x[3]}}
-                    <br>
-                    
+                <ion-col col *ngIf="x[2]<0" > {{x[3]}}
                  </ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]<0" > {{x[0]}}</ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]<0" style="color:red"> {{x[1]}}</ion-col>
+                <ion-col col *ngIf="x[2]<0" > {{x[0]}}</ion-col>
+                <ion-col  col *ngIf="x[2]<0" style="color:red"> {{x[2]}}</ion-col>
+                <ion-col  col *ngIf="x[2]<0" style="color:red"> {{x[1]}}%</ion-col>
 
-                <ion-col class="myCol"  col *ngIf="x[2]==0"> {{x[3]}}
-                  <br>
+                <ion-col  col *ngIf="x[2]==0"> {{x[3]}}
                  </ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[0]}}</ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
-                <ion-col class="myCol"  col *ngIf="x[2]==0"> {{x[1]}}</ion-col>
+                <ion-col col *ngIf="x[2]==0" > {{x[0]}}</ion-col>
+                <ion-col  col *ngIf="x[2]==0" > {{x[2]}}</ion-col>
+                <ion-col  col *ngIf="x[2]==0"> {{x[1]}}%</ion-col>
                 <ion-col  col>
                     <ion-icon right *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col>
             </button>
-            <p>{{x[4] | limitTo: 30}}</p>
+            <p>{{x[4]}}</p>
             <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
         </ion-item>
     </ion-list>

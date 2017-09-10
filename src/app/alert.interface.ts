@@ -18,6 +18,7 @@ export interface alert {
   LastUpdated: string;
   IsDeleted: boolean;
   DoubleValue: number;
+  strMetTime: string;
 }
 export enum Type {
   AlertStockTypeIndex = 1,

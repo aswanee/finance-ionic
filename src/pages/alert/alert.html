@@ -20,32 +20,50 @@
     <ion-slide>
       <h2>Matched Alerts</h2>
       <ion-list *ngIf="matchedAlerts">
-        <ion-row>
+        <ion-row *ngIf="!isSmall">
           <ion-col col>
-            <p>Reuter</p>
+            <p style="font-size:0.9em;">Reuter</p>
           </ion-col>
           <ion-col col>
-            <p>Type</p>
+            <p style="font-size:0.9em;">Type</p>
           </ion-col>
           <ion-col col>
-            <p>Value</p>
+            <p style="font-size:0.9em;">Value</p>
+          </ion-col>
+          <ion-col col-3>
+            <p style="font-size:0.9em;">MetTime</p>
           </ion-col>
           <ion-col col>
-            <p>Mettime</p>
+            <p style="font-size:0.9em;">Field</p>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="isSmall">
+          <ion-col col>
+            <p style="font-size:0.9em;">Re..</p>
           </ion-col>
           <ion-col col>
-            <p>Field</p>
+            <p style="font-size:0.9em;">Type</p>
+          </ion-col>
+          <ion-col col>
+            <p style="font-size:0.9em;">Va..</p>
+          </ion-col>
+          <ion-col col>
+            <p style="font-size:0.9em;">Met</p>
+          </ion-col>
+          <ion-col col>
+            <p style="font-size:0.9em;">Field</p>
           </ion-col>
         </ion-row>
         <ion-item *ngFor="let alert of matchedAlerts; let i=index;">
           <button ion-button full clear color='dark' (click)="alertDetails(i, true)">
-                  <ion-col class="myCol"  col> {{alert.Code}} </ion-col>
-                  <ion-col class="myCol"  col> {{Types[alert.Type]}}</ion-col>
-                  <ion-col class="myCol"  col> {{alert.Value}}</ion-col>
-                  <ion-col class="myCol"  col> {{alert.MetTime}}</ion-col>
-                  <ion-col  col> 
-                    {{Fields[alert.Field]}}
-                  </ion-col>
+            <ion-col col><p style="font-size:0.8em;"> {{alert.Code}}</p> </ion-col>
+            <ion-col col><p style="font-size:0.8em;"> {{Types[alert.Type]}}</p></ion-col>
+            <ion-col col><p style="font-size:0.8em;"> {{alert.Value}}</p></ion-col>
+            <ion-col col-3><p style="font-size:0.8em;"> {{alert.strMetTime | limitTo: 11}}</p></ion-col>
+            <ion-col  col> <p style="font-size:0.8em;">
+              {{Fields[alert.Field]}}
+              </p>
+            </ion-col>
               </button>
           <button ion-button item-end clear color="danger" icon-only (click)="deleteAlert(i, true)"><ion-icon name='trash' is-active="false"></ion-icon></button>
         </ion-item>

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit, OnChanges, SimpleChanges, HostListener } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
@@ -19,6 +19,7 @@ import { CompanydetailsComponent } from "../companydetails/companydetails.compon
   templateUrl: "WatchList.html"
 })
 export class HomePage implements OnInit {
+  isSmall: boolean = false;
   List: SerResponse;
   displayList: string[] = new Array();
   displayListDummy: string[] = new Array();
@@ -56,7 +57,11 @@ export class HomePage implements OnInit {
     private storage: Storage,
     private TranslateService: TranslateService
   ) {}
-
+  @HostListener('window:resize', ['$event'])
+  onResize(event){
+     console.log("Width: " + event.target.innerWidth);
+     this.isSmall = event.target.innerWidth < 414? true : false;
+  }
   ngOnInit() {
     this.TranslateService.use(language);
     // this.storage.keys().then (

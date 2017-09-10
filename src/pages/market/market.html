@@ -9,23 +9,42 @@
 <ion-content padding *ngIf="Indices&&BP&&WP&&BV">
     <ion-item style="margin-bottom: 3%; margin-top: 10%">
         <h2 style="text-align:center;"> {{'Indices'|translate}}</h2>
-        <ion-row>
+        <ion-row *ngIf="!this.isSmall">
             <ion-col col-1>
             </ion-col>
             <ion-col col>
-                <p style="font-size:0.2em">{{'Reuter'|translate}}</p>
+                <p style="font-size:0.8em">{{'Reuter'|translate}}</p>
             </ion-col>
             <ion-col col>
-                <p style="font-size:0.2em">{{'Value' |translate}}</p>
+                <p style="font-size:0.8em">{{'Value' |translate}}</p>
             </ion-col>
             <ion-col col>
-                <p style="font-size:0.2em">{{'Change' |translate}}</p>
+                <p style="font-size:0.8em">{{'Change' |translate}}</p>
             </ion-col>
             <ion-col col>
-                <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
+                <p style="font-size:0.8em">{{'Percentage' | translate}}</p>
             </ion-col>
             <ion-col col>
-                <p style="font-size:0.2em">{{'Trend' | translate}}</p>
+                <p style="font-size:0.8em">{{'Trend' | translate}}</p>
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="this.isSmall">
+            <ion-col col-1>
+            </ion-col>
+            <ion-col col>
+                <p style="font-size:0.8em">{{'Reuter'|translate | limitTo:3}}</p>
+            </ion-col>
+            <ion-col col>
+                <p style="font-size:0.8em">{{'Value' |translate | limitTo:3}}</p>
+            </ion-col>
+            <ion-col col>
+                <p style="font-size:0.8em">{{'Change' |translate | limitTo:3}}</p>
+            </ion-col>
+            <ion-col col>
+                <p style="font-size:0.8em">{{'Percentage' | translate | limitTo:3}}</p>
+            </ion-col>
+            <ion-col col>
+                <p style="font-size:0.8em">{{'Trend' | translate | limitTo:3}}</p>
             </ion-col>
         </ion-row>
         <ion-buttons *ngIf="EGX30&&EGX70&&EGX100">
@@ -37,8 +56,8 @@
                 <ion-col col> {{EGX30?.result[0][1] | limitTo:4}}</ion-col>
                 <ion-col col> {{EGX30?.result[0][2] | limitTo:4 }}</ion-col>
                 <ion-col  col> {{EGX30?.result[0][3] | limitTo:4}}</ion-col>
-                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][4] | limitTo:4}}</ion-col>
-                <ion-col  col *ngIf="!this.isSmall"> {{EGX30?.result[0][5] | limitTo:4 }}</ion-col> 
+                <ion-col  col > {{EGX30?.result[0][4] | limitTo:4}}</ion-col>
+                <ion-col  col > {{EGX30?.result[0][5] | limitTo:4 }}</ion-col> 
                 <ion-col  col>
                     <ion-icon right *ngIf="EGX30?.result[0][2]>0" name="md-trending-up" color="secondary"></ion-icon>
                     <ion-icon *ngIf="EGX30?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
@@ -101,23 +120,42 @@
     <ion-item style="margin-top: 1%">
         <h2 style="text-align:center">{{'BP' | translate}}</h2>
         <ion-item>
-            <ion-row>
+            <ion-row *ngIf="!this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Reuter' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Reuter'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Value' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Value' |translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Change' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Change' |translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Trend' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Trend' | translate}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="this.isSmall">
+                <ion-col col-1>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Reuter'|translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Value' |translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Change' |translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Percentage' | translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Trend' | translate | limitTo:3}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -141,23 +179,42 @@
     <ion-item>
         <h2 style="text-align:center">{{'BV' | translate}}</h2>
         <ion-item>
-            <ion-row>
+            <ion-row *ngIf="!this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Reuter' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Reuter'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Value' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Value' |translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Change' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Change' |translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Trend' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Trend' | translate}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="this.isSmall">
+                <ion-col col-1>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Reuter'|translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Value' |translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Change' |translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Percentage' | translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Trend' | translate | limitTo:3}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -184,23 +241,42 @@
     <ion-item style="margin-bottom: 3%">
         <h2 style="text-align:center">{{'WP' | translate}}</h2>
         <ion-item>
-            <ion-row>
+            <ion-row *ngIf="!this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Reuter' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Reuter'|translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Value' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Value' |translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Change' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Change' |translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Percentage' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Percentage' | translate}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.2em">{{'Trend' | translate}}</p>
+                    <p style="font-size:0.8em">{{'Trend' | translate}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="this.isSmall">
+                <ion-col col-1>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Reuter'|translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Value' |translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Change' |translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Percentage' | translate | limitTo:3}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p style="font-size:0.8em">{{'Trend' | translate | limitTo:3}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
