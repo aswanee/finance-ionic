@@ -190,11 +190,12 @@ export class TradingPage implements OnInit {
       }
       console.log(this.portfolioresponse);
     });
-    this.refreshPortfolio();
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
     this.showhistory = false;
     this.showInsert = false;
+    this.refreshPortfolio();
+
     // this.ShowUpdate = false;
   }
 
