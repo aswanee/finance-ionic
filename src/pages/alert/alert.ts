@@ -1,4 +1,9 @@
-import { Component, OnChanges, SimpleChanges } from "@angular/core";
+import {
+  Component,
+  OnChanges,
+  SimpleChanges,
+  HostListener
+} from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { StockService } from "./../../app/stock.service";
@@ -23,6 +28,7 @@ import { UpdateAlertPage } from "./../update-alert/update-alert";
   templateUrl: "alert.html"
 })
 export class AlertPage {
+  isSmall: boolean = false;
   private alertForm: FormGroup;
   addAlertForm: boolean = false;
   dispnames: any[][] = new Array();
@@ -68,7 +74,11 @@ export class AlertPage {
     private AlertService: AlertService,
     private storage: Storage
   ) {}
-
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    console.log("Width: " + event.target.innerWidth);
+    this.isSmall = event.target.innerWidth < 414 ? true : false;
+  }
   ngOnInit() {
     this.storage.keys().then(keys => {
       if (keys) {
