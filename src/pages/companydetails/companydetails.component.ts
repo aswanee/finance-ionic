@@ -24,6 +24,7 @@ import { MarketPage } from "./../market/market";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { language } from "./../settings/settings";
 import { ToastController } from "ionic-angular";
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 @Component({
   // moduleId: module.id,

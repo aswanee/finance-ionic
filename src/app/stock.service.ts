@@ -104,7 +104,7 @@ export class StockService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getnames(isArabic: boolean): Observable<SerResponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link = this.link + "apis/market/GetQuotesList?isArabic=" + isArabic;
     return (
       this.http

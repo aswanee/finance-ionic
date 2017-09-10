@@ -31,15 +31,15 @@
             <ion-segment [(ngModel)]="QueteParts">
                 <ion-segment-button value="News" (click)="setnews()">
                     <ion-icon name="cart" item-start></ion-icon>
-                    {{'Related News' | translate}}
+                    {{'Related News' | Language}}
                 </ion-segment-button>
                 <ion-segment-button value="Orders" (click)="setasksbids()">
                     <ion-icon name="cart" item-start></ion-icon>
-                    {{'Asks' | translate}}/{{'Bids' | translate}}
+                    {{'Asks' | translate}}/{{'Bids' | Language}}
                 </ion-segment-button>
                 <ion-segment-button value="Trades" (click)="settrades()">
                     <ion-icon name="cart" item-start></ion-icon>
-                    {{'Trades' | translate}}
+                    {{'Trades' | Language}}
                 </ion-segment-button>
             </ion-segment>
         </div>
@@ -55,7 +55,7 @@
                     <ion-row>
                         <ion-col col-6>
                             <table width="100%">
-                                <th colspan="3"><strong>{{'Asks' | translate}}</strong></th>
+                                <th colspan="3"><strong>{{'Asks' | Language}}</strong></th>
                                 <tr *ngFor="let item of Asks?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                                     <td>{{item[0]}}</td>
                                     <td>{{item[1]}}</td>
@@ -65,7 +65,7 @@
                         </ion-col>
                         <ion-col col-6>
                             <table width="100%">
-                                <th colspan="3"><strong>{{'Bids' | translate}}</strong></th>
+                                <th colspan="3"><strong>{{'Bids' | Language}}</strong></th>
                                 <tr *ngFor="let item of Bids?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                                     <td>{{item[0]}}</td>
                                     <td>{{item[1]}}</td>
@@ -98,7 +98,7 @@
                 <ion-item *ngIf="Trades?.result.length===0 ">
                     <ion-icon name="sad" color='danger' style="margin-left: 10%; font-size: 30px;"></ion-icon>
                     &nbsp; &nbsp; &nbsp;
-                    <strong> {{'No Trades Yet' | translate}} </strong>
+                    <strong> {{'No Trades Yet' | Language}} </strong>
                 </ion-item>
             </ion-list>
             <ion-list *ngSwitchCase="'News'">
@@ -111,7 +111,7 @@
                         <p>{{item[2]}}</p>
                         <p>
                             <button ion-button item-end (click)="getdetails(item[0])" color="dark">
-                                                        {{'Next' | translate}}
+                                                        {{'Next' | Language}}
                                                         <ion-icon name='arrow-forward'></ion-icon>
                                                       </button>
                         </p>

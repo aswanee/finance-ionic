@@ -95,7 +95,7 @@ export class SettingsPage implements OnInit {
     this.language = "ar";
     isArabic = true;
     language = this.language;
-    this.gotoWatchList();
+    // this.gotoWatchList();
     // this.TranslateService.use(this.language);
     // this.TradeService
     //   .CancelOrder(630914, true, 123456, this.usertoken)
@@ -110,7 +110,7 @@ export class SettingsPage implements OnInit {
     isArabic = false;
     language = this.language;
     // this.TranslateService.use(this.language);
-    this.gotoWatchList();
+    // this.gotoWatchList();
   }
   setopenlang() {
     this.openlanguage = !this.openlanguage;
@@ -118,9 +118,9 @@ export class SettingsPage implements OnInit {
   setshowabout() {
     this.showabout = !this.showabout;
   }
-  gotoWatchList() {
-    this.navCtrl.pop();
-  }
+  // gotoWatchList() {
+  //   this.navCtrl.pop();
+  // }
 }
 //  {
 //     PriceType: 2 /*Market -  Limited*/,

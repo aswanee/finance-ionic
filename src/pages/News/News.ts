@@ -11,6 +11,7 @@ import { language } from "./../settings/settings";
 import { isArabic } from "./../settings/settings";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 @Component({
   selector: "page-contact",
   templateUrl: "News.html"

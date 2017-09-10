@@ -53,7 +53,7 @@ export class HomePage implements OnInit {
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   dispnames: string[] = new Array();
-  language = "en";
+  language = language;
   constructor(
     public navCtrl: NavController,
     private StockService: StockService,
@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
-    this.TranslateService.use(language);
+    // this.TranslateService.use(language);
     // this.storage.keys().then (
     //   keys=>{
     //     if(keys){
@@ -144,6 +144,7 @@ export class HomePage implements OnInit {
   ionViewDidEnter() {
     this.dorefresh = true;
     this.refresh();
+    // console.log(LanguagePipe);
   }
   ionViewWillLeave() {
     this.dorefresh = false;
@@ -167,6 +168,7 @@ export class HomePage implements OnInit {
       });
       // console.log(this.News);
     });
+    this.language = language;
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();

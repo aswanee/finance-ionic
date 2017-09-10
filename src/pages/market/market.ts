@@ -1,11 +1,12 @@
-import { language , isArabic} from "./../settings/settings";
-import { Component, OnInit,HostListener } from "@angular/core";
+import { language, isArabic } from "./../settings/settings";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
 import { TranslatePipe, TranslateService } from "ng2-translate";
 import { CompanydetailsComponent } from "./../companydetails/companydetails.component";
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 /**
  * Generated class for the MarketPage page.
  *
@@ -50,10 +51,10 @@ export class MarketPage {
     private MarketService: MarketService,
     private TranslateService: TranslateService
   ) {}
-  @HostListener('window:resize', ['$event'])
-  onResize(event){
-     console.log("Width: " + event.target.innerWidth);
-     this.isSmall = event.target.innerWidth < 414? true : false;
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    console.log("Width: " + event.target.innerWidth);
+    this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.

@@ -26,7 +26,7 @@ import {
 @Injectable()
 export class TradeService extends ParentService {
   GetPortfolioSummary(token: token): Observable<Detailsresponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link = this.link + "apis/trading/GetPortfolioSummary?bimsid=";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
@@ -52,7 +52,7 @@ export class TradeService extends ParentService {
 
   GetPortfolio(token: token, isArabic: boolean): Observable<portfolioresponse> {
     // htis.getlink();
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link = this.link + "apis/trading/GetUserPortfolio?BimsUserID=";
     // console.log(link);
     let headers = new Headers();
@@ -85,7 +85,7 @@ export class TradeService extends ParentService {
     orderid: number
   ): Observable<userorderhistoryresponse> {
     // htis.getlink();
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link = this.link + "apis/trading/GetUserOrderHistory?bimsUserID=";
     // console.log(link);
     let headers = new Headers();
@@ -127,7 +127,7 @@ export class TradeService extends ParentService {
     isArabic: boolean,
     view: number
   ): Observable<userorderresponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     // htis.getlink();
     this.link = this.link + "apis/trading/GetUserOrders?BimsUserID=";
     // console.log(link);
@@ -172,7 +172,7 @@ export class TradeService extends ParentService {
     token: token,
     Pin: number
   ): Observable<PlaceResponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link =
       this.link +
       "apis/trading/PlaceOrder?isArabic=" +
@@ -234,7 +234,7 @@ export class TradeService extends ParentService {
     order: userorder,
     token: token
   ): Observable<ValidationResponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link =
       this.link +
       "apis/trading/ValidatePlaceOrder?isArabic=" +
@@ -294,7 +294,7 @@ export class TradeService extends ParentService {
     pin: number,
     token
   ): Observable<CancelResponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link =
       this.link +
       "apis/trading/CancelOrder?orderID=" +

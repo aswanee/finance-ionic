@@ -40,7 +40,7 @@ export class MarketService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getindicestable(): Observable<MarketResponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     return this.http
       .get(this.link + "apis/market/GetIndicesTable")
       .map(x => {
