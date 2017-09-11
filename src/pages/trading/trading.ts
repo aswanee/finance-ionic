@@ -4,7 +4,7 @@ import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import { AlertController } from "ionic-angular";
 import { LoginComponent } from "./../login/login.component";
-import { language, isArabic } from "./../settings/settings";
+// import { isArabic } from "./../../app/app.module";
 import {
   userorderhistoryresponse,
   userorderresponse,
@@ -183,14 +183,16 @@ export class TradingPage implements OnInit {
   getportfolio() {
     /* bn Rashed*/
     //this.checkLogin();
-    this.TradeService.GetPortfolio(this.token, isArabic).subscribe(data => {
-      this.portfolioresponse = data;
-      if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
-        window["token"] = null;
-        this.gotoLogin();
-      }
-      console.log(this.portfolioresponse);
-    });
+    this.TradeService
+      .GetPortfolio(this.token, window["isArabic"])
+      .subscribe(data => {
+        this.portfolioresponse = data;
+        if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        }
+        console.log(this.portfolioresponse);
+      });
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
     this.showhistory = false;
@@ -201,14 +203,16 @@ export class TradingPage implements OnInit {
   }
 
   refreshPortfolio() {
-    this.TradeService.GetPortfolio(this.token, isArabic).subscribe(data => {
-      this.portfolioresponse = data;
-      if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
-        window["token"] = null;
-        this.gotoLogin();
-      }
-      console.log(this.portfolioresponse);
-    });
+    this.TradeService
+      .GetPortfolio(this.token, window["isArabic"])
+      .subscribe(data => {
+        this.portfolioresponse = data;
+        if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        }
+        console.log(this.portfolioresponse);
+      });
     if (this.showportfolio) {
       setTimeout(() => {
         this.refreshPortfolio();
@@ -229,18 +233,20 @@ export class TradingPage implements OnInit {
     this.showsummary = !this.showsummary;
   }
   getorders() {
-    this.TradeService.getorders(this.token, isArabic, 2).subscribe(data => {
-      this.userorderresponse = data;
-      console.log(this.userorderresponse);
-      if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
-        window["token"] = null;
-        this.gotoLogin();
-      } else {
-        for (let i = 0; i < this.userorderresponse.Status.length; i++) {
-          this.ShowUpdate[i] = false;
+    this.TradeService
+      .getorders(this.token, window["isArabic"], 2)
+      .subscribe(data => {
+        this.userorderresponse = data;
+        console.log(this.userorderresponse);
+        if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        } else {
+          for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+            this.ShowUpdate[i] = false;
+          }
         }
-      }
-    });
+      });
     this.showorders = !this.showorders;
     this.showportfolio = false;
     this.showhistory = false;
@@ -250,18 +256,20 @@ export class TradingPage implements OnInit {
   }
 
   refreshOrders() {
-    this.TradeService.getorders(this.token, isArabic, 2).subscribe(data => {
-      this.userorderresponse = data;
-      console.log(this.userorderresponse);
-      if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
-        window["token"] = null;
-        this.gotoLogin();
-      } else {
-        for (let i = 0; i < this.userorderresponse.Status.length; i++) {
-          this.ShowUpdate[i] = false;
+    this.TradeService
+      .getorders(this.token, window["isArabic"], 2)
+      .subscribe(data => {
+        this.userorderresponse = data;
+        console.log(this.userorderresponse);
+        if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        } else {
+          for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+            this.ShowUpdate[i] = false;
+          }
         }
-      }
-    });
+      });
     if (this.showorders) {
       setTimeout(() => {
         this.refreshOrders();
@@ -295,7 +303,7 @@ export class TradingPage implements OnInit {
     this.userorder.Username = this.token.result.UserName;
     console.log(this.userorder);
     this.TradeService
-      .ValidateOrder(isArabic, false, this.userorder, this.token)
+      .ValidateOrder(window["isArabic"], false, this.userorder, this.token)
       .subscribe(data => {
         this.ValidationResponse = data;
         console.log(this.ValidationResponse);
@@ -336,7 +344,13 @@ export class TradingPage implements OnInit {
   placeOrder() {
     this.pincode = Number(prompt("please enter the pin code"));
     this.TradeService
-      .PlaceOrder(isArabic, false, this.userorder, this.token, this.pincode)
+      .PlaceOrder(
+        window["isArabic"],
+        false,
+        this.userorder,
+        this.token,
+        this.pincode
+      )
       .subscribe(data => {
         this.Createresponse = data;
         console.log(this.Createresponse);
@@ -360,7 +374,7 @@ export class TradingPage implements OnInit {
     //order.Username = this.token.result.UserName;
     //this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
     this.TradeService
-      .ValidateOrder(isArabic, true, this.updateuserorder, this.token)
+      .ValidateOrder(window["isArabic"], true, this.updateuserorder, this.token)
       .subscribe(data => {
         this.ValidationResponse = data;
         console.log(this.ValidationResponse);
@@ -376,7 +390,7 @@ export class TradingPage implements OnInit {
           );
           this.TradeService
             .PlaceOrder(
-              isArabic,
+              window["isArabic"],
               true,
               this.updateuserorder,
               this.token,
@@ -403,7 +417,7 @@ export class TradingPage implements OnInit {
   CancelOrder(orderid: number) {
     this.pincode = Number(prompt("please enter your pin code"));
     this.TradeService
-      .CancelOrder(orderid, isArabic, this.pincode, this.token)
+      .CancelOrder(orderid, window["isArabic"], this.pincode, this.token)
       .subscribe(data => {
         this.CancelResponse = data;
         console.log(this.CancelResponse);

@@ -50,6 +50,8 @@
                 <ion-col>{{'Status' | Language}}</ion-col>
                 <ion-col>{{'Side' | Language}}</ion-col>
                 <ion-col>{{'Price Type' | Language}}</ion-col>
+                <ion-col></ion-col>
+                <ion-col></ion-col>
             </ion-row>
             <ion-row *ngFor="let item of userorderresponse?.result;let i = index">
                 <ion-col>{{item.ReutersCode}}</ion-col>
@@ -203,10 +205,10 @@
         <ion-row>{{showTimeTerm(userorderhistoryresponse?.result.TimeTerm)}}</ion-row>
     </ion-grid> -->
     <ion-item *ngIf="!loggedIn">
-        <h2 style="text-align:center">You are not logged In</h2>
+        <h2 style="text-align:center">{{'You are not logged In'| Language }}</h2>
         <br>
 
-        <button ion-button block (click)="gotoLogin()">Login</button>
+        <button ion-button block (click)="gotoLogin()">{{'Login' | Language}}</button>
     </ion-item>
 </ion-content>
 

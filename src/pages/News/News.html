@@ -12,15 +12,17 @@
             <br/>
             <p>{{item[2]}}</p>
         </ion-item>
-        <ion-item *ngFor="let item of displayedMoreNews?.result.V" (click)="getdetails(item[0])">
+
+        <ion-item *ngFor="let item of displayednews" (click)="getdetails(item[0])">
             <p color="dark">{{ item[1] | limitTo: 50 }}</p>
             <br/>
             <p>{{item[2]}}</p>
         </ion-item>
         <ion-item>
-            <button class="button button-block" (click)="More()">{{'More' | Language}}</button>
         </ion-item>
     </ion-list>
+    <ion-item (click)="More()">{{'More' | Language}}</ion-item>
+
 </ion-content>
 <!-- <ion-list *ngIf="MoreNews?.result.V">
 

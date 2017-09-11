@@ -1,4 +1,4 @@
-import { language, isArabic } from "./../settings/settings";
+// import { language, isArabic } from "./../../app/app.module";
 import { Component, OnInit, HostListener } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
@@ -82,20 +82,26 @@ export class MarketPage {
       console.log(this.EGX100);
       //   this.Indices.push(this.EGX100);
     });
-    this.MarketService.getperformers("BP", isArabic).subscribe(data => {
-      this.BP = data;
-      console.log(this.BP);
-    });
-    this.MarketService.getperformers("BV", isArabic).subscribe(data => {
-      this.BV = data;
-      console.log(this.BV);
-    });
-    this.MarketService.getperformers("WP", isArabic).subscribe(data => {
-      this.WP = data;
-      console.log(this.WP);
-    });
+    this.MarketService
+      .getperformers("BP", window["isArabic"])
+      .subscribe(data => {
+        this.BP = data;
+        console.log(this.BP);
+      });
+    this.MarketService
+      .getperformers("BV", window["isArabic"])
+      .subscribe(data => {
+        this.BV = data;
+        console.log(this.BV);
+      });
+    this.MarketService
+      .getperformers("WP", window["isArabic"])
+      .subscribe(data => {
+        this.WP = data;
+        console.log(this.WP);
+      });
     console.log(this.Indices);
-    this.TranslateService.use(language);
+    // this.TranslateService.use(language);
     this.initialized = true;
   }
   ionViewDidEnter() {
@@ -132,18 +138,24 @@ export class MarketPage {
       console.log(this.EGX100);
       //  this.Indices.push(this.EGX100);
     });
-    this.MarketService.getperformers("BP", isArabic).subscribe(data => {
-      this.BP = data;
-      console.log(this.BP);
-    });
-    this.MarketService.getperformers("BV", isArabic).subscribe(data => {
-      this.BV = data;
-      console.log(this.BV);
-    });
-    this.MarketService.getperformers("WP", isArabic).subscribe(data => {
-      this.WP = data;
-      console.log(this.WP);
-    });
+    this.MarketService
+      .getperformers("BP", window["isArabic"])
+      .subscribe(data => {
+        this.BP = data;
+        console.log(this.BP);
+      });
+    this.MarketService
+      .getperformers("BV", window["isArabic"])
+      .subscribe(data => {
+        this.BV = data;
+        console.log(this.BV);
+      });
+    this.MarketService
+      .getperformers("WP", window["isArabic"])
+      .subscribe(data => {
+        this.WP = data;
+        console.log(this.WP);
+      });
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();

@@ -15,7 +15,7 @@ import {
 } from "./../../app/alert.interface";
 import { add } from "./../../app/addresponse.interface";
 import { deleteresponse } from "./../../app/delete.interface";
-import { language } from "./../settings/settings";
+// import { language } from "./../../app/app.module";
 import { TranslatePipe, TranslateService } from "ng2-translate";
 @Component({
   selector: "login",

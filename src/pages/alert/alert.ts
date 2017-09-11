@@ -11,7 +11,7 @@ import { AlertService } from "./../../app/alert.service";
 import { alertresponse, alert } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
 import { token } from "./../../app/token.interface";
-
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { CreateAlertPage } from "./../create-alert/create-alert";
 import { UpdateAlertPage } from "./../update-alert/update-alert";
 

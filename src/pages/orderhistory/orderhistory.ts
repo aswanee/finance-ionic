@@ -9,7 +9,7 @@ import {
   OrderSide
 } from "./../../app/userorder.interface";
 import { TradeService } from "./../../app/trade.service";
-import { language, isArabic } from "./../settings/settings";
+// import { language, isArabic } from "./../../app/app.module";
 import { token } from "./../../app/token.interface";
 import { LoginComponent } from "./../login/login.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
@@ -48,7 +48,7 @@ export class OrderhistoryPage implements OnInit {
   }
   getorderhistory(orderid) {
     this.TradeService
-      .getorderhistory(this.token, isArabic, orderid)
+      .getorderhistory(this.token, window["isArabic"], orderid)
       .subscribe(data => {
         this.userorderhistoryresponse = data;
         console.log(this.userorderhistoryresponse);

@@ -22,7 +22,7 @@ import { TabsPage } from "../tabs/tabs";
 import { HomePage } from "./../WatchList/WatchList";
 import { MarketPage } from "./../market/market";
 import { TranslateService, TranslatePipe } from "ng2-translate";
-import { language } from "./../settings/settings";
+// import { language } from "./../../app/app.module";
 import { ToastController } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
@@ -78,7 +78,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     // console.log(this.reuter);
-    this.TranslateService.use(language);
+    // this.TranslateService.use(language);
   }
   ngOnChanges(changes: SimpleChanges) {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.

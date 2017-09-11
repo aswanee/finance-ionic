@@ -23,6 +23,6 @@
         <button ion-button block [disabled]="!loginForm.valid" type="submit">{{'Login'|Language}}</button>
     </form>
     <ion-item *ngIf="token">
-        <h3> You are already logged in! </h3>
+        <h3> {{'You are already logged in ' | Language}}</h3>
     </ion-item>
 </ion-content>

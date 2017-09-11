@@ -12,7 +12,7 @@ import {
 } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
 import { token } from "./../../app/token.interface";
-
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 /**
  * Generated class for the CreateAlertPage page.
  *

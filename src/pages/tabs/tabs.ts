@@ -6,7 +6,7 @@ import { HomePage } from "../WatchList/WatchList";
 import { MarketPage } from "../market/market";
 import { AlertPage } from "../alert/alert";
 import { LoginComponent } from "./../login/login.component";
-import { language } from "./../settings/settings";
+// import { language } from "./../settings/settings";
 import { TranslateService, TranslatePipe } from "ng2-translate";
 import { TradingPage } from "./../trading/trading";
 @Component({
@@ -21,6 +21,6 @@ export class TabsPage implements OnInit {
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.TranslateService.use(language);
+    // this.TranslateService.use(language);
   }
 }

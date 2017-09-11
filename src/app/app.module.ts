@@ -8,6 +8,7 @@ import { AboutPage } from "../pages/about/about";
 import { NewsPage } from "../pages/News/News";
 import { AlertPage } from "../pages/alert/alert";
 import { HomePage } from "../pages/WatchList/WatchList";
+import { Storage } from "@ionic/storage";
 import { LoginComponent } from "./../pages/login/login.component";
 import { ChartPage } from "../pages/chart/chart";
 import { MarketPage } from "../pages/market/market";

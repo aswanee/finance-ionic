@@ -1,3 +1,5 @@
+export let language: string = "en";
+export let isArabic: boolean = false;
 import {
   Component,
   OnInit,
@@ -16,8 +18,8 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { TranslateService, TranslatePipe } from "ng2-translate";
-import { language } from "./../settings/settings";
-import { isArabic } from "./../settings/settings";
+// import { language } from "./../settings/settings";
+// import { isArabic } from "./../settings/settings";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 @Component({
@@ -53,7 +55,7 @@ export class HomePage implements OnInit {
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   dispnames: string[] = new Array();
-  language = language;
+  // language = language;
   constructor(
     public navCtrl: NavController,
     private StockService: StockService,
@@ -77,10 +79,20 @@ export class HomePage implements OnInit {
     //     }
     //    window['token'] = data;
     // });
+    this.storage.get("language").then(val => {
+      window["language"] = val;
+      console.log(val);
+    });
+    this.storage.get("isArabic").then(val => {
+      window["isArabic"] = val;
+      isArabic = window["isArabic"];
+      console.log(val);
+    });
     this.storage.get("token").then(val => {
       window["token"] = val;
       console.log(val);
     });
+
     console.log(window["token"]);
     console.log(this.storage.get("token"));
     this.StockService.getnames(isArabic).subscribe(data => {
@@ -168,7 +180,9 @@ export class HomePage implements OnInit {
       });
       // console.log(this.News);
     });
-    this.language = language;
+    isArabic = window["isArabic"];
+
+    // this.language = language;
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();

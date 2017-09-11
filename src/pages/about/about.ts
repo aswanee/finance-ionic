@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import { language } from "./../settings/settings";
+// import { language } from "./../../app/app.module";
 /**
  * Generated class for the AboutPage page.
  *
@@ -15,7 +15,6 @@ import { language } from "./../settings/settings";
   templateUrl: "about.html"
 })
 export class AboutPage {
-  language = language;
   dorefresh = false;
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 

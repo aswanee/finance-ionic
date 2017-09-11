@@ -1,4 +1,3 @@
-export let language: string = "en";
 export let isArabic: boolean = false;
 import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
@@ -13,6 +12,8 @@ import {
   TimeTerm,
   PriceType
 } from "./../../app/userorder.interface";
+import { Storage } from "@ionic/storage";
+
 import {
   ValidationResponse,
   CancelResponse
@@ -44,7 +45,7 @@ export class SettingsPage implements OnInit {
   userorderresponse: userorderresponse;
   portfolioresponse: portfolioresponse;
   Detailsresponse: Detailsresponse;
-  language: string;
+  lang: string;
   openlanguage: boolean = false;
   showabout = false;
   ValidationResponse: ValidationResponse;
@@ -72,13 +73,32 @@ export class SettingsPage implements OnInit {
     strOrderDate: new Date("2017-08-28T11:42:05.05"),
     strExpireAt: new Date("2017-08-28T00:00:00.00")
   };
+  get language(): string {
+    var t: string = null;
+    try {
+      t = <string>window["language"];
+    } catch (e) {
+      alert(e);
+    }
+    return t;
+  }
+  get isArabic(): boolean {
+    var t: boolean = null;
+    try {
+      t = <boolean>window["isArabic"];
+    } catch (e) {
+      alert(e);
+    }
+    return t;
+  }
   CancelResponse: CancelResponse;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     private TranslateService: TranslateService,
     private TradeService: TradeService,
-    private LoginService: LoginService
+    private LoginService: LoginService,
+    private storage: Storage
   ) {}
   ngOnInit() {
     // Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -92,9 +112,13 @@ export class SettingsPage implements OnInit {
     console.log("ionViewDidLoad SettingsPage");
   }
   toarab() {
-    this.language = "ar";
+    this.lang = "ar";
     isArabic = true;
-    language = this.language;
+    // language = this.language;
+    window["language"] = this.lang;
+    this.storage.set("language", this.language);
+    window["isArabic"] = true;
+    this.storage.set("isArabic", isArabic);
     // this.gotoWatchList();
     // this.TranslateService.use(this.language);
     // this.TradeService
@@ -106,9 +130,14 @@ export class SettingsPage implements OnInit {
   }
 
   toen() {
-    this.language = "en";
+    this.lang = "en";
     isArabic = false;
-    language = this.language;
+    // language = this.language;
+    window["language"] = this.lang;
+    this.storage.set("language", this.language);
+    window["isArabic"] = false;
+    this.storage.set("isArabic", isArabic);
+
     // this.TranslateService.use(this.language);
     // this.gotoWatchList();
   }
