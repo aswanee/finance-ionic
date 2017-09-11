@@ -54,7 +54,7 @@ export class CreateAlertPage {
   types_num: number[];
   fields: Field;
   criterias: Criteria;
-  reuters: string[];
+  reuters: string[] = new Array();
   userId: number;
   update: boolean;
 

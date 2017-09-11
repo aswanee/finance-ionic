@@ -5,10 +5,10 @@ import { language } from "./../../pages/settings/settings";
 export class LanguagePipe implements PipeTransform {
   transform(value: string, ...args): string {
     if (language === "ar") {
-      console.log(ArabicDictionary[value]);
+      // console.log(ArabicDictionary[value]);
       return ArabicDictionary[value];
     } else if (language === "en") {
-      console.log(EnglishDictionary[value]);
+      // console.log(EnglishDictionary[value]);
       return EnglishDictionary[value];
     }
   }

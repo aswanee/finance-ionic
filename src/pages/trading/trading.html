@@ -7,14 +7,14 @@
 <ion-header>
 
     <ion-navbar>
-        <ion-title>Trading</ion-title>
+        <ion-title>{{'Trading' | Language}}</ion-title>
     </ion-navbar>
 
 </ion-header>
 
 <ion-content>
     <ion-buttons *ngIf="loggedIn">
-        <button ion-item (click)="getportfolio()">Show Portfolio</button>
+        <button ion-item (click)="getportfolio()">{{'Show Portfolio' | Language}}</button>
         <ion-grid *ngIf="portfolioresponse && showportfolio&&token">
             <ion-row *ngFor="let item of portfolioresponse?.result">
                 <ion-col>
@@ -40,98 +40,107 @@
                 {{item}}
             </ion-item>
         </ion-item> -->
-        <button ion-item (click)="getorders()">Show Orders</button>
+        <button ion-item (click)="getorders()">{{'Show Orders' | Language}}</button>
         <ion-grid *ngIf="userorderresponse && showorders&&token">
+            <ion-row>
+                <ion-col>{{'Reuter' | Language}}</ion-col>
+                <ion-col>{{'Quantity' | Language}}</ion-col>
+                <ion-col>{{'Price' | Language}}</ion-col>
+                <ion-col>{{'Time Term' | Language}}</ion-col>
+                <ion-col>{{'Status' | Language}}</ion-col>
+                <ion-col>{{'Side' | Language}}</ion-col>
+                <ion-col>{{'Price Type' | Language}}</ion-col>
+            </ion-row>
             <ion-row *ngFor="let item of userorderresponse?.result;let i = index">
                 <ion-col>{{item.ReutersCode}}</ion-col>
                 <ion-col>{{item.Quantity}}</ion-col>
                 <ion-col>{{item.Price}}</ion-col>
-                <ion-col>{{showTimeTerm(item.TimeTerm)}}</ion-col>
-                <ion-col>{{showOrderStatus(item.Status)}}</ion-col>
-                <ion-col>{{showOrderSide(item.Side)}}</ion-col>
-                <ion-col>{{showPriceType(item.PriceType)}}</ion-col>
+                <ion-col>{{showTimeTerm(item.TimeTerm) | Language}}</ion-col>
+                <ion-col>{{showOrderStatus(item.Status) | Language}}</ion-col>
+                <ion-col>{{showOrderSide(item.Side) | Language}}</ion-col>
+                <ion-col>{{showPriceType(item.PriceType) | Language}}</ion-col>
                 <ion-col>
-                    <button ion-item (click)="getorderhistory(item.ID)">View History</button>
+                    <button ion-item (click)="getorderhistory(item.ID)">{{'View History' | Language}}</button>
                 </ion-col>
                 <ion-col>
-                    <button ion-item (click)="ChangeUpdate(i,item)" [hidden]="!checkupdatability(item)">Update</button>
+                    <button ion-item (click)="ChangeUpdate(i,item)" [hidden]="!checkupdatability(item)">{{'Update' | Language}}</button>
                 </ion-col>
 
                 <form *ngIf="ShowUpdate[i]">
                     <ion-item>
-                        <ion-label>ReutersCode</ion-label>
+                        <ion-label>{{'Reuter' | Language}}</ion-label>
                         <ion-input [(ngModel)]="updateuserorder.ReutersCode" name="UCode"></ion-input>
                     </ion-item>
                     <ion-item>
-                        <ion-label>Quantity</ion-label>
+                        <ion-label>{{'Quantity' | Language}}</ion-label>
                         <ion-input [(ngModel)]="updateuserorder.Quantity" name="UQuantity"></ion-input>
                     </ion-item>
                     <ion-item>
                         <ion-segment>
                             <ion-segment-button value="UDay" (click)="ChooseDay()">
-                                Day
+                                {{'Day' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="UWeek" (click)="ChooseWeek()">
-                                Week
+                                {{'Week' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="UMonth" (click)="ChooseMonth()">
-                                Month
+                                {{'Month' | Language}}
                             </ion-segment-button>
                         </ion-segment>
                     </ion-item>
                     <ion-item>
                         <ion-segment>
                             <ion-segment-button value="UMarket" (click)="ChooseMarket()">
-                                Market
+                                {{'Market' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="ULimit" (click)="ChooseLimit()">
-                                Limit
+                                {{'Limit' | Language}}
                             </ion-segment-button>
                         </ion-segment>
                     </ion-item>
                     <ion-item *ngIf="EnablePrice">
-                        <ion-label>Price</ion-label>
+                        <ion-label>{{'Price' | Language}}</ion-label>
                         <ion-input ion-input [(ngModel)]="updateuserorder.Price" name="UPrice"></ion-input>
                     </ion-item>
-                    <button ion-button block type="submit" (click)="UpdateOrder(item)">Update Order</button>
+                    <button ion-button block type="submit" (click)="UpdateOrder(item)">{{'Update Order' | Language}}</button>
                 </form>
 
                 <ion-col>
-                    <button ion-item [hidden]="!checkupdatability(item)" (click)="CancelOrder(item.ID)">Cancel</button>
+                    <button ion-item [hidden]="!checkupdatability(item)" (click)="CancelOrder(item.ID)">{{'Cancel' | Language}}</button>
                 </ion-col>
             </ion-row>
         </ion-grid>
 
-        <button ion-item (click)="ChangeInsert()">Add Order</button>
+        <button ion-item (click)="ChangeInsert()">{{'Add Order' | Language}}</button>
     </ion-buttons>
 
     <ion-card *ngIf="showInsert && loggedIn">
         <ion-card-header>
-            Insert Order
+            {{"Add Order" | Language}}
         </ion-card-header>
         <ion-card-content>
             <form>
                 <ion-item>
-                    <ion-label>ReutersCode</ion-label>
+                    <ion-label>{{'Reuter' | Language}}</ion-label>
                     <ion-input [(ngModel)]="userorder.ReutersCode" name="Code"></ion-input>
                 </ion-item>
 
                 <ion-item>
-                    <ion-label>Quantity</ion-label>
+                    <ion-label>{{'Quantity' | Language}}</ion-label>
                     <ion-input [(ngModel)]="userorder.Quantity" name="Quantity"></ion-input>
                 </ion-item>
                 <ion-card>
-                    <ion-card-header>Time Term</ion-card-header>
+                    <ion-card-header>{{'Time Term' | Language}}</ion-card-header>
                     <ion-card-content>
                         <ion-segment>
                             <ion-segment-button value="Day" (click)="ChooseDay()">
-                                Day
+                                {{'Day' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="Week" (click)="ChooseWeek()">
-                                Week
+                                {{'Week' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="Month" (click)="ChooseMonth()">
-                                Month
+                                {{'Month' | Language}}
                             </ion-segment-button>
                         </ion-segment>
                     </ion-card-content>
@@ -139,60 +148,60 @@
                 </ion-card>
                 <ion-card>
                     <ion-card-header>
-                        Side
+                        {{'Side' | Language}}
                     </ion-card-header>
                     <ion-card-content>
                         <ion-segment>
                             <ion-segment-button value="Buy" (click)="ChooseBuy()">
-                                Buy
+                                {{'Buy' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="Sell" (click)="ChooseSell()">
-                                Sell
+                                {{'Sell' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="SellT0" (click)="ChooseSellT0()">
-                                Sell T+0
+                                {{'Sell_T0' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="SellT1" (click)="ChooseSellT1()">
-                                Sell T+1
+                                {{'Sell_T1' | Language}}
                             </ion-segment-button>
                         </ion-segment>
                     </ion-card-content>
                 </ion-card>
 
                 <ion-card>
-                    <ion-card-header>Price Type</ion-card-header>
+                    <ion-card-header>{{'Price Type' | Language}}</ion-card-header>
                     <ion-card-content>
                         <ion-segment>
                             <ion-segment-button value="Market" (click)="ChooseMarket()">
-                                Market
+                                {{'Market' | Language}}
                             </ion-segment-button>
                             <ion-segment-button value="Limit" (click)="ChooseLimit()">
-                                Limit
+                                {{'Limit' | Language}}
                             </ion-segment-button>
 
                         </ion-segment>
                     </ion-card-content>
                 </ion-card>
                 <ion-item *ngIf="EnablePrice">
-                    <ion-label>Price</ion-label>
+                    <ion-label>{{'Price' | Language}}</ion-label>
                     <ion-input [(ngModel)]="userorder.Price" name="Price"></ion-input>
                 </ion-item>
 
-                <button ion-button block type="submit" (click)="CreateUpdateOrder()">Make Order</button>
+                <button ion-button block type="submit" (click)="CreateUpdateOrder()">{{'Make Order' | Language}}</button>
             </form>
         </ion-card-content>
     </ion-card>
 
 
 
-    <ion-grid *ngIf="userorderhistoryresponse && showhistory&&token">
+    <!-- <ion-grid *ngIf="userorderhistoryresponse && showhistory&&token">
         <ion-row>{{userorderhistoryresponse?.result.ReutersCode}}</ion-row>
         <ion-row>{{userorderhistoryresponse?.result.Price}}</ion-row>
         <ion-row>{{userorderhistoryresponse?.result.Quantity}}</ion-row>
         <ion-row>{{userorderhistoryresponse?.result.ExecutedQuantity}}</ion-row>
         <ion-row>{{showOrderStatus(userorderhistoryresponse?.result.Status)}}</ion-row>
         <ion-row>{{showTimeTerm(userorderhistoryresponse?.result.TimeTerm)}}</ion-row>
-    </ion-grid>
+    </ion-grid> -->
     <ion-item *ngIf="!loggedIn">
         <h2 style="text-align:center">You are not logged In</h2>
         <br>

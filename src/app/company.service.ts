@@ -39,7 +39,36 @@ export class CompanyService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
-
+  getnewsRange(
+    from: Date,
+    to: Date,
+    count: number,
+    isArabic: boolean
+  ): Observable<Newsresponse> {
+    this.getsecurelink();
+    let tempfrom = "";
+    tempfrom =
+      from.getFullYear() + "-" + (from.getMonth() + 1) + "-" + from.getDate();
+    let tempto = "";
+    tempto = to.getFullYear() + "-" + (to.getMonth() + 1) + "-" + to.getDate();
+    this.link =
+      this.link +
+      "apis/market/GetNewsWithRange?to=" +
+      tempto +
+      "%2011:10&from=" +
+      tempfrom +
+      "&count=" +
+      count +
+      "&isArabic=" +
+      isArabic;
+    console.log(this.link);
+    return this.http
+      .get(this.link)
+      .map(x => {
+        return <Newsresponse>x.json();
+      })
+      .catch((t: Response) => t.json());
+  }
   getnewsdetails(id: number): Observable<Newsdetailsresponse> {
     this.getsecurelink();
     this.link = this.link + "apis/market/GetNewsDetails?newsId=" + id;

@@ -20,6 +20,7 @@ import { MarketService } from "./market.service";
 import { CreateAlertPage } from "../pages/create-alert/create-alert";
 import { UpdateAlertPage } from "../pages/update-alert/update-alert";
 import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
+import { PopoverPage } from "./../pages/pop-over/pop-over";
 import {
   TranslateModule,
   TranslateLoader,
@@ -61,6 +62,7 @@ export function createTranslateLoader(http: Http) {
     ChartPage,
     MarketPage,
     AlertPage,
+    PopoverPage,
     SettingsPage,
     TradingPage,
     OrderhistoryPage,
@@ -106,6 +108,7 @@ export function createTranslateLoader(http: Http) {
     SettingsPage,
     TradingPage,
     CreateAlertPage,
+    PopoverPage,
     UpdateAlertPage,
     OrderhistoryPage
   ],

@@ -5,7 +5,7 @@ import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { token } from "./../../app/token.interface";
 import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
-
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import {
   alertresponse,
   alert,

@@ -28,6 +28,7 @@ import { Detailsresponse } from "./../../app/details.interface";
 import { token } from "./../../app/token.interface";
 import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 /**
  * Generated class for the TradingPage page.
  *

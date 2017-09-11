@@ -9,17 +9,17 @@ import { AboutPage } from "./../about/about";
 import { SettingsPage } from "./../settings/settings";
 import { AlertPage } from "./../alert/alert";
 import { HomePage } from "./../WatchList/WatchList";
-
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 @Component({
   template: `
-    <ion-list>
-      <ion-list-header></ion-list-header>
-      <button ion-item *ngIf="!loggedIn" (click)="login()">Login</button>
-      <button ion-item *ngIf="loggedIn" (click)="logout()">Logout</button>
-      <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">Alerts</button>      
-      <button ion-item (click)="goToSettings()">Change language</button>
-      <button ion-item (click)="goToAbout()">About us</button>
-    </ion-list>
+   <ion-list>
+    <ion-list-header></ion-list-header>
+    <button ion-item *ngIf="!loggedIn" (click)="login()">{{'Login' | Language}}</button>
+    <button ion-item *ngIf="loggedIn" (click)="logout()">{{'Logout' | Language}}</button>
+    <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
+    <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
+    <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
+</ion-list>
   `
 })
 export class PopoverPage {

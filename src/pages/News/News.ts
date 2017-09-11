@@ -18,11 +18,17 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 })
 export class NewsPage implements OnInit {
   News: Newsresponse;
+  displayedMoreNews: Newsresponse;
+  displayednews: string[][] = new Array();
+  MoreNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   showdetails = false;
   date: Date = new Date("2017-7-1");
   elements: Element;
   initialized = false;
+  to: Date = new Date();
+  from: Date = new Date();
+  initializetofrom = false;
   id: string;
   dorefresh: boolean = true;
   constructor(
@@ -44,6 +50,7 @@ export class NewsPage implements OnInit {
   }
   ionViewDidEnter() {
     this.dorefresh = true;
+    this.initializetofrom = false;
     this.refresh();
   }
   ionViewWillLeave() {
@@ -57,13 +64,20 @@ export class NewsPage implements OnInit {
     }
     this.CompanyService.getnews(this.date, 100, isArabic).subscribe(data => {
       this.News = data;
+      if (!this.initializetofrom) {
+        this.to = new Date(
+          this.News.result.V[this.News.result.V.length - 1][2]
+        );
+        this.from.setDate(this.to.getDate() - 1);
+      }
+
       // console.log(this.News);
     });
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();
       }, 1000);
-      console.log("refresh");
+      // console.log("refresh");
     }
   }
   getdetails(id) {
@@ -88,5 +102,17 @@ export class NewsPage implements OnInit {
     this.navCtrl.push(NewsdetailsComponent, {
       id: this.id
     });
+  }
+  More() {
+    if (this.initializetofrom) {
+      this.to = this.from;
+      this.from.setDate(this.to.getDate() - 1);
+    }
+    this.CompanyService
+      .getnewsRange(this.from, this.to, 10, isArabic)
+      .subscribe(data => {
+        this.MoreNews = data;
+        // this.refresh();
+      });
   }
 }

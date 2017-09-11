@@ -12,6 +12,7 @@ import { TradeService } from "./../../app/trade.service";
 import { language, isArabic } from "./../settings/settings";
 import { token } from "./../../app/token.interface";
 import { LoginComponent } from "./../login/login.component";
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 /**
  * Generated class for the OrderhistoryPage page.
  *
@@ -66,9 +67,7 @@ export class OrderhistoryPage implements OnInit {
       this.navCtrl.push(LoginComponent);
     }
   }
-  // showTimeTerm(Term: TimeTerm): string {
-  //   return TimeTerm[Term];
-  // }
+
   showOrderStatus(Status: OrderStatus): string {
     return OrderStatus[Status];
   }
@@ -81,10 +80,4 @@ export class OrderhistoryPage implements OnInit {
   showPlaceType(Place: PlaceType) {
     return PlaceType[Place];
   }
-  // ChangeDate(string) {
-  //   string.start;
-  //   string.start.match(/\d+/)[0];
-  //   string.start.match(/\d+/)[0] * 1;
-  //   new Date(string.start.match(/\d+/)[0] * 1);
-  // }
 }
