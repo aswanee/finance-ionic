@@ -27,16 +27,22 @@ export class NewsdetailsComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     const parsed = Number(this.id);
-    this.CompanyService.getnewsdetails(parsed).subscribe(data => {
-      this.Newsbody = data;
-      var div = document.createElement("div");
-      div.innerHTML = this.Newsbody.result.V[3];
-      this.elements = div;
-      // document.writeln(this.elements.innerHTML);
-      console.log(this.elements);
-      document.getElementById("id").innerHTML = this.elements.innerHTML;
-      // console.log(this.News);
-    });
+    this.CompanyService.getnewsdetails(parsed).subscribe(
+      data => {
+        this.Newsbody = data;
+        var div = document.createElement("div");
+        div.innerHTML = this.Newsbody.result.V[3];
+        this.elements = div;
+        // document.writeln(this.elements.innerHTML);
+        console.log(this.elements);
+        document.getElementById("id").innerHTML = this.elements.innerHTML;
+        // console.log(this.News);
+      },
+      Error =>
+        alert(
+          "Error! Please Check your Connectivity and restart the application"
+        )
+    );
     // this.showdetails=true;
   }
   // getdetails(){

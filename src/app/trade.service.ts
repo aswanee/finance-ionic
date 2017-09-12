@@ -30,18 +30,22 @@ export class TradeService extends ParentService {
     this.link = this.link + "apis/trading/GetPortfolioSummary?bimsid=";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    let useraccounts = token.result.UserAccounts.length;
-    if (useraccounts === 0) {
+    let useraccounts = 0;
+    let tokensymbol = "";
+    let Uname = "";
+    if (token) {
+      useraccounts = token.result.UserAccounts.length;
+      tokensymbol = token.result.Token;
+      Uname = token.result.UserName;
+    }
+    if (useraccounts === 0 && token) {
       this.link = this.link + token.result.BIMSIAccountNumber;
-    } else {
+    } else if (useraccounts !== 0 && token) {
       this.link = this.link + token.result.UserAccounts[0];
     }
     console.log(this.link);
     let body =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {
@@ -57,21 +61,25 @@ export class TradeService extends ParentService {
     // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    let useraccounts = token.result.UserAccounts.length;
-    if (useraccounts === 0) {
+    let useraccounts = 0;
+    let tokensymbol = "";
+    let Uname = "";
+    if (token) {
+      useraccounts = token.result.UserAccounts.length;
+      tokensymbol = token.result.Token;
+      Uname = token.result.UserName;
+    }
+    if (useraccounts === 0 && token) {
       this.link =
         this.link + token.result.BIMSIAccountNumber + "&isArabic=" + isArabic;
-    } else {
+    } else if (useraccounts !== 0 && token) {
       this.link =
         this.link + token.result.UserAccounts[0] + "&isArabic=" + isArabic;
     }
 
     console.log(this.link);
     let body =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {
@@ -90,8 +98,15 @@ export class TradeService extends ParentService {
     // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    let useraccounts = token.result.UserAccounts.length;
-    if (useraccounts === 0) {
+    let useraccounts = 0;
+    let tokensymbol = "";
+    let Uname = "";
+    if (token) {
+      useraccounts = token.result.UserAccounts.length;
+      tokensymbol = token.result.Token;
+      Uname = token.result.UserName;
+    }
+    if (useraccounts === 0 && token) {
       this.link =
         this.link +
         token.result.BIMSIAccountNumber +
@@ -99,7 +114,7 @@ export class TradeService extends ParentService {
         orderid +
         "&isArabic=" +
         isArabic;
-    } else {
+    } else if (useraccounts !== 0 && token) {
       this.link =
         this.link +
         token.result.UserAccounts[0] +
@@ -111,10 +126,7 @@ export class TradeService extends ParentService {
 
     console.log(this.link);
     let body =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {
@@ -127,14 +139,22 @@ export class TradeService extends ParentService {
     isArabic: boolean,
     view: number
   ): Observable<userorderresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     // htis.getlink();
     this.link = this.link + "apis/trading/GetUserOrders?BimsUserID=";
     // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    let useraccounts = token.result.UserAccounts.length;
-    if (useraccounts === 0) {
+    let useraccounts = 0;
+    let Uname = "";
+    let tokensymbol = "";
+    if (token) {
+      useraccounts = token.result.UserAccounts.length;
+      Uname = token.result.UserName;
+      tokensymbol = token.result.Token;
+    }
+
+    if (useraccounts === 0 && token) {
       this.link =
         this.link +
         token.result.BIMSIAccountNumber +
@@ -142,7 +162,7 @@ export class TradeService extends ParentService {
         view +
         "&isArabic=" +
         isArabic;
-    } else {
+    } else if (useraccounts !== 0 && token) {
       this.link =
         this.link +
         token.result.UserAccounts[0] +
@@ -154,10 +174,7 @@ export class TradeService extends ParentService {
 
     console.log(this.link);
     let body =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {
@@ -184,13 +201,15 @@ export class TradeService extends ParentService {
     // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-
+    let Uname = "";
+    let tokensymbol = "";
+    if (token) {
+      Uname = token.result.UserName;
+      tokensymbol = token.result.Token;
+    }
     console.log(this.link);
     let value =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     let body =
       "Order={PriceType:'" +
       PriceType[order.PriceType] +
@@ -244,13 +263,15 @@ export class TradeService extends ParentService {
     //console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-
+    let Uname = "";
+    let tokensymbol = "";
+    if (token) {
+      Uname = token.result.UserName;
+      tokensymbol = token.result.Token;
+    }
     console.log(this.link);
     let value =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     let body =
       "Order={PriceType:'" +
       PriceType[order.PriceType] +
@@ -294,7 +315,7 @@ export class TradeService extends ParentService {
     pin: number,
     token
   ): Observable<CancelResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link =
       this.link +
       "apis/trading/CancelOrder?orderID=" +
@@ -305,11 +326,14 @@ export class TradeService extends ParentService {
       pin;
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
+    let Uname = "";
+    let tokensymbol = "";
+    if (token) {
+      Uname = token.result.UserName;
+      tokensymbol = token.result.Token;
+    }
     let value =
-      "username=" +
-      token.result.UserName +
-      "&token=" +
-      encodeURIComponent(token.result.Token);
+      "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
       .post(this.link, value, { headers: headers })
       .map(x => {

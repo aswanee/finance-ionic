@@ -53,16 +53,21 @@ export class LoginComponent implements OnInit {
   login() {
     this.LoginService
       .gettoken(this.loginForm.value.username, this.loginForm.value.password)
-      .subscribe(data => {
-        window["token"] = data;
-        console.log(data);
-        this.storage.set("token", data);
-        this.token = true;
-        USERTOKEN = data;
-        //   console.log(data);
-        // console.log(USERTOKEN);
-        // check if authentication error
-        this.navCtrl.pop();
-      });
+      .subscribe(
+        data => {
+          window["token"] = data;
+          console.log(data);
+          this.storage.set("token", data);
+
+          this.token = true;
+          USERTOKEN = data;
+          this.navCtrl.pop();
+
+          //   console.log(data);
+          // console.log(USERTOKEN);
+          // check if authentication error
+        },
+        Error => alert("Error")
+      );
   }
 }

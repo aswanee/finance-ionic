@@ -80,7 +80,15 @@ export class HomePage implements OnInit {
     //    window['token'] = data;
     // });
     this.storage.get("language").then(val => {
+      if(val){
       window["language"] = val;
+      }
+      else
+      {
+        window["language"] = "en";
+        this.storage.set("language","en");
+        this.storage.set("isArabic", false);
+      }
       console.log(val);
     });
     this.storage.get("isArabic").then(val => {
@@ -95,62 +103,81 @@ export class HomePage implements OnInit {
 
     console.log(window["token"]);
     console.log(this.storage.get("token"));
-    this.StockService.getnames(isArabic).subscribe(data => {
-      this.List = data;
-      console.log(this.List);
-      for (let i = 0; i < this.List.result.length; i++) {
-        // are chosen alias
-        this.map[this.List.result[i][0]] = false; // OK
+    this.StockService.getnames(isArabic).subscribe(
+      data => {
+        this.List = data;
+        console.log(this.List);
+        for (let i = 0; i < this.List.result.length; i++) {
+          // are chosen alias
+          this.map[this.List.result[i][0]] = false; // OK
 
-        this.displayList.push(this.List.result[i][0]);
-        this.displayListDummy.push(this.List.result[i][0]);
-      }
-      this.editpressed = false;
-      // this.hidewatchlast = false;
-      // this.showCompanyDetails = false;
-
-      this.storage.keys().then(keys => {
-        if (keys) {
-          keys.forEach(key => {
-            if (key === "watchList") {
-              this.storage.get("watchList").then(val => {
-                this.StockService.getstock(val, isArabic).subscribe(data => {
-                  this.StockDetails = data;
-                  this.dispnames = val;
-
-                  for (let i = 0; i < data.result.length; i++) {
-                    this.StockDetails.result[i].push(this.dispnames[i]);
-                    for (let j = 0; j < this.List.result.length; j++) {
-                      if (this.List.result[j][0] === this.dispnames[i]) {
-                        this.StockDetails.result[i].push(
-                          this.List.result[j][1]
-                        );
-                      }
-                    }
-                  }
-                });
-                this.editpressed = false;
-                //   this.hidewatchlast = this.editpressed || this.stockchosen;
-              });
-            }
-          });
-        } else {
-          this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-          this.StockService
-            .getstock(this.dispnames, isArabic)
-            .subscribe(data => {
-              this.StockDetails = data;
-              this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-              console.log(this.StockDetails.result);
-              for (let i = 0; i < this.StockDetails.result.length; i++) {
-                this.StockDetails.result[i].push(this.dispnames[i]);
-              }
-              console.log(this.StockDetails);
-            });
-          this.editpressed = false;
+          this.displayList.push(this.List.result[i][0]);
+          this.displayListDummy.push(this.List.result[i][0]);
         }
-      });
-    });
+        this.editpressed = false;
+        // this.hidewatchlast = false;
+        // this.showCompanyDetails = false;
+
+        this.storage.keys().then(keys => {
+          if (keys) {
+            keys.forEach(key => {
+              if (key === "watchList") {
+                this.storage.get("watchList").then(val => {
+                  this.StockService.getstock(val, isArabic).subscribe(
+                    data => {
+                      this.StockDetails = data;
+                      this.dispnames = val;
+
+                      for (let i = 0; i < data.result.length; i++) {
+                        this.StockDetails.result[i].push(this.dispnames[i]);
+                        for (let j = 0; j < this.List.result.length; j++) {
+                          if (this.List.result[j][0] === this.dispnames[i]) {
+                            this.StockDetails.result[i].push(
+                              this.List.result[j][1]
+                            );
+                          }
+                        }
+                      }
+                    },
+                    Error =>
+                      alert(
+                        "Error! Please Check your Connectivity and restart the application"
+                      )
+                  );
+                  this.editpressed = false;
+                  //   this.hidewatchlast = this.editpressed || this.stockchosen;
+                });
+              }
+            });
+          } else {
+            this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
+            this.StockService.getstock(this.dispnames, isArabic).subscribe(
+              data => {
+                this.StockDetails = data;
+                this.dispnames = [
+                  this.List.result[0][0],
+                  this.List.result[1][0]
+                ];
+                console.log(this.StockDetails.result);
+                for (let i = 0; i < this.StockDetails.result.length; i++) {
+                  this.StockDetails.result[i].push(this.dispnames[i]);
+                }
+                console.log(this.StockDetails);
+              },
+              Error =>
+                alert(
+                  "Error! Please Check your Connectivity and restart the application"
+                )
+            );
+            this.editpressed = false;
+          }
+        });
+      },
+      Error =>
+        alert(
+          "Error! Please Check your Connectivity and restart the application"
+        )
+    );
     this.initializedref = true;
   }
   ionViewDidEnter() {
@@ -165,21 +192,33 @@ export class HomePage implements OnInit {
     //  setTimeout(() => {
     //     }, 1000);
 
-    this.StockService.getstock(this.dispnames, isArabic).subscribe(data => {
-      this.StockDetails = data;
-      for (let i = 0; i < this.StockDetails.result.length; i++) {
-        this.StockDetails.result[i].push(this.dispnames[i]);
-        for (let j = 0; j < this.List.result.length; j++) {
-          if (this.List.result[j][0] === this.dispnames[i]) {
-            this.StockDetails.result[i].push(this.List.result[j][1]);
+    this.StockService.getstock(this.dispnames, isArabic).subscribe(
+      data => {
+        this.StockDetails = data;
+        for (let i = 0; i < this.StockDetails.result.length; i++) {
+          this.StockDetails.result[i].push(this.dispnames[i]);
+          for (let j = 0; j < this.List.result.length; j++) {
+            if (this.List.result[j][0] === this.dispnames[i]) {
+              this.StockDetails.result[i].push(this.List.result[j][1]);
+            }
           }
         }
-      }
-      this.StockService.getnames(isArabic).subscribe(data => {
-        this.List = data;
-      });
-      // console.log(this.News);
-    });
+        this.StockService.getnames(isArabic).subscribe(
+          data => {
+            this.List = data;
+          },
+          Error =>
+            alert(
+              "Error! Please Check your Connectivity and restart the application"
+            )
+        );
+        // console.log(this.News);
+      },
+      Error =>
+        alert(
+          "Error! Please Check your Connectivity and restart the application"
+        )
+    );
     isArabic = window["isArabic"];
 
     // this.language = language;
@@ -231,13 +270,19 @@ export class HomePage implements OnInit {
     console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
-    this.StockService.getstock(this.dispnames, isArabic).subscribe(data => {
-      this.StockDetails = data;
-      for (let i = 0; i < this.StockDetails.result.length; i++) {
-        this.StockDetails.result[i].push(this.dispnames[i]);
-      }
-      console.log(this.StockDetails);
-    });
+    this.StockService.getstock(this.dispnames, isArabic).subscribe(
+      data => {
+        this.StockDetails = data;
+        for (let i = 0; i < this.StockDetails.result.length; i++) {
+          this.StockDetails.result[i].push(this.dispnames[i]);
+        }
+        console.log(this.StockDetails);
+      },
+      Error =>
+        alert(
+          "Error! Please Check your Connectivity and restart the application"
+        )
+    );
     this.editpressed = false;
   }
 

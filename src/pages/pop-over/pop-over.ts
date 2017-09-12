@@ -10,6 +10,8 @@ import { SettingsPage } from "./../settings/settings";
 import { AlertPage } from "./../alert/alert";
 import { HomePage } from "./../WatchList/WatchList";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { token } from "./../../app/token.interface";
+import { SwitchAccountsPage } from "./../switch-accounts/switch-accounts";
 @Component({
   template: `
    <ion-list>
@@ -19,12 +21,16 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
     <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
     <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
     <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
+    <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">Switch Accounts</button>
 </ion-list>
   `
 })
 export class PopoverPage {
   @Output() onLogout = new EventEmitter<boolean>();
   loggedIn: boolean = false;
+  multiaccounts: boolean = false;
+  token: token = window["token"];
+  ChosenAccount: string = "";
   constructor(
     public viewCtrl: ViewController,
     private navController: NavController,
@@ -38,8 +44,17 @@ export class PopoverPage {
     this.storage.keys().then(keys => {
       if (keys) {
         keys.forEach(key => {
-          if (key === "token") {
-            this.loggedIn = true;
+          if (key === "token" && window["token"] && this.token) {
+            if (this.token.Status === "Unauthorized") {
+              this.loggedIn = false;
+            } else {
+              this.loggedIn = true;
+              if (this.token.result.UserAccounts.length === 0) {
+                this.multiaccounts = false;
+              } else {
+                this.multiaccounts = true;
+              }
+            }
           }
         });
       }
@@ -49,6 +64,7 @@ export class PopoverPage {
   logout() {
     this.loggedIn = false;
     this.storage.remove("token").then(val => {
+      window["token"] = null;
       console.log("logged out");
       // TODO: should pop to the home page, not working.
       this.navController.popToRoot();
@@ -75,7 +91,10 @@ export class PopoverPage {
     this.navController.push(LoginComponent);
     this.close();
   }
-
+  gotoSwitch() {
+    this.navController.push(SwitchAccountsPage, { token: this.token });
+    this.close();
+  }
   close() {
     this.viewCtrl.dismiss();
   }

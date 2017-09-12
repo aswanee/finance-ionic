@@ -123,12 +123,14 @@ export class AlertPage {
     this.AlertService
       .getUseralerts(this.userId, this.alertsLastDate)
       .subscribe(data => {
-        this.newMatchedAlerts = data.result[0].filter(item => {
-          return item.IsMatched;
-        });
-        this.newNonMatchedAlerts = data.result[0].filter(item => {
-          return !item.IsMatched;
-        });
+        if (data) {
+          this.newMatchedAlerts = data.result[0].filter(item => {
+            return item.IsMatched;
+          });
+          this.newNonMatchedAlerts = data.result[0].filter(item => {
+            return !item.IsMatched;
+          });
+        }
         console.log(this.newMatchedAlerts);
         console.log(this.newNonMatchedAlerts);
         if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
@@ -157,15 +159,16 @@ export class AlertPage {
   }
 
   refreshAlerts() {
-    this.AlertService
-      .getUseralerts(this.userId, this.alertsLastDate)
-      .subscribe(data => {
-        this.newMatchedAlerts = data.result[0].filter(item => {
-          return item.IsMatched;
-        });
-        this.newNonMatchedAlerts = data.result[0].filter(item => {
-          return !item.IsMatched;
-        });
+    this.AlertService.getUseralerts(this.userId, this.alertsLastDate).subscribe(
+      data => {
+        if (data) {
+          this.newMatchedAlerts = data.result[0].filter(item => {
+            return item.IsMatched;
+          });
+          this.newNonMatchedAlerts = data.result[0].filter(item => {
+            return !item.IsMatched;
+          });
+        }
         console.log(this.newMatchedAlerts);
         console.log(this.newNonMatchedAlerts);
         if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
@@ -175,7 +178,9 @@ export class AlertPage {
             lastUpdate: new Date()
           });
         }
-      });
+      },
+      Error => alert("Error")
+    );
   }
 
   alertDetails(index: number, IsMatched: boolean) {

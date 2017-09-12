@@ -22,6 +22,7 @@ import { CreateAlertPage } from "../pages/create-alert/create-alert";
 import { UpdateAlertPage } from "../pages/update-alert/update-alert";
 import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
 import { PopoverPage } from "./../pages/pop-over/pop-over";
+import { SwitchAccountsPage } from "./../pages/switch-accounts/switch-accounts";
 import {
   TranslateModule,
   TranslateLoader,
@@ -66,6 +67,7 @@ export function createTranslateLoader(http: Http) {
     PopoverPage,
     SettingsPage,
     TradingPage,
+    SwitchAccountsPage,
     OrderhistoryPage,
     LimitToPipe,
     CreateAlertPage,
@@ -103,6 +105,7 @@ export function createTranslateLoader(http: Http) {
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,
+    SwitchAccountsPage,
     ChartPage,
     MarketPage,
     AlertPage,

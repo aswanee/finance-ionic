@@ -22,7 +22,8 @@ import {
   OrderOperationResult,
   Place,
   PlaceOrderStatus,
-  PlaceResponse
+  PlaceResponse,
+  CancelOrderStatus
 } from "./../../app/Validate.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { token } from "./../../app/token.interface";
@@ -76,6 +77,7 @@ export class TradingPage implements OnInit {
   showorders = false;
   pincode: number = 0;
   showhistory = false;
+  AllUpdatesNotShown = true;
   userorder: userorder = {
     PriceType: 0 /*Market -  Limited*/,
     TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
@@ -151,6 +153,10 @@ export class TradingPage implements OnInit {
     //this.checkLogin();
     if (this.token == null) {
       this.navCtrl.push(LoginComponent);
+    } else {
+      if (this.token.Status === "Unauthorized") {
+        this.navCtrl.push(LoginComponent);
+      }
     }
   }
   goToorderHistory(orderid) {
@@ -165,11 +171,18 @@ export class TradingPage implements OnInit {
       setTimeout(() => {
         this.showAlert();
       }, 1000);
+    } else if (this.token.Status === "Unauthorized") {
+      setTimeout(() => {
+        this.showAlert();
+      }, 1000);
     } else this.loggedIn = true;
   }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad TradingPage");
+  }
+  ionViewDidEnter() {
+    this.showAlert();
   }
   ionViewWillLeave() {
     this.showhistory = false;
@@ -183,16 +196,18 @@ export class TradingPage implements OnInit {
   getportfolio() {
     /* bn Rashed*/
     //this.checkLogin();
-    this.TradeService
-      .GetPortfolio(this.token, window["isArabic"])
-      .subscribe(data => {
+    this.TradeService.GetPortfolio(this.token, window["isArabic"]).subscribe(
+      data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
+          alert("you are not logged in");
           this.gotoLogin();
         }
         console.log(this.portfolioresponse);
-      });
+      },
+      Error => alert("error")
+    );
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
     this.showhistory = false;
@@ -203,16 +218,18 @@ export class TradingPage implements OnInit {
   }
 
   refreshPortfolio() {
-    this.TradeService
-      .GetPortfolio(this.token, window["isArabic"])
-      .subscribe(data => {
+    this.TradeService.GetPortfolio(this.token, window["isArabic"]).subscribe(
+      data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
+          alert("you are not logged in");
           this.gotoLogin();
         }
         console.log(this.portfolioresponse);
-      });
+      },
+      Error => alert("error")
+    );
     if (this.showportfolio) {
       setTimeout(() => {
         this.refreshPortfolio();
@@ -244,6 +261,9 @@ export class TradingPage implements OnInit {
         } else {
           for (let i = 0; i < this.userorderresponse.Status.length; i++) {
             this.ShowUpdate[i] = false;
+            if (this.ShowUpdate[i] === true) {
+              this.AllUpdatesNotShown = false;
+            }
           }
         }
       });
@@ -265,12 +285,12 @@ export class TradingPage implements OnInit {
           window["token"] = null;
           this.gotoLogin();
         } else {
-          for (let i = 0; i < this.userorderresponse.Status.length; i++) {
-            this.ShowUpdate[i] = false;
-          }
+          // for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+          //   this.ShowUpdate[i] = false;
+          // }
         }
       });
-    if (this.showorders) {
+    if (this.showorders && this.AllUpdatesNotShown) {
       setTimeout(() => {
         this.refreshOrders();
       }, 1000);
@@ -307,34 +327,38 @@ export class TradingPage implements OnInit {
       .subscribe(data => {
         this.ValidationResponse = data;
         console.log(this.ValidationResponse);
-        if (
-          this.ValidationResponse.result.Result.toString() ===
-          OrderOperationResult[OrderOperationResult.Success]
-        ) {
-          console.log("order placed");
-          this.placeOrder();
-          // this.pincode = Number(
-          //   prompt(
-          //     this.ValidationResponse.result.Message +
-          //       "Please enter the Pin code"
-          //   )
-          // );
-          // console.log(this.pincode);
-          // setTimeout(function() {
+        if (this.ValidationResponse.Status === "OK") {
+          if (
+            this.ValidationResponse.result.Result.toString() ===
+            OrderOperationResult[OrderOperationResult.Success]
+          ) {
+            console.log("order placed");
+            this.placeOrder();
+            // this.pincode = Number(
+            //   prompt(
+            //     this.ValidationResponse.result.Message +
+            //       "Please enter the Pin code"
+            //   )
+            // );
+            // console.log(this.pincode);
+            // setTimeout(function() {
 
-          // }, 5000);
-          // this.TradeService
-          //   .PlaceOrder(true, false, this.userorder, this.token, 123456)
-          //   .subscribe(data => {
-          //     this.Createresponse = data;
-          //     console.log(this.Createresponse);
-          //     prompt(this.Createresponse.result.Message);
-          //   });
+            // }, 5000);
+            // this.TradeService
+            //   .PlaceOrder(true, false, this.userorder, this.token, 123456)
+            //   .subscribe(data => {
+            //     this.Createresponse = data;
+            //     console.log(this.Createresponse);
+            //     prompt(this.Createresponse.result.Message);
+            //   });
+          } else {
+            console.log("order not placed");
+            console.log(this.ValidationResponse.result.Result.toString());
+            console.log(OrderOperationResult[OrderOperationResult.Success]);
+            alert(this.ValidationResponse.result.Message);
+          }
         } else {
-          console.log("order not placed");
-          console.log(this.ValidationResponse.result.Result.toString());
-          console.log(OrderOperationResult[OrderOperationResult.Success]);
-          alert(this.ValidationResponse.result.Message);
+          alert("please insert all fields with Valid Values");
         }
       });
 
@@ -378,39 +402,43 @@ export class TradingPage implements OnInit {
       .subscribe(data => {
         this.ValidationResponse = data;
         console.log(this.ValidationResponse);
-        if (
-          this.ValidationResponse.result.Result.toString() ===
-          OrderOperationResult[OrderOperationResult.Success]
-        ) {
-          this.pincode = Number(
-            prompt(
-              this.ValidationResponse.result.Message +
-                "Please enter the Pin code"
-            )
-          );
-          this.TradeService
-            .PlaceOrder(
-              window["isArabic"],
-              true,
-              this.updateuserorder,
-              this.token,
-              this.pincode
-            )
-            .subscribe(data => {
-              this.Updateresponse = data;
-              alert(this.Updateresponse.result.OutMessages);
-              console.log(this.Updateresponse);
-              console.log(this.Updateresponse.result.Status.toString());
-              console.log(PlaceOrderStatus[PlaceOrderStatus.Completed]);
-              if (
-                this.Updateresponse.result.Status.toString() ===
-                PlaceOrderStatus[PlaceOrderStatus.Completed]
-              ) {
-                order = Object.assign({}, this.updateuserorder);
-              }
-            });
+        if (this.ValidationResponse.Status === "OK") {
+          if (
+            this.ValidationResponse.result.Result.toString() ===
+            OrderOperationResult[OrderOperationResult.Success]
+          ) {
+            this.pincode = Number(
+              prompt(
+                this.ValidationResponse.result.Message +
+                  "Please enter the Pin code"
+              )
+            );
+            this.TradeService
+              .PlaceOrder(
+                window["isArabic"],
+                true,
+                this.updateuserorder,
+                this.token,
+                this.pincode
+              )
+              .subscribe(data => {
+                this.Updateresponse = data;
+                alert(this.Updateresponse.result.OutMessages);
+                console.log(this.Updateresponse);
+                console.log(this.Updateresponse.result.Status.toString());
+                console.log(PlaceOrderStatus[PlaceOrderStatus.Completed]);
+                if (
+                  this.Updateresponse.result.Status.toString() ===
+                  PlaceOrderStatus[PlaceOrderStatus.Completed]
+                ) {
+                  order = Object.assign({}, this.updateuserorder);
+                }
+              });
+          } else {
+            alert(this.ValidationResponse.result.Message);
+          }
         } else {
-          alert(this.ValidationResponse.result.Message);
+          alert("Please Fill all Fields with valid values");
         }
       });
   }
@@ -421,7 +449,7 @@ export class TradingPage implements OnInit {
       .subscribe(data => {
         this.CancelResponse = data;
         console.log(this.CancelResponse);
-        alert(this.CancelResponse.result.Message);
+        alert(this.CancelResponse.result.OutMessages);
       });
   }
 
@@ -488,9 +516,14 @@ export class TradingPage implements OnInit {
     this.showsummary = false;
     this.showInsert = false;
     // this.showorders = false;
-    for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+    for (let i = 0; i < this.userorderresponse.result.length; i++) {
       if (id === i) {
         this.ShowUpdate[i] = !this.ShowUpdate[i];
+        if (this.ShowUpdate[i] === true) {
+          this.AllUpdatesNotShown = false;
+        } else {
+          this.AllUpdatesNotShown = true;
+        }
         this.updateuserorder = Object.assign({}, order);
       } else {
         this.ShowUpdate[i] = false;

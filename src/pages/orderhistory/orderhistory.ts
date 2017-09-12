@@ -49,16 +49,23 @@ export class OrderhistoryPage implements OnInit {
   getorderhistory(orderid) {
     this.TradeService
       .getorderhistory(this.token, window["isArabic"], orderid)
-      .subscribe(data => {
-        this.userorderhistoryresponse = data;
-        console.log(this.userorderhistoryresponse);
-        if (
-          this.userorderhistoryresponse.Status == "UnauthorizedOrOverrideToken"
-        ) {
-          window["token"] = null;
-          this.gotoLogin();
-        }
-      });
+      .subscribe(
+        data => {
+          this.userorderhistoryresponse = data;
+          console.log(this.userorderhistoryresponse);
+          if (
+            this.userorderhistoryresponse.Status ==
+            "UnauthorizedOrOverrideToken"
+          ) {
+            window["token"] = null;
+            this.gotoLogin();
+          }
+        },
+        Error =>
+          alert(
+            "Error! Please Check your Connectivity and restart the application"
+          )
+      );
   }
   gotoLogin() {
     // check when he comes bach if he did login

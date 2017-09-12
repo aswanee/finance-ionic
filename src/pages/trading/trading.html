@@ -13,7 +13,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-buttons *ngIf="loggedIn">
+    <ion-buttons *ngIf="loggedIn&&token">
         <button ion-item (click)="getportfolio()">{{'Show Portfolio' | Language}}</button>
         <ion-grid *ngIf="portfolioresponse && showportfolio&&token">
             <ion-row *ngFor="let item of portfolioresponse?.result">
@@ -116,7 +116,7 @@
         <button ion-item (click)="ChangeInsert()">{{'Add Order' | Language}}</button>
     </ion-buttons>
 
-    <ion-card *ngIf="showInsert && loggedIn">
+    <ion-card *ngIf="showInsert && loggedIn &&token">
         <ion-card-header>
             {{"Add Order" | Language}}
         </ion-card-header>
@@ -204,7 +204,7 @@
         <ion-row>{{showOrderStatus(userorderhistoryresponse?.result.Status)}}</ion-row>
         <ion-row>{{showTimeTerm(userorderhistoryresponse?.result.TimeTerm)}}</ion-row>
     </ion-grid> -->
-    <ion-item *ngIf="!loggedIn">
+    <ion-item *ngIf="!loggedIn||!token">
         <h2 style="text-align:center">{{'You are not logged In'| Language }}</h2>
         <br>
 

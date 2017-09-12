@@ -37,12 +37,16 @@ export class NewsPage implements OnInit {
     private TranslateService: TranslateService,
     public events: Events
   ) {
-    this.CompanyService
-      .getnews(this.date, 100, window["isArabic"])
-      .subscribe(data => {
+    this.CompanyService.getnews(this.date, 100, window["isArabic"]).subscribe(
+      data => {
         this.News = data;
         // console.log(this.News);
-      });
+      },
+      Error =>
+        alert(
+          "Error! Please Check your Connectivity and restart the application"
+        )
+    );
   }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
@@ -66,9 +70,8 @@ export class NewsPage implements OnInit {
     if (this.initialized && this.News) {
       this.date = new Date(this.News.result.V[0][2]);
     }
-    this.CompanyService
-      .getnews(this.date, 100, window["isArabic"])
-      .subscribe(data => {
+    this.CompanyService.getnews(this.date, 100, window["isArabic"]).subscribe(
+      data => {
         this.News = data;
         if (!this.initializetofrom) {
           this.to = new Date(
@@ -83,7 +86,12 @@ export class NewsPage implements OnInit {
         }
 
         // console.log(this.News);
-      });
+      },
+      Error =>
+        alert(
+          "Error! Please Check your Connectivity and restart the application"
+        )
+    );
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();
@@ -123,15 +131,21 @@ export class NewsPage implements OnInit {
     }
     this.CompanyService
       .getnewsRange(this.from, this.to, 10, window["isArabic"])
-      .subscribe(data => {
-        this.MoreNews = data;
-        console.log(this.MoreNews);
+      .subscribe(
+        data => {
+          this.MoreNews = data;
+          console.log(this.MoreNews);
 
-        for (let i = 0; i < this.MoreNews.result.V.length; i++) {
-          this.displayednews.push(this.MoreNews.result.V[i]);
-        }
-        console.log(this.displayednews);
-        // this.refresh();
-      });
+          for (let i = 0; i < this.MoreNews.result.V.length; i++) {
+            this.displayednews.push(this.MoreNews.result.V[i]);
+          }
+          console.log(this.displayednews);
+          // this.refresh();
+        },
+        Error =>
+          alert(
+            "Error! Please Check your Connectivity and restart the application"
+          )
+      );
   }
 }

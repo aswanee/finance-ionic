@@ -1,5 +1,5 @@
 export interface token {
-  status: string;
+  Status: string;
   result: result;
 }
 interface result {

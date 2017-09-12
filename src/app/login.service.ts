@@ -10,7 +10,7 @@ import { ParentService } from "./parentservice.service";
 export class LoginService extends ParentService {
   //Rashed Need to search
   gettoken(UserName: string, Password: string): Observable<token> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/account/token";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");

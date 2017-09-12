@@ -44,8 +44,9 @@ export interface CancelResponse {
   result: Cancel;
 }
 export interface Cancel {
-  Result: CancelOrderStatus;
-  Message: string;
+  Status: CancelOrderStatus;
+  Result: number;
+  OutMessages: string;
 }
 export enum CancelOrderStatus {
   Completed = 1,
