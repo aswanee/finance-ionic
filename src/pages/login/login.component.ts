@@ -8,7 +8,6 @@ import { Storage } from "@ionic/storage";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import {
   alertresponse,
-  alert,
   Type,
   Field,
   Criteria
@@ -57,17 +56,20 @@ export class LoginComponent implements OnInit {
         data => {
           window["token"] = data;
           console.log(data);
-          this.storage.set("token", data);
-
-          this.token = true;
-          USERTOKEN = data;
-          this.navCtrl.pop();
+          if (this.token) {
+            this.storage.set("token", data);
+            this.token = true;
+            USERTOKEN = data;
+            this.navCtrl.pop();
+          }
 
           //   console.log(data);
           // console.log(USERTOKEN);
           // check if authentication error
         },
-        Error => alert("Error")
+        Error => {
+          alert("error");
+        }
       );
   }
 }
