@@ -31,6 +31,7 @@ export class NewsPage implements OnInit {
   initializetofrom = false;
   id: string;
   dorefresh: boolean = true;
+  isFired = false;
   constructor(
     public navCtrl: NavController,
     private CompanyService: CompanyService,
@@ -42,10 +43,14 @@ export class NewsPage implements OnInit {
         this.News = data;
         // console.log(this.News);
       },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      Error => {
+        if (!this.isFired) {
+          alert(
+            "Error! Please Check your Connectivity and restart the application"
+          );
+          this.isFired = true;
+        }
+      }
     );
   }
   ngOnInit() {

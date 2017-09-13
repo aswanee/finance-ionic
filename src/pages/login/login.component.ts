@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         data => {
           window["token"] = data;
           console.log(data);
-          if (this.token) {
+          if (data) {
             this.storage.set("token", data);
             this.token = true;
             USERTOKEN = data;

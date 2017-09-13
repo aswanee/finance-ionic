@@ -54,8 +54,8 @@ export class HomePage implements OnInit {
   News: Newsresponse;
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
+  isFired: boolean = false;
   dispnames: string[] = new Array();
-  // language = language;
   constructor(
     public navCtrl: NavController,
     private StockService: StockService,
@@ -80,13 +80,11 @@ export class HomePage implements OnInit {
     //    window['token'] = data;
     // });
     this.storage.get("language").then(val => {
-      if(val){
-      window["language"] = val;
-      }
-      else
-      {
+      if (val) {
+        window["language"] = val;
+      } else {
         window["language"] = "en";
-        this.storage.set("language","en");
+        this.storage.set("language", "en");
         this.storage.set("isArabic", false);
       }
       console.log(val);
@@ -115,13 +113,12 @@ export class HomePage implements OnInit {
           this.displayListDummy.push(this.List.result[i][0]);
         }
         this.editpressed = false;
-        // this.hidewatchlast = false;
-        // this.showCompanyDetails = false;
 
         this.storage.keys().then(keys => {
           if (keys) {
             keys.forEach(key => {
               if (key === "watchList") {
+                console.log("watchList has data");
                 this.storage.get("watchList").then(val => {
                   this.StockService.getstock(val, isArabic).subscribe(
                     data => {
@@ -139,17 +136,21 @@ export class HomePage implements OnInit {
                         }
                       }
                     },
-                    Error =>
-                      alert(
-                        "Error! Please Check your Connectivity and restart the application"
-                      )
+                    Error => {
+                      if (!this.isFired) {
+                        alert(
+                          "Error! Please Check your Connectivity and restart the application"
+                        );
+                        this.isFired = true;
+                      }
+                    }
                   );
                   this.editpressed = false;
-                  //   this.hidewatchlast = this.editpressed || this.stockchosen;
                 });
               }
             });
           } else {
+            console.log("no data yet");
             this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
             this.StockService.getstock(this.dispnames, isArabic).subscribe(
               data => {
@@ -159,69 +160,91 @@ export class HomePage implements OnInit {
                   this.List.result[1][0]
                 ];
                 console.log(this.StockDetails.result);
-                for (let i = 0; i < this.StockDetails.result.length; i++) {
+                for (let i = 0; i < data.result.length; i++) {
                   this.StockDetails.result[i].push(this.dispnames[i]);
+                  for (let j = 0; j < this.List.result.length; j++) {
+                    if (this.List.result[j][0] === this.dispnames[i]) {
+                      this.StockDetails.result[i].push(this.List.result[j][1]);
+                    }
+                  }
                 }
                 console.log(this.StockDetails);
               },
-              Error =>
-                alert(
-                  "Error! Please Check your Connectivity and restart the application"
-                )
+              Error => {
+                if (!this.isFired) {
+                  alert(
+                    "Error! Please Check your Connectivity and restart the application"
+                  );
+                  this.isFired = true;
+                }
+              }
             );
             this.editpressed = false;
           }
         });
       },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      Error => {
+        if (!this.isFired) {
+          alert(
+            "Error! Please Check your Connectivity and restart the application"
+          );
+          this.isFired = true;
+        }
+      }
     );
     this.initializedref = true;
   }
   ionViewDidEnter() {
     this.dorefresh = true;
-    this.refresh();
+    if (this.initializedref) {
+      this.refresh();
+    }
+
     // console.log(LanguagePipe);
   }
   ionViewWillLeave() {
     this.dorefresh = false;
   }
   refresh() {
-    //  setTimeout(() => {
-    //     }, 1000);
-
-    this.StockService.getstock(this.dispnames, isArabic).subscribe(
-      data => {
-        this.StockDetails = data;
-        for (let i = 0; i < this.StockDetails.result.length; i++) {
-          this.StockDetails.result[i].push(this.dispnames[i]);
-          for (let j = 0; j < this.List.result.length; j++) {
-            if (this.List.result[j][0] === this.dispnames[i]) {
-              this.StockDetails.result[i].push(this.List.result[j][1]);
+    if (this.dispnames && isArabic) {
+      this.StockService.getstock(this.dispnames, isArabic).subscribe(
+        data => {
+          this.StockDetails = data;
+          for (let i = 0; i < this.StockDetails.result.length; i++) {
+            this.StockDetails.result[i].push(this.dispnames[i]);
+            for (let j = 0; j < this.List.result.length; j++) {
+              if (this.List.result[j][0] === this.dispnames[i]) {
+                this.StockDetails.result[i].push(this.List.result[j][1]);
+              }
             }
           }
-        }
-        this.StockService.getnames(isArabic).subscribe(
-          data => {
-            this.List = data;
-          },
-          Error =>
+          this.StockService.getnames(isArabic).subscribe(
+            data => {
+              this.List = data;
+            },
+            Error => {
+              if (!this.isFired) {
+                alert(
+                  "Error! Please Check your Connectivity and restart the application"
+                );
+                this.isFired = true;
+              }
+            }
+          );
+          // console.log(this.News);
+        },
+        Error => {
+          if (!this.isFired) {
             alert(
               "Error! Please Check your Connectivity and restart the application"
-            )
-        );
-        // console.log(this.News);
-      },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
-    );
-    isArabic = window["isArabic"];
+            );
+            this.isFired = true;
+          }
+        }
+      );
+    }
+    // isArabic = window["isArabic"];
 
-    // this.language = language;
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();
@@ -247,10 +270,6 @@ export class HomePage implements OnInit {
   }
 
   falsepressed() {
-    // if (this.List.result.length > 0) {
-    //   this.dispnames = [];
-    // }
-
     for (let i = 0; i < this.List.result.length; i++) {
       console.log(this.map[this.displayListDummy[i]]);
 
@@ -278,10 +297,14 @@ export class HomePage implements OnInit {
         }
         console.log(this.StockDetails);
       },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      Error => {
+        if (!this.isFired) {
+          alert(
+            "Error! Please Check your Connectivity and restart the application"
+          );
+          this.isFired = true;
+        }
+      }
     );
     this.editpressed = false;
   }
@@ -334,10 +357,6 @@ export class HomePage implements OnInit {
       }
       this.initialized = false;
     }
-    // this.hidewatchlast = this.editpressed || this.stockchosen;
-    // for (let i = 0; i < this.displayListDummy.length; i++) {
-    //   this.map[this.displayListDummy[i]] = false;
-    // }
 
     this.displayListDummy.sort();
     this.displayList = this.displayListDummy;
