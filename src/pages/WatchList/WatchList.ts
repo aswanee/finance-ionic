@@ -47,6 +47,7 @@ export class HomePage implements OnInit {
   initialized: boolean = true;
   initializedref: boolean = false;
   dorefresh = false;
+  isArabic : boolean = false;
   // are chosen alias
 
   map: { [reuter: string]: Boolean } = {};
@@ -93,7 +94,7 @@ export class HomePage implements OnInit {
     });
     this.storage.get("isArabic").then(val => {
       window["isArabic"] = val;
-      isArabic = window["isArabic"];
+      this.isArabic = window["isArabic"];
       console.log(val);
     });
     this.storage.get("token").then(val => {
@@ -103,7 +104,7 @@ export class HomePage implements OnInit {
 
     console.log(window["token"]);
     console.log(this.storage.get("token"));
-    this.StockService.getnames(isArabic).subscribe(
+    this.StockService.getnames(this.isArabic).subscribe(
       data => {
         this.List = data;
         console.log(this.List);
@@ -114,16 +115,17 @@ export class HomePage implements OnInit {
           this.displayList.push(this.List.result[i][0]);
           this.displayListDummy.push(this.List.result[i][0]);
         }
+        // console.log(this.displayList);
         this.editpressed = false;
         // this.hidewatchlast = false;
         // this.showCompanyDetails = false;
-
+        console.log(this.dispnames);
         this.storage.keys().then(keys => {
           if (keys) {
             keys.forEach(key => {
               if (key === "watchList") {
                 this.storage.get("watchList").then(val => {
-                  this.StockService.getstock(val, isArabic).subscribe(
+                  this.StockService.getstock(val, this.isArabic).subscribe(
                     data => {
                       this.StockDetails = data;
                       this.dispnames = val;
@@ -150,8 +152,9 @@ export class HomePage implements OnInit {
               }
             });
           } else {
+            console.log(this.dispnames)
             this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-            this.StockService.getstock(this.dispnames, isArabic).subscribe(
+            this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
               data => {
                 this.StockDetails = data;
                 this.dispnames = [
@@ -163,20 +166,23 @@ export class HomePage implements OnInit {
                   this.StockDetails.result[i].push(this.dispnames[i]);
                 }
                 console.log(this.StockDetails);
-              },
-              Error =>
-                alert(
-                  "Error! Please Check your Connectivity and restart the application"
-                )
+              }
+              // ,
+              // Error =>
+              //   alert(
+              //     "Error! Please Check your Connectivity and restart the application"
+              //   )
             );
+            console.log(this.dispnames);
             this.editpressed = false;
           }
         });
-      },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      }
+      // ,
+      // Error =>
+      //   alert(
+      //     "Error! Please Check your Connectivity and restart the application"
+      //   )
     );
     this.initializedref = true;
   }
@@ -192,7 +198,7 @@ export class HomePage implements OnInit {
     //  setTimeout(() => {
     //     }, 1000);
 
-    this.StockService.getstock(this.dispnames, isArabic).subscribe(
+    this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
       data => {
         this.StockDetails = data;
         for (let i = 0; i < this.StockDetails.result.length; i++) {
@@ -203,14 +209,15 @@ export class HomePage implements OnInit {
             }
           }
         }
-        this.StockService.getnames(isArabic).subscribe(
+        this.StockService.getnames(this.isArabic).subscribe(
           data => {
             this.List = data;
-          },
-          Error =>
-            alert(
-              "Error! Please Check your Connectivity and restart the application"
-            )
+          }
+          // ,
+          // Error =>
+          //   alert(
+          //     "Error! Please Check your Connectivity and restart the application"
+          //   )
         );
         // console.log(this.News);
       },
@@ -219,7 +226,7 @@ export class HomePage implements OnInit {
           "Error! Please Check your Connectivity and restart the application"
         )
     );
-    isArabic = window["isArabic"];
+    this.isArabic = window["isArabic"];
 
     // this.language = language;
     if (this.dorefresh) {
@@ -270,7 +277,7 @@ export class HomePage implements OnInit {
     console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
     console.log(this.dispnames);
-    this.StockService.getstock(this.dispnames, isArabic).subscribe(
+    this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
       data => {
         this.StockDetails = data;
         for (let i = 0; i < this.StockDetails.result.length; i++) {
