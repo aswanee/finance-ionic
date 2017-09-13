@@ -1,5 +1,4 @@
 export let language: string = "en";
-export let isArabic: boolean = false;
 import {
   Component,
   OnInit,
@@ -8,6 +7,7 @@ import {
   HostListener
 } from "@angular/core";
 import { NavController } from "ionic-angular";
+import { watchlistRefresh } from "./../../app/refreshconfig";
 import { ToastController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
@@ -46,6 +46,7 @@ export class HomePage implements OnInit {
   initializedref: boolean = false;
   dorefresh = false;
   isArabic: boolean = false;
+  languageinit: boolean = false;
   // are chosen alias
 
   map: { [reuter: string]: Boolean } = {};
@@ -70,19 +71,28 @@ export class HomePage implements OnInit {
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
-    this.storage.get("language").then(val => {
+    this.storage.get("languageinit").then(val => {
       if (val) {
+        this.languageinit = val;
+      }
+    });
+    this.storage.get("language").then(val => {
+      if (val && this.languageinit) {
         window["language"] = val;
+        console.log(window["language"]);
       } else {
         window["language"] = "en";
         this.storage.set("language", "en");
         this.storage.set("isArabic", false);
+        this.storage.set("languageinit", true);
+        console.log("watchist set");
       }
       console.log(val);
     });
     this.storage.get("isArabic").then(val => {
       window["isArabic"] = val;
       this.isArabic = window["isArabic"];
+      console.log(this.isArabic);
       console.log(val);
     });
     this.storage.get("token").then(val => {
@@ -195,6 +205,32 @@ export class HomePage implements OnInit {
   }
   refresh() {
     if (this.dispnames) {
+      ///////////////////////////////////////////////////////Eng.Rashed needs invistigaation
+      this.storage.get("languageinit").then(val => {
+        if (val) {
+          this.languageinit = val;
+        }
+      });
+      this.storage.get("language").then(val => {
+        if (val && this.languageinit) {
+          window["language"] = val;
+          console.log(window["language"]);
+        } else {
+          window["language"] = "en";
+          this.storage.set("language", "en");
+          this.storage.set("isArabic", false);
+          this.storage.set("languageinit", true);
+          console.log("watchist set");
+        }
+        console.log(val);
+      });
+      this.storage.get("isArabic").then(val => {
+        window["isArabic"] = val;
+        this.isArabic = window["isArabic"];
+        console.log(this.isArabic);
+        console.log(val);
+      });
+      ////////////////////////////////////
       this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
         data => {
           this.StockDetails = data;
@@ -229,7 +265,7 @@ export class HomePage implements OnInit {
       if (this.dorefresh) {
         setTimeout(() => {
           this.refresh();
-        }, 1000);
+        }, watchlistRefresh);
         console.log("refresh");
       }
     }

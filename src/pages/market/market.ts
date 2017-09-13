@@ -7,6 +7,7 @@ import { SerResponse } from "./../../app/response.interface";
 import { CompanydetailsComponent } from "./../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { ToastController } from "ionic-angular";
+import { marketRefresh } from "./../../app/refreshconfig";
 
 /**
  * Generated class for the MarketPage page.
@@ -223,7 +224,7 @@ export class MarketPage {
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();
-      }, 10000);
+      }, marketRefresh);
       console.log("refresh");
     }
   }

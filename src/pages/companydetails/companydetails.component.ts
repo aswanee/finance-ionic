@@ -10,6 +10,11 @@ import {
 } from "@angular/core";
 import { NavController, NavParams } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
+import {
+  asksbidsRefresh,
+  relnewsRefresh,
+  tradesRefresh
+} from "./../../app/refreshconfig";
 import { AskBidService } from "./../../app/asksbids.service";
 import { CompanyService } from "./../../app/company.service";
 import { GetService } from "./../../app/else.service";
@@ -176,7 +181,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     if (this.showasksbids) {
       setTimeout(() => {
         this.refreshAsksBids();
-      }, 1000);
+      }, asksbidsRefresh);
       console.log("refreshasksbids");
     }
 
@@ -247,7 +252,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     if (this.showtrades) {
       setTimeout(() => {
         this.refreshAutoTrades();
-      }, 1000);
+      }, tradesRefresh);
       console.log("refreshtrades");
     }
   }
@@ -351,7 +356,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     if (this.shownews) {
       setTimeout(() => {
         this.refreshAutoNews();
-      }, 1000);
+      }, relnewsRefresh);
       console.log("refreshnews");
     }
   }

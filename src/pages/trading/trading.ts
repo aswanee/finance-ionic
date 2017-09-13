@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { portfolioRefresh, ordersRefresh } from "./../../app/refreshconfig";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
@@ -172,11 +173,11 @@ export class TradingPage implements OnInit {
     if (this.token == null) {
       setTimeout(() => {
         this.showAlert();
-      }, 1000);
+      }, portfolioRefresh);
     } else if (this.token.Status === "Unauthorized") {
       setTimeout(() => {
         this.showAlert();
-      }, 1000);
+      }, ordersRefresh);
     } else this.loggedIn = true;
   }
 
@@ -234,7 +235,7 @@ export class TradingPage implements OnInit {
     if (this.showportfolio) {
       setTimeout(() => {
         this.refreshPortfolio();
-      }, 1000);
+      }, portfolioRefresh);
       console.log("refresh port");
     }
   }
@@ -298,7 +299,7 @@ export class TradingPage implements OnInit {
     if (this.showorders && this.AllUpdatesNotShown) {
       setTimeout(() => {
         this.refreshOrders();
-      }, 1000);
+      }, ordersRefresh);
       console.log("refreshorders");
     }
   }

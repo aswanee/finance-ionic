@@ -7,7 +7,7 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
 import { ToastController } from "ionic-angular";
-
+import { newsRefresh } from "./../../app/refreshconfig";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
@@ -97,7 +97,7 @@ export class NewsPage implements OnInit {
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();
-      }, 1000);
+      }, newsRefresh);
       // console.log("refresh");
     }
   }
