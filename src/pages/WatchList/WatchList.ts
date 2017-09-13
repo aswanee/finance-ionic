@@ -194,45 +194,44 @@ export class HomePage implements OnInit {
     this.dorefresh = false;
   }
   refresh() {
-    //  setTimeout(() => {
-    //     }, 1000);
+    if (this.dispnames) {
+      this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
+        data => {
+          this.StockDetails = data;
+          for (let i = 0; i < this.StockDetails.result.length; i++) {
+            this.StockDetails.result[i].push(this.dispnames[i]);
+            for (let j = 0; j < this.List.result.length; j++) {
+              if (this.List.result[j][0] === this.dispnames[i]) {
+                this.StockDetails.result[i].push(this.List.result[j][1]);
+              }
+            }
+          }
+          this.StockService.getnames(this.isArabic).subscribe(
+            data => {
+              this.List = data;
+            },
+            Error => {
+              if (!this.isFired) {
+                this.ErrorToast();
+              }
+            }
+          );
+          // console.log(this.News);
+        },
+        Error => {
+          if (!this.isFired) {
+            this.ErrorToast();
+          }
+        }
+      );
+      this.isArabic = window["isArabic"];
 
-    this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
-      data => {
-        this.StockDetails = data;
-        for (let i = 0; i < this.StockDetails.result.length; i++) {
-          this.StockDetails.result[i].push(this.dispnames[i]);
-          for (let j = 0; j < this.List.result.length; j++) {
-            if (this.List.result[j][0] === this.dispnames[i]) {
-              this.StockDetails.result[i].push(this.List.result[j][1]);
-            }
-          }
-        }
-        this.StockService.getnames(this.isArabic).subscribe(
-          data => {
-            this.List = data;
-          },
-          Error => {
-            if (!this.isFired) {
-              this.ErrorToast();
-            }
-          }
-        );
-        // console.log(this.News);
-      },
-      Error => {
-        if (!this.isFired) {
-          this.ErrorToast();
-        }
+      if (this.dorefresh) {
+        setTimeout(() => {
+          this.refresh();
+        }, 1000);
+        console.log("refresh");
       }
-    );
-    this.isArabic = window["isArabic"];
-
-    if (this.dorefresh) {
-      setTimeout(() => {
-        this.refresh();
-      }, 1000);
-      console.log("refresh");
     }
   }
   searchList(reuter: string) {
