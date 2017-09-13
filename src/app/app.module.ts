@@ -41,6 +41,8 @@ import { LoginService } from "./login.service";
 import { IonicStorageModule } from "@ionic/storage";
 import { AlertService } from "./alert.service";
 import { PopOverPageModule } from "../pages/pop-over/pop-over.module";
+import { OneSignal } from '@ionic-native/onesignal';
+
 //pipes
 import { LimitToPipe } from "./../pipes/limit-to/limit-to";
 import { aroundToPipe } from "./../pipes/around-to/around-to";
@@ -128,7 +130,8 @@ export function createTranslateLoader(http: Http) {
     GetService,
     SplashScreen,
     // LoginComponent,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    OneSignal
   ]
 })
 export class AppModule {}
