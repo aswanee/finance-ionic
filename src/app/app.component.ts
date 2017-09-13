@@ -4,7 +4,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { TabsPage } from "../pages/tabs/tabs";
 import { AboutPage } from "../pages/about/about";
-import { OneSignal } from '@ionic-native/onesignal';
+import { OneSignal } from "@ionic-native/onesignal";
 
 import {
   IonicPage,
@@ -66,19 +66,24 @@ export class MyApp {
       //   .handleNotificationOpened(notificationOpenedCallback)
       //   .endInit();
 
-      // this.oneSignal.startInit('09eba30b-641e-4d7b-97c9-78566376acfe', '1097286062230');
+      this.oneSignal.startInit(
+        "09eba30b-641e-4d7b-97c9-78566376acfe",
+        "1097286062230"
+      );
 
-      // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+      this.oneSignal.inFocusDisplaying(
+        this.oneSignal.OSInFocusDisplayOption.InAppAlert
+      );
 
-      // this.oneSignal.handleNotificationReceived().subscribe(() => {
-      //  // do something when notification is received
-      // });
+      this.oneSignal.handleNotificationReceived().subscribe(() => {
+        // do something when notification is received
+      });
 
-      // this.oneSignal.handleNotificationOpened().subscribe(() => {
-      //   // do something when a notification is opened
-      // });
+      this.oneSignal.handleNotificationOpened().subscribe(() => {
+        // do something when a notification is opened
+      });
 
-      // this.oneSignal.endInit();
+      this.oneSignal.endInit();
 
       statusBar.styleDefault();
       splashScreen.hide();

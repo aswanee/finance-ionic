@@ -21,18 +21,4 @@ export class AboutPage {
   ionViewDidLoad() {
     console.log("ionViewDidLoad AboutPage");
   }
-  // ionViewDidEnter() {
-  //   this.language = language;
-  //   this.dorefresh = true;
-  // if (this.dorefresh) {
-  //   this.refresh();
-  // }
-  // }
-  // refresh() {
-  //   this.language = language;
-  //   this.refresh();
-  // }
-  // ionViewWillLeave() {
-  //   this.dorefresh = false;
-  // }
 }

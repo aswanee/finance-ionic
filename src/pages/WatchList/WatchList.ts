@@ -8,6 +8,7 @@ import {
   HostListener
 } from "@angular/core";
 import { NavController } from "ionic-angular";
+import { ToastController } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
 import { CompanyService } from "./../../app/company.service";
@@ -17,9 +18,6 @@ import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
-import { TranslateService, TranslatePipe } from "ng2-translate";
-// import { language } from "./../settings/settings";
-// import { isArabic } from "./../settings/settings";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 @Component({
@@ -64,7 +62,7 @@ export class HomePage implements OnInit {
     private AskBidService: AskBidService,
     private GetService: GetService,
     private storage: Storage,
-    private TranslateService: TranslateService
+    private ToastController: ToastController
   ) {}
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -72,14 +70,6 @@ export class HomePage implements OnInit {
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
-    // this.TranslateService.use(language);
-    // this.storage.keys().then (
-    //   keys=>{
-    //     if(keys){
-
-    //     }
-    //    window['token'] = data;
-    // });
     this.storage.get("language").then(val => {
       if (val) {
         window["language"] = val;
@@ -140,9 +130,7 @@ export class HomePage implements OnInit {
                     },
                     Error => {
                       if (!this.isFired) {
-                        alert(
-                          "Error! Please Check your Connectivity and restart the application"
-                        );
+                        this.ErrorToast();
                         this.isFired = true;
                       }
                     }
@@ -175,9 +163,7 @@ export class HomePage implements OnInit {
               },
               Error => {
                 if (!this.isFired) {
-                  alert(
-                    "Error! Please Check your Connectivity and restart the application"
-                  );
+                  this.ErrorToast();
                   this.isFired = true;
                 }
               }
@@ -189,9 +175,7 @@ export class HomePage implements OnInit {
       },
       Error => {
         if (!this.isFired) {
-          alert(
-            "Error! Please Check your Connectivity and restart the application"
-          );
+          this.ErrorToast();
           this.isFired = true;
         }
       }
@@ -200,7 +184,7 @@ export class HomePage implements OnInit {
   }
   ionViewDidEnter() {
     this.dorefresh = true;
-    if (this.initializedref) {
+    if (this.dispnames) {
       this.refresh();
     }
 
@@ -227,19 +211,20 @@ export class HomePage implements OnInit {
         this.StockService.getnames(this.isArabic).subscribe(
           data => {
             this.List = data;
+          },
+          Error => {
+            if (!this.isFired) {
+              this.ErrorToast();
+            }
           }
-          // ,
-          // Error =>
-          //   alert(
-          //     "Error! Please Check your Connectivity and restart the application"
-          //   )
         );
         // console.log(this.News);
       },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+        }
+      }
     );
     this.isArabic = window["isArabic"];
 
@@ -297,9 +282,7 @@ export class HomePage implements OnInit {
       },
       Error => {
         if (!this.isFired) {
-          alert(
-            "Error! Please Check your Connectivity and restart the application"
-          );
+          this.ErrorToast();
           this.isFired = true;
         }
       }
@@ -386,5 +369,18 @@ export class HomePage implements OnInit {
       rootid: this.rootid,
       stockchosen: this.stockchosen
     });
+  }
+  ErrorToast() {
+    let toast = this.ToastController.create({
+      message: "Error!",
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }

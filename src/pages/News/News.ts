@@ -6,9 +6,8 @@ import { Newsbody } from "./../../app/newsbody.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
-import { TranslatePipe, TranslateService } from "ng2-translate";
-// import { language } from "./../../app/app.module";
-// import { isArabic } from "./../settings/settings";
+import { ToastController } from "ionic-angular";
+
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
@@ -35,8 +34,8 @@ export class NewsPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     private CompanyService: CompanyService,
-    private TranslateService: TranslateService,
-    public events: Events
+    public events: Events,
+    private ToastController: ToastController
   ) {
     this.CompanyService.getnews(this.date, 100, window["isArabic"]).subscribe(
       data => {
@@ -45,9 +44,7 @@ export class NewsPage implements OnInit {
       },
       Error => {
         if (!this.isFired) {
-          alert(
-            "Error! Please Check your Connectivity and restart the application"
-          );
+          this.ErrorToast();
           this.isFired = true;
         }
       }
@@ -55,8 +52,6 @@ export class NewsPage implements OnInit {
   }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // this.TranslateService.use(language);
     this.initialized = true;
   }
   ionViewDidEnter() {
@@ -92,10 +87,12 @@ export class NewsPage implements OnInit {
 
         // console.log(this.News);
       },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
     );
     if (this.dorefresh) {
       setTimeout(() => {
@@ -147,10 +144,26 @@ export class NewsPage implements OnInit {
           console.log(this.displayednews);
           // this.refresh();
         },
-        Error =>
-          alert(
-            "Error! Please Check your Connectivity and restart the application"
-          )
+        Error => {
+          if (!this.isFired) {
+            this.ErrorToast();
+            this.isFired = true;
+          }
+        }
       );
+  }
+  ErrorToast() {
+    let toast = this.ToastController.create({
+      message:
+        "Error!Please Check your Connectivity and restart the application",
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }

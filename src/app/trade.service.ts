@@ -139,7 +139,7 @@ export class TradeService extends ParentService {
     isArabic: boolean,
     view: number
   ): Observable<userorderresponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     // htis.getlink();
     this.link = this.link + "apis/trading/GetUserOrders?BimsUserID=";
     // console.log(link);
@@ -315,7 +315,7 @@ export class TradeService extends ParentService {
     pin: number,
     token
   ): Observable<CancelResponse> {
-    this.getunsecurelink();
+    this.getsecurelink();
     this.link =
       this.link +
       "apis/trading/CancelOrder?orderID=" +

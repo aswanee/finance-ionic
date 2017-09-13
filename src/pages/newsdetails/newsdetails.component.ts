@@ -5,6 +5,7 @@ import { Newsbody } from "./../../app/newsbody.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
+import { ToastController } from "ionic-angular";
 import { NavController, NavParams } from "ionic-angular";
 @Component({
   // moduleId: module.id,
@@ -16,10 +17,12 @@ export class NewsdetailsComponent implements OnInit {
   id: string;
   Newsbody: Newsdetailsresponse;
   elements: Element;
+  isFired = false;
   constructor(
     private CompanyService: CompanyService,
     private NavController: NavController,
-    public navParams: NavParams
+    public navParams: NavParams,
+    private ToastController: ToastController
   ) {
     this.id = navParams.get("id");
   }
@@ -38,24 +41,27 @@ export class NewsdetailsComponent implements OnInit {
         document.getElementById("id").innerHTML = this.elements.innerHTML;
         // console.log(this.News);
       },
-      Error =>
-        alert(
-          "Error! Please Check your Connectivity and restart the application"
-        )
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
     );
     // this.showdetails=true;
   }
-  // getdetails(){
-  //   const parsed = Number(this.id);
-  //  this.CompanyService.getnewsdetails(parsed).subscribe(data  => {this.Newsbody = data;
-  //               var div = document.createElement('div');
-  //               div.innerHTML = this.Newsbody.result.V[3];
-  //                this.elements = div;
-  //                // document.writeln(this.elements.innerHTML);
-  //                console.log(this.elements);
-  //                document.getElementById('id').innerHTML = this.elements.innerHTML;
-  //               // console.log(this.News);
-  //            } );
-  //  // this.showdetails=true;
-  // }
+  ErrorToast() {
+    let toast = this.ToastController.create({
+      message:
+        "Error!Please Check your Connectivity and restart the application",
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
+  }
 }

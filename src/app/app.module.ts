@@ -23,11 +23,6 @@ import { UpdateAlertPage } from "../pages/update-alert/update-alert";
 import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
 import { PopoverPage } from "./../pages/pop-over/pop-over";
 import { SwitchAccountsPage } from "./../pages/switch-accounts/switch-accounts";
-import {
-  TranslateModule,
-  TranslateLoader,
-  TranslateStaticLoader
-} from "ng2-translate";
 import { LanguagePipe } from "./../pipes/Language/Language.pipe";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
@@ -47,11 +42,11 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { LimitToPipe } from "./../pipes/limit-to/limit-to";
 import { aroundToPipe } from "./../pipes/around-to/around-to";
 
-export function HttpLoaderFactory(http: Http) {
-  return new TranslateStaticLoader(http);
-}
-export function createTranslateLoader(http: Http) {
-  return new TranslateStaticLoader(http, "./../assets/", ".json");
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+
+export function highchartsFactory():HighchartsStatic {
+  const hc =  require("highcharts/highstock");
+  return hc;
 }
 @NgModule({
   declarations: [
@@ -81,21 +76,9 @@ export function createTranslateLoader(http: Http) {
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    ChartModule.forRoot(require("highcharts/highstock")),
-    IonicStorageModule
-      .forRoot
-      // {
-      // name: "__mydb",
-      // driverOrder: ["sqlite", "websql", "indexeddb"]
-      // }
-      (),
-    PopOverPageModule,
-    TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: (http: Http) =>
-        new TranslateStaticLoader(http, "./../assets/", ".json"),
-      deps: [Http]
-    })
+    ChartModule, 
+    IonicStorageModule.forRoot(),
+    PopOverPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -127,11 +110,14 @@ export function createTranslateLoader(http: Http) {
     CompanyService,
     LoginService,
     MarketService,
+OneSignal,
     GetService,
     SplashScreen,
-    // LoginComponent,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
-    OneSignal
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    }
+    //{ provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
 export class AppModule {}

@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { token } from "./../../app/token.interface";
 import { Storage } from "@ionic/storage";
-
+import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 /**
  * Generated class for the SwitchAccountsPage page.
  *
@@ -17,7 +17,7 @@ import { Storage } from "@ionic/storage";
   template: `
   <ion-header>
   <ion-navbar>
-    <ion-title>SwitchAccounts</ion-title>
+    <ion-title>{{'SwitchAccounts' | Language}}</ion-title>
   </ion-navbar>
 
 </ion-header>

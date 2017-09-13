@@ -26,6 +26,7 @@ import {
   CancelOrderStatus
 } from "./../../app/Validate.interface";
 import { Detailsresponse } from "./../../app/details.interface";
+import { ToastController } from "ionic-angular";
 import { token } from "./../../app/token.interface";
 import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
@@ -140,7 +141,8 @@ export class TradingPage implements OnInit {
     private LoginService: LoginService,
     private TradeService: TradeService,
     private storage: Storage,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private ToastController: ToastController
   ) {
     this.showAlert();
   }
@@ -196,18 +198,17 @@ export class TradingPage implements OnInit {
   getportfolio() {
     /* bn Rashed*/
     //this.checkLogin();
-    this.TradeService.GetPortfolio(this.token, window["isArabic"]).subscribe(
-      data => {
+    this.TradeService
+      .GetPortfolio(this.token, window["isArabic"])
+      .subscribe(data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
-          alert("you are not logged in");
+          this.ErrorToast("you are not logged in");
           this.gotoLogin();
         }
         console.log(this.portfolioresponse);
-      },
-      Error => alert("error")
-    );
+      }, Error => this.ErrorToast("Error")!);
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
     this.showhistory = false;
@@ -223,7 +224,7 @@ export class TradingPage implements OnInit {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
-          alert("you are not logged in");
+          this.ErrorToast("you are not logged in");
           this.gotoLogin();
         }
         console.log(this.portfolioresponse);
@@ -239,20 +240,22 @@ export class TradingPage implements OnInit {
   }
 
   getportfoliosummary() {
-    this.TradeService.GetPortfolioSummary(this.token).subscribe(data => {
-      this.Detailsresponse = data;
-      if (this.Detailsresponse.status == "UnauthorizedOrOverrideToken") {
-        window["token"] = null;
-        this.gotoLogin();
-      }
-      console.log(this.Detailsresponse);
-    });
+    this.TradeService.GetPortfolioSummary(this.token).subscribe(
+      data => {
+        this.Detailsresponse = data;
+        if (this.Detailsresponse.status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        }
+        console.log(this.Detailsresponse);
+      },
+      Error => this.ErrorToast("Error!")
+    );
     this.showsummary = !this.showsummary;
   }
   getorders() {
-    this.TradeService
-      .getorders(this.token, window["isArabic"], 2)
-      .subscribe(data => {
+    this.TradeService.getorders(this.token, window["isArabic"], 2).subscribe(
+      data => {
         this.userorderresponse = data;
         console.log(this.userorderresponse);
         if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
@@ -266,7 +269,9 @@ export class TradingPage implements OnInit {
             }
           }
         }
-      });
+      },
+      Error => this.ErrorToast("Error!")
+    );
     this.showorders = !this.showorders;
     this.showportfolio = false;
     this.showhistory = false;
@@ -289,7 +294,7 @@ export class TradingPage implements OnInit {
           //   this.ShowUpdate[i] = false;
           // }
         }
-      });
+      }, Error => this.ErrorToast);
     if (this.showorders && this.AllUpdatesNotShown) {
       setTimeout(() => {
         this.refreshOrders();
@@ -324,43 +329,46 @@ export class TradingPage implements OnInit {
     console.log(this.userorder);
     this.TradeService
       .ValidateOrder(window["isArabic"], false, this.userorder, this.token)
-      .subscribe(data => {
-        this.ValidationResponse = data;
-        console.log(this.ValidationResponse);
-        if (this.ValidationResponse.Status === "OK") {
-          if (
-            this.ValidationResponse.result.Result.toString() ===
-            OrderOperationResult[OrderOperationResult.Success]
-          ) {
-            console.log("order placed");
-            this.placeOrder();
-            // this.pincode = Number(
-            //   prompt(
-            //     this.ValidationResponse.result.Message +
-            //       "Please enter the Pin code"
-            //   )
-            // );
-            // console.log(this.pincode);
-            // setTimeout(function() {
+      .subscribe(
+        data => {
+          this.ValidationResponse = data;
+          console.log(this.ValidationResponse);
+          if (this.ValidationResponse.Status === "OK") {
+            if (
+              this.ValidationResponse.result.Result.toString() ===
+              OrderOperationResult[OrderOperationResult.Success]
+            ) {
+              console.log("order placed");
+              this.placeOrder();
+              // this.pincode = Number(
+              //   prompt(
+              //     this.ValidationResponse.result.Message +
+              //       "Please enter the Pin code"
+              //   )
+              // );
+              // console.log(this.pincode);
+              // setTimeout(function() {
 
-            // }, 5000);
-            // this.TradeService
-            //   .PlaceOrder(true, false, this.userorder, this.token, 123456)
-            //   .subscribe(data => {
-            //     this.Createresponse = data;
-            //     console.log(this.Createresponse);
-            //     prompt(this.Createresponse.result.Message);
-            //   });
+              // }, 5000);
+              // this.TradeService
+              //   .PlaceOrder(true, false, this.userorder, this.token, 123456)
+              //   .subscribe(data => {
+              //     this.Createresponse = data;
+              //     console.log(this.Createresponse);
+              //     prompt(this.Createresponse.result.Message);
+              //   });
+            } else {
+              console.log("order not placed");
+              console.log(this.ValidationResponse.result.Result.toString());
+              console.log(OrderOperationResult[OrderOperationResult.Success]);
+              alert(this.ValidationResponse.result.Message);
+            }
           } else {
-            console.log("order not placed");
-            console.log(this.ValidationResponse.result.Result.toString());
-            console.log(OrderOperationResult[OrderOperationResult.Success]);
-            alert(this.ValidationResponse.result.Message);
+            alert("please insert all fields with Valid Values");
           }
-        } else {
-          alert("please insert all fields with Valid Values");
-        }
-      });
+        },
+        Error => this.ErrorToast("Error!")
+      );
 
     //  console.log(this.pincode);
   }
@@ -375,12 +383,15 @@ export class TradingPage implements OnInit {
         this.token,
         this.pincode
       )
-      .subscribe(data => {
-        this.Createresponse = data;
-        console.log(this.Createresponse);
-        console.log(this.Createresponse);
-        alert(this.Createresponse.result.OutMessages);
-      });
+      .subscribe(
+        data => {
+          this.Createresponse = data;
+          console.log(this.Createresponse);
+          console.log(this.Createresponse);
+          alert(this.Createresponse.result.OutMessages);
+        },
+        Error => this.ErrorToast("Error!")
+      );
   }
   UpdateOrder(order: userorder) {
     // console.log(this.userorder);
@@ -399,58 +410,67 @@ export class TradingPage implements OnInit {
     //this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
     this.TradeService
       .ValidateOrder(window["isArabic"], true, this.updateuserorder, this.token)
-      .subscribe(data => {
-        this.ValidationResponse = data;
-        console.log(this.ValidationResponse);
-        if (this.ValidationResponse.Status === "OK") {
-          if (
-            this.ValidationResponse.result.Result.toString() ===
-            OrderOperationResult[OrderOperationResult.Success]
-          ) {
-            this.pincode = Number(
-              prompt(
-                this.ValidationResponse.result.Message +
-                  "Please enter the Pin code"
-              )
-            );
-            this.TradeService
-              .PlaceOrder(
-                window["isArabic"],
-                true,
-                this.updateuserorder,
-                this.token,
-                this.pincode
-              )
-              .subscribe(data => {
-                this.Updateresponse = data;
-                alert(this.Updateresponse.result.OutMessages);
-                console.log(this.Updateresponse);
-                console.log(this.Updateresponse.result.Status.toString());
-                console.log(PlaceOrderStatus[PlaceOrderStatus.Completed]);
-                if (
-                  this.Updateresponse.result.Status.toString() ===
-                  PlaceOrderStatus[PlaceOrderStatus.Completed]
-                ) {
-                  order = Object.assign({}, this.updateuserorder);
-                }
-              });
+      .subscribe(
+        data => {
+          this.ValidationResponse = data;
+          console.log(this.ValidationResponse);
+          if (this.ValidationResponse.Status === "OK") {
+            if (
+              this.ValidationResponse.result.Result.toString() ===
+              OrderOperationResult[OrderOperationResult.Success]
+            ) {
+              this.pincode = Number(
+                prompt(
+                  this.ValidationResponse.result.Message +
+                    "Please enter the Pin code"
+                )
+              );
+              this.TradeService
+                .PlaceOrder(
+                  window["isArabic"],
+                  true,
+                  this.updateuserorder,
+                  this.token,
+                  this.pincode
+                )
+                .subscribe(
+                  data => {
+                    this.Updateresponse = data;
+                    alert(this.Updateresponse.result.OutMessages);
+                    console.log(this.Updateresponse);
+                    console.log(this.Updateresponse.result.Status.toString());
+                    console.log(PlaceOrderStatus[PlaceOrderStatus.Completed]);
+                    if (
+                      this.Updateresponse.result.Status.toString() ===
+                      PlaceOrderStatus[PlaceOrderStatus.Completed]
+                    ) {
+                      order = Object.assign({}, this.updateuserorder);
+                    }
+                  },
+                  Error => this.ErrorToast("Error!")
+                );
+            } else {
+              alert(this.ValidationResponse.result.Message);
+            }
           } else {
-            alert(this.ValidationResponse.result.Message);
+            alert("Please Fill all Fields with valid values");
           }
-        } else {
-          alert("Please Fill all Fields with valid values");
-        }
-      });
+        },
+        Error => this.ErrorToast("Error!")
+      );
   }
   CancelOrder(orderid: number) {
     this.pincode = Number(prompt("please enter your pin code"));
     this.TradeService
       .CancelOrder(orderid, window["isArabic"], this.pincode, this.token)
-      .subscribe(data => {
-        this.CancelResponse = data;
-        console.log(this.CancelResponse);
-        alert(this.CancelResponse.result.OutMessages);
-      });
+      .subscribe(
+        data => {
+          this.CancelResponse = data;
+          console.log(this.CancelResponse);
+          alert(this.CancelResponse.result.OutMessages);
+        },
+        Error => this.ErrorToast("Error")
+      );
   }
 
   ChooseDay() {
@@ -575,5 +595,18 @@ export class TradingPage implements OnInit {
   }
   showPriceType(Price: PriceType): string {
     return PriceType[Price];
+  }
+  ErrorToast(message: string) {
+    let toast = this.ToastController.create({
+      message: message,
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }

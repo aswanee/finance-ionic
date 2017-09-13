@@ -5,6 +5,8 @@ import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { token } from "./../../app/token.interface";
 import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
+import { ToastController } from "ionic-angular";
+
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import {
   alertresponse,
@@ -12,10 +14,9 @@ import {
   Field,
   Criteria
 } from "./../../app/alert.interface";
+
 import { add } from "./../../app/addresponse.interface";
 import { deleteresponse } from "./../../app/delete.interface";
-// import { language } from "./../../app/app.module";
-import { TranslatePipe, TranslateService } from "ng2-translate";
 @Component({
   selector: "login",
   templateUrl: "login.component.html"
@@ -33,8 +34,8 @@ export class LoginComponent implements OnInit {
     public navCtrl: NavController,
     private LoginService: LoginService,
     private formBuilder: FormBuilder,
-    private TranslateService: TranslateService,
-    private storage: Storage
+    private storage: Storage,
+    private ToastController: ToastController
   ) {
     this.loginForm = this.formBuilder.group({
       username: ["", Validators.required],
@@ -63,13 +64,29 @@ export class LoginComponent implements OnInit {
             this.navCtrl.pop();
           }
 
-          //   console.log(data);
-          // console.log(USERTOKEN);
           // check if authentication error
+          if (data) {
+            if (data.Status === "Unauthorized") {
+              this.ErrorToast("Please Enter a valid username and password");
+            }
+          }
         },
         Error => {
-          alert("error");
+          this.ErrorToast("Error!");
         }
       );
+  }
+  ErrorToast(message: string) {
+    let toast = this.ToastController.create({
+      message: message,
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }

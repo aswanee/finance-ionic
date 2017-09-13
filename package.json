@@ -1,8 +1,8 @@
 {
-    "name": "newproj",
+    "name": "AFinance",
     "version": "0.0.1",
-    "author": "Ionic Framework",
-    "homepage": "http://ionicframework.com/",
+    "author": "Ionic ArabFinance",
+    "homepage": "https://arabfinance.com/",
     "private": true,
     "scripts": {
         "clean": "ionic-app-scripts clean",
@@ -26,6 +26,7 @@
         "@ionic-native/status-bar": "3.12.1",
         "@ionic/cloud-angular": "^0.12.0",
         "@ionic/storage": "2.0.1",
+        "add": "file:node_modules\\add",
         "ajv": "^5.2.2",
         "ajv-keywords": "^2.1.0",
         "angular2-highcharts": "^0.5.5",

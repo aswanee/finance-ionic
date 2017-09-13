@@ -4,9 +4,10 @@ import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
-import { TranslatePipe, TranslateService } from "ng2-translate";
 import { CompanydetailsComponent } from "./../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { ToastController } from "ionic-angular";
+
 /**
  * Generated class for the MarketPage page.
  *
@@ -44,12 +45,13 @@ export class MarketPage {
   rootid: number = 1;
   BV: SerResponse;
   WP: SerResponse;
+  isFired = false;
   dorefresh = true;
   initialized = false;
   constructor(
     public navCtrl: NavController,
     private MarketService: MarketService,
-    private TranslateService: TranslateService
+    private ToastController: ToastController
   ) {}
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -59,49 +61,63 @@ export class MarketPage {
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.MarketService.getindicestable().subscribe(data => {
-      this.IndicesTable = data;
-      console.log(this.IndicesTable);
-    });
+    this.MarketService.getindicestable().subscribe(
+      data => {
+        this.IndicesTable = data;
+        console.log(this.IndicesTable);
+      },
+      Error => this.ErrorToast()
+    );
     this.MarketService.getperformerstable().subscribe(data => {
       this.PerformersTable = data;
       console.log(this.PerformersTable);
     });
-    this.MarketService.getindices("EGX30").subscribe(data => {
-      this.EGX30 = data;
-      console.log(this.EGX30);
-      //  this.Indices.push(this.EGX30);
-    });
-    this.MarketService.getindices("EGX70").subscribe(data => {
-      this.EGX70 = data;
-      console.log(this.EGX70);
-      //  this.Indices.push(this.EGX70);
-    });
-    this.MarketService.getindices("EGX100").subscribe(data => {
-      this.EGX100 = data;
-      console.log(this.EGX100);
-      //   this.Indices.push(this.EGX100);
-    });
-    this.MarketService
-      .getperformers("BP", window["isArabic"])
-      .subscribe(data => {
+    this.MarketService.getindices("EGX30").subscribe(
+      data => {
+        this.EGX30 = data;
+        console.log(this.EGX30);
+        //  this.Indices.push(this.EGX30);
+      },
+      Error => this.ErrorToast()
+    );
+    this.MarketService.getindices("EGX70").subscribe(
+      data => {
+        this.EGX70 = data;
+        console.log(this.EGX70);
+        //  this.Indices.push(this.EGX70);
+      },
+      Error => this.ErrorToast()
+    );
+    this.MarketService.getindices("EGX100").subscribe(
+      data => {
+        this.EGX100 = data;
+        console.log(this.EGX100);
+        //   this.Indices.push(this.EGX100);
+      },
+      Error => this.ErrorToast()
+    );
+    this.MarketService.getperformers("BP", window["isArabic"]).subscribe(
+      data => {
         this.BP = data;
         console.log(this.BP);
-      });
-    this.MarketService
-      .getperformers("BV", window["isArabic"])
-      .subscribe(data => {
+      },
+      Error => this.ErrorToast()
+    );
+    this.MarketService.getperformers("BV", window["isArabic"]).subscribe(
+      data => {
         this.BV = data;
         console.log(this.BV);
-      });
-    this.MarketService
-      .getperformers("WP", window["isArabic"])
-      .subscribe(data => {
+      },
+      Error => this.ErrorToast()
+    );
+    this.MarketService.getperformers("WP", window["isArabic"]).subscribe(
+      data => {
         this.WP = data;
         console.log(this.WP);
-      });
+      },
+      Error => this.ErrorToast()
+    );
     console.log(this.Indices);
-    // this.TranslateService.use(language);
     this.initialized = true;
   }
   ionViewDidEnter() {
@@ -112,50 +128,98 @@ export class MarketPage {
     this.dorefresh = false;
   }
   refresh() {
-    //  setTimeout(() => {
-    //     }, 1000);
     this.Indices = new Array();
-    this.MarketService.getindicestable().subscribe(data => {
-      this.IndicesTable = data;
-      console.log(this.IndicesTable);
-    });
-    this.MarketService.getperformerstable().subscribe(data => {
-      this.PerformersTable = data;
-      console.log(this.PerformersTable);
-    });
-    this.MarketService.getindices("EGX30").subscribe(data => {
-      this.EGX30 = data;
-      console.log(this.EGX30);
-      // this.Indices.push(this.EGX30);
-    });
-    this.MarketService.getindices("EGX70").subscribe(data => {
-      this.EGX70 = data;
-      console.log(this.EGX70);
-      // this.Indices.push(this.EGX70);
-    });
+    this.MarketService.getindicestable().subscribe(
+      data => {
+        this.IndicesTable = data;
+        console.log(this.IndicesTable);
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.MarketService.getperformerstable().subscribe(
+      data => {
+        this.PerformersTable = data;
+        console.log(this.PerformersTable);
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.MarketService.getindices("EGX30").subscribe(
+      data => {
+        this.EGX30 = data;
+        console.log(this.EGX30);
+        // this.Indices.push(this.EGX30);
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.MarketService.getindices("EGX70").subscribe(
+      data => {
+        this.EGX70 = data;
+        console.log(this.EGX70);
+        // this.Indices.push(this.EGX70);
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     this.MarketService.getindices("EGX100").subscribe(data => {
       this.EGX100 = data;
       console.log(this.EGX100);
       //  this.Indices.push(this.EGX100);
     });
-    this.MarketService
-      .getperformers("BP", window["isArabic"])
-      .subscribe(data => {
+    this.MarketService.getperformers("BP", window["isArabic"]).subscribe(
+      data => {
         this.BP = data;
         console.log(this.BP);
-      });
-    this.MarketService
-      .getperformers("BV", window["isArabic"])
-      .subscribe(data => {
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.MarketService.getperformers("BV", window["isArabic"]).subscribe(
+      data => {
         this.BV = data;
         console.log(this.BV);
-      });
-    this.MarketService
-      .getperformers("WP", window["isArabic"])
-      .subscribe(data => {
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.MarketService.getperformers("WP", window["isArabic"]).subscribe(
+      data => {
         this.WP = data;
         console.log(this.WP);
-      });
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     if (this.dorefresh) {
       setTimeout(() => {
         this.refresh();
@@ -211,5 +275,18 @@ export class MarketPage {
       rootid: this.rootid,
       stockchosen: this.stockchosen
     });
+  }
+  ErrorToast() {
+    let toast = this.ToastController.create({
+      message: "Error!",
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }

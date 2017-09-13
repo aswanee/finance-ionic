@@ -21,7 +21,7 @@ import { SwitchAccountsPage } from "./../switch-accounts/switch-accounts";
     <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
     <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
     <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
-    <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">Switch Accounts</button>
+    <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">{{'SwitchAccounts' | Language}}</button>
 </ion-list>
   `
 })

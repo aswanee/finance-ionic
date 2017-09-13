@@ -10,6 +10,7 @@ import { StockService } from "./../../app/stock.service";
 import { AlertService } from "./../../app/alert.service";
 import { alertresponse, alert } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
+import { ToastController } from "ionic-angular";
 import { token } from "./../../app/token.interface";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { CreateAlertPage } from "./../create-alert/create-alert";
@@ -41,6 +42,7 @@ export class AlertPage {
   newMatchedAlerts: alert[] = new Array();
   newNonMatchedAlerts: alert[] = new Array();
   dummyAlert: alert;
+  isFired: false;
   loggedin: boolean = false;
   fetchedAlerts: boolean = false;
   Types: String[] = ["Index", "Stock", "OTC"];
@@ -72,7 +74,8 @@ export class AlertPage {
     private formBuilder: FormBuilder,
     private StockService: StockService,
     private AlertService: AlertService,
-    private storage: Storage
+    private storage: Storage,
+    private ToastController: ToastController
   ) {}
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -120,9 +123,8 @@ export class AlertPage {
     // TODO: should handle if a none user sent a that request.
     // show sth like "you are not a user"
 
-    this.AlertService
-      .getUseralerts(this.userId, this.alertsLastDate)
-      .subscribe(data => {
+    this.AlertService.getUseralerts(this.userId, this.alertsLastDate).subscribe(
+      data => {
         if (data) {
           this.newMatchedAlerts = data.result[0].filter(item => {
             return item.IsMatched;
@@ -140,7 +142,9 @@ export class AlertPage {
             lastUpdate: new Date()
           });
         }
-      });
+      },
+      Error => this.ErrorToast()
+    );
   }
 
   ionViewDidLoad() {
@@ -179,7 +183,7 @@ export class AlertPage {
           });
         }
       },
-      Error => alert("Error")
+      Error => this.ErrorToast()
     );
   }
 
@@ -210,26 +214,36 @@ export class AlertPage {
       reuter = this.matchedAlerts[index].Code;
     }
     console.log(alertId);
-    this.AlertService.deletealerts(alertId).subscribe(data => {
-      // TODO: add toast here.
-      console.log(data);
+    this.AlertService.deletealerts(alertId).subscribe(
+      data => {
+        // TODO: add toast here.
+        console.log(data);
 
-      if (data.result) {
-        if (IsMatched) {
-          this.matchedAlerts = this.matchedAlerts.filter(item => {
-            return item.AlertID !== alertId;
-          });
-        } else {
-          this.nonMatchedAlerts = this.nonMatchedAlerts.filter(item => {
-            return item.AlertID !== alertId;
+        if (data.result) {
+          if (IsMatched) {
+            this.matchedAlerts = this.matchedAlerts.filter(item => {
+              return item.AlertID !== alertId;
+            });
+          } else {
+            this.nonMatchedAlerts = this.nonMatchedAlerts.filter(item => {
+              return item.AlertID !== alertId;
+            });
+          }
+          this.storage.set("alerts", {
+            m: this.matchedAlerts,
+            nm: this.nonMatchedAlerts,
+            lastUpdate: new Date()
           });
         }
-        this.storage.set("alerts", {
-          m: this.matchedAlerts,
-          nm: this.nonMatchedAlerts,
-          lastUpdate: new Date()
-        });
-      }
+      },
+      Error => this.ErrorToast()
+    );
+  }
+  ErrorToast() {
+    let toast = this.ToastController.create({
+      message: "Error!",
+      duration: 2000,
+      position: "bottom"
     });
   }
 }

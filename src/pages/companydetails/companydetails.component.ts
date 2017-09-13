@@ -21,8 +21,6 @@ import { BehaviorSubject } from "rxjs";
 import { TabsPage } from "../tabs/tabs";
 import { HomePage } from "./../WatchList/WatchList";
 import { MarketPage } from "./../market/market";
-import { TranslateService, TranslatePipe } from "ng2-translate";
-// import { language } from "./../../app/app.module";
 import { ToastController } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
@@ -45,6 +43,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   showasksbids: boolean = false;
   shownews = false;
   lastFveDays: boolean = true;
+  isFired = false;
   detailsresponse: Detailsresponse;
   showtrades: boolean = false;
   showrelatednews: boolean = false;
@@ -65,7 +64,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     private AskBidService: AskBidService,
     private GetService: GetService,
     private navCtrl: NavController,
-    private TranslateService: TranslateService,
     private toastCtrl: ToastController,
     public navParams: NavParams
   ) {
@@ -73,28 +71,38 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.rootid = navParams.get("rootid");
     // this.stockchosen = navParams.get("stockchosen");
   }
-  ngOnInit() {
-    // this.navCtrl.push(CompanydetailsComponent);
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    // console.log(this.reuter);
-    // this.TranslateService.use(language);
-  }
+  ngOnInit() {}
   ngOnChanges(changes: SimpleChanges) {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add 'implements OnChanges' to the class.
 
     if (changes["reuter"] && changes["reuter"].currentValue) {
-      this.StockService.getstockdetails(this.reuter, true).subscribe(data => {
-        this.detailsresponse = data;
-        console.log(this.detailsresponse);
-      });
+      this.StockService.getstockdetails(this.reuter, true).subscribe(
+        data => {
+          this.detailsresponse = data;
+          console.log(this.detailsresponse);
+        },
+        Error => {
+          if (!this.isFired) {
+            this.ErrorToast();
+            this.isFired = true;
+          }
+        }
+      );
       let reuterarr: string[] = new Array();
       reuterarr.push(this.reuter);
-      this.StockService.getstock(reuterarr, true).subscribe(data => {
-        this.Stocksimple = data;
-        console.log(this.Stocksimple);
-      });
+      this.StockService.getstock(reuterarr, true).subscribe(
+        data => {
+          this.Stocksimple = data;
+          console.log(this.Stocksimple);
+        },
+        Error => {
+          if (!this.isFired) {
+            this.ErrorToast();
+            this.isFired = true;
+          }
+        }
+      );
     } else {
     }
   }
@@ -104,14 +112,30 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.showtrades = false;
   }
   setasksbids() {
-    this.AskBidService.getasks(this.reuter).subscribe(data => {
-      this.Asks = data;
-      console.log(this.Asks);
-    });
-    this.AskBidService.getbids(this.reuter).subscribe(data => {
-      this.Bids = data;
-      console.log(this.Bids);
-    });
+    this.AskBidService.getasks(this.reuter).subscribe(
+      data => {
+        this.Asks = data;
+        console.log(this.Asks);
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.AskBidService.getbids(this.reuter).subscribe(
+      data => {
+        this.Bids = data;
+        console.log(this.Bids);
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     this.showasksbids = true;
     this.showtrades = false;
     this.shownews = false;
@@ -127,12 +151,28 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     // this.send.emit(this.stockchosen);
   }
   refreshAsksBids() {
-    this.AskBidService.getasks(this.reuter).subscribe(data => {
-      this.Asks = data;
-    });
-    this.AskBidService.getbids(this.reuter).subscribe(data => {
-      this.Bids = data;
-    });
+    this.AskBidService.getasks(this.reuter).subscribe(
+      data => {
+        this.Asks = data;
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.AskBidService.getbids(this.reuter).subscribe(
+      data => {
+        this.Bids = data;
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     if (this.showasksbids) {
       setTimeout(() => {
         this.refreshAsksBids();
@@ -146,22 +186,30 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     //this.refreshedToast("Asks and Bids");
   }
   settrades() {
-    this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
-      this.Trades = data;
-      for (let i = 0; i < this.Trades.result.length; i++) {
-        this.TradesArray[i] = new Array();
-      }
-      for (let i = 0; i < this.Trades.result.length; i++) {
-        this.TradesArray[i] = this.Trades.result[i].split(",");
+    this.GetService.getquotetrades(this.reuter, 0).subscribe(
+      data => {
+        this.Trades = data;
+        for (let i = 0; i < this.Trades.result.length; i++) {
+          this.TradesArray[i] = new Array();
+        }
+        for (let i = 0; i < this.Trades.result.length; i++) {
+          this.TradesArray[i] = this.Trades.result[i].split(",");
 
-        this.TradesArray[i][this.TradesArray[i].length - 1] = this.TradesArray[
-          i
-        ][this.TradesArray[i].length - 1].substring(
-          0,
-          this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
-        );
+          this.TradesArray[i][
+            this.TradesArray[i].length - 1
+          ] = this.TradesArray[i][this.TradesArray[i].length - 1].substring(
+            0,
+            this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
+          );
+        }
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
       }
-    });
+    );
     this.showtrades = true;
     this.showasksbids = false;
     this.shownews = false;
@@ -172,22 +220,30 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     // this.send.emit(this.stockchosen);
   }
   refreshAutoTrades() {
-    this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
-      this.Trades = data;
-      for (let i = 0; i < this.Trades.result.length; i++) {
-        this.TradesArray[i] = new Array();
-      }
-      for (let i = 0; i < this.Trades.result.length; i++) {
-        this.TradesArray[i] = this.Trades.result[i].split(",");
+    this.GetService.getquotetrades(this.reuter, 0).subscribe(
+      data => {
+        this.Trades = data;
+        for (let i = 0; i < this.Trades.result.length; i++) {
+          this.TradesArray[i] = new Array();
+        }
+        for (let i = 0; i < this.Trades.result.length; i++) {
+          this.TradesArray[i] = this.Trades.result[i].split(",");
 
-        this.TradesArray[i][this.TradesArray[i].length - 1] = this.TradesArray[
-          i
-        ][this.TradesArray[i].length - 1].substring(
-          0,
-          this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
-        );
+          this.TradesArray[i][
+            this.TradesArray[i].length - 1
+          ] = this.TradesArray[i][this.TradesArray[i].length - 1].substring(
+            0,
+            this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
+          );
+        }
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
       }
-    });
+    );
     if (this.showtrades) {
       setTimeout(() => {
         this.refreshAutoTrades();
@@ -196,9 +252,17 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     }
   }
   refreshTrades() {
-    this.GetService.getquotetrades(this.reuter, 0).subscribe(data => {
-      this.Trades = data;
-    });
+    this.GetService.getquotetrades(this.reuter, 0).subscribe(
+      data => {
+        this.Trades = data;
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     this.showtrades = true;
     // this.stockchosen = false;
     // this.send.emit(this.stockchosen);
@@ -206,12 +270,28 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   }
 
   refreshAsks() {
-    this.AskBidService.getasks(this.reuter).subscribe(data => {
-      this.Asks = data;
-    });
-    this.AskBidService.getbids(this.reuter).subscribe(data => {
-      this.Bids = data;
-    });
+    this.AskBidService.getasks(this.reuter).subscribe(
+      data => {
+        this.Asks = data;
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
+    this.AskBidService.getbids(this.reuter).subscribe(
+      data => {
+        this.Bids = data;
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     this.showasksbids = true;
     // this.stockchosen = false;
     // this.send.emit(this.stockchosen);
@@ -224,26 +304,50 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   }
 
   refreshNews() {
-    this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
-      this.relNews = data;
-      this.refreshedToast("News");
-    });
+    this.CompanyService.getnewsrelated(this.reuter).subscribe(
+      data => {
+        this.relNews = data;
+        this.refreshedToast("News");
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
   }
 
   setnews() {
-    this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
-      this.relNews = data;
-    });
+    this.CompanyService.getnewsrelated(this.reuter).subscribe(
+      data => {
+        this.relNews = data;
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     this.shownews = true;
     this.showasksbids = false;
     this.showtrades = false;
     this.refreshAutoNews();
   }
   refreshAutoNews() {
-    this.CompanyService.getnewsrelated(this.reuter).subscribe(data => {
-      this.relNews = data;
-      // this.refreshedToast("News");
-    });
+    this.CompanyService.getnewsrelated(this.reuter).subscribe(
+      data => {
+        this.relNews = data;
+        // this.refreshedToast("News");
+      },
+      Error => {
+        if (!this.isFired) {
+          this.ErrorToast();
+          this.isFired = true;
+        }
+      }
+    );
     if (this.shownews) {
       setTimeout(() => {
         this.refreshAutoNews();
@@ -269,7 +373,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   refreshedToast(refreshType: string) {
     let toast = this.toastCtrl.create({
       message: refreshType + " refreshed successfully",
-      duration: 3000,
+      duration: 2000,
       position: "top"
     });
 
@@ -280,6 +384,19 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     toast.present();
   }
 
+  ErrorToast() {
+    let toast = this.toastCtrl.create({
+      message: "Error!",
+      duration: 2000,
+      position: "top"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
+  }
   showLastFiveDays() {
     this.lastFveDays = !this.lastFveDays;
   }

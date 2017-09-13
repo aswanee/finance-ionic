@@ -8,6 +8,7 @@ import {
   PriceType,
   OrderSide
 } from "./../../app/userorder.interface";
+import { ToastController } from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
 // import { language, isArabic } from "./../../app/app.module";
 import { token } from "./../../app/token.interface";
@@ -32,7 +33,8 @@ export class OrderhistoryPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private TradeService: TradeService
+    private TradeService: TradeService,
+    private toastCtrl: ToastController
   ) {
     this.orderid = navParams.get("orderid");
     this.token = navParams.get("token");
@@ -61,10 +63,7 @@ export class OrderhistoryPage implements OnInit {
             this.gotoLogin();
           }
         },
-        Error =>
-          alert(
-            "Error! Please Check your Connectivity and restart the application"
-          )
+        Error => this.ErrorToast()
       );
   }
   gotoLogin() {
@@ -86,5 +85,18 @@ export class OrderhistoryPage implements OnInit {
   }
   showPlaceType(Place: PlaceType) {
     return PlaceType[Place];
+  }
+  ErrorToast() {
+    let toast = this.toastCtrl.create({
+      message: "Error!",
+      duration: 2000,
+      position: "top"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
   }
 }

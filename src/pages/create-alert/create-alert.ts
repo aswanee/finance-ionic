@@ -13,6 +13,8 @@ import {
 import { Storage } from "@ionic/storage";
 import { token } from "./../../app/token.interface";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { ToastController } from "ionic-angular";
+
 /**
  * Generated class for the CreateAlertPage page.
  *
@@ -63,7 +65,8 @@ export class CreateAlertPage {
     public navParams: NavParams,
     private formBuilder: FormBuilder,
     private StockService: StockService,
-    private AlertService: AlertService
+    private AlertService: AlertService,
+    private ToastController: ToastController
   ) {
     this.alertForm = this.formBuilder.group({
       reuter: ["", Validators.required],
@@ -78,13 +81,13 @@ export class CreateAlertPage {
   }
 
   ngOnInit() {
-    this.StockService.getnames(true).subscribe(data => {
+    this.StockService.getnames(window["isArabic"]).subscribe(data => {
       var d = data.result;
       var length = d.length;
       for (var index = 0; index < length; index++) {
         this.reuters.push(d[index][0]);
       }
-    });
+    }, Error => this.ErrorToast);
 
     console.log(Criteria.AlertCriteriaEqual);
   }
@@ -108,20 +111,30 @@ export class CreateAlertPage {
         this.alertForm.value.value,
         this.alertForm.value.note
       )
-      .subscribe(data => {
-        console.log(data);
-        this.navCtrl.popToRoot();
-      });
+      .subscribe(
+        data => {
+          console.log(data);
+          this.navCtrl.popToRoot();
+        },
+        Error => this.ErrorToast()
+      );
 
     // } else {
     // console.log("company not found");
     // }
   }
 
-  // forbiddenNameValidator(nameRe: String): ValidatorFn {
-  //   return (control: AbstractControl): {[key: string]: any} => {
-  //     const forbidden = nameRe.test(control.value);
-  //     return forbidden ? {'forbiddenName': {value: control.value}} : null;
-  //   };
-  // }
+  ErrorToast() {
+    let toast = this.ToastController.create({
+      message: "Error!",
+      duration: 2000,
+      position: "bottom"
+    });
+
+    toast.onDidDismiss(() => {
+      console.log("Dismissed toast");
+    });
+
+    toast.present();
+  }
 }

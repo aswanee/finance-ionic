@@ -110,7 +110,8 @@ export let ArabicDictionary: Dictionary = {
   "Create Alert": "عمل إنذار",
   Submit: "تسليم",
   "You are already logged in": "أنت مسجل بالفعل",
-  "You are not logged In": "أنت غير مسجل"
+  "You are not logged In": "أنت غير مسجل",
+  SwitchAccounts: "تبديل الحسابات"
 };
 export let EnglishDictionary: Dictionary = {
   "Watch List": "WatchList",
@@ -221,5 +222,6 @@ export let EnglishDictionary: Dictionary = {
   "Create Alert": "Create Alert",
   Submit: "Submit",
   "You are already logged in": "You are already logged in!",
-  "You are not logged In": "You are not logged In"
+  "You are not logged In": "You are not logged In",
+  SwitchAccounts: "Switch Accounts"
 };
