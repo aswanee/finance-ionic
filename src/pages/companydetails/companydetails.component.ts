@@ -63,6 +63,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   asksbidsinitialized = false;
   tradesinitialized = false;
   newsinitialized = false;
+  QueteParts: string = "'News'";
   constructor(
     private StockService: StockService,
     private CompanyService: CompanyService,
@@ -74,6 +75,8 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   ) {
     this.reuter = navParams.get("reuter");
     this.rootid = navParams.get("rootid");
+    this.QueteParts = "News";
+
     // this.stockchosen = navParams.get("stockchosen");
   }
   ngOnInit() {}
@@ -110,6 +113,12 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       );
     } else {
     }
+  }
+  ionViewDidEnter() {
+    this.setnews();
+
+    this.shownews = true;
+    this.QueteParts = "'News'";
   }
   ionViewWillLeave() {
     this.showasksbids = false;

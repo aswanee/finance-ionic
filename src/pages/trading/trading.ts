@@ -185,6 +185,9 @@ export class TradingPage implements OnInit {
     console.log("ionViewDidLoad TradingPage");
   }
   ionViewDidEnter() {
+    this.getportfolio();
+    this.showportfolio = true;
+
     this.showAlert();
   }
   ionViewWillLeave() {

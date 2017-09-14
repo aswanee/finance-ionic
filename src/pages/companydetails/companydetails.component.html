@@ -101,19 +101,19 @@
                     <strong> {{'No Trades Yet' | Language}} </strong>
                 </ion-item>
             </ion-list>
-            <ion-list *ngSwitchCase="'News'">
+            <ion-list *ngIf=shownews>
                 <ion-item>
                     <button item-end clear color='dark' ion-button (click)="refreshNews()"><ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon></button>
                 </ion-item>
                 <ion-list inset color="secondary">
-                    <ion-item *ngFor="let item of relNews?.result.V">
+                    <ion-item *ngFor="let item of relNews?.result.V" (click)="getdetails(item[0])">
                         <p style="font-size: 16px">{{item[1]}}</p>
                         <p>{{item[2]}}</p>
                         <p>
-                            <button ion-button item-end (click)="getdetails(item[0])" color="dark">
-                                                        {{'Next' | Language}}
+                            <!-- <ion-item color="dark">
+                                {{'Next' | Language}}
                                                         <ion-icon name='arrow-forward'></ion-icon>
-                                                      </button>
+                            </ion-item> -->
                         </p>
 
                     </ion-item>

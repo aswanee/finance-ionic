@@ -13,108 +13,20 @@
 </ion-header>
 
 <ion-content>
-    <ion-buttons *ngIf="loggedIn&&token">
-        <button ion-item (click)="getportfolio()">{{'Show Portfolio' | Language}}</button>
-        <ion-grid *ngIf="portfolioresponse && showportfolio&&token">
-            <ion-row *ngFor="let item of portfolioresponse?.result">
-                <ion-col>
-                    {{item.ReutersCode}}
-                </ion-col>
-                <ion-col>
-                    {{item.AvailableQuantity}}
-                </ion-col>
-                <ion-col>
-                    {{item.LastTrade}}
-                </ion-col>
-                <ion-col>
-                    {{item.PercentageChange}}
-                </ion-col>
-                <ion-col>
-                    {{item.GainLossPercentage | aroundTo: 2 }}
-                </ion-col>
-            </ion-row>
-        </ion-grid>
+    <ion-segment *ngIf="loggedIn&&token">
+        <ion-segment-button value="Portfolio" (click)="getportfolio()">{{'Show Portfolio' | Language}}</ion-segment-button>
+
         <!-- <button ion-item (click)="getportfoliosummary()">Show Portfolio Summary</button>
         <ion-item *ngIf="Detailsresponse && showsummary&&token">
             <ion-item *ngFor="let item of Detailsresponse?.result">
                 {{item}}
             </ion-item>
         </ion-item> -->
-        <button ion-item (click)="getorders()">{{'Show Orders' | Language}}</button>
-        <ion-grid *ngIf="userorderresponse && showorders&&token">
-            <ion-row>
-                <ion-col>{{'Reuter' | Language}}</ion-col>
-                <ion-col>{{'Quantity' | Language}}</ion-col>
-                <ion-col>{{'Price' | Language}}</ion-col>
-                <ion-col>{{'Time Term' | Language}}</ion-col>
-                <ion-col>{{'Status' | Language}}</ion-col>
-                <ion-col>{{'Side' | Language}}</ion-col>
-                <ion-col>{{'Price Type' | Language}}</ion-col>
-                <ion-col></ion-col>
-                <ion-col></ion-col>
-            </ion-row>
-            <ion-row *ngFor="let item of userorderresponse?.result;let i = index">
-                <ion-col>{{item.ReutersCode}}</ion-col>
-                <ion-col>{{item.Quantity}}</ion-col>
-                <ion-col>{{item.Price}}</ion-col>
-                <ion-col>{{showTimeTerm(item.TimeTerm) | Language}}</ion-col>
-                <ion-col>{{showOrderStatus(item.Status) | Language}}</ion-col>
-                <ion-col>{{showOrderSide(item.Side) | Language}}</ion-col>
-                <ion-col>{{showPriceType(item.PriceType) | Language}}</ion-col>
-                <ion-col>
-                    <button ion-item (click)="getorderhistory(item.ID)">{{'View History' | Language}}</button>
-                </ion-col>
-                <ion-col>
-                    <button ion-item (click)="ChangeUpdate(i,item)" [hidden]="!checkupdatability(item)">{{'Update' | Language}}</button>
-                </ion-col>
+        <ion-segment-button value="Orders" (click)="getorders()">{{'Show Orders' | Language}}</ion-segment-button>
 
-                <form *ngIf="ShowUpdate[i]">
-                    <ion-item>
-                        <ion-label>{{'Reuter' | Language}}</ion-label>
-                        <ion-input [(ngModel)]="updateuserorder.ReutersCode" name="UCode"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-label>{{'Quantity' | Language}}</ion-label>
-                        <ion-input [(ngModel)]="updateuserorder.Quantity" name="UQuantity"></ion-input>
-                    </ion-item>
-                    <ion-item>
-                        <ion-segment>
-                            <ion-segment-button value="UDay" (click)="ChooseDay()">
-                                {{'Day' | Language}}
-                            </ion-segment-button>
-                            <ion-segment-button value="UWeek" (click)="ChooseWeek()">
-                                {{'Week' | Language}}
-                            </ion-segment-button>
-                            <ion-segment-button value="UMonth" (click)="ChooseMonth()">
-                                {{'Month' | Language}}
-                            </ion-segment-button>
-                        </ion-segment>
-                    </ion-item>
-                    <ion-item>
-                        <ion-segment>
-                            <ion-segment-button value="UMarket" (click)="ChooseMarket()">
-                                {{'Market' | Language}}
-                            </ion-segment-button>
-                            <ion-segment-button value="ULimit" (click)="ChooseLimit()">
-                                {{'Limit' | Language}}
-                            </ion-segment-button>
-                        </ion-segment>
-                    </ion-item>
-                    <ion-item *ngIf="EnablePrice">
-                        <ion-label>{{'Price' | Language}}</ion-label>
-                        <ion-input ion-input [(ngModel)]="updateuserorder.Price" name="UPrice"></ion-input>
-                    </ion-item>
-                    <button ion-button block type="submit" (click)="UpdateOrder(item)">{{'Update Order' | Language}}</button>
-                </form>
 
-                <ion-col>
-                    <button ion-item [hidden]="!checkupdatability(item)" (click)="CancelOrder(item.ID)">{{'Cancel' | Language}}</button>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-
-        <button ion-item (click)="ChangeInsert()">{{'Add Order' | Language}}</button>
-    </ion-buttons>
+        <ion-segment-button value="Insert" (click)="ChangeInsert()">{{'Add Order' | Language}}</ion-segment-button>
+    </ion-segment>
 
     <ion-card *ngIf="showInsert && loggedIn &&token">
         <ion-card-header>
@@ -209,6 +121,103 @@
         <br>
 
         <button ion-button block (click)="gotoLogin()">{{'Login' | Language}}</button>
+    </ion-item>
+    <ion-item *ngIf="portfolioresponse && showportfolio&&token&&loggedIn">
+        <ion-grid>
+            <ion-row *ngFor="let item of portfolioresponse?.result;let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+                <ion-col>
+                    {{item.ReutersCode}}
+                </ion-col>
+                <ion-col>
+                    {{item.AvailableQuantity}}
+                </ion-col>
+                <ion-col>
+                    {{item.LastTrade}}
+                </ion-col>
+                <ion-col>
+                    {{item.PercentageChange}}
+                </ion-col>
+                <ion-col>
+                    {{item.GainLossPercentage | aroundTo: 2 }}
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-item>
+
+
+
+    <ion-item *ngIf="userorderresponse && showorders&&token&&loggedIn">
+        <ion-grid>
+            <ion-row>
+                <ion-col>{{'Reuter' | Language}}</ion-col>
+                <ion-col>{{'Quantity' | Language}}</ion-col>
+                <ion-col>{{'Price' | Language}}</ion-col>
+                <ion-col>{{'Time Term' | Language}}</ion-col>
+                <ion-col>{{'Status' | Language}}</ion-col>
+                <ion-col>{{'Side' | Language}}</ion-col>
+                <ion-col>{{'Price Type' | Language}}</ion-col>
+                <ion-col></ion-col>
+                <ion-col></ion-col>
+            </ion-row>
+            <ion-row *ngFor="let item of userorderresponse?.result;let i = index;let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+                <ion-col> {{item.ReutersCode}}</ion-col>
+                <ion-col>{{item.Quantity}}</ion-col>
+                <ion-col>{{item.Price}}</ion-col>
+                <ion-col>{{showTimeTerm(item.TimeTerm) | Language}}</ion-col>
+                <ion-col>{{showOrderStatus(item.Status) | Language}}</ion-col>
+                <ion-col>{{showOrderSide(item.Side) | Language}}</ion-col>
+                <ion-col>{{showPriceType(item.PriceType) | Language}}</ion-col>
+                <ion-col>
+                    <button ion-item [ngClass]="{ odd: odd, even: even }" class="row" (click)="getorderhistory(item.ID)">{{'View History' | Language}}</button>
+                </ion-col>
+                <ion-col>
+                    <button ion-item [ngClass]="{ odd: odd, even: even }" class="row" (click)="ChangeUpdate(i,item)" [hidden]="!checkupdatability(item)">{{'Update' | Language}}</button>
+                </ion-col>
+
+                <form *ngIf="ShowUpdate[i]">
+                    <ion-item>
+                        <ion-label>{{'Reuter' | Language}}</ion-label>
+                        <ion-input [(ngModel)]="updateuserorder.ReutersCode" name="UCode"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>{{'Quantity' | Language}}</ion-label>
+                        <ion-input [(ngModel)]="updateuserorder.Quantity" name="UQuantity"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-segment>
+                            <ion-segment-button value="UDay" (click)="ChooseDay()">
+                                {{'Day' | Language}}
+                            </ion-segment-button>
+                            <ion-segment-button value="UWeek" (click)="ChooseWeek()">
+                                {{'Week' | Language}}
+                            </ion-segment-button>
+                            <ion-segment-button value="UMonth" (click)="ChooseMonth()">
+                                {{'Month' | Language}}
+                            </ion-segment-button>
+                        </ion-segment>
+                    </ion-item>
+                    <ion-item>
+                        <ion-segment>
+                            <ion-segment-button value="UMarket" (click)="ChooseMarket()">
+                                {{'Market' | Language}}
+                            </ion-segment-button>
+                            <ion-segment-button value="ULimit" (click)="ChooseLimit()">
+                                {{'Limit' | Language}}
+                            </ion-segment-button>
+                        </ion-segment>
+                    </ion-item>
+                    <ion-item *ngIf="EnablePrice">
+                        <ion-label>{{'Price' | Language}}</ion-label>
+                        <ion-input ion-input [(ngModel)]="updateuserorder.Price" name="UPrice"></ion-input>
+                    </ion-item>
+                    <button ion-button block type="submit" (click)="UpdateOrder(item)">{{'Update Order' | Language}}</button>
+                </form>
+
+                <ion-col>
+                    <button ion-item [ngClass]="{ odd: odd, even: even }" class="row" [hidden]="!checkupdatability(item)" (click)="CancelOrder(item.ID)">{{'Cancel' | Language}}</button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </ion-item>
 </ion-content>
 
