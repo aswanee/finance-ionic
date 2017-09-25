@@ -3,9 +3,10 @@ import { Http } from "@angular/http";
 @Injectable()
 export class ParentService {
   constructor(protected http: Http) {}
+  
   link: string;
   securedebug: boolean = false;
-  unsecuredebug: boolean = true;
+  unsecuredebug: boolean =true;
   getsecurelink() {
     if (this.securedebug === true) {
       this.link = "http://staging5.arabfinance.com/";

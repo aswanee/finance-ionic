@@ -28,7 +28,6 @@ export class LoginService extends ParentService {
         return <token>x.json();
       })
       .catch((t: Response) => t.json());
-    //  console.log(response);
     return response;
   }
 }

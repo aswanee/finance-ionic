@@ -40,7 +40,6 @@ export class NewsPage implements OnInit {
     this.CompanyService.getnews(this.date, 100, window["isArabic"]).subscribe(
       data => {
         this.News = data;
-        // console.log(this.News);
       },
       Error => {
         if (!this.isFired) {
@@ -84,8 +83,6 @@ export class NewsPage implements OnInit {
           console.log(this.to);
           console.log(this.from);
         }
-
-        // console.log(this.News);
       },
       Error => {
         if (!this.isFired) {
@@ -98,27 +95,15 @@ export class NewsPage implements OnInit {
       setTimeout(() => {
         this.refresh();
       }, newsRefresh);
-      // console.log("refresh");
     }
   }
   getdetails(id) {
     this.id = id;
     this.goToNewsDeatils();
-    //   const parsed = Number(id);
-    //  this.CompanyService.getnewsdetails(parsed).subscribe(data  => {this.Newsbody = data;
-    //               var div = document.createElement('div');
-    //               div.innerHTML = this.Newsbody.result.V[3];
-    //                this.elements = div;
-    //                // document.writeln(this.elements.innerHTML);
-    //                console.log(this.elements);
-    //                document.getElementById('id').innerHTML = this.elements.innerHTML;
-    //               // console.log(this.News);
-    //            } );
+
     this.showdetails = true;
   }
-  // back() {
-  //   this.showdetails = false;
-  // }
+
   goToNewsDeatils() {
     this.navCtrl.push(NewsdetailsComponent, {
       id: this.id

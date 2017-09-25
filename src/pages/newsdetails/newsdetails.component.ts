@@ -39,7 +39,6 @@ export class NewsdetailsComponent implements OnInit {
         // document.writeln(this.elements.innerHTML);
         console.log(this.elements);
         document.getElementById("id").innerHTML = this.elements.innerHTML;
-        // console.log(this.News);
       },
       Error => {
         if (!this.isFired) {

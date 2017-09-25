@@ -56,34 +56,26 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
+      if(this.platform.is('core') || this.platform.is('mobileweb')) {
+        //this.isApp = false;
+      } else 
+      {
+          this.oneSignal.startInit('a0b47b91-106c-4139-9955-ffe07d4f41e4', '12030250491');
+    
+          this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+    
+          this.oneSignal.handleNotificationReceived().subscribe(() => {
+           // do something when notification is received
+          });
+    
+          this.oneSignal.handleNotificationOpened().subscribe(() => {
+            // do something when a notification is opened
+          });
+         
+          this.oneSignal.endInit();
+    }
+      //For Notification
 
-      // var notificationOpenedCallback = function(jsonData) {
-      //   console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-      // };
-
-      // window["plugins"].OneSignal
-      //   .startInit("09eba30b-641e-4d7b-97c9-78566376acfe", "1097286062230")
-      //   .handleNotificationOpened(notificationOpenedCallback)
-      //   .endInit();
-
-      // this.oneSignal.startInit(
-      //   "09eba30b-641e-4d7b-97c9-78566376acfe",
-      //   "1097286062230"
-      // );
-
-      // this.oneSignal.inFocusDisplaying(
-      //   this.oneSignal.OSInFocusDisplayOption.InAppAlert
-      // );
-
-      // this.oneSignal.handleNotificationReceived().subscribe(() => {
-      //   // do something when notification is received
-      // });
-
-      // this.oneSignal.handleNotificationOpened().subscribe(() => {
-      //   // do something when a notification is opened
-      // });
-
-      // this.oneSignal.endInit();
 
       statusBar.styleDefault();
       splashScreen.hide();

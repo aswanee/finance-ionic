@@ -13,7 +13,6 @@ export class AskBidService extends ParentService {
   getasks(reuter: string): Observable<SerResponse> {
     this.getsecurelink();
     this.link = this.link + "apis/market/QuoteAsks?Code=" + reuter;
-    // console.log(link);
     return this.http
       .get(this.link)
       .map(x => {
@@ -24,7 +23,6 @@ export class AskBidService extends ParentService {
   getbids(reuter: string): Observable<SerResponse> {
     this.getsecurelink();
     this.link = this.link + "apis/market/QuoteBids?Code=" + reuter;
-    // console.log(link);
     return this.http
       .get(this.link)
       .map(x => {

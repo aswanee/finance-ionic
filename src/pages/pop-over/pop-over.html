@@ -1,10 +1,8 @@
 <ion-list>
-    <ion-list-header></ion-list-header>
     <button ion-item *ngIf="!loggedIn" (click)="login()">{{'Login' | Language}}</button>
     <button ion-item *ngIf="loggedIn" (click)="logout()">{{'Logout' | Language}}</button>
     <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
     <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
     <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
-    <button ion-item *ngIf="loggedIn">{{Switch Accounts}}</button>
-
+    <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">{{'SwitchAccounts' | Language}}</button>
 </ion-list>

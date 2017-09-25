@@ -13,10 +13,9 @@ import { ParentService } from "./parentservice.service";
 @Injectable()
 export class AlertService extends ParentService {
   getUseralerts(id: number, update: Date): Observable<alertresponse> {
-    // htis.getlink();
     this.getsecurelink();
     this.link = this.link + "apis/account/GetUserAlerts?UserID=";
-    // console.log(link);
+
     let stringdate = "";
     stringdate =
       update.getFullYear() +
@@ -37,7 +36,6 @@ export class AlertService extends ParentService {
   deletealerts(id: number): Observable<deleteresponse> {
     this.getsecurelink();
     this.link = this.link + "apis/account/DeleteAlert?alertIDs=";
-    // console.log(link);
     this.link = this.link + id;
     console.log(this.link);
     return this.http
@@ -60,7 +58,6 @@ export class AlertService extends ParentService {
   ): Observable<deleteresponse> {
     this.getsecurelink();
     this.link = this.link + "apis/account/UpdateAlert";
-    // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let sent: string =
@@ -148,7 +145,6 @@ export class AlertService extends ParentService {
   ): Observable<deleteresponse> {
     this.getsecurelink();
     this.link = this.link + "apis/account/UpdateAlertViewedByTicker?UserID=";
-    // console.log(link);
     this.link = this.link + id + "&Code=" + code;
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");

@@ -1,7 +1,8 @@
 export interface Dictionary {
   [key: string]: string;
 }
-export let ArabicDictionary: Dictionary = {
+export let ArabicDictionary: Dictionary = 
+{
   "Watch List": "قائمة المراقبة",
   Market: "السوق",
   Edit: "تعديل",
@@ -111,7 +112,8 @@ export let ArabicDictionary: Dictionary = {
   Submit: "تسليم",
   "You are already logged in": "أنت مسجل بالفعل",
   "You are not logged In": "أنت غير مسجل",
-  SwitchAccounts: "تبديل الحسابات"
+  SwitchAccounts: "تبديل الحسابات",
+  Name:"الأسم"
 };
 export let EnglishDictionary: Dictionary = {
   "Watch List": "WatchList",
@@ -223,5 +225,6 @@ export let EnglishDictionary: Dictionary = {
   Submit: "Submit",
   "You are already logged in": "You are already logged in!",
   "You are not logged In": "You are not logged In",
-  SwitchAccounts: "Switch Accounts"
+  SwitchAccounts: "Switch Accounts",
+  Name:"Name"
 };

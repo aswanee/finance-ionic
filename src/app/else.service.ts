@@ -29,7 +29,6 @@ export class GetService extends ParentService {
     this.getsecurelink();
     this.link =
       this.link + "apis/market/QuoteTrades?Code=" + code + "&lID=" + id;
-    // console.log(link);
     return this.http
       .get(this.link)
       .map(x => {
@@ -41,7 +40,6 @@ export class GetService extends ParentService {
   getmarketdetails(cid: number = 1): Observable<Detailsresponse> {
     this.getsecurelink();
     this.link = this.link + "apis/market/GetMarketInformation?CID=" + cid;
-    // console.log(link);
     return this.http
       .get(this.link)
       .map(x => {

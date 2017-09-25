@@ -13,17 +13,17 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { token } from "./../../app/token.interface";
 import { SwitchAccountsPage } from "./../switch-accounts/switch-accounts";
 @Component({
-  template: `
-   <ion-list>
-    <ion-list-header></ion-list-header>
-    <button ion-item *ngIf="!loggedIn" (click)="login()">{{'Login' | Language}}</button>
-    <button ion-item *ngIf="loggedIn" (click)="logout()">{{'Logout' | Language}}</button>
-    <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
-    <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
-    <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
-    <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">{{'SwitchAccounts' | Language}}</button>
-</ion-list>
-  `
+  templateUrl:"pop-over.html"
+//   template: `
+//    <ion-list>
+//     <button ion-item *ngIf="!loggedIn" (click)="login()">{{'Login' | Language}}</button>
+//     <button ion-item *ngIf="loggedIn" (click)="logout()">{{'Logout' | Language}}</button>
+//     <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
+//     <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
+//     <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
+//     <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">{{'SwitchAccounts' | Language}}</button>
+// </ion-list>
+//   `
 })
 export class PopoverPage {
   @Output() onLogout = new EventEmitter<boolean>();

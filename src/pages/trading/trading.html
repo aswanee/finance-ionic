@@ -1,34 +1,17 @@
-<!--
-  Generated template for the TradingPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-
     <ion-navbar>
         <ion-title>{{'Trading' | Language}}</ion-title>
     </ion-navbar>
-
 </ion-header>
 
 <ion-content>
-    <ion-segment *ngIf="loggedIn&&token">
+    <ion-segment *ngIf="loggedIn && token"  [(ngModel)]="SelectedSegment">
         <ion-segment-button value="Portfolio" (click)="getportfolio()">{{'Show Portfolio' | Language}}</ion-segment-button>
-
-        <!-- <button ion-item (click)="getportfoliosummary()">Show Portfolio Summary</button>
-        <ion-item *ngIf="Detailsresponse && showsummary&&token">
-            <ion-item *ngFor="let item of Detailsresponse?.result">
-                {{item}}
-            </ion-item>
-        </ion-item> -->
         <ion-segment-button value="Orders" (click)="getorders()">{{'Show Orders' | Language}}</ion-segment-button>
-
-
         <ion-segment-button value="Insert" (click)="ChangeInsert()">{{'Add Order' | Language}}</ion-segment-button>
     </ion-segment>
 
-    <ion-card *ngIf="showInsert && loggedIn &&token">
+    <ion-card *ngIf="showInsert && loggedIn && token">
         <ion-card-header>
             {{"Add Order" | Language}}
         </ion-card-header>
@@ -106,23 +89,14 @@
         </ion-card-content>
     </ion-card>
 
-
-
-    <!-- <ion-grid *ngIf="userorderhistoryresponse && showhistory&&token">
-        <ion-row>{{userorderhistoryresponse?.result.ReutersCode}}</ion-row>
-        <ion-row>{{userorderhistoryresponse?.result.Price}}</ion-row>
-        <ion-row>{{userorderhistoryresponse?.result.Quantity}}</ion-row>
-        <ion-row>{{userorderhistoryresponse?.result.ExecutedQuantity}}</ion-row>
-        <ion-row>{{showOrderStatus(userorderhistoryresponse?.result.Status)}}</ion-row>
-        <ion-row>{{showTimeTerm(userorderhistoryresponse?.result.TimeTerm)}}</ion-row>
-    </ion-grid> -->
     <ion-item *ngIf="!loggedIn||!token">
         <h2 style="text-align:center">{{'You are not logged In'| Language }}</h2>
         <br>
 
         <button ion-button block (click)="gotoLogin()">{{'Login' | Language}}</button>
     </ion-item>
-    <ion-item *ngIf="portfolioresponse && showportfolio&&token&&loggedIn">
+
+    <ion-item *ngIf="portfolioresponse && showportfolio && token && loggedIn">
         <ion-grid>
             <ion-row *ngFor="let item of portfolioresponse?.result;let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
                 <ion-col>
@@ -144,9 +118,7 @@
         </ion-grid>
     </ion-item>
 
-
-
-    <ion-item *ngIf="userorderresponse && showorders&&token&&loggedIn">
+    <ion-item *ngIf="userorderresponse && showorders && token && loggedIn">
         <ion-grid>
             <ion-row>
                 <ion-col>{{'Reuter' | Language}}</ion-col>
@@ -220,105 +192,3 @@
         </ion-grid>
     </ion-item>
 </ion-content>
-
-<!-- <form>
-=======
-    <form *ngIf="showInsert && loggedIn">
-        <ion-item>
-            <ion-label>ReutersCode</ion-label>
-            <ion-input [(ngModel)]="userorder.ReutersCode" name="Code"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label>Quantity</ion-label>
-            <ion-input [(ngModel)]="userorder.Quantity" name="Quantity"></ion-input>
-        </ion-item>
-        <ion-segment>
-            <ion-segment-button value="Day" (click)="ChooseDay()">
-                Day
-            </ion-segment-button>
-            <ion-segment-button value="Week" (click)="ChooseWeek()">
-                Week
-            </ion-segment-button>
-            <ion-segment-button value="Month" (click)="ChooseMonth()">
-                Month
-            </ion-segment-button>
-        </ion-segment>
-
-        <ion-segment>
-            <ion-segment-button value="Buy" (click)="ChooseBuy()">
-                Buy
-            </ion-segment-button>
-            <ion-segment-button value="Sell" (click)="ChooseSell()">
-                Sell
-            </ion-segment-button>
-            <ion-segment-button value="SellT0" (click)="ChooseSellT0()">
-                Sell T+0
-            </ion-segment-button>
-            <ion-segment-button value="SellT1" (click)="ChooseSellT1()">
-                Sell T+1
-            </ion-segment-button>
-        </ion-segment>
-
-        <ion-segment>
-            <ion-segment-button value="Market" (click)="ChooseMarket()">
-                Market
-            </ion-segment-button>
-            <ion-segment-button value="Limit" (click)="ChooseLimit()">
-                Limit
-            </ion-segment-button>
-
-        </ion-segment>
-        <ion-item *ngIf="EnablePrice">
-            <ion-label>Price</ion-label>
-            <ion-input [(ngModel)]="userorder.Price" name="Price"></ion-input>
-        </ion-item>
-
-        <button ion-button block type="submit" (click)="CreateUpdateOrder()">Make Order</button>
-    </form>
-
-    <ion-item *ngIf="!loggedIn">
-        <h2 style="text-align:center">You are not logged In</h2>
-        <br>
-
-        <button ion-button block (click)="gotoLogin()">Login</button>
-    </ion-item>
-    <!-- <form>
->>>>>>> 76c3eb88b2cfea788380f3b819c4d8624eb5ebb8
-        <ion-item>
-            <ion-label>ReutersCode</ion-label>
-            <ion-input type="text" id="UCode"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Price</ion-label>
-            <ion-input type="text" id="UPrice"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>Quantity</ion-label>
-            <ion-input type="text" id="UQuantity"></ion-input>
-        </ion-item>
-        <ion-segment>
-            <ion-segment-button (click)="ChooseDay()">
-                Day
-            </ion-segment-button>
-            <ion-segment-button (click)="ChooseWeek()">
-                Week
-            </ion-segment-button>
-            <ion-segment-button (click)="ChooseMonth()">
-                Month
-            </ion-segment-button>
-        </ion-segment>
-
-
-        <ion-segment>
-            <ion-segment-button (click)="ChooseMarket()">
-                Market
-            </ion-segment-button>
-            <ion-segment-button (click)="ChooseLimit()">
-                Limit
-            </ion-segment-button>
-        </ion-segment>
-
-        <button ion-button block type="submit">Update Order</button>
-    </form>
-    <! (click)="UpdateOrder()" -->

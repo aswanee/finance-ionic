@@ -22,13 +22,12 @@ export class StockService extends ParentService {
   names: string[] = new Array();
 
   getstock(nameobj: string[], isArabic: boolean): Observable<SerResponse> {
-    // console.log(nameobj.length);
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/GetSimpleQuotesDetails?Codes=";
+
     for (let i = 0; i < nameobj.length - 1; i++) {
       this.link = this.link + nameobj[i] + ",";
     }
-    // console.log(this.nameobj); // egts,amer,orwe;
     this.link =
       this.link + nameobj[nameobj.length - 1] + "&isArabic=" + isArabic;
     console.log(this.link);
@@ -40,7 +39,7 @@ export class StockService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getstockwithupdate(nameobj: string, date: Date): Observable<SerResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     let temp = "";
     temp = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
     this.link =
@@ -60,7 +59,7 @@ export class StockService extends ParentService {
     nameobj: string,
     isArabic: boolean
   ): Observable<Detailsresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link =
       this.link +
       "apis/market/GetQuoteDetails?Code=" +
@@ -79,11 +78,11 @@ export class StockService extends ParentService {
     isArabic: boolean,
     date: Date
   ): Observable<Detailsupdateresponse> {
-    //  for (let i = 0 ; i < nameobj.length - 1 ; i++) {
-    //       link = link + nameobj[i] + ',';
-    //  }
-    // console.log(this.nameobj) egts,amer,orwe;
-    this.getsecurelink();
+
+
+
+    
+    this.getunsecurelink();
     let temp = "";
     temp =
       date.getFullYear() + "-" + date.getMonth() + 1 + "-" + date.getDate();
@@ -104,7 +103,7 @@ export class StockService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getnames(isArabic: boolean): Observable<SerResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/GetQuotesList?isArabic=" + isArabic;
     return (
       this.http
@@ -120,8 +119,7 @@ export class StockService extends ParentService {
     to: Date,
     isIntra: number
   ): Observable<Chartobjectresponse> {
-    this.getsecurelink();
-    // console.log(nameobj.length);
+    this.getunsecurelink();
     let temp1 = "";
     temp1 = from.getFullYear() + "-" + from.getMonth() + "-" + from.getDate();
     let temp2 = "";

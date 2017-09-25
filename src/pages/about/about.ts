@@ -9,7 +9,6 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
  * on Ionic pages and navigation.
  */
 
-@IonicPage()
 @Component({
   selector: "page-about",
   templateUrl: "about.html"

@@ -32,8 +32,8 @@ import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
-  templateUrl: "companydetails.component.html"
-  // styleUrls: ['companydetails.component.scss']
+  templateUrl: "companydetails.component.html",
+  styles: [``]
 })
 export class CompanydetailsComponent implements OnInit, OnChanges {
   // private _items = new BehaviorSubject<String[]>([]);
@@ -63,7 +63,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   asksbidsinitialized = false;
   tradesinitialized = false;
   newsinitialized = false;
-  QueteParts: string = "'News'";
+  QueteParts: string = "News";
   constructor(
     private StockService: StockService,
     private CompanyService: CompanyService,
@@ -118,7 +118,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.setnews();
 
     this.shownews = true;
-    this.QueteParts = "'News'";
+    this.QueteParts = "News";
   }
   ionViewWillLeave() {
     this.showasksbids = false;
@@ -154,15 +154,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.showtrades = false;
     this.shownews = false;
     this.refreshAsksBids();
-
-    // this.stockchosen = false;
-    // this.send.emit(this.stockchosen);
-
-    // console.log("refasksbids");
-
-    // this.showasksbids = false;
-    // this.stockchosen = true;
-    // this.send.emit(this.stockchosen);
   }
   refreshAsksBids() {
     this.AskBidService.getasks(this.reuter).subscribe(
@@ -193,11 +184,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       }, asksbidsRefresh);
       console.log("refreshasksbids");
     }
-
-    //this.showasksbids = true;
-    // this.stockchosen = false;
-    // this.send.emit(this.stockchosen);
-    //this.refreshedToast("Asks and Bids");
   }
   settrades() {
     this.GetService.getquotetrades(this.reuter, 0).subscribe(

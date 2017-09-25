@@ -58,7 +58,6 @@ export class TradeService extends ParentService {
     // htis.getlink();
     this.getsecurelink();
     this.link = this.link + "apis/trading/GetUserPortfolio?BimsUserID=";
-    // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let useraccounts = 0;
@@ -95,7 +94,6 @@ export class TradeService extends ParentService {
     // htis.getlink();
     this.getsecurelink();
     this.link = this.link + "apis/trading/GetUserOrderHistory?bimsUserID=";
-    // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let useraccounts = 0;
@@ -142,7 +140,6 @@ export class TradeService extends ParentService {
     this.getsecurelink();
     // htis.getlink();
     this.link = this.link + "apis/trading/GetUserOrders?BimsUserID=";
-    // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let useraccounts = 0;
@@ -198,7 +195,6 @@ export class TradeService extends ParentService {
       UpdateOrder +
       "&pinCode=" +
       Pin;
-    // console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let Uname = "";
@@ -260,7 +256,6 @@ export class TradeService extends ParentService {
       isArabic +
       "&updateOrder=" +
       UpdateOrder;
-    //console.log(link);
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let Uname = "";

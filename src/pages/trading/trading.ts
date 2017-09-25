@@ -136,6 +136,7 @@ export class TradingPage implements OnInit {
   EnablePrice = true;
   timeout: number;
   loggedIn: boolean = false;
+  SelectedSegment: string = "Portfolio";
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -145,6 +146,7 @@ export class TradingPage implements OnInit {
     public alertCtrl: AlertController,
     private ToastController: ToastController
   ) {
+    this.SelectedSegment= "Portfolio";
     this.showAlert();
   }
   ngOnInit() {
@@ -185,6 +187,7 @@ export class TradingPage implements OnInit {
     console.log("ionViewDidLoad TradingPage");
   }
   ionViewDidEnter() {
+    this.SelectedSegment= "Portfolio";
     this.getportfolio();
     this.showportfolio = true;
 
@@ -344,23 +347,6 @@ export class TradingPage implements OnInit {
             ) {
               console.log("order placed");
               this.placeOrder();
-              // this.pincode = Number(
-              //   prompt(
-              //     this.ValidationResponse.result.Message +
-              //       "Please enter the Pin code"
-              //   )
-              // );
-              // console.log(this.pincode);
-              // setTimeout(function() {
-
-              // }, 5000);
-              // this.TradeService
-              //   .PlaceOrder(true, false, this.userorder, this.token, 123456)
-              //   .subscribe(data => {
-              //     this.Createresponse = data;
-              //     console.log(this.Createresponse);
-              //     prompt(this.Createresponse.result.Message);
-              //   });
             } else {
               console.log("order not placed");
               console.log(this.ValidationResponse.result.Result.toString());
@@ -374,7 +360,6 @@ export class TradingPage implements OnInit {
         Error => this.ErrorToast("Error!")
       );
 
-    //  console.log(this.pincode);
   }
 
   placeOrder() {
@@ -398,20 +383,12 @@ export class TradingPage implements OnInit {
       );
   }
   UpdateOrder(order: userorder) {
-    // console.log(this.userorder);
-
     this.updateuserorder.Username = this.token.result.UserName;
-    // console.log(this.userorder);
-    //  console.log(order);
-    //  console.log(this.token.result.UserName);
+
     if (this.EnablePrice) {
     } else {
       this.updateuserorder.Price = 0;
     }
-    // order.Quantity = Number(document.getElementById("UQuantity").textContent);
-    // order.ReutersCode = document.getElementById("UCode").textContent;
-    //order.Username = this.token.result.UserName;
-    //this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
     this.TradeService
       .ValidateOrder(window["isArabic"], true, this.updateuserorder, this.token)
       .subscribe(

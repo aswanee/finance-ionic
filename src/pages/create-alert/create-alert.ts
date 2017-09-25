@@ -118,10 +118,6 @@ export class CreateAlertPage {
         },
         Error => this.ErrorToast()
       );
-
-    // } else {
-    // console.log("company not found");
-    // }
   }
 
   ErrorToast() {
