@@ -80,8 +80,6 @@ export class NewsPage implements OnInit {
           );
           this.from.setDate(this.to.getDate() - 1);
           this.initializetofrom = true;
-          console.log(this.to);
-          console.log(this.from);
         }
       },
       Error => {
@@ -113,21 +111,16 @@ export class NewsPage implements OnInit {
     if (this.initializetofrom) {
       this.to.setDate(this.from.getDate());
       this.from.setDate(this.to.getDate() - 1);
-      console.log(this.to);
-      console.log(this.from);
     }
     this.CompanyService
       .getnewsRange(this.from, this.to, 10, window["isArabic"])
       .subscribe(
         data => {
           this.MoreNews = data;
-          console.log(this.MoreNews);
 
           for (let i = 0; i < this.MoreNews.result.V.length; i++) {
             this.displayednews.push(this.MoreNews.result.V[i]);
           }
-          console.log(this.displayednews);
-          // this.refresh();
         },
         Error => {
           if (!this.isFired) {

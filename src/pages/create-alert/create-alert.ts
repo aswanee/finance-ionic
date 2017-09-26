@@ -89,7 +89,6 @@ export class CreateAlertPage {
       }
     }, Error => this.ErrorToast);
 
-    console.log(Criteria.AlertCriteriaEqual);
   }
 
   ionViewDidLoad() {
@@ -99,8 +98,6 @@ export class CreateAlertPage {
   addAlert() {
     // if (this.reuters.indexOf(this.alertForm.value.reuter.toString()) > 0) {
 
-    console.log(this.reuters.indexOf(this.alertForm.value.reuter.toString()));
-    console.log(this.reuters);
     this.AlertService
       .addalert(
         this.userId,
@@ -113,7 +110,6 @@ export class CreateAlertPage {
       )
       .subscribe(
         data => {
-          console.log(data);
           this.navCtrl.popToRoot();
         },
         Error => this.ErrorToast()

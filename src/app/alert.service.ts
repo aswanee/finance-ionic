@@ -25,7 +25,6 @@ export class AlertService extends ParentService {
       update.getDate();
 
     this.link = this.link + id + "&LastUpdated=" + stringdate;
-    console.log(this.link);
     return this.http
       .get(this.link)
       .map(x => {
@@ -37,7 +36,6 @@ export class AlertService extends ParentService {
     this.getsecurelink();
     this.link = this.link + "apis/account/DeleteAlert?alertIDs=";
     this.link = this.link + id;
-    console.log(this.link);
     return this.http
       .get(this.link)
       .map(x => {
@@ -82,8 +80,6 @@ export class AlertService extends ParentService {
       "'" +
       Note +
       "'}";
-    console.log(this.link);
-    console.log(sent);
     return this.http
       .post(this.link, sent, { headers: headers })
       .map(x => {
@@ -104,7 +100,6 @@ export class AlertService extends ParentService {
     this.link = this.link + "apis/account/AddAlert";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    console.log(this.link);
     let sent: string =
       "Alert={ UserID:" +
       UserID +
@@ -170,8 +165,6 @@ export class AlertService extends ParentService {
       "'" +
       Note +
       "'}";
-    console.log(this.link);
-    console.log(sent);
     return this.http
       .post(this.link, sent, { headers: headers })
       .map(x => {

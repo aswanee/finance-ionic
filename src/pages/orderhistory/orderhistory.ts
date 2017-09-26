@@ -54,7 +54,6 @@ export class OrderhistoryPage implements OnInit {
       .subscribe(
         data => {
           this.userorderhistoryresponse = data;
-          console.log(this.userorderhistoryresponse);
           if (
             this.userorderhistoryresponse.Status ==
             "UnauthorizedOrOverrideToken"

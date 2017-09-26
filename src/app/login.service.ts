@@ -14,17 +14,13 @@ export class LoginService extends ParentService {
     this.link = this.link + "apis/account/token";
     let headers = new Headers();
     headers.append("Content-Type", "application/x-www-form-urlencoded");
-    console.log(headers);
-    console.log(headers.values());
 
     let body = "auth={UserName:'" + UserName + "',Password:'" + Password + "'}";
-    console.log(body);
     let response = this.http
       .post(this.link, body, {
         headers: headers
       })
       .map(x => {
-        console.log(x);
         return <token>x.json();
       })
       .catch((t: Response) => t.json());

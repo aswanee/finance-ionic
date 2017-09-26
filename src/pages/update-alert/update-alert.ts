@@ -88,7 +88,6 @@ export class UpdateAlertPage {
         this.alertForm.value.note.toString()
       )
       .subscribe(data => {
-        console.log(data);
         this.navCtrl.popToRoot();
       });
   }

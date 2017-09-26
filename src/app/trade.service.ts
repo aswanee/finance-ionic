@@ -43,7 +43,6 @@ export class TradeService extends ParentService {
     } else if (useraccounts !== 0 && token) {
       this.link = this.link + token.result.UserAccounts[0];
     }
-    console.log(this.link);
     let body =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
@@ -76,7 +75,6 @@ export class TradeService extends ParentService {
         this.link + token.result.UserAccounts[0] + "&isArabic=" + isArabic;
     }
 
-    console.log(this.link);
     let body =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
@@ -122,7 +120,6 @@ export class TradeService extends ParentService {
         isArabic;
     }
 
-    console.log(this.link);
     let body =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
@@ -169,7 +166,6 @@ export class TradeService extends ParentService {
         isArabic;
     }
 
-    console.log(this.link);
     let body =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     return this.http
@@ -203,7 +199,6 @@ export class TradeService extends ParentService {
       Uname = token.result.UserName;
       tokensymbol = token.result.Token;
     }
-    console.log(this.link);
     let value =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     let body =
@@ -235,7 +230,6 @@ export class TradeService extends ParentService {
       order.ExecutedQuantity +
       "}&" +
       value;
-    console.log(body);
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {
@@ -264,7 +258,6 @@ export class TradeService extends ParentService {
       Uname = token.result.UserName;
       tokensymbol = token.result.Token;
     }
-    console.log(this.link);
     let value =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
     let body =
@@ -296,7 +289,6 @@ export class TradeService extends ParentService {
       order.ExecutedQuantity +
       "}&" +
       value;
-    console.log(body);
     return this.http
       .post(this.link, body, { headers: headers })
       .map(x => {

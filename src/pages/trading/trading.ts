@@ -214,7 +214,6 @@ export class TradingPage implements OnInit {
           this.ErrorToast("you are not logged in");
           this.gotoLogin();
         }
-        console.log(this.portfolioresponse);
       }, Error => this.ErrorToast("Error")!);
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
@@ -234,7 +233,6 @@ export class TradingPage implements OnInit {
           this.ErrorToast("you are not logged in");
           this.gotoLogin();
         }
-        console.log(this.portfolioresponse);
       },
       Error => alert("error")
     );
@@ -242,7 +240,6 @@ export class TradingPage implements OnInit {
       setTimeout(() => {
         this.refreshPortfolio();
       }, portfolioRefresh);
-      console.log("refresh port");
     }
   }
 
@@ -254,7 +251,6 @@ export class TradingPage implements OnInit {
           window["token"] = null;
           this.gotoLogin();
         }
-        console.log(this.Detailsresponse);
       },
       Error => this.ErrorToast("Error!")
     );
@@ -264,7 +260,6 @@ export class TradingPage implements OnInit {
     this.TradeService.getorders(this.token, window["isArabic"], 2).subscribe(
       data => {
         this.userorderresponse = data;
-        console.log(this.userorderresponse);
         if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
           this.gotoLogin();
@@ -292,7 +287,6 @@ export class TradingPage implements OnInit {
       .getorders(this.token, window["isArabic"], 2)
       .subscribe(data => {
         this.userorderresponse = data;
-        console.log(this.userorderresponse);
         if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
           this.gotoLogin();
@@ -306,7 +300,6 @@ export class TradingPage implements OnInit {
       setTimeout(() => {
         this.refreshOrders();
       }, ordersRefresh);
-      console.log("refreshorders");
     }
   }
 
@@ -333,24 +326,18 @@ export class TradingPage implements OnInit {
       this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
     }
     this.userorder.Username = this.token.result.UserName;
-    console.log(this.userorder);
     this.TradeService
       .ValidateOrder(window["isArabic"], false, this.userorder, this.token)
       .subscribe(
         data => {
           this.ValidationResponse = data;
-          console.log(this.ValidationResponse);
           if (this.ValidationResponse.Status === "OK") {
             if (
               this.ValidationResponse.result.Result.toString() ===
               OrderOperationResult[OrderOperationResult.Success]
             ) {
-              console.log("order placed");
               this.placeOrder();
             } else {
-              console.log("order not placed");
-              console.log(this.ValidationResponse.result.Result.toString());
-              console.log(OrderOperationResult[OrderOperationResult.Success]);
               alert(this.ValidationResponse.result.Message);
             }
           } else {
@@ -375,8 +362,6 @@ export class TradingPage implements OnInit {
       .subscribe(
         data => {
           this.Createresponse = data;
-          console.log(this.Createresponse);
-          console.log(this.Createresponse);
           alert(this.Createresponse.result.OutMessages);
         },
         Error => this.ErrorToast("Error!")
@@ -394,7 +379,6 @@ export class TradingPage implements OnInit {
       .subscribe(
         data => {
           this.ValidationResponse = data;
-          console.log(this.ValidationResponse);
           if (this.ValidationResponse.Status === "OK") {
             if (
               this.ValidationResponse.result.Result.toString() ===
@@ -418,9 +402,6 @@ export class TradingPage implements OnInit {
                   data => {
                     this.Updateresponse = data;
                     alert(this.Updateresponse.result.OutMessages);
-                    console.log(this.Updateresponse);
-                    console.log(this.Updateresponse.result.Status.toString());
-                    console.log(PlaceOrderStatus[PlaceOrderStatus.Completed]);
                     if (
                       this.Updateresponse.result.Status.toString() ===
                       PlaceOrderStatus[PlaceOrderStatus.Completed]
@@ -447,7 +428,6 @@ export class TradingPage implements OnInit {
       .subscribe(
         data => {
           this.CancelResponse = data;
-          console.log(this.CancelResponse);
           alert(this.CancelResponse.result.OutMessages);
         },
         Error => this.ErrorToast("Error")
@@ -457,8 +437,6 @@ export class TradingPage implements OnInit {
   ChooseDay() {
     this.userorder.TimeTerm = TimeTerm.Day;
     this.updateuserorder.TimeTerm = TimeTerm.Day;
-    console.log("day");
-    console.log(this.userorder.TimeTerm);
   }
   ChooseWeek() {
     this.userorder.TimeTerm = TimeTerm.Week;
@@ -477,14 +455,10 @@ export class TradingPage implements OnInit {
     this.userorder.PriceType = PriceType.Limit;
     this.updateuserorder.PriceType = PriceType.Limit;
     this.EnablePrice = true;
-    console.log("limit");
-    console.log(this.userorder.PriceType);
   }
   ChooseBuy() {
     this.userorder.Side = OrderSide.Buy;
     this.updateuserorder.Side = OrderSide.Buy;
-    console.log(this.userorder.Side);
-    console.log("buy");
   }
   ChooseSell() {
     this.userorder.Side = OrderSide.Sell;

@@ -3,7 +3,6 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
 import { Http, Response } from "@angular/http";
 import { Stock } from "./stock.interface";
-// import {Names} from './models/names.interface';
 import { SerResponse } from "./response.interface";
 import { Detailsupdateresponse } from "./detailsupdateresponse.interface";
 import { Detailsresponse } from "./details.interface";
@@ -30,11 +29,72 @@ export class StockService extends ParentService {
     }
     this.link =
       this.link + nameobj[nameobj.length - 1] + "&isArabic=" + isArabic;
-    console.log(this.link);
     return this.http
       .get(this.link)
       .map(x => {
-        return <SerResponse>x.json();
+        var StockDetails :SerResponse = <SerResponse>x.json();
+        return StockDetails;
+      })
+      .catch((t: Response) => t.json());
+  }
+
+  getstockv2(nameobj: string[], 
+    nameAllList: string[][],
+    OldStockDetails:SerResponse,
+    isArabic: boolean): any 
+  {
+    if(!nameobj || nameobj.length==0)
+    {
+      nameobj = [nameAllList[0][0], nameAllList[1][0]];
+    }
+    this.getunsecurelink();
+    this.link = this.link + "apis/market/GetSimpleQuotesDetails?Codes=";
+
+    for (let i = 0; i < nameobj.length - 1; i++) {
+      this.link = this.link + nameobj[i] + ",";
+    }
+    this.link =
+      this.link + nameobj[nameobj.length - 1] + "&isArabic=" + isArabic;
+    return this.http
+      .get(this.link)
+      .map(x => {
+        //========================================================================
+        var data :SerResponse = <SerResponse>x.json();
+        
+        for (let i = 0; i < data.result.length; i++) 
+        {
+          data.result[i].push(nameobj[i]);
+          var isNew:boolean = true;
+          loop1:
+          if(OldStockDetails!=undefined)
+          {
+            for (let ii = 0; ii < OldStockDetails.result.length; ii++)
+            {
+              if(nameobj[i] == OldStockDetails.result[ii][3])
+              {
+                isNew = false;
+                //var OldValue:string = OldStockDetails.result[ii][0];
+                data.result[i].push(OldStockDetails.result[ii][4]);
+                data.result[i].push(OldStockDetails.result[ii][0]);
+                break loop1;
+              }
+            }
+          }
+          if(isNew)
+          {
+            loop2:
+            for (let j = 0; j < nameAllList.length; j++) {
+              if (nameAllList[j][0] === nameobj[i]) {
+                data.result[i].push(nameAllList[j][1]);
+                break loop2;
+              }
+            }
+            data.result[i].push(data.result[i][0]);// Add Old Value 
+            isNew =false;
+          }
+        }
+        //=========================================================================
+        return data;
       })
       .catch((t: Response) => t.json());
   }
@@ -55,6 +115,7 @@ export class StockService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
   getstockdetails(
     nameobj: string,
     isArabic: boolean
@@ -73,15 +134,12 @@ export class StockService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
   getstockdetailswithupdate(
     nameobj: string,
     isArabic: boolean,
     date: Date
   ): Observable<Detailsupdateresponse> {
-
-
-
-    
     this.getunsecurelink();
     let temp = "";
     temp =
@@ -94,7 +152,6 @@ export class StockService extends ParentService {
       isArabic +
       "&lastUpdated=" +
       temp;
-    console.log(this.link);
     return this.http
       .get(this.link)
       .map(x => {
@@ -102,6 +159,7 @@ export class StockService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
   getnames(isArabic: boolean): Observable<SerResponse> {
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetQuotesList?isArabic=" + isArabic;
@@ -113,6 +171,7 @@ export class StockService extends ParentService {
         .catch((t: Response) => t.json())
     );
   }
+
   getchart(
     codes: string,
     from: Date,
@@ -141,4 +200,5 @@ export class StockService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
 }

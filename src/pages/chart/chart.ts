@@ -39,7 +39,6 @@ export class ChartPage {
 
   options: Object;
   ngOnInit() {
-    console.log(this.lastFiveDays);
     this.getchart(this.lastFiveDays).subscribe(data => {
       this.received_json = data;
       var l = this.received_json.result.V.length;
@@ -82,7 +81,6 @@ export class ChartPage {
       this.link += date.toISOString().substring(0, 10);
       this.link += "&isIntra=0";
     }
-    console.log(this.link);
     return this.http
       .get(this.link)
       .map(x => {

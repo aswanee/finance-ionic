@@ -32,7 +32,6 @@ export class GetService extends ParentService {
     return this.http
       .get(this.link)
       .map(x => {
-        console.log(x);
         return <Detailsresponse>x.json();
       })
       .catch((t: Response) => t.json());

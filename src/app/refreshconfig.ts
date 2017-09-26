@@ -1,4 +1,4 @@
-export let watchlistRefresh = 13000;
+export let watchlistRefresh = 5000;
 export let marketRefresh = 5000;
 export let asksbidsRefresh = 5000;
 export let tradesRefresh = 5000;

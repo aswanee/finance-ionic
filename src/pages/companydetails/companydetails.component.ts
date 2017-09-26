@@ -88,7 +88,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       this.StockService.getstockdetails(this.reuter, true).subscribe(
         data => {
           this.detailsresponse = data;
-          console.log(this.detailsresponse);
         },
         Error => {
           if (!this.isFired) {
@@ -102,7 +101,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       this.StockService.getstock(reuterarr, true).subscribe(
         data => {
           this.Stocksimple = data;
-          console.log(this.Stocksimple);
         },
         Error => {
           if (!this.isFired) {
@@ -129,7 +127,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.AskBidService.getasks(this.reuter).subscribe(
       data => {
         this.Asks = data;
-        console.log(this.Asks);
       },
       Error => {
         if (!this.isFired) {
@@ -141,7 +138,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.AskBidService.getbids(this.reuter).subscribe(
       data => {
         this.Bids = data;
-        console.log(this.Bids);
       },
       Error => {
         if (!this.isFired) {
@@ -182,7 +178,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.refreshAsksBids();
       }, asksbidsRefresh);
-      console.log("refreshasksbids");
     }
   }
   settrades() {
@@ -248,7 +243,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.refreshAutoTrades();
       }, tradesRefresh);
-      console.log("refreshtrades");
     }
   }
   refreshTrades() {
@@ -304,7 +298,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   }
 
   refreshNews() {
-    this.CompanyService.getnewsrelated(this.reuter).subscribe(
+    this.CompanyService.getnewsrelated(this.reuter,window["isArabic"]).subscribe(
       data => {
         this.relNews = data;
         this.refreshedToast("News");
@@ -319,7 +313,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   }
 
   setnews() {
-    this.CompanyService.getnewsrelated(this.reuter).subscribe(
+    this.CompanyService.getnewsrelated(this.reuter,window["isArabic"]).subscribe(
       data => {
         this.relNews = data;
       },
@@ -336,7 +330,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     this.refreshAutoNews();
   }
   refreshAutoNews() {
-    this.CompanyService.getnewsrelated(this.reuter).subscribe(
+    this.CompanyService.getnewsrelated(this.reuter,window["isArabic"]).subscribe(
       data => {
         this.relNews = data;
         // this.refreshedToast("News");
@@ -352,7 +346,6 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
       setTimeout(() => {
         this.refreshAutoNews();
       }, relnewsRefresh);
-      console.log("refreshnews");
     }
   }
   getdetails(id) {

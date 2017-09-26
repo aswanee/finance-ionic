@@ -46,11 +46,8 @@ export class HomePage implements OnInit {
   initializedref: boolean = false;
   dorefresh = false;
   isArabic: boolean = false;
-  //languageinit: boolean = false;
-  // are chosen alias
 
   map: { [reuter: string]: Boolean } = {};
-
   News: Newsresponse;
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
@@ -69,7 +66,7 @@ export class HomePage implements OnInit {
   ) {}
   @HostListener("window:resize", ["$event"])
   onResize(event) {
-    console.log("Width: " + event.target.innerWidth);
+    //console.log("Width: " + event.target.innerWidth);
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
@@ -98,87 +95,56 @@ export class HomePage implements OnInit {
   
     this.storage.get("token").then(val => {
       window["token"] = val;
-      console.log(val);
     });
 
-    console.log(window["token"]);
-    console.log(this.storage.get("token"));
-    
     this.StockService.getnames(this.isArabic).subscribe(
       data => {
         this.List = data;
-        console.log(this.List);
         for (let i = 0; i < this.List.result.length; i++) {
           // are chosen alias
           this.map[this.List.result[i][0]] = false; // OK
-
           this.displayList.push(this.List.result[i][0]);
           this.displayListDummy.push(this.List.result[i][0]);
         }
         this.editpressed = false;
-        console.log(this.dispnames);
         this.storage.keys().then(keys => {
           if (keys) {
             keys.forEach(key => {
               if (key === "watchList") {
-                console.log("watchList has data");
                 this.storage.get("watchList").then(val => {
                   if(val.length>0)
                   {
-                    this.StockService.getstock(val, this.isArabic).subscribe(
-                    data => {
-                      this.StockDetails = data;
-                      this.dispnames = val;
-
-                      for (let i = 0; i < data.result.length; i++) {
-                        this.StockDetails.result[i].push(this.dispnames[i]);
-                        for (let j = 0; j < this.List.result.length; j++) {
-                          if (this.List.result[j][0] === this.dispnames[i]) {
-                            this.StockDetails.result[i].push(
-                              this.List.result[j][1]
-                            );
-                          }
+                    this.StockService.getstockv2(val,this.List.result,this.StockDetails, this.isArabic).subscribe(
+                      data => {
+                        this.StockDetails = data;
+                        this.dispnames = val;
+                      },
+                      Error => {
+                        if (!this.isFired) {
+                          this.ErrorToast();
+                          this.isFired = true;
                         }
-                        //////this.StockDetails.result[i].push(data.result[i][0]);
                       }
-                    },
-                    Error => {
-                      if (!this.isFired) {
-                        this.ErrorToast();
-                        this.isFired = true;
-                      }
-                    }
-                  );
-                  this.editpressed = false;
-                }
+                    );
+                    this.editpressed = false;
+                  }
                 });
               }
             });
-          } else {
-            console.log("no data yet");
-            console.log(this.dispnames);
-            this.dispnames = [this.List.result[0][0], this.List.result[1][0]];
-            if(this.dispnames.length>0)
+          } 
+          else 
+          {
+            
+            //if(this.dispnames.length>0)
             {
-              this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
-                data => {
+              this.StockService.getstockv2(this.dispnames,this.List.result,this.StockDetails, this.isArabic).subscribe(
+                  data => {
                   this.StockDetails = data;
                   this.dispnames = [
                     this.List.result[0][0],
                     this.List.result[1][0]
                   ];
-                  console.log(this.StockDetails.result);
-                  for (let i = 0; i < data.result.length; i++) {
-                    this.StockDetails.result[i].push(this.dispnames[i]);
-                    for (let j = 0; j < this.List.result.length; j++) {
-                      if (this.List.result[j][0] === this.dispnames[i]) {
-                        this.StockDetails.result[i].push(this.List.result[j][1]);
-                      }
-                    }
-                    /////this.StockDetails.result[i].push(data.result[i][0]);
-                  }
-                  console.log(this.StockDetails);
-                },
+                 },
                 Error => {
                   if (!this.isFired) {
                     this.ErrorToast();
@@ -186,7 +152,6 @@ export class HomePage implements OnInit {
                   }
                 }
               );
-              console.log(this.dispnames);
             }
             this.editpressed = false;
           }
@@ -201,11 +166,6 @@ export class HomePage implements OnInit {
     );
     this.initializedref = true;
   }
-  
-  public mychange(event)
-  {
-     console.log(event); // mymodel has the value before the change
-  }
   ionViewDidEnter() {
     this.dorefresh = true;
     if (this.dispnames) {
@@ -216,6 +176,9 @@ export class HomePage implements OnInit {
   ionViewWillLeave() {
     this.dorefresh = false;
   }
+  getColore():string{
+    return "test";
+  }
   refresh() {
     var TempStockDetails :SerResponse = <SerResponse>{result: [], status:''};
     
@@ -223,34 +186,29 @@ export class HomePage implements OnInit {
       if(this.dispnames.length>0)
       {
         
-        this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
+        //this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
+        this.StockService.getstockv2(this.dispnames,this.List.result,this.StockDetails, this.isArabic).subscribe(
           data => {
-            this.StockDetails = data;
-            for (let i = 0; i < this.StockDetails.result.length; i++) {
-              this.StockDetails.result[i].push(this.dispnames[i]);
-              for (let j = 0; j < this.List.result.length; j++) {
-                if (this.List.result[j][0] === this.dispnames[i]) {
-                  this.StockDetails.result[i].push(this.List.result[j][1]);
+              var oldStockdata:any = this.StockDetails;
+  
+              this.StockDetails = data;
+
+              this.StockService.getnames(this.isArabic).subscribe(
+                data => {
+                  this.List = data;
+                },
+                Error => {
+                if (!this.isFired) {
+                  this.ErrorToast();
+                  }
                 }
-              }
-            }
-            this.StockService.getnames(this.isArabic).subscribe(
-              data => {
-                this.List = data;
-              },
+              );
+           },
           Error => {
             if (!this.isFired) {
               this.ErrorToast();
             }
           }
-        );
-        // console.log(this.News);
-              },
-        Error => {
-          if (!this.isFired) {
-            this.ErrorToast();
-          }
-                  }
         );
   
       }
@@ -260,7 +218,6 @@ export class HomePage implements OnInit {
         setTimeout(() => {
           this.refresh();
         }, watchlistRefresh);
-        console.log("refresh");
       }
     }
   }
@@ -282,31 +239,26 @@ export class HomePage implements OnInit {
   }
   falsepressed() {
     for (let i = 0; i < this.List.result.length; i++) {
-      console.log(this.map[this.displayListDummy[i]]);
 
       if (this.map[this.displayListDummy[i]] === true) {
-        console.log(this.map[this.displayListDummy[i]]);
         this.dispnames.push(this.displayListDummy[i]);
         this.displayListDummy[i] = this.displayListDummy[
           this.displayListDummy.length - 1
         ];
         this.displayListDummy.pop();
-        console.log(this.displayListDummy);
-
-        console.log("saved");
       }
     }
     this.displayList = this.displayListDummy;
-    console.log("before saving more data");
     this.storage.set("watchList", this.dispnames);
-    console.log(this.dispnames);
-    this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
+    this.StockService.getstockv2(this.dispnames,this.List.result,this.StockDetails, this.isArabic).subscribe(
       data => {
         this.StockDetails = data;
-        for (let i = 0; i < this.StockDetails.result.length; i++) {
-          this.StockDetails.result[i].push(this.dispnames[i]);
-        }
-        console.log(this.StockDetails);
+        // for (let i = 0; i < this.StockDetails.result.length; i++) {
+        //   this.StockDetails.result[i].push(this.dispnames[i]);
+        //   this.StockDetails.result[i].push("");
+        //   this.StockDetails.result[i].push(data.result[i][0]);
+          
+        // }
       },
       Error => {
         if (!this.isFired) {
@@ -325,18 +277,11 @@ export class HomePage implements OnInit {
     this.displayListDummy.sort();
     this.map[this.dispnames[index]] = false;
     this.displayList = this.displayListDummy;
-    console.log("removed");
-    console.log(this.map[this.dispnames[index]]);
-    console.log(this.dispnames[index]);
     this.dispnames.splice(index, 1);
     this.storage.set("watchList", this.dispnames);
-    // TODO: Add test here
-    this.storage.get("watchList").then(val => {
-      console.log(val);
-    });
+
     // Update viewed watchlist
     this.StockDetails.result.splice(index, 1);
-    console.log(this.StockDetails.result);
 
     // TODO: mark in the adding list
   }
@@ -345,20 +290,14 @@ export class HomePage implements OnInit {
   addToWatchlist() {
     this.editpressed = true;
     if (this.initialized === true) {
-      console.log(this.displayListDummy.length);
-      console.log("initialized");
       for (let k = 0; k < this.dispnames.length; k++) {
         for (let i = 0; i < this.List.result.length; i++) {
           if (this.dispnames[k] === this.displayListDummy[i]) {
             this.map[this.displayListDummy[i]] = true;
-            console.log(this.List.result[i][0]);
-            console.log(this.displayListDummy[i]);
-            console.log(this.dispnames[k]);
             this.displayListDummy[i] = this.displayListDummy[
               this.displayListDummy.length - 1
             ];
             this.displayListDummy.pop();
-            console.log(this.displayListDummy);
             break;
           }
         }
@@ -373,9 +312,6 @@ export class HomePage implements OnInit {
   //used for searching
   getItems(ev: any) {
     this.displayList = this.displayListDummy;
-    if (this.displayList) {
-      console.log(this.displayListDummy);
-    }
     if (this.displayList) {
       // set val to the value of the searchbar
       let val = ev.target.value;

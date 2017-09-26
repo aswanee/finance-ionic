@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
       .subscribe(
         data => {
           window["token"] = data;
-          console.log(data);
           if (data) {
             this.storage.set("token", data);
             this.token = true;

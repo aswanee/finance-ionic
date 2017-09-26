@@ -76,7 +76,9 @@
                 <button clear class="full"  (click)="setstockchosen(x[3])" [hidden]="editpressed">
                     <ion-row>
                         <ion-col  style="color:#e67e22">{{x[3]}}</ion-col>
-                        <ion-col  style="color:gray" (ngModelChange)="mychange($event)" >{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]>x[5]"  style="color:green">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]<x[5]"  style="color:red">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]==x[5]">{{x[0]}}</ion-col>
                         
                         <ion-col  *ngIf="x[2]>0"  style="color:green">{{x[2]}}</ion-col>
                         <ion-col  *ngIf="x[2]>0"  style="color:green">{{x[1]}}</ion-col>
@@ -86,6 +88,10 @@
     
                         <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
                         <ion-col  *ngIf="x[2]==0">{{x[1]}}</ion-col>
+                        <ion-col  col>
+                                <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                                <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                        </ion-col>                        
                     </ion-row>
                     <ion-row>
                         <ion-col style="color:#228EE6">

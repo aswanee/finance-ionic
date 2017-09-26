@@ -79,7 +79,6 @@ export class AlertPage {
   ) {}
   @HostListener("window:resize", ["$event"])
   onResize(event) {
-    console.log("Width: " + event.target.innerWidth);
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
@@ -88,7 +87,6 @@ export class AlertPage {
         keys.forEach(key => {
           if (key === "token") {
             this.storage.get(key).then(val => {
-              console.log(val);
               this.token = val;
               this.loggedin = true;
               this.userId = this.token.result.UserID;
@@ -96,7 +94,6 @@ export class AlertPage {
             });
           } else if (key === "alerts") {
             this.storage.get(key).then(val => {
-              console.log(val);
               this.matchedAlerts = val.m;
               this.nonMatchedAlerts = val.nm;
               this.alertsLastDate = val.lastUpdate;
@@ -133,8 +130,6 @@ export class AlertPage {
             return !item.IsMatched;
           });
         }
-        console.log(this.newMatchedAlerts);
-        console.log(this.newNonMatchedAlerts);
         if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
           this.storage.set("alerts", {
             m: this.matchedAlerts.concat(this.newMatchedAlerts),
@@ -173,8 +168,6 @@ export class AlertPage {
             return !item.IsMatched;
           });
         }
-        console.log(this.newMatchedAlerts);
-        console.log(this.newNonMatchedAlerts);
         if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
           this.storage.set("alerts", {
             m: this.newMatchedAlerts,
@@ -213,12 +206,9 @@ export class AlertPage {
       alertId = this.nonMatchedAlerts[index].AlertID;
       reuter = this.matchedAlerts[index].Code;
     }
-    console.log(alertId);
     this.AlertService.deletealerts(alertId).subscribe(
       data => {
         // TODO: add toast here.
-        console.log(data);
-
         if (data.result) {
           if (IsMatched) {
             this.matchedAlerts = this.matchedAlerts.filter(item => {

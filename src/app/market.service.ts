@@ -10,7 +10,6 @@ export class MarketService extends ParentService {
     this.getsecurelink();
     let link = this.link + "apis/market/GetPerformers?TPID=";
     link = link + id + "&isArabic=" + isArabaic;
-    console.log(link);
     return this.http
       .get(link)
       .map(x => {
@@ -22,7 +21,6 @@ export class MarketService extends ParentService {
     this.getsecurelink();
     let link = this.link + "apis/market/GetIndices?IID=";
     link = link + id;
-    console.log(link);
     return this.http
       .get(link)
       .map(x => {
