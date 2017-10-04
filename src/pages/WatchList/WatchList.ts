@@ -91,7 +91,7 @@ export class HomePage implements OnInit {
         localStorage.setItem('language', "ar");
         localStorage.setItem('isArabic', "true");
     }
-
+    this.isArabic = window["isArabic"];
   
     this.storage.get("token").then(val => {
       window["token"] = val;
@@ -114,7 +114,7 @@ export class HomePage implements OnInit {
                 this.storage.get("watchList").then(val => {
                   if(val.length>0)
                   {
-                    this.StockService.getstockv2(val,this.List.result,this.StockDetails, this.isArabic).subscribe(
+                    this.StockService.getstockv2(val,this.StockDetails, this.isArabic).subscribe(
                       data => {
                         this.StockDetails = data;
                         this.dispnames = val;
@@ -137,7 +137,7 @@ export class HomePage implements OnInit {
             
             //if(this.dispnames.length>0)
             {
-              this.StockService.getstockv2(this.dispnames,this.List.result,this.StockDetails, this.isArabic).subscribe(
+              this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
                   data => {
                   this.StockDetails = data;
                   this.dispnames = [
@@ -187,22 +187,20 @@ export class HomePage implements OnInit {
       {
         
         //this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
-        this.StockService.getstockv2(this.dispnames,this.List.result,this.StockDetails, this.isArabic).subscribe(
+        this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
           data => {
               var oldStockdata:any = this.StockDetails;
-  
               this.StockDetails = data;
-
-              this.StockService.getnames(this.isArabic).subscribe(
-                data => {
-                  this.List = data;
-                },
-                Error => {
-                if (!this.isFired) {
-                  this.ErrorToast();
-                  }
-                }
-              );
+              // this.StockService.getnames(this.isArabic).subscribe(
+              //   data => {
+              //     this.List = data;
+              //   },
+              //   Error => {
+              //   if (!this.isFired) {
+              //     this.ErrorToast();
+              //     }
+              //   }
+              // );
            },
           Error => {
             if (!this.isFired) {
@@ -250,7 +248,7 @@ export class HomePage implements OnInit {
     }
     this.displayList = this.displayListDummy;
     this.storage.set("watchList", this.dispnames);
-    this.StockService.getstockv2(this.dispnames,this.List.result,this.StockDetails, this.isArabic).subscribe(
+    this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
       data => {
         this.StockDetails = data;
         // for (let i = 0; i < this.StockDetails.result.length; i++) {

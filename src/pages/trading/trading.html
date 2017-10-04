@@ -20,6 +20,8 @@
                 <ion-item>
                     <ion-label>{{'Reuter' | Language}}</ion-label>
                     <ion-input [(ngModel)]="userorder.ReutersCode" name="Code"></ion-input>
+                    <ion-input (click)="showAddressModal()" [(ngModel)]="userorder.ReutersCode" name="Code" type="text" placeholder="Add Reuters"></ion-input>
+                    
                 </ion-item>
 
                 <ion-item>
@@ -96,28 +98,66 @@
         <button ion-button block (click)="gotoLogin()">{{'Login' | Language}}</button>
     </ion-item>
 
-    <ion-item *ngIf="portfolioresponse && showportfolio && token && loggedIn">
-        <ion-grid>
-            <ion-row *ngFor="let item of portfolioresponse?.result;let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
-                <ion-col>
-                    {{item.ReutersCode}}
-                </ion-col>
-                <ion-col>
-                    {{item.AvailableQuantity}}
-                </ion-col>
-                <ion-col>
-                    {{item.LastTrade}}
-                </ion-col>
-                <ion-col>
-                    {{item.PercentageChange}}
-                </ion-col>
-                <ion-col>
-                    {{item.GainLossPercentage | aroundTo: 2 }}
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-item>
+    <ion-list no-lines *ngIf="portfolioresponse && showportfolio && token && loggedIn">
+            <ion-item >
+                <ion-row>
+                    <ion-col col>
+                        <p style="font-size:0.8em">{{'Reuter'|Language}}</p>
+                    </ion-col>
+                    <ion-col col>
+                        <p style="font-size:0.8em">{{'Value'|Language}}</p>
+                    </ion-col>
+                    <ion-col col>
+                        <p style="font-size:0.8em">{{'Change'|Language}}</p>
+                    </ion-col>
+                    <ion-col col>
+                        <p style="font-size:0.8em">{{'Percentage'|Language | limitTo:5}}</p>
+                    </ion-col>
+                    <ion-col col>
+                        <p style="font-size:0.8em">{{'Trend'|Language}}</p>
+                    </ion-col>
+                    <ion-col col>
+                    </ion-col>
+                </ion-row>
+            </ion-item>
+            <ion-item *ngFor="let item of portfolioresponse?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+                <button clear class="full"  (click)="setstockchosen(item)" >
+                    <ion-row>
+                        <ion-col  style="color:#e67e22;font-weight: bold;">{{item.ReutersCode}}</ion-col>
 
+                        <ion-col *ngIf="item.GainLossPercentage>0"  style="color:#32db64; font-weight: bolder;">{{item.AvailableQuantity}}</ion-col>
+                        <ion-col *ngIf="item.GainLossPercentage<0"  style="color: red; font-weight: bolder">{{item.AvailableQuantity}}</ion-col>
+                        <ion-col *ngIf="item.GainLossPercentage==0">{{item.AvailableQuantity}}</ion-col>
+                        
+                        <ion-col  *ngIf="item.GainLossPercentage>0"  style="color:#32db64; font-weight: bolder;">{{item.LastTrade}}</ion-col>
+                        <ion-col  *ngIf="item.GainLossPercentage<0"  style="color:red; font-weight: bolder;">{{item.LastTrade}}</ion-col>
+                        <ion-col  *ngIf="item.GainLossPercentage==0" >{{item.LastTrade}}</ion-col>
+                            
+                        <ion-col  *ngIf="item.GainLossPercentage>0"  style="color: #32db64; font-weight: bolder"> {{item.PercentageChange}}</ion-col>
+                        <ion-col  *ngIf="item.GainLossPercentage<0"  style="color: red; font-weight: bolder"> {{item.PercentageChange}}</ion-col>
+                        <ion-col  *ngIf="item.GainLossPercentage==0" > {{item.PercentageChange}}</ion-col>
+                            
+                        <ion-col  *ngIf="item.GainLossPercentage>0" style="color: #32db64; font-weight: bolder"> {{item.GainLossPercentage | aroundTo: 2 }}</ion-col>
+                        <ion-col  *ngIf="item.GainLossPercentage<0" style="color: red; font-weight: bolder"> {{item.GainLossPercentage | aroundTo: 2 }}</ion-col>
+                        <ion-col  *ngIf="item.GainLossPercentage==0"> {{item.GainLossPercentage | aroundTo: 2 }}</ion-col>
+                        <!-- <ion-col  col>
+                                <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
+                                <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
+                        </ion-col>                         -->
+                    </ion-row>
+                    <ion-row>
+                            <ion-col style="color:#e67e22" *ngIf="isArabic">
+                                    {{item.ARB_Name}}
+                            </ion-col>
+                            <ion-col style="color:#e67e22" *ngIf="!isArabic">
+                                    {{item.ENG_NAME}}
+                            </ion-col>
+                            </ion-row>
+                </button>   
+                <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
+            </ion-item>                     
+    </ion-list>
+ 
     <ion-item *ngIf="userorderresponse && showorders && token && loggedIn">
         <ion-grid>
             <ion-row>

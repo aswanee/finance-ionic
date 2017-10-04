@@ -107,7 +107,8 @@ export class NewsPage implements OnInit {
       id: this.id
     });
   }
-  More() {
+  More() 
+  {
     if (this.initializetofrom) {
       this.to.setDate(this.from.getDate());
       this.from.setDate(this.to.getDate() - 1);

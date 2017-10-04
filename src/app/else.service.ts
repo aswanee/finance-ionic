@@ -13,10 +13,9 @@ import { Detailsresponse } from "./details.interface";
 import { MarketDetails } from "./marketsummary.interface";
 @Injectable()
 export class GetService extends ParentService {
-  // Comapnies: Rouiter[]= new Array();
 
   getmarketsummary(): Observable<MarketDetails> {
-    this.getsecurelink();
+    this.getunsecurelink();
     return this.http
       .get(this.link + "apis/market/GetMarketSummary?Schema=false")
       .map(x => {
@@ -26,7 +25,7 @@ export class GetService extends ParentService {
   }
 
   getquotetrades(code: string, id: number): Observable<Detailsresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link =
       this.link + "apis/market/QuoteTrades?Code=" + code + "&lID=" + id;
     return this.http
@@ -36,8 +35,9 @@ export class GetService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
   getmarketdetails(cid: number = 1): Observable<Detailsresponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/GetMarketInformation?CID=" + cid;
     return this.http
       .get(this.link)

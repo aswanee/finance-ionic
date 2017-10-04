@@ -24,6 +24,9 @@ import { LoginService } from "./../../app/login.service";
 import { token } from "./../../app/token.interface";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { HomePage } from "./../WatchList/WatchList";
+import { StockService } from "./../../app/stock.service";
+import { Platform } from "ionic-angular";
+
 /**
  * Generated class for the SettingsPage page.
  *
@@ -79,7 +82,11 @@ export class SettingsPage implements OnInit {
     public navParams: NavParams,
     private TradeService: TradeService,
     private LoginService: LoginService,
-    private storage: Storage
+    private storage: Storage,
+    private StockService: StockService,
+    private platform: Platform
+    
+    
   ) {}
   ngOnInit() {
   }
@@ -92,6 +99,9 @@ export class SettingsPage implements OnInit {
 
     window["isArabic"] = true;
     localStorage.setItem('isArabic', "true");
+    this.StockService.getnames(true).subscribe();
+    this.platform.setDir('rtl', true)
+    
   }
 
   toen() {
@@ -100,6 +110,9 @@ export class SettingsPage implements OnInit {
 
     window["isArabic"] = false;
     localStorage.setItem('isArabic', "false");
+    this.StockService.getnames(false).subscribe();
+    this.platform.setDir('ltr', true)
+    
   }
   setopenlang() {
     this.openlanguage = !this.openlanguage;

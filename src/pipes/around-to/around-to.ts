@@ -21,7 +21,8 @@ export class aroundToPipe implements PipeTransform {
     else
     {
           let prec  :number = args[0];
-          let limit :string = value.toFixed(prec);
+          let ValueN:number = Number(value);
+          let limit :string = ValueN.toFixed(prec);
           return  limit ;
     }
   }

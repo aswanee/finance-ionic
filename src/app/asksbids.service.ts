@@ -11,7 +11,7 @@ import { ParentService } from "./parentservice.service";
 @Injectable()
 export class AskBidService extends ParentService {
   getasks(reuter: string): Observable<SerResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/QuoteAsks?Code=" + reuter;
     return this.http
       .get(this.link)
@@ -21,7 +21,7 @@ export class AskBidService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getbids(reuter: string): Observable<SerResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     this.link = this.link + "apis/market/QuoteBids?Code=" + reuter;
     return this.http
       .get(this.link)

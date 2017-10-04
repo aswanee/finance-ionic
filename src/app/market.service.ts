@@ -7,7 +7,7 @@ import { ParentService } from "./parentservice.service";
 @Injectable()
 export class MarketService extends ParentService {
   getperformers(id: string, isArabaic: boolean): Observable<SerResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     let link = this.link + "apis/market/GetPerformers?TPID=";
     link = link + id + "&isArabic=" + isArabaic;
     return this.http
@@ -18,7 +18,7 @@ export class MarketService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getindices(id: string): Observable<SerResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     let link = this.link + "apis/market/GetIndices?IID=";
     link = link + id;
     return this.http
@@ -29,7 +29,7 @@ export class MarketService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getperformerstable(): Observable<MarketResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     return this.http
       .get(this.link + "apis/market/GetPerformersTable")
       .map(x => {
@@ -38,7 +38,7 @@ export class MarketService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getindicestable(): Observable<MarketResponse> {
-    this.getsecurelink();
+    this.getunsecurelink();
     return this.http
       .get(this.link + "apis/market/GetIndicesTable")
       .map(x => {

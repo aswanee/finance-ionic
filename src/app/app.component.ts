@@ -54,6 +54,8 @@ export class MyApp {
       ]
     });
     platform.ready().then(() => {
+      if(window["language"]=="ar")
+            this.platform.setDir('rtl', true)
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       if(this.platform.is('core') || this.platform.is('mobileweb')) {

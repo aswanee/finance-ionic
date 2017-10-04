@@ -19,7 +19,7 @@ export class StockService extends ParentService {
   // nameobj: string [][] = new Array() ;
   substrings: string[] = new Array();
   names: string[] = new Array();
-
+  List: SerResponse;
   getstock(nameobj: string[], isArabic: boolean): Observable<SerResponse> {
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetSimpleQuotesDetails?Codes=";
@@ -39,13 +39,13 @@ export class StockService extends ParentService {
   }
 
   getstockv2(nameobj: string[], 
-    nameAllList: string[][],
+    
     OldStockDetails:SerResponse,
     isArabic: boolean): any 
   {
     if(!nameobj || nameobj.length==0)
     {
-      nameobj = [nameAllList[0][0], nameAllList[1][0]];
+      nameobj = [this.List.result[0][0], this.List.result[1][0]];
     }
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetSimpleQuotesDetails?Codes=";
@@ -74,8 +74,23 @@ export class StockService extends ParentService {
               {
                 isNew = false;
                 //var OldValue:string = OldStockDetails.result[ii][0];
-                data.result[i].push(OldStockDetails.result[ii][4]);
+
+                if(this.List.status!=OldStockDetails.result[ii][6])
+                {
+                  loop2:
+                  for (let j = 0; j < this.List.result.length; j++) {
+                    if (this.List.result[j][0] === nameobj[i]) {
+                      data.result[i].push(this.List.result[j][1]);
+                      break loop2;
+                    }
+                  }
+                }
+                else
+                {
+                  data.result[i].push(OldStockDetails.result[ii][4]);
+                }
                 data.result[i].push(OldStockDetails.result[ii][0]);
+                data.result[i].push(this.List.status);
                 break loop1;
               }
             }
@@ -83,13 +98,15 @@ export class StockService extends ParentService {
           if(isNew)
           {
             loop2:
-            for (let j = 0; j < nameAllList.length; j++) {
-              if (nameAllList[j][0] === nameobj[i]) {
-                data.result[i].push(nameAllList[j][1]);
+            for (let j = 0; j < this.List.result.length; j++) {
+              if (this.List.result[j][0] === nameobj[i]) {
+                data.result[i].push(this.List.result[j][1]);
                 break loop2;
               }
             }
+            let lang = isArabic? "ar":"en";
             data.result[i].push(data.result[i][0]);// Add Old Value 
+            data.result[i].push(lang);// Add Old Value 
             isNew =false;
           }
         }
@@ -160,14 +177,24 @@ export class StockService extends ParentService {
       .catch((t: Response) => t.json());
   }
 
-  getnames(isArabic: boolean): Observable<SerResponse> {
+  getnames(isArabic: boolean): any {
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetQuotesList?isArabic=" + isArabic;
     return (
       this.http
         .get(this.link)
         // .get('./../assets/cmps.json')
-        .map(x => <SerResponse>x.json())
+        .map(x => {
+          //this.List = x.json();
+          var TempList: SerResponse =  x.json();
+          this.List =  {
+            status:"",
+            result:[]
+           };
+          this.List.result = TempList.result;
+          this.List.status = isArabic? "ar":"en";
+          return this.List;
+        })
         .catch((t: Response) => t.json())
     );
   }

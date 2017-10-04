@@ -6,7 +6,7 @@ export class ParentService {
   
   link: string;
   securedebug: boolean = false;
-  unsecuredebug: boolean =true;
+  unsecuredebug: boolean =false;
   getsecurelink() {
     if (this.securedebug === true) {
       this.link = "http://staging5.arabfinance.com/";

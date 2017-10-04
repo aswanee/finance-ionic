@@ -33,7 +33,10 @@ import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
   // moduleId: module.id,
   selector: "companydetails",
   templateUrl: "companydetails.component.html",
-  styles: [``]
+  styles: [`.col{
+    background: gray;
+    border: think solid black;
+    }`]
 })
 export class CompanydetailsComponent implements OnInit, OnChanges {
   // private _items = new BehaviorSubject<String[]>([]);
@@ -47,7 +50,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   // stockchosen:boolean=false;
   showasksbids: boolean = false;
   shownews = false;
-  lastFveDays: boolean = true;
+  //lastFveDays: boolean = true;
   isFired = false;
   detailsresponse: Detailsresponse;
   showtrades: boolean = false;
@@ -60,6 +63,9 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   relNews: Newsresponse;
   reuter;
   TradesArray: string[][] = new Array();
+  LastTradID : number=0;
+  ChartParts : string = "IntraDay"
+  isIntraDays : boolean = true;
   asksbidsinitialized = false;
   tradesinitialized = false;
   newsinitialized = false;
@@ -75,6 +81,7 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
   ) {
     this.reuter = navParams.get("reuter");
     this.rootid = navParams.get("rootid");
+    this.LastTradID =0;
     this.QueteParts = "News";
 
     // this.stockchosen = navParams.get("stockchosen");
@@ -181,21 +188,27 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
     }
   }
   settrades() {
-    this.GetService.getquotetrades(this.reuter, 0).subscribe(
+    this.GetService.getquotetrades(this.reuter, this.LastTradID).subscribe(
       data => {
-        this.Trades = data;
-        for (let i = 0; i < this.Trades.result.length; i++) {
-          this.TradesArray[i] = new Array();
+        if(data && data.result && data.result.length>0)
+        {
+          this.LastTradID =Number(data.result[0][0]);          
         }
-        for (let i = 0; i < this.Trades.result.length; i++) {
-          this.TradesArray[i] = this.Trades.result[i].split(",");
+        if(!this.Trades)
+        {
+          this.Trades= {status:"", result:[]}
+        }
+        var TempTrades: string[]=[];
+        TempTrades = data.result;
+        
+        this.Trades.result = TempTrades.concat(this.Trades.result);
 
-          this.TradesArray[i][
-            this.TradesArray[i].length - 1
-          ] = this.TradesArray[i][this.TradesArray[i].length - 1].substring(
-            0,
-            this.TradesArray[i][this.TradesArray[i].length - 1].length - 1
-          );
+        this.showtrades = true;
+        
+        if (this.showtrades) {
+          setTimeout(() => {
+            this.settrades();
+          }, tradesRefresh);
         }
       },
       Error => {
@@ -205,17 +218,15 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
         }
       }
     );
-    this.showtrades = true;
     this.showasksbids = false;
     this.shownews = false;
-    this.refreshAutoTrades();
-    // this.stockchosen = false;
-    // this.send.emit(this.stockchosen);
-    // this.stockchosen = true;
-    // this.send.emit(this.stockchosen);
+    //this.refreshAutoTrades();
   }
+
+  
+
   refreshAutoTrades() {
-    this.GetService.getquotetrades(this.reuter, 0).subscribe(
+    this.GetService.getquotetrades(this.reuter, this.LastTradID).subscribe(
       data => {
         this.Trades = data;
         for (let i = 0; i < this.Trades.result.length; i++) {
@@ -390,8 +401,15 @@ export class CompanydetailsComponent implements OnInit, OnChanges {
 
     toast.present();
   }
-  showLastFiveDays() {
-    this.lastFveDays = !this.lastFveDays;
+  showIntraDays() {
+    this.ChartParts = "IntraDay";
+    this.isIntraDays = true;
+    //this.lastFveDays = !this.lastFveDays;
+  }
+  showHistoricalDays() {
+    this.ChartParts = "Historical";
+    this.isIntraDays = false;
+    //this.lastFveDays = !this.lastFveDays;
   }
   goToNewsDeatils() {
     this.navCtrl.push(NewsdetailsComponent, {

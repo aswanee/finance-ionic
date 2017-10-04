@@ -32,6 +32,8 @@ import { token } from "./../../app/token.interface";
 import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { CompanydetailsComponent } from "../companydetails/companydetails.component";
+
 /**
  * Generated class for the TradingPage page.
  *
@@ -42,19 +44,20 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 @IonicPage()
 @Component({
   selector: "page-trading",
-  templateUrl: "trading.html",
-  styles: [
-    `.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
-    background-color: lightblue;
-    border-color: #488aff;
-    border-style: solid;
-    border-width: 1px;
-    background-color: #e0e0e0;
-}
-.text-input-md {
-    border: 1px solid darkgrey;
-}`
-  ]
+  templateUrl: "trading.html"
+  //,
+//   styles: [
+//     `.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
+//     background-color: lightblue;
+//     border-color: #488aff;
+//     border-style: solid;
+//     border-width: 1px;
+//     background-color: #e0e0e0;
+// }
+// .text-input-md {
+//     border: 1px solid darkgrey;
+// }`
+//   ]
   //segment-button segment-activated
 })
 export class TradingPage implements OnInit {
@@ -137,6 +140,7 @@ export class TradingPage implements OnInit {
   timeout: number;
   loggedIn: boolean = false;
   SelectedSegment: string = "Portfolio";
+  isArabic:boolean=true;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -156,6 +160,7 @@ export class TradingPage implements OnInit {
   gotoLogin() {
     // check when he comes bach if he did login
     //this.checkLogin();
+    this.isArabic = window["isArabic"];
     if (this.token == null) {
       this.navCtrl.push(LoginComponent);
     } else {
@@ -205,6 +210,8 @@ export class TradingPage implements OnInit {
   getportfolio() {
     /* bn Rashed*/
     //this.checkLogin();
+    this.isArabic = window["isArabic"];
+    
     this.TradeService
       .GetPortfolio(this.token, window["isArabic"])
       .subscribe(data => {
@@ -225,6 +232,8 @@ export class TradingPage implements OnInit {
   }
 
   refreshPortfolio() {
+    this.isArabic = window["isArabic"];
+    
     this.TradeService.GetPortfolio(this.token, window["isArabic"]).subscribe(
       data => {
         this.portfolioresponse = data;
@@ -257,6 +266,8 @@ export class TradingPage implements OnInit {
     this.showsummary = !this.showsummary;
   }
   getorders() {
+    this.isArabic = window["isArabic"];
+    
     this.TradeService.getorders(this.token, window["isArabic"], 2).subscribe(
       data => {
         this.userorderresponse = data;
@@ -283,6 +294,8 @@ export class TradingPage implements OnInit {
   }
 
   refreshOrders() {
+    this.isArabic = window["isArabic"];
+    
     this.TradeService
       .getorders(this.token, window["isArabic"], 2)
       .subscribe(data => {
@@ -308,6 +321,8 @@ export class TradingPage implements OnInit {
   }
   CreateUpdateOrder() {
     // this.InitializeUserOrder();
+    this.isArabic = window["isArabic"];
+    
     if (this.EnablePrice) {
       // this.userorder.Price = Number(
       //   document.getElementById("Price").textContent
@@ -350,6 +365,8 @@ export class TradingPage implements OnInit {
   }
 
   placeOrder() {
+    this.isArabic = window["isArabic"];
+    
     this.pincode = Number(prompt("please enter the pin code"));
     this.TradeService
       .PlaceOrder(
@@ -368,6 +385,8 @@ export class TradingPage implements OnInit {
       );
   }
   UpdateOrder(order: userorder) {
+    this.isArabic = window["isArabic"];
+    
     this.updateuserorder.Username = this.token.result.UserName;
 
     if (this.EnablePrice) {
@@ -422,6 +441,8 @@ export class TradingPage implements OnInit {
       );
   }
   CancelOrder(orderid: number) {
+    this.isArabic = window["isArabic"];
+    
     this.pincode = Number(prompt("please enter your pin code"));
     this.TradeService
       .CancelOrder(orderid, window["isArabic"], this.pincode, this.token)
@@ -563,5 +584,33 @@ export class TradingPage implements OnInit {
     });
 
     toast.present();
+  }
+  setstockchosen(item: any)
+  {
+    this.stockchosen = true;
+    this.reuter = item.ReutersCode;
+    this.goToCompanyDeatils();
+  }
+  reuter: string;
+  rootid: number = 3;
+  stockchosen: boolean = false;
+  
+  goToCompanyDeatils() {
+    this.navCtrl.push(CompanydetailsComponent, {
+      reuter: this.reuter,
+      rootid: this.rootid,
+      stockchosen: this.stockchosen
+    });
+  }
+  showAddressModal()
+  {
+    var test:string;
+    test="hello";
+    // let modal = this.modalCtrl.create(AutocompletePage);
+    // let me = this;
+    // modal.onDidDismiss(data => {
+    //   this.userorder.ReutersCode = data;
+    // });
+    // modal.present();
   }
 }

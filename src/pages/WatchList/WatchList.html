@@ -8,6 +8,7 @@
 </ion-header>
 
 <ion-content>
+    <!-- Start Search-->
     <div class="list" *ngIf="editpressed && displayListDummy &&displayList">
         <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
@@ -23,15 +24,16 @@
             <button (click)="falsepressed()" ion-fab><ion-icon name='checkmark'></ion-icon></button>
         </ion-fab>
     </div>
+    <!-- End Search-->
     <div class="list" *ngIf="!editpressed ">
         <ion-fab style="position:fixed; margin-bottom:12%; margin-right: 1%;" bottom right>
             <button clear (click)="addToWatchlist()" ion-fab><p style="font-size:30px;">+</p></button>
         </ion-fab>
     </div>
 
-    <ion-list *ngIf="StockDetails && !editpressed">
-        <ion-item>
-            <ion-row *ngIf="!isSmall">
+    <ion-list no-lines *ngIf="StockDetails && !editpressed">
+        <ion-item *ngIf="!isSmall">
+            <ion-row>
                 <ion-col col>
                     <p style="font-size:0.8em">{{'Reuter'|Language}}</p>
                 </ion-col>
@@ -51,22 +53,22 @@
                 </ion-col>
             </ion-row>
         </ion-item>
-        <ion-item *ngIf="isSmall">
+        <ion-item  no-lines *ngIf="isSmall">
             <ion-row>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language |limitTo:3}}</p>
+                    <p style="font-size:0.8em">{{'Reuter'|Language |limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value'|Language |limitTo:3}}</p>
+                    <p style="font-size:0.8em">{{'Value'|Language |limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change'|Language |limitTo:3}}</p>
+                    <p style="font-size:0.8em">{{'Change'|Language |limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage'|Language |limitTo:3}}</p>
+                    <p style="font-size:0.8em">{{'Percentage'|Language |limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend'|Language |limitTo:3}}</p>
+                    <p style="font-size:0.8em">{{'Trend'|Language |limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
                 </ion-col>
@@ -75,16 +77,17 @@
         <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
                 <button clear class="full"  (click)="setstockchosen(x[3])" [hidden]="editpressed">
                     <ion-row>
-                        <ion-col  style="color:#e67e22">{{x[3]}}</ion-col>
-                        <ion-col *ngIf="x[0]>x[5]"  style="color:green">{{x[0]}}</ion-col>
-                        <ion-col *ngIf="x[0]<x[5]"  style="color:red">{{x[0]}}</ion-col>
+                        <ion-col  style="color:#e67e22;font-weight: bold;">{{x[3]}}</ion-col>
+
+                        <ion-col *ngIf="x[0]>x[5]"  style="color:#32db64; font-weight: bolder;">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]<x[5]"  style="color: red; font-weight: bolder">{{x[0]}}</ion-col>
                         <ion-col *ngIf="x[0]==x[5]">{{x[0]}}</ion-col>
                         
-                        <ion-col  *ngIf="x[2]>0"  style="color:green">{{x[2]}}</ion-col>
-                        <ion-col  *ngIf="x[2]>0"  style="color:green">{{x[1]}}</ion-col>
+                        <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
+                        <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[1]}}</ion-col>
     
-                        <ion-col  *ngIf="x[2]<0"  style="color:red">{{x[2]}}</ion-col>
-                        <ion-col  *ngIf="x[2]<0"  style="color:red">{{x[1]}}</ion-col>
+                        <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[2]}}</ion-col>
+                        <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[1]}}</ion-col>
     
                         <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
                         <ion-col  *ngIf="x[2]==0">{{x[1]}}</ion-col>
@@ -94,14 +97,14 @@
                         </ion-col>                        
                     </ion-row>
                     <ion-row>
-                        <ion-col style="color:#228EE6">
+                        <ion-col style="color:#e67e22">
                             {{x[4]}}
                         </ion-col>
                     </ion-row>
                 </button>   
                 <button ion-button item-end clear color="danger" icon-only (click)="removeFromWatchlist(i)"><ion-icon name='trash' is-active="false"></ion-icon></button>
-            </ion-item>                     
-        </ion-list>
+        </ion-item>                     
+    </ion-list>
 
 
 </ion-content>

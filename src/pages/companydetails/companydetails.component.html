@@ -8,23 +8,28 @@
 
 <ion-content padding>
     <ion-card>
-
-        <ion-card-header>
+        <!-- <ion-card-header>
             {{reuter}}
-        </ion-card-header>
-
-        <ion-item *ngIf="reuter">
-            <ion-buttons>
-                <button ion-button (click)="showLastFiveDays()" [disabled]="lastFveDays">
-                            Last five days
-                    </button>
-                <button ion-button (click)="showLastFiveDays()" [disabled]="!lastFveDays">
-                         Last year
-                        </button>
-            </ion-buttons>
-            <page-chart [hidden]="!lastFveDays" [lastFiveDays]=true [rouiterCode]="reuter"></page-chart>
-            <page-chart [hidden]="lastFveDays" [lastFiveDays]=false [rouiterCode]="reuter"></page-chart>
-        </ion-item>
+        </ion-card-header> -->
+        <ion-segment [(ngModel)]="ChartParts">
+                <ion-segment-button value="IntraDay" (click)="showIntraDays()">
+                        <ion-icon name="cart" item-start></ion-icon>
+                        IntraDay
+                    </ion-segment-button>
+                    <ion-segment-button value="Historical" (click)="showHistoricalDays()">
+                        <ion-icon name="cart"></ion-icon>
+                        Historical
+                    </ion-segment-button>
+        </ion-segment>
+        <div [ngSwitch]="ChartParts">
+                <ion-list *ngSwitchCase="'IntraDay'">
+                    <page-chart [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></page-chart>
+                </ion-list>
+                <ion-list *ngSwitchCase="'Historical'">
+                    <page-chart [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></page-chart>
+                </ion-list>                        
+        </div>
+    </ion-card>
         <div padding>
             <ion-segment [(ngModel)]="QueteParts">
                 <ion-segment-button value="News" (click)="setnews()">
@@ -43,12 +48,6 @@
         </div>
         <div [ngSwitch]="QueteParts">
             <ion-list *ngSwitchCase="'Orders'">
-                <ion-item>
-                    <button item-end clear color='dark' ion-button (click)="refreshAsks()">
-                                                <ion-icon name='refresh' style="font-size: 30px;" is-active="false"></ion-icon>
-                                            </button>
-                </ion-item>
-
                 <ion-grid>
                     <ion-row>
                         <ion-col col-6>
@@ -75,13 +74,13 @@
                 </ion-grid>
             </ion-list>
             <ion-list *ngSwitchCase="'Trades'">
-                <ion-item>
+                <!-- <ion-item>
                     <button item-end clear color='dark' ion-button (click)="refreshTrades()">
                                                 <ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon>
                                             </button>
-                </ion-item>
-                <table width="100%" *ngIf="Trades&&TradesArray">
-                    <tr *ngFor="let item of TradesArray let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                </ion-item> -->
+                <table width="100%" *ngIf="Trades">
+                    <tr *ngFor="let item of Trades?.result let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                         <td>{{item[0]}}</td>
                         <td>{{item[1]}}</td>
                         <td>{{item[2]}}</td>
@@ -95,16 +94,12 @@
                 </ion-item>
             </ion-list>
             <ion-list *ngIf=shownews>
-                <ion-item>
-                    <button item-end clear color='dark' ion-button (click)="refreshNews()"><ion-icon name='refresh' style="font-size: 30px;"  is-active="false"></ion-icon></button>
-                </ion-item>
                 <ion-item *ngFor="let item of relNews?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                     <button clear class="full"  (click)="getdetails(item[0])">
-                        <p style="font-size: 16px">{{item[1]}}</p>
-                        <p>{{item[2]}}</p>
+                        <p >{{item[1]}}</p>
+                        <p style="color: gray">{{item[2]}}</p>
                     </button>
                 </ion-item>
             </ion-list>
         </div>
-    </ion-card>
 </ion-content>

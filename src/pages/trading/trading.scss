@@ -3,15 +3,29 @@
     position: fixed;
 }
 
-.odd {
-    background-color: #ffffff;
-}
 
-.even {
-    background-color: #eaeaf1;
+.RowDown{
+    color:red !important; 
+    font-weight: bolder !important; 
+}
+.RowUp{
+    color:#32db64 !important; 
+    font-weight: bolder !important; 
 }
 
 .button-inner {
     flex-flow: row;
     white-space: normal;
-}
+  }
+   .row{
+     padding: 0px;
+  }
+  .label-md{
+     margin: 1px 4px 1px 0;
+  }
+  .full{
+    width: 99%;
+    text-align: left;
+    direction: left;
+    background-color: rgba(255, 255, 255, 0);
+  }

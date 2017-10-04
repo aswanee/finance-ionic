@@ -4,6 +4,8 @@ import { Observable } from "rxjs/Observable";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import "rxjs/add/operator/map";
 import "rxjs/Rx";
+import { ParentService } from "../../app/parentservice.service";
+
 // import { ChartModule } from "angular2-highcharts";
 
 /**
@@ -18,19 +20,24 @@ import "rxjs/Rx";
   selector: "page-chart",
   templateUrl: "chart.html"
 })
-export class ChartPage {
+export class ChartPage extends ParentService{
   link: string = "";
   d = [];
   received_json;
-  @Input() lastFiveDays: boolean;
+  @Input() isIntraDays: boolean;
   @Input() rouiterCode: string = "";
+  @Input() ChartType: string = "";
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private http: Http
-  ) {
-    this.link =
-      "https://www.arabfinance.com/apis/market/GetSimpleChartWithinRange?Codes=";
+    public http: Http
+  ) 
+  {
+    super(http);
+    this.getunsecurelink();
+    this.link = this.link + "apis/market/GetSimpleChartWithinRange?Codes=";
+    
   }
 
   ionViewDidLoad() {
@@ -39,7 +46,7 @@ export class ChartPage {
 
   options: Object;
   ngOnInit() {
-    this.getchart(this.lastFiveDays).subscribe(data => {
+    this.getchart(this.isIntraDays).subscribe(data => {
       this.received_json = data;
       var l = this.received_json.result.V.length;
       for (var index = 0; index < l; index++) {
@@ -49,9 +56,33 @@ export class ChartPage {
         ]);
       }
       this.options = {
-        title: { text: this.rouiterCode.toUpperCase() + " Stock Price" },
-        series: [
+      // title: { text: this.rouiterCode.toUpperCase() + " Stock Price" },
+      //   rangeSelector: {
+      //     buttons: [{
+      //         type: 'hour',
+      //         count: 1,
+      //         text: '1h'
+      //     }, {
+      //         type: 'day',e
+
+      //         count: 1,
+      //         text: '1D'
+      //     }, {
+      //         type: 'all',
+      //         count: 1,
+      //         text: 'All'
+      //     }],
+      //     selected: 1,
+      //     inputEnabled: false
+      // },        
+      colors: ['orange', '#F3B32A', '#F3B32A', '#F3B32A', '#F3B32A', '#F3B32A', 
+      '#F3B32A', '#F3B32A', '#F3B32A'],
+      chart: {
+        backgroundColor: '#242424'
+      },
+      series: [
           {
+            //type: 'candlestick',
             name: this.rouiterCode,
             data: this.d,
             tooltip: {
@@ -72,13 +103,13 @@ export class ChartPage {
       date2.setDate(date.getDay() - 5);
       this.link += date2.toISOString().substring(0, 10);
       this.link += "&to=";
-      this.link += date.toISOString().substring(0, 10);
+      this.link += date.toISOString();
       this.link += "&isIntra=1";
     } else {
       date2.setFullYear(date.getFullYear() - 1);
       this.link += date2.toISOString().substring(0, 10);
       this.link += "&to=";
-      this.link += date.toISOString().substring(0, 10);
+      this.link += date.toISOString();
       this.link += "&isIntra=0";
     }
     return this.http
