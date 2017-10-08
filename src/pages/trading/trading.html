@@ -19,11 +19,16 @@
             <form>
                 <ion-item>
                     <ion-label>{{'Reuter' | Language}}</ion-label>
-                    <ion-input [(ngModel)]="userorder.ReutersCode" name="Code"></ion-input>
                     <ion-input (click)="showAddressModal()" [(ngModel)]="userorder.ReutersCode" name="Code" type="text" placeholder="Add Reuters"></ion-input>
-                    
                 </ion-item>
-
+                <ion-item>
+                        <ion-row  [ngClass]="[DirClass]">
+                            <ion-col style="color:#e67e22;font-weight: bold;">{{OrderSearchItem[3]}}</ion-col>
+                            <ion-col>{{OrderSearchItem[4]}}</ion-col>
+                            <ion-col>{{OrderSearchItem[5]}}</ion-col>
+                        </ion-row>
+                        <ion-row><ion-col style="color:#e67e22">{{OrderSearchItem[1]}}</ion-col></ion-row>
+                    </ion-item>
                 <ion-item>
                     <ion-label>{{'Quantity' | Language}}</ion-label>
                     <ion-input [(ngModel)]="userorder.Quantity" name="Quantity"></ion-input>

@@ -44,8 +44,15 @@ import { aroundToPipe } from "./../pipes/around-to/around-to";
 
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 
+import {AutocompletePage} from '../pages/autocomplete/autocomplete'
+
 export function highchartsFactory():HighchartsStatic {
   const hc =  require("highcharts/highstock");
+  const hcm = require('highcharts/highcharts-more');
+  const exp = require('highcharts/modules/exporting');
+  hcm(hc);
+  exp(hc);
+
   return hc;
 }
 @NgModule({
@@ -70,7 +77,8 @@ export function highchartsFactory():HighchartsStatic {
     CreateAlertPage,
     UpdateAlertPage,
     aroundToPipe,
-    LanguagePipe
+    LanguagePipe,
+    AutocompletePage
   ],
   imports: [
     BrowserModule,
@@ -99,7 +107,8 @@ export function highchartsFactory():HighchartsStatic {
     CreateAlertPage,
     PopoverPage,
     UpdateAlertPage,
-    OrderhistoryPage
+    OrderhistoryPage,
+    AutocompletePage
   ],
   providers: [
     StatusBar,

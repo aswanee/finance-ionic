@@ -20,15 +20,15 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+
 @Component({
   selector: "page-home",
   templateUrl: "WatchList.html"
 })
 export class HomePage implements OnInit {
+
   isSmall: boolean = false;
   List: SerResponse;
-  displayList: string[] = new Array();
-  displayListDummy: string[] = new Array();
   StockDetails: SerResponse;
   reuter: string;
   Asks: SerResponse;
@@ -47,13 +47,18 @@ export class HomePage implements OnInit {
   dorefresh = false;
   isArabic: boolean = false;
 
-  map: { [reuter: string]: Boolean } = {};
   News: Newsresponse;
   relNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   isFired: boolean = false;
   dispnames: string[] = new Array();
   WatchListChanged : boolean = false;
+
+
+
+  displayList: string[][] = new Array();
+  displayListDummy: string[][] = new Array();
+  map: { [reuter: string]: Boolean } = {};
   
   constructor(
     public navCtrl: NavController,
@@ -103,8 +108,9 @@ export class HomePage implements OnInit {
         for (let i = 0; i < this.List.result.length; i++) {
           // are chosen alias
           this.map[this.List.result[i][0]] = false; // OK
-          this.displayList.push(this.List.result[i][0]);
-          this.displayListDummy.push(this.List.result[i][0]);
+          var company:string[] = [this.List.result[i][0],this.List.result[i][1]]
+          this.displayList.push(company);
+          this.displayListDummy.push(company);
         }
         this.editpressed = false;
         this.storage.keys().then(keys => {
@@ -136,7 +142,7 @@ export class HomePage implements OnInit {
           {
             
             //if(this.dispnames.length>0)
-            {
+            //{
               this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
                   data => {
                   this.StockDetails = data;
@@ -152,7 +158,7 @@ export class HomePage implements OnInit {
                   }
                 }
               );
-            }
+            //}
             this.editpressed = false;
           }
         });
@@ -236,14 +242,15 @@ export class HomePage implements OnInit {
     this.goToCompanyDeatils();
   }
   falsepressed() {
-    for (let i = 0; i < this.List.result.length; i++) {
 
-      if (this.map[this.displayListDummy[i]] === true) {
-        this.dispnames.push(this.displayListDummy[i]);
-        this.displayListDummy[i] = this.displayListDummy[
-          this.displayListDummy.length - 1
-        ];
-        this.displayListDummy.pop();
+    for (let i = 0; i < this.List.result.length; i++) {
+      if(this.displayListDummy[i])
+      {
+        if (this.map[this.displayListDummy[i][0]] === true) {
+          this.dispnames.push(this.displayListDummy[i][0]);
+          this.displayListDummy[i] = this.displayListDummy[this.displayListDummy.length - 1];
+          this.displayListDummy.pop();
+        }
       }
     }
     this.displayList = this.displayListDummy;
@@ -270,7 +277,7 @@ export class HomePage implements OnInit {
   removeFromWatchlist(index: number) {
     // Update saved watchlist
     if (this.initialized === false) {
-      this.displayListDummy.push(this.dispnames[index]);
+      this.displayListDummy.push([this.dispnames[index],""]);
     }
     this.displayListDummy.sort();
     this.map[this.dispnames[index]] = false;
@@ -290,11 +297,9 @@ export class HomePage implements OnInit {
     if (this.initialized === true) {
       for (let k = 0; k < this.dispnames.length; k++) {
         for (let i = 0; i < this.List.result.length; i++) {
-          if (this.dispnames[k] === this.displayListDummy[i]) {
-            this.map[this.displayListDummy[i]] = true;
-            this.displayListDummy[i] = this.displayListDummy[
-              this.displayListDummy.length - 1
-            ];
+          if (this.dispnames[k] === this.displayListDummy[i][0]) {
+            this.map[this.displayListDummy[i][0]] = true;
+            this.displayListDummy[i] = this.displayListDummy[this.displayListDummy.length - 1];
             this.displayListDummy.pop();
             break;
           }
@@ -317,7 +322,7 @@ export class HomePage implements OnInit {
       // if the value is an empty string don't filter the items
       if (val && val.trim() != "") {
         this.displayList = this.displayList.filter(item => {
-          return item.toLowerCase().indexOf(val.toLowerCase()) > -1;
+          return item[0].toLowerCase().indexOf(val.toLowerCase()) > -1 ||  item[1].toLowerCase().indexOf(val.toLowerCase()) > -1;
         });
       }
     }

@@ -6,7 +6,7 @@ import "rxjs/add/operator/map";
 import "rxjs/Rx";
 import { ParentService } from "../../app/parentservice.service";
 
-// import { ChartModule } from "angular2-highcharts";
+import { ChartModule } from "angular2-highcharts";
 
 /**
  * Generated class for the ChartPage page.
@@ -56,7 +56,8 @@ export class ChartPage extends ParentService{
         ]);
       }
       this.options = {
-      // title: { text: this.rouiterCode.toUpperCase() + " Stock Price" },
+
+      //title: { text: this.rouiterCode.toUpperCase() + " Stock Price" },
       //   rangeSelector: {
       //     buttons: [{
       //         type: 'hour',
@@ -89,7 +90,33 @@ export class ChartPage extends ParentService{
               valueDecimals: 2
             }
           }
-        ]
+        ],
+        navigation: {
+          buttonOptions: {
+              enabled: true
+          }
+        },      
+        exporting: {
+          filename: 'event-id-metadata-graph',
+           buttons: {
+               contextButton: {
+                   menuItems: [{
+                       text: 'Download PDF',
+                       onclick: function () {
+                           this.exportChart({
+                               type: 'application/pdf'
+                           });
+                       }
+                   }, {
+                       text: 'Print',
+                       onclick: function () {
+                               alert('Launch Print Table function')
+                       },
+                       separator: false
+                   }]
+               }
+           }
+       }         
       };
     });
   }

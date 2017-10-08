@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { portfolioRefresh, ordersRefresh } from "./../../app/refreshconfig";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { IonicPage, NavController, NavParams ,ModalController} from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import { AlertController } from "ionic-angular";
@@ -33,6 +33,8 @@ import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
+import {AutocompletePage} from '../autocomplete/autocomplete'
+import { StockService } from "./../../app/stock.service";
 
 /**
  * Generated class for the TradingPage page.
@@ -106,7 +108,7 @@ export class TradingPage implements OnInit {
     strOrderDate: null,
     strExpireAt: null
   };
-
+  
   updateuserorder: userorder = {
     PriceType: 0 /*Market -  Limited*/,
     TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
@@ -141,6 +143,7 @@ export class TradingPage implements OnInit {
   loggedIn: boolean = false;
   SelectedSegment: string = "Portfolio";
   isArabic:boolean=true;
+  
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -148,10 +151,13 @@ export class TradingPage implements OnInit {
     private TradeService: TradeService,
     private storage: Storage,
     public alertCtrl: AlertController,
-    private ToastController: ToastController
+    private ToastController: ToastController,
+    private modalCtrl: ModalController,
+    private StockService: StockService
   ) {
     this.SelectedSegment= "Portfolio";
     this.showAlert();
+    this.userorder.ReutersCode= '';
   }
   ngOnInit() {
     console.log(this.token);
@@ -534,31 +540,7 @@ export class TradingPage implements OnInit {
     // this.ShowUpdate = false;
     this.showorders = false;
   }
-  // InitializeUserOrder() {
-  //  // this.userorder = {
-  //   //  PriceType: 0 /*Market -  Limited*/,
-  //   //  TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
-  //     BimsUserID: 0,
-  //   //  ReutersCode: "",
-  //     // Side: 0 /*(2)Buy -(3) Sell -(4) Sell Same Day -(5) T+1*/,
-  //   //  Price: 0,
-  //  //   Quantity: 0,
-  //     Username: "",
-  //     CurrencyCode: "EGP",
-  //     Status: 1 /*(1)Open, (2)Completed, (3)Expired, (4)Cancelled, (5)Partially Executed, (6)Pending Approval, (7)Rejected, (8)Suspended, (9)Invalid Order, (-2)Cancelled With Error*/,
-  //     ExecutedQuantity: 0,
-  //     details: [],
-  //     ID: 0,
-  //     BimsID: 0,
-  //     OrderDate: null,
-  //     SymbolCode: "",
-  //     ExpireAt: null,
-  //     BkeeperID: 4527,
-  //     OrderReference: "",
-  //     strOrderDate: null,
-  //     strExpireAt: null
-  // //  };
-  // }
+  
 
   showTimeTerm(Term: TimeTerm): string {
     return TimeTerm[Term];
@@ -587,30 +569,52 @@ export class TradingPage implements OnInit {
   }
   setstockchosen(item: any)
   {
-    this.stockchosen = true;
-    this.reuter = item.ReutersCode;
-    this.goToCompanyDeatils();
+    this.goToCompanyDeatils(item.ReutersCode,3,true);
   }
-  reuter: string;
-  rootid: number = 3;
-  stockchosen: boolean = false;
-  
-  goToCompanyDeatils() {
+  goToCompanyDeatils(ReutersCode:string,rootid:number,stockchosen: boolean) {
     this.navCtrl.push(CompanydetailsComponent, {
-      reuter: this.reuter,
-      rootid: this.rootid,
-      stockchosen: this.stockchosen
+      ReutersCode,
+      rootid,
+      stockchosen
     });
   }
+  OrderSearchItem:string[]=["","","","","",""];
+  DirClass:string = "";
   showAddressModal()
   {
-    var test:string;
-    test="hello";
-    // let modal = this.modalCtrl.create(AutocompletePage);
-    // let me = this;
-    // modal.onDidDismiss(data => {
-    //   this.userorder.ReutersCode = data;
-    // });
-    // modal.present();
+    let modal = this.modalCtrl.create(AutocompletePage);
+    let me = this;
+    modal.onDidDismiss(data => {
+      this.OrderSearchItem = data;
+      this.OrderSearchItem.push("");
+      this.OrderSearchItem.push("");
+      this.OrderSearchItem.push("");
+      this.userorder.ReutersCode = this.OrderSearchItem[0];
+       this.StockService.getstock([this.OrderSearchItem[0]], this.isArabic).subscribe(
+        data => {
+          var Change :number = eval(data.result[0][1]);
+          this.DirClass="";
+
+          if(Change > 0)
+          {
+            this.DirClass="gainColor";
+          }
+          if(Change < 0)
+          {
+            this.DirClass="loosColor";
+          }
+          this.OrderSearchItem[3] = data.result[0][0];
+          this.OrderSearchItem[4] = data.result[0][1];
+          this.OrderSearchItem[5] = data.result[0][2];
+        },
+        Error => {
+          // if (!this.isFired) {
+          //   this.ErrorToast();
+          //   this.isFired = true;
+          // }
+        }
+      );
+    });
+    modal.present();
   }
 }
