@@ -35,6 +35,7 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 import {AutocompletePage} from '../autocomplete/autocomplete'
 import { StockService } from "./../../app/stock.service";
+import { Equals } from "../../Lib/Compare";
 
 /**
  * Generated class for the TradingPage page.
@@ -47,20 +48,6 @@ import { StockService } from "./../../app/stock.service";
 @Component({
   selector: "page-trading",
   templateUrl: "trading.html"
-  //,
-//   styles: [
-//     `.segment-md .segment-button.activated, .segment-md .segment-button.segment-activated {
-//     background-color: lightblue;
-//     border-color: #488aff;
-//     border-style: solid;
-//     border-width: 1px;
-//     background-color: #e0e0e0;
-// }
-// .text-input-md {
-//     border: 1px solid darkgrey;
-// }`
-//   ]
-  //segment-button segment-activated
 })
 export class TradingPage implements OnInit {
   //token: token;
@@ -76,17 +63,19 @@ export class TradingPage implements OnInit {
   }
 
   userorderhistoryresponse: userorderhistoryresponse;
-  userorderresponse: userorderresponse;
+  //userorderresponse: userorderresponse;
+  UserOpenOrderResponse: userorderresponse;
+  UserNotOpenOrderResponse: userorderresponse;
   portfolioresponse: portfolioresponse;
-  Detailsresponse: Detailsresponse;
+  Detailsresponse: any;
   showportfolio: boolean = false;
   showsummary = false;
   showorders = false;
   pincode: number = 0;
   showhistory = false;
-  AllUpdatesNotShown = true;
+  //AllowRefreshOrders = true;
   userorder: userorder = {
-    PriceType: 0 /*Market -  Limited*/,
+    PriceType: PriceType.Market /*Market -  Limited*/,
     TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
     BimsUserID: 0,
     ReutersCode: "",
@@ -143,6 +132,9 @@ export class TradingPage implements OnInit {
   loggedIn: boolean = false;
   SelectedSegment: string = "Portfolio";
   isArabic:boolean=true;
+  OrderSearchItem:string[]=["","","","","",""];
+  DirClass:string = "";
+  OrdresData: Array<{id: string ,title: string, details: any, icon: string, showDetails: boolean}> = [];
   
   constructor(
     public navCtrl: NavController,
@@ -153,11 +145,26 @@ export class TradingPage implements OnInit {
     public alertCtrl: AlertController,
     private ToastController: ToastController,
     private modalCtrl: ModalController,
-    private StockService: StockService
+    private StockService: StockService,
   ) {
     this.SelectedSegment= "Portfolio";
     this.showAlert();
     this.userorder.ReutersCode= '';
+
+    this.OrdresData.push({
+      id:"open",
+      title: 'Open Orders ',
+      details: this.UserOpenOrderResponse,
+      icon: 'ios-remove-circle-outline',
+      showDetails: true
+    });
+    this.OrdresData.push({
+      id:"notopen",
+      title: 'Not Open Orders ',
+      details: this.UserNotOpenOrderResponse,
+      icon: 'ios-add-circle-outline',
+      showDetails: false
+    });
   }
   ngOnInit() {
     console.log(this.token);
@@ -175,12 +182,14 @@ export class TradingPage implements OnInit {
       }
     }
   }
+
   goToorderHistory(orderid) {
     this.navCtrl.push(OrderhistoryPage, {
       token: this.token,
       orderid: orderid
     });
   }
+
   showAlert() {
     this.loggedIn = false;
     if (this.token == null) {
@@ -197,13 +206,34 @@ export class TradingPage implements OnInit {
   ionViewDidLoad() {
     console.log("ionViewDidLoad TradingPage");
   }
+
   ionViewDidEnter() {
-    this.SelectedSegment= "Portfolio";
-    this.getportfolio();
-    this.showportfolio = true;
+    this.showhistory = false;
+    this.showInsert = false;
+    this.showorders = false;
+    this.showportfolio = false;
+
+    if(this.SelectedSegment== "Orders" ) {
+      this.showorders = true;
+      this.getorders();
+    }
+    else if(this.SelectedSegment== "Insert" ) {
+      this.showInsert = true;
+      this.ChangeInsert();
+    }
+    else
+    {
+      this.SelectedSegment= "Portfolio";
+      this.getportfolio();
+      this.getportfoliosummary();
+      this.showportfolio = true;
+    }              
+            
+
 
     this.showAlert();
   }
+
   ionViewWillLeave() {
     this.showhistory = false;
     this.showInsert = false;
@@ -213,6 +243,7 @@ export class TradingPage implements OnInit {
       this.ShowUpdate[i] = false;
     }
   }
+
   getportfolio() {
     /* bn Rashed*/
     //this.checkLogin();
@@ -251,6 +282,7 @@ export class TradingPage implements OnInit {
       },
       Error => alert("error")
     );
+    this.getportfoliosummary();
     if (this.showportfolio) {
       setTimeout(() => {
         this.refreshPortfolio();
@@ -258,11 +290,15 @@ export class TradingPage implements OnInit {
     }
   }
 
-  getportfoliosummary() {
+  getportfoliosummary() { 
     this.TradeService.GetPortfolioSummary(this.token).subscribe(
       data => {
-        this.Detailsresponse = data;
-        if (this.Detailsresponse.status == "UnauthorizedOrOverrideToken") {
+        //console.log(data);
+        if(data.result && data.result.length>0)
+        {
+          this.Detailsresponse = data.result[0];
+        }
+        if (data.status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
           this.gotoLogin();
         }
@@ -271,60 +307,107 @@ export class TradingPage implements OnInit {
     );
     this.showsummary = !this.showsummary;
   }
+
   getorders() {
     this.isArabic = window["isArabic"];
     
-    this.TradeService.getorders(this.token, window["isArabic"], 2).subscribe(
+    this.TradeService.getorders(this.token, window["isArabic"], 1).subscribe(
       data => {
-        this.userorderresponse = data;
-        if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
+        this.UserOpenOrderResponse = data;
+        if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
           this.gotoLogin();
         } else {
-          for (let i = 0; i < this.userorderresponse.Status.length; i++) {
+          for (let i = 0; i < this.UserOpenOrderResponse.Status.length; i++) {
             this.ShowUpdate[i] = false;
-            if (this.ShowUpdate[i] === true) {
-              this.AllUpdatesNotShown = false;
-            }
+            // if (this.ShowUpdate[i] === true) {
+            //   this.All UpdatesNotShown = false;
+            // }
           }
         }
       },
       Error => this.ErrorToast("Error!")
     );
-    this.showorders = !this.showorders;
+    this.TradeService.getorders(this.token, window["isArabic"], 2).subscribe(
+      data => {
+        this.UserNotOpenOrderResponse = data;
+        if (this.UserNotOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        } else {
+          for (let i = 0; i < this.UserNotOpenOrderResponse.Status.length; i++) {
+            this.ShowUpdate[i] = false;
+            // if (this.ShowUpdate[i] === true) {
+            //   this.All UpdatesNotShown = false;
+            // }
+          }
+        }
+      },
+      Error => this.ErrorToast("Error!")
+    );
+
+    this.showorders = true;
     this.showportfolio = false;
     this.showhistory = false;
     this.showInsert = false;
     // this.ShowUpdate = false;
-    this.refreshOrders();
+    this.refreshOpenOrders();
   }
 
-  refreshOrders() {
+  refreshOpenOrders() {
     this.isArabic = window["isArabic"];
     
     this.TradeService
-      .getorders(this.token, window["isArabic"], 2)
+      .getorders(this.token, window["isArabic"], 1)
       .subscribe(data => {
-        this.userorderresponse = data;
-        if (this.userorderresponse.Status == "UnauthorizedOrOverrideToken") {
+        if(this.UserOpenOrderResponse && this.UserOpenOrderResponse.result){
+          if(data.result.length != this.UserOpenOrderResponse.result.length)
+          {
+            this.UserOpenOrderResponse = data;
+            console.log("UserOpenOrderResponse === data");
+          }
+          else
+          {
+            for(var i=0;i<data.result.length ;i++)
+            {
+              if(!Equals(data.result[i],this.UserOpenOrderResponse.result[i]))
+              {
+                console.log("UserOpenOrderResponse === data");
+                this.UserOpenOrderResponse.result[i] = data.result[i];
+              }
+            }
+          }
+        }
+        //this.UserOpenOrderResponse = data;
+        if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
           window["token"] = null;
           this.gotoLogin();
-        } else {
-          // for (let i = 0; i < this.userorderresponse.Status.length; i++) {
-          //   this.ShowUpdate[i] = false;
-          // }
         }
       }, Error => this.ErrorToast);
-    if (this.showorders && this.AllUpdatesNotShown) {
+    if (this.showorders) {
       setTimeout(() => {
-        this.refreshOrders();
+        this.refreshOpenOrders();
       }, ordersRefresh);
     }
+  }
+
+  refreshNotOpenOrders() {
+    this.isArabic = window["isArabic"];
+    this.TradeService
+      .getorders(this.token, window["isArabic"], 2)
+      .subscribe(data => {
+        this.UserNotOpenOrderResponse = data;
+        if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
+          window["token"] = null;
+          this.gotoLogin();
+        }
+      }, Error => this.ErrorToast);
   }
 
   getorderhistory(orderid) {
     this.goToorderHistory(orderid);
   }
+
   CreateUpdateOrder() {
     // this.InitializeUserOrder();
     this.isArabic = window["isArabic"];
@@ -390,6 +473,7 @@ export class TradingPage implements OnInit {
         Error => this.ErrorToast("Error!")
       );
   }
+
   UpdateOrder(order: userorder) {
     this.isArabic = window["isArabic"];
     
@@ -446,6 +530,7 @@ export class TradingPage implements OnInit {
         Error => this.ErrorToast("Error!")
       );
   }
+
   CancelOrder(orderid: number) {
     this.isArabic = window["isArabic"];
     
@@ -465,41 +550,50 @@ export class TradingPage implements OnInit {
     this.userorder.TimeTerm = TimeTerm.Day;
     this.updateuserorder.TimeTerm = TimeTerm.Day;
   }
+
   ChooseWeek() {
     this.userorder.TimeTerm = TimeTerm.Week;
     this.updateuserorder.TimeTerm = TimeTerm.Week;
   }
+
   ChooseMonth() {
     this.userorder.TimeTerm = TimeTerm.Month;
     this.updateuserorder.TimeTerm = TimeTerm.Month;
   }
+
   ChooseMarket() {
     this.userorder.PriceType = PriceType.Market;
     this.updateuserorder.PriceType = PriceType.Market;
     this.EnablePrice = false;
   }
+
   ChooseLimit() {
     this.userorder.PriceType = PriceType.Limit;
     this.updateuserorder.PriceType = PriceType.Limit;
     this.EnablePrice = true;
   }
+
   ChooseBuy() {
     this.userorder.Side = OrderSide.Buy;
     this.updateuserorder.Side = OrderSide.Buy;
   }
+
   ChooseSell() {
     this.userorder.Side = OrderSide.Sell;
     this.updateuserorder.Side = OrderSide.Sell;
   }
+
   ChooseSellT0() {
     this.userorder.Side = OrderSide.Sell_T0;
     // this.updateuserorder.Side = OrderSide.Sell_T0;
     this.updateuserorder.Side = OrderSide.Sell_T0;
   }
+
   ChooseSellT1() {
     this.userorder.Side = OrderSide.Sell_T1;
     this.updateuserorder.Side = OrderSide.Sell_T1;
   }
+
   checkupdatability(userorder: userorder): boolean {
     if (
       userorder.Status === 1 ||
@@ -512,26 +606,28 @@ export class TradingPage implements OnInit {
       return false;
     }
   }
+
   ChangeUpdate(id: number, order: userorder) {
     this.showportfolio = false;
     this.showhistory = false;
     this.showsummary = false;
     this.showInsert = false;
     // this.showorders = false;
-    for (let i = 0; i < this.userorderresponse.result.length; i++) {
+    var lShowUpdate = true;
+    for (let i = 0; i < this.UserOpenOrderResponse.result.length; i++) {
       if (id === i) {
-        this.ShowUpdate[i] = !this.ShowUpdate[i];
-        if (this.ShowUpdate[i] === true) {
-          this.AllUpdatesNotShown = false;
-        } else {
-          this.AllUpdatesNotShown = true;
-        }
+        this.ShowUpdate[i] = true;
+        lShowUpdate = false;
         this.updateuserorder = Object.assign({}, order);
-      } else {
+        break;
+      } 
+      else {
         this.ShowUpdate[i] = false;
       }
     }
+    this.showorders = lShowUpdate;
   }
+
   ChangeInsert() {
     this.showInsert = !this.showInsert;
     this.showportfolio = false;
@@ -539,21 +635,25 @@ export class TradingPage implements OnInit {
     this.showsummary = false;
     // this.ShowUpdate = false;
     this.showorders = false;
+    this.ChooseMarket();
   }
   
-
   showTimeTerm(Term: TimeTerm): string {
     return TimeTerm[Term];
   }
+
   showOrderStatus(Status: OrderStatus): string {
     return OrderStatus[Status];
   }
+
   showOrderSide(Side: OrderSide): string {
     return OrderSide[Side];
   }
+
   showPriceType(Price: PriceType): string {
     return PriceType[Price];
   }
+
   ErrorToast(message: string) {
     let toast = this.ToastController.create({
       message: message,
@@ -567,21 +667,20 @@ export class TradingPage implements OnInit {
 
     toast.present();
   }
-  setstockchosen(item: any)
-  {
+
+  setstockchosen(item: any){
     this.goToCompanyDeatils(item.ReutersCode,3,true);
   }
+
   goToCompanyDeatils(ReutersCode:string,rootid:number,stockchosen: boolean) {
     this.navCtrl.push(CompanydetailsComponent, {
-      ReutersCode,
-      rootid,
-      stockchosen
+      reuter: ReutersCode,
+      rootid: rootid,
+      stockchosen: stockchosen
     });
   }
-  OrderSearchItem:string[]=["","","","","",""];
-  DirClass:string = "";
-  showAddressModal()
-  {
+
+  showAddressModal(){
     let modal = this.modalCtrl.create(AutocompletePage);
     let me = this;
     modal.onDidDismiss(data => {
@@ -589,6 +688,7 @@ export class TradingPage implements OnInit {
       this.OrderSearchItem.push("");
       this.OrderSearchItem.push("");
       this.OrderSearchItem.push("");
+      
       this.userorder.ReutersCode = this.OrderSearchItem[0];
        this.StockService.getstock([this.OrderSearchItem[0]], this.isArabic).subscribe(
         data => {
@@ -617,4 +717,27 @@ export class TradingPage implements OnInit {
     });
     modal.present();
   }
+
+  toggleDetails(curElem) {
+    this.OrdresData.forEach(element => {
+      if(element === curElem)
+      {
+        if (curElem.showDetails) {
+          curElem.showDetails = false;
+          curElem.icon = 'ios-add-circle-outline';
+        } else {
+          curElem.showDetails = true;
+          curElem.icon = 'ios-remove-circle-outline';
+        }
+      }
+      else
+      {
+        element.showDetails = false;
+        element.icon = 'ios-add-circle-outline';
+      }
+    });
+
+  }
+
+
 }

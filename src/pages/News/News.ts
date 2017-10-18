@@ -7,7 +7,7 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
 import { ToastController } from "ionic-angular";
-import { newsRefresh } from "./../../app/refreshconfig";
+import { newsRefresh,imagPath } from "./../../app/refreshconfig";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
@@ -19,15 +19,18 @@ export class NewsPage implements OnInit {
   News: Newsresponse;
   displayedMoreNews: Newsresponse;
   displayednews: string[][] = new Array();
-  MoreNews: Newsresponse;
+  //MoreNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   showdetails = false;
-  date: Date = new Date("2017-7-1");
+  NewestDate: string = "2017-7-1";
+  OldestDate: string ;
+  
+  //date: Date = new Date("2017-7-1");
   elements: Element;
-  initialized = false;
-  to: Date = new Date();
-  from: Date = new Date();
-  initializetofrom = false;
+  //initialized = false;
+  //to: Date = new Date();
+  //from: Date = new Date();
+  //initializetofrom = false;
   id: string;
   dorefresh: boolean = true;
   isFired = false;
@@ -37,49 +40,60 @@ export class NewsPage implements OnInit {
     public events: Events,
     private ToastController: ToastController
   ) {
-    this.CompanyService.getnews(this.date, 100, window["isArabic"]).subscribe(
-      data => {
-        this.News = data;
-      },
-      Error => {
-        if (!this.isFired) {
-          this.ErrorToast();
-          this.isFired = true;
-        }
-      }
-    );
+    // this.CompanyService.getnews(this.NewestDate, 100, window["isArabic"]).subscribe(
+    //   data => {
+    //     var len :number = data.result.V.length;
+    //     var n : string = data.result.V[0][2] + " " + data.result.V[0][2];
+    //     this.NewestDate = new Date(n);
+    //     if(!this.News || this.News.result.V.length==0)
+    //     {
+    //       var l : string = data.result.V[len-1][2] + " " + data.result.V[len-1][2];
+    //       this.OldestDate = new Date(l);
+    //     }
+    //     this.News = data;
+
+    //   },
+    //   Error => {
+    //     if (!this.isFired) {
+    //       this.ErrorToast();
+    //       this.isFired = true;
+    //     }
+    //   }
+    // );
   }
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    this.initialized = true;
+    //this.initialized = true;
   }
   ionViewDidEnter() {
     this.dorefresh = true;
-    this.initializetofrom = false;
+    //this.initializetofrom = false;
     this.displayednews = new Array();
-
     this.refresh();
   }
+  
   ionViewWillLeave() {
     this.dorefresh = false;
   }
   refresh() {
-    //  setTimeout(() => {
-    //     }, 1000);
-    if (this.initialized && this.News) {
-      this.date = new Date(this.News.result.V[0][2]);
-    }
-    this.CompanyService.getnews(this.date, 100, window["isArabic"]).subscribe(
+    this.CompanyService.getnews(this.NewestDate, 100, window["isArabic"]).subscribe(
       data => {
-        this.News = data;
-        if (!this.initializetofrom) {
-          this.to = new Date(
-            this.News.result.V[this.News.result.V.length - 1][2] +
-              ":" +
-              this.News.result.V[this.News.result.V.length - 1][3]
-          );
-          this.from.setDate(this.to.getDate() - 1);
-          this.initializetofrom = true;
+        console.log(data.result.V);
+        var len :number = data.result.V.length;
+        if(data.result.V.length>0)
+        {
+          this.NewestDate = data.result.V[0][2] + ":" + data.result.V[0][3];
+        }
+        if(!this.News || this.News.result.V.length==0)
+        {
+          this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
+          this.News = data;
+        }
+        else
+        {
+          this.News.result.V = [...data.result.V,...this.News.result.V];
+          this.News.result.N = data.result.N;
+          this.News.status = data.status;
         }
       },
       Error => {
@@ -87,13 +101,15 @@ export class NewsPage implements OnInit {
           this.ErrorToast();
           this.isFired = true;
         }
+      },()=>{
+        if (this.dorefresh) {
+          setTimeout(() => {
+            this.refresh();
+          }, newsRefresh);
+        }
       }
     );
-    if (this.dorefresh) {
-      setTimeout(() => {
-        this.refresh();
-      }, newsRefresh);
-    }
+
   }
   getdetails(id) {
     this.id = id;
@@ -109,18 +125,28 @@ export class NewsPage implements OnInit {
   }
   More() 
   {
-    if (this.initializetofrom) {
-      this.to.setDate(this.from.getDate());
-      this.from.setDate(this.to.getDate() - 1);
-    }
     this.CompanyService
-      .getnewsRange(this.from, this.to, 10, window["isArabic"])
+      .getnewsRange(this.OldestDate, 10, window["isArabic"])
       .subscribe(
         data => {
-          this.MoreNews = data;
+          if(data.result.V.length > 0)
+          {
+            var len :number = data.result.V.length;
+            this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
+          }
 
-          for (let i = 0; i < this.MoreNews.result.V.length; i++) {
-            this.displayednews.push(this.MoreNews.result.V[i]);
+          if(!this.News || this.News.result.V.length == 0)
+          {
+            var len :number = data.result.V.length;
+            this.NewestDate = data.result.V[0][2] + ":" + data.result.V[0][3];
+            this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
+            this.News = data;
+          }
+          else
+          {
+            this.News.result.V =[...this.News.result.V,...data.result.V];
+            this.News.result.N = data.result.N;
+            this.News.status = data.status;
           }
         },
         Error => {

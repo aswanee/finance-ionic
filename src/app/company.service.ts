@@ -16,18 +16,15 @@ export class CompanyService extends ParentService {
   // Comapnies: Rouiter[]= new Array();
 
   getnews(
-    date: Date,
+    strDate: string,
     count: number,
     isArabic: boolean
   ): Observable<Newsresponse> {
     this.getunsecurelink();
-    let temp = "";
-    temp =
-      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
     this.link =
       this.link +
       "apis/market/GetNews?lastPostingTime=" +
-      temp +
+      strDate +
       "&count=" +
       count +
       "&isArabic=" +
@@ -40,23 +37,19 @@ export class CompanyService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getnewsRange(
-    from: Date,
-    to: Date,
+    //from: Date,
+    tempto: string,
     count: number,
     isArabic: boolean
   ): Observable<Newsresponse> {
     this.getunsecurelink();
-    let tempfrom = "";
-    tempfrom =
-      from.getFullYear() + "-" + (from.getMonth() + 1) + "-" + from.getDate();
-    let tempto = "";
-    tempto = to.getFullYear() + "-" + (to.getMonth() + 1) + "-" + to.getDate();
+    //let tempfrom = from.getFullYear() + "-" + (from.getMonth() + 1) + "-" + from.getDate();
     this.link =
       this.link +
       "apis/market/GetNewsWithRange?to=" +
       tempto +
-      "%2011:10&from=" +
-      tempfrom +
+      //"%2011:10&from=" +
+      //tempfrom +
       "&count=" +
       count +
       "&isArabic=" +

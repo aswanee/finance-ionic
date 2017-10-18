@@ -2,12 +2,17 @@
 <ion-header>
     <ion-navbar>
         <ion-title>
-           {{Newsbody?.result.V[1]}}
+           <!-- {{Newsbody?.result.V[1]}} -->
         </ion-title>
     </ion-navbar>
 </ion-header>
 <ion-content>
-        <ion-item >{{Newsbody?.result.V[1]}}</ion-item>
-        <ion-item no-lines style="color:#B39058">{{Newsbody?.result.V[6]}}</ion-item>
-    <ion-item id="id"></ion-item>
+    <ion-item text-wrap  style="color:#ffa500;font-size: 1.2em;font-weight: bold">{{Newsbody?.result.V[1]}}</ion-item>
+    <ion-item  no-lines style="color:#ffa500;font-size: 0.8em">
+        {{Newsbody?.result.V[6]}}
+    </ion-item>
+    <ion-item>
+        <img src="https://www.arabfinance.com/News/NewsImages/larg/{{Newsbody?.result.V[7]}}">
+    </ion-item>
+    <ion-item id="id" class="NewsDetails-body"></ion-item>
 </ion-content>

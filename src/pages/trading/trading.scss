@@ -1,8 +1,47 @@
+.ToggelOrdersItem {
+    padding-left: 0;
+    position: relative;
+}
+.ToggelOrdersDiv {
+    text-transform: none;
+    //font-size: 0.8em;
+    padding: 0;
+    white-space: normal;
+    text-align: justify;
+}
+.ToggelOrdersicon  {
+    //font-size: 1.8rem;
+    padding: 0;
+    text-align: center;
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    &:before {
+      font-weight: bold;
+    }
+}
+.odd{
+  ion-item{
+    background-color: #242424 !important;
+  }
+}  
+.even{
+  ion-item{
+    background-color: #000 !important;
+  }
+}  
+  //.item-md
 .button-fab {
     z-index: 100;
     position: fixed;
 }
-
+ion-item-options{
+  button{
+    -webkit-box-shadow: none !important;
+    box-shadow:  none !important;
+  }
+  background-color: orange !important;
+}
 
 .RowDown{
     color:red !important; 
@@ -29,3 +68,20 @@
     direction: left;
     background-color: rgba(255, 255, 255, 0);
   }
+  form{
+    .input-wrapper ion-label{
+      color:orange !important; 
+    }
+    ion-card-header{
+      background-color: #343434 !important; 
+      border-bottom: 1px solid gray;
+      padding: 5px 0px !important; 
+      span{
+        padding: 0px 10px !important; 
+      }
+    }
+    ion-card{
+      border: 1px solid #343434;
+    }
+  }
+  

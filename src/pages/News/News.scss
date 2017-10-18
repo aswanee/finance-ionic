@@ -1,3 +1,13 @@
 page-contact {
 
 }
+.imgThumb {
+    display: inline-block;
+    width: 33%; /* or waterver you need = w1 */
+    vertical-align: top;
+ }
+ .pThumb {
+    display:inline-block;
+    // width: 66%; /* (100-w1)% */
+    vertical-align: top;
+ }

@@ -4,7 +4,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { TabsPage } from "../pages/tabs/tabs";
 import { AboutPage } from "../pages/about/about";
-import { OneSignal } from "@ionic-native/onesignal";
+//import { OneSignal } from "@ionic-native/onesignal";
 
 import {
   IonicPage,
@@ -32,7 +32,7 @@ export class MyApp {
     // public navCtrl: Nav,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    private oneSignal: OneSignal
+    //private oneSignal: OneSignal
   ) {
     this.alert = this.alertCtrl.create({
       title: "Exit?",
@@ -62,25 +62,24 @@ export class MyApp {
         //this.isApp = false;
       } else 
       {
-          this.oneSignal.startInit('a0b47b91-106c-4139-9955-ffe07d4f41e4', '12030250491');
+          // this.oneSignal.startInit('a0b47b91-106c-4139-9955-ffe07d4f41e4', '12030250491');
     
-          this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
+          // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
     
-          this.oneSignal.handleNotificationReceived().subscribe(() => {
-           // do something when notification is received
-          });
+          // this.oneSignal.handleNotificationReceived().subscribe(() => {
+          //  // do something when notification is received
+          // });
     
-          this.oneSignal.handleNotificationOpened().subscribe(() => {
-            // do something when a notification is opened
-          });
+          // this.oneSignal.handleNotificationOpened().subscribe(() => {
+          //   // do something when a notification is opened
+          // });
          
-          this.oneSignal.endInit();
-    }
+          // this.oneSignal.endInit();
+      }
       //For Notification
 
 
       statusBar.styleDefault();
-      splashScreen.hide();
       platform.registerBackButtonAction(() => {
         if (this.nav.canGoBack()) {
           this.showToast();

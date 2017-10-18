@@ -7,20 +7,14 @@
 </ion-header>
 <ion-content>
     <ion-list *ngIf="News?.result.V">
-        <ion-item *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+        <ion-item  *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
             <button clear class="full"  (click)="getdetails(item[0])">
-                <p>{{item[1] | limitTo: 50}}</p>
-                <p style="color:#B39058">{{item[2]}}</p>
+                <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/News/NewsImages/{{item[4]}}">
+                <div class="pThumb" item-text-wrap>
+                    <p text-wrap>{{item[1]}}</p>
+                    <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                </div>
             </button> 
-        </ion-item>
-
-        <!-- <ion-item *ngFor="let item of displayednews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
-            <button clear class="full"  (click)="getdetails(item[0])">
-                <p style="font-size: 12px">{{item[1] | limitTo: 50}}</p>
-                <p style="font-size: 12px;color: gray">{{item[2]}}</p>
-            </button>            
-        </ion-item> -->
-        <ion-item>
         </ion-item>
     </ion-list>
     <ion-item (click)="More()">{{'More' | Language}}</ion-item>

@@ -6,9 +6,9 @@ import {
   SimpleChanges,
   HostListener
 } from "@angular/core";
-import { NavController } from "ionic-angular";
+import { NavController,AlertController ,PopoverController} from "ionic-angular";
 import { watchlistRefresh } from "./../../app/refreshconfig";
-import { ToastController } from "ionic-angular";
+import { ToastController,Platform } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
 import { AskBidService } from "./../../app/asksbids.service";
 import { CompanyService } from "./../../app/company.service";
@@ -20,6 +20,9 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { Badge } from '@ionic-native/badge';
+import { PopoverPage } from "../pop-over/pop-over";
+import { SplashScreen } from "@ionic-native/splash-screen";
 
 @Component({
   selector: "page-home",
@@ -59,7 +62,16 @@ export class HomePage implements OnInit {
   displayList: string[][] = new Array();
   displayListDummy: string[][] = new Array();
   map: { [reuter: string]: Boolean } = {};
-  
+
+  hideSplash:boolean=false;
+
+
+  presentPopover(myEvent) {
+    // let popover = this.popoverCtrl.create(PopoverPage);
+    // popover.present({
+    //   ev: myEvent
+    // });
+  }
   constructor(
     public navCtrl: NavController,
     private StockService: StockService,
@@ -67,8 +79,137 @@ export class HomePage implements OnInit {
     private AskBidService: AskBidService,
     private GetService: GetService,
     private storage: Storage,
-    private ToastController: ToastController
-  ) {}
+    private ToastController: ToastController,
+    private platform:Platform,
+    private alert:AlertController,
+    private badge: Badge,
+    public popoverCtrl: PopoverController,
+    public splashScreen: SplashScreen,
+  ) 
+  {
+    //this.onNotification();
+    platform.ready().then(() => {
+      //this.requestPremission();
+      
+      if(!this.platform.is('core') && !this.platform.is('mobileweb')) 
+      {
+        
+        // this.hideSplash = true;
+        //FCMPlugin.onTokenRefresh( onTokenRefreshCallback(token) );
+        //Note that this callback will be fired everytime a new token is generated, including the first time.
+        FCMPlugin.onTokenRefresh(function(token){
+          //window["FCMToken"] = token;
+          console.log("token IS :[" + token + "]");
+        });
+  
+        FCMPlugin.getToken(function(token){
+          //window["FCMToken"] = token;
+          console.log("token IS :[" + token + "]");
+        });
+  
+        FCMPlugin.onNotification((data)=>{
+            this.increaseBadges();        
+            console.log(data);
+            this.alert.create({message:data.message}).present();
+          },(error)=> 
+          {
+            console.error(error);
+          }
+        );
+      }
+    });
+  }
+
+  async setBadges(num: number){
+    try{
+      let badges = await this.badge.set(num);
+      console.log("badges:");
+      console.log(badges);
+    }catch(e)
+    {
+      console.error(e);
+    }
+  }
+
+  async increaseBadges(){
+    try{
+      let hasPermissio = await this.badge.hasPermission();
+      console.log(hasPermissio);
+      
+      if(hasPermissio)
+      {
+        let badges = await this.badge.increase(1);
+        console.log("badges:");
+        console.log(badges);
+      }
+      else{
+        console.log("YOU DONT HAVE PERMISSION!!!");
+        
+      }
+    }catch(e)
+    {
+      console.error(e);
+    }
+  }
+
+  async requestPremission_XXX() {
+    try{
+      let hasPermissio = await this.badge.hasPermission();
+      console.log("hasPermissio:");
+      console.log(hasPermissio);
+      
+      if(!hasPermissio)
+      {
+        let permissio = await this.badge.registerPermission();
+        console.log("permissio");
+        console.log(permissio) ;
+        
+       }
+       else
+       {
+         this.setBadges(10);
+       }
+     }
+    catch(e)
+    {
+      console.error(e);
+    }
+  }
+
+  async onNotification_XXX()
+  {
+    try{
+ 
+      //console.log("--- Begin Notification ---")
+      await this.platform.ready();
+
+      FCMPlugin.onNotification((data)=>{
+          console.log("wasTapped")
+          this.alert.create({message:data.message}).present();
+        },(error)=> 
+        {
+          console.error(error);
+        }
+      );
+
+      //FCMPlugin.onTokenRefresh( onTokenRefreshCallback(token) );
+      //Note that this callback will be fired everytime a new token is generated, including the first time.
+      // FCMPlugin.onTokenRefresh(function(token){
+      //   window["FCMToken"] = token;
+      //   console.log(token);
+      // });
+
+      // FCMPlugin.getToken(function(token){
+      //   window["FCMToken"] = token;
+      //   console.log(token);
+      // });
+    }
+    catch(e)
+    {
+      console.error(e);
+    }
+  }
+
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     //console.log("Width: " + event.target.innerWidth);
@@ -177,6 +318,7 @@ export class HomePage implements OnInit {
     if (this.dispnames) {
       this.refresh();
     }
+    this.splashScreen.hide();
 
   }
   ionViewWillLeave() {

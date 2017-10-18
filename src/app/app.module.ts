@@ -36,7 +36,9 @@ import { LoginService } from "./login.service";
 import { IonicStorageModule } from "@ionic/storage";
 import { AlertService } from "./alert.service";
 import { PopOverPageModule } from "../pages/pop-over/pop-over.module";
-import { OneSignal } from '@ionic-native/onesignal';
+import { Badge } from '@ionic-native/badge';
+
+//import { OneSignal } from '@ionic-native/onesignal';
 
 //pipes
 import { LimitToPipe } from "./../pipes/limit-to/limit-to";
@@ -119,13 +121,13 @@ export function highchartsFactory():HighchartsStatic {
     CompanyService,
     LoginService,
     MarketService,
-    OneSignal,
+    //OneSignal,
     GetService,
     SplashScreen,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
-    }
+    },Badge
     //{ provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

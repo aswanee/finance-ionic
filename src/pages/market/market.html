@@ -1,3 +1,4 @@
+
 <ion-header>
     <ion-navbar>
         <ion-title>
@@ -6,37 +7,37 @@
     </ion-navbar>
 </ion-header>
 
-<ion-content *ngIf="Indices&&BP&&WP&&BV">
-    <ion-item style="margin-top: 10%;">
-        <h2 style="text-align:center;"> {{'Indices'|Language}}</h2>
-        <ion-row>
-            <ion-col col-1>
-            </ion-col>
-            <ion-col col>
-                <p style="font-size:0.8em">{{'Reuter'|Language}}</p>
-            </ion-col>
-            <ion-col col>
-                <p style="font-size:0.8em">{{'Value' |Language}}</p>
-            </ion-col>
-            <ion-col col>
-                <p style="font-size:0.8em">{{'Change' |Language}}</p>
-            </ion-col>
-            <ion-col col>
-                <p style="font-size:0.8em">{{'Percentage' | Language}}</p>
-            </ion-col>
-            <ion-col col *ngIf="!this.isSmall">
-                <p style="font-size:0.8em">{{'TurnOver' | Language}}</p>
-            </ion-col>
-            <ion-col col *ngIf="!this.isSmall">
-                <p style="font-size:0.8em">{{'Volume' | Language}}</p>
-            </ion-col>
-            <!-- <ion-col  col>
-                <p style="font-size:0.8em">{{'Trend' | Language}}</p>
-            </ion-col> -->
-        </ion-row>
-         <ion-buttons *ngIf="EGX30 && EGX70 && EGX100">
+<ion-content>
+    <ion-item *ngIf="Indices&&BP&&WP&&BV">
+        <!-- <h2 style="text-align:center;"> {{'Indices'|Language}}</h2> -->
+        <ion-item class="GridHeader">
+            <ion-row>
+                <ion-col col-1>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Reuter'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Value' |Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Change' |Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p>{{'Percentage' | Language}}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
+                    <p>{{'TurnOver' | Language}}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
+                    <p>{{'Volume' | Language}}</p>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-buttons *ngIf="EGX30 && EGX70 && EGX100">
+
             <button ion-button [clear]=!show30 full (click)="showHideChart(0)" [ngClass]="['button-border',egx30Selected , egx30DirRow]">
-                <ion-col col style="color:#e67e22;font-weight: bold;"> {{EGX30?.result[0][0]}}</ion-col><!--ReutersCode-->
+                <ion-col col style="color:#ffa500;font-weight: bold;"> {{EGX30?.result[0][0]}}</ion-col><!--ReutersCode-->
                 <ion-col col [ngClass]="egx30Dir"> {{EGX30?.result[0][1]}}</ion-col><!--LastTrade-->
                 <ion-col col> {{EGX30?.result[0][2]}}</ion-col><!--NetChange-->
                 <ion-col col> {{EGX30?.result[0][3]}}</ion-col><!--PercentageChange-->
@@ -47,9 +48,9 @@
                     <ion-icon *ngIf="EGX30?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col> -->
             </button>
-<!-- <hr style="background-color: orange"/> -->
-            <button ion-button [clear]=!show70 full (click)="showHideChart(1)" [ngClass]="['button-border',egx70Selected , egx70DirRow]">
-                <ion-col col style="color:#e67e22;font-weight: bold;"> {{EGX70?.result[0][0]}} </ion-col>
+
+            <button ion-button  full (click)="showHideChart(1)" [ngClass]="['button-border',egx70Selected , egx70DirRow]">
+                <ion-col col style="color:#ffa500;font-weight: bold;"> {{EGX70?.result[0][0]}} </ion-col>
                 <ion-col col [ngClass]="egx70Dir"> {{EGX70?.result[0][1]}}</ion-col>
                 <ion-col col> {{EGX70?.result[0][2]}}</ion-col>
                 <ion-col col> {{EGX70?.result[0][3]}}</ion-col>
@@ -60,9 +61,9 @@
                     <ion-icon *ngIf="EGX70?.result[0][2]<0" name="md-trending-down" color="danger"></ion-icon>
                 </ion-col> -->
             </button>
-<!-- <hr style="background-color: orange"/> -->
+
             <button ion-button [clear]=!show100  full (click)="showHideChart(2)" [ngClass]="['button-border',egx100Selected , egx100DirRow]">
-                <ion-col col style="color:#e67e22;font-weight: bold;"> {{EGX100?.result[0][0]}} </ion-col>
+                <ion-col col style="color:#ffa500;font-weight: bold;"> {{EGX100?.result[0][0]}} </ion-col>
                 <ion-col col [ngClass]="egx100Dir"> {{EGX100?.result[0][1]}}</ion-col>
                 <ion-col col> {{EGX100?.result[0][2]}}</ion-col>
                 <ion-col col> {{EGX100?.result[0][3]}}</ion-col>
@@ -74,14 +75,12 @@
                 </ion-col> -->
             </button>
         </ion-buttons>
-        <ion-item *ngIf="EGX30">
+        <ion-item *ngIf="EGX30 && EGX70 && EGX100">
             <ion-segment [(ngModel)]="ChartParts">
                 <ion-segment-button value="IntraDay" (click)="showIntraDays()">
-                    <!-- <ion-icon name="cart" item-start></ion-icon> -->
                     Intra
                 </ion-segment-button>
                 <ion-segment-button value="Historical" (click)="showHistoricalDays()">
-                    <!-- <ion-icon name="cart"></ion-icon> -->
                     Hist
                 </ion-segment-button>
             </ion-segment>
@@ -122,50 +121,50 @@
     <div [ngSwitch]="SelectedPerform">
     <ion-item *ngSwitchCase="'BP'">
         <!-- <h2 style="text-align:center">{{'BP' | Language}}</h2> -->
-        <ion-item>
+        <ion-item class="GridHeader">
             <ion-row *ngIf="!this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language}}</p>
+                    <p>{{'Reuter'|Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value' |Language}}</p>
+                    <p>{{'Value' |Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change' |Language}}</p>
+                    <p>{{'Change' |Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage' | Language}}</p>
+                    <p>{{'Percentage' | Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend' | Language}}</p>
+                    <p>{{'Trend' | Language}}</p>
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language | limitTo:5}}</p>
+                    <p>{{'Reuter'|Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value' |Language | limitTo:5}}</p>
+                    <p>{{'Value' |Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change' |Language | limitTo:5}}</p>
+                    <p>{{'Change' |Language | limitTo:5}}</p>
                 </ion-col>
                 <!-- <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage' | Language | limitTo:5}}</p>
+                    <p>{{'Percentage' | Language | limitTo:5}}</p>
                 </ion-col> -->
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend' | Language | limitTo:5}}</p>
+                    <p>{{'Trend' | Language | limitTo:5}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
         <ion-item *ngFor="let x of BP?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
             <button clear class="full"  (click)="setstockchosen(x[0])">
                 <ion-row>
-                    <ion-col  style="color:#e67e22;font-weight: bold;">{{x[0]}}</ion-col>
+                    <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
                     <!-- <ion-col *ngIf="x[0]>x[5]"  style="color:green">{{x[0]}}</ion-col>
                     <ion-col *ngIf="x[0]<x[5]"  style="color:red">{{x[0]}}</ion-col> -->
                     <ion-col *ngIf="x[0]==x[5]">{{x[1]}}</ion-col>
@@ -193,43 +192,43 @@
     </ion-item>
     <ion-item *ngSwitchCase="'BV'">
         <!-- <h2 style="text-align:center">{{'BV' | Language}}</h2> -->
-        <ion-item>
+        <ion-item class="GridHeader">
             <ion-row *ngIf="!this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language}}</p>
+                    <p>{{'Reuter'|Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value' |Language}}</p>
+                    <p>{{'Value' |Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change' |Language}}</p>
+                    <p>{{'Change' |Language}}</p>
                 </ion-col>
                 <!-- <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage' | Language}}</p>
+                    <p>{{'Percentage' | Language}}</p>
                 </ion-col> -->
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend' | Language}}</p>
+                    <p>{{'Trend' | Language}}</p>
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language | limitTo:5}}</p>
+                    <p>{{'Reuter'|Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value' |Language | limitTo:5}}</p>
+                    <p>{{'Value' |Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change' |Language | limitTo:5}}</p>
+                    <p>{{'Change' |Language | limitTo:5}}</p>
                 </ion-col>
                 <!-- <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage' | Language | limitTo:5}}</p>
+                    <p>{{'Percentage' | Language | limitTo:5}}</p>
                 </ion-col> -->
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend' | Language | limitTo:5}}</p>
+                    <p>{{'Trend' | Language | limitTo:5}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
@@ -264,50 +263,50 @@
     </ion-item>
     <ion-item *ngSwitchCase="'WP'" style="margin-bottom: 3%">
         <!-- <h2 style="text-align:center">{{'WP' | Language}}</h2> -->
-        <ion-item>
+        <ion-item class="GridHeader">
             <ion-row *ngIf="!this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language}}</p>
+                    <p>{{'Reuter'|Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value' |Language}}</p>
+                    <p>{{'Value' |Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change' |Language}}</p>
+                    <p>{{'Change' |Language}}</p>
                 </ion-col>
                 <!-- <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage' | Language}}</p>
+                    <p>{{'Percentage' | Language}}</p>
                 </ion-col> -->
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend' | Language}}</p>
+                    <p>{{'Trend' | Language}}</p>
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="this.isSmall">
                 <ion-col col-1>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Reuter'|Language | limitTo:5}}</p>
+                    <p>{{'Reuter'|Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Value' |Language | limitTo:5}}</p>
+                    <p>{{'Value' |Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Change' |Language | limitTo:5}}</p>
+                    <p>{{'Change' |Language | limitTo:5}}</p>
                 </ion-col>
                 <!-- <ion-col col>
-                    <p style="font-size:0.8em">{{'Percentage' | Language | limitTo:5}}</p>
+                    <p>{{'Percentage' | Language | limitTo:5}}</p>
                 </ion-col> -->
                 <ion-col col>
-                    <p style="font-size:0.8em">{{'Trend' | Language | limitTo:5}}</p>
+                    <p>{{'Trend' | Language | limitTo:5}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
         <ion-item *ngFor="let x of WP?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
             <button clear class="full"  (click)="setstockchosen(x[0])">
                 <ion-row>
-                    <ion-col  style="color:#e67e22;font-weight: bold;">{{x[0]}}</ion-col>
+                    <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
                     <!-- <ion-col *ngIf="x[0]>x[5]"  style="color:green">{{x[0]}}</ion-col>
                     <ion-col *ngIf="x[0]<x[5]"  style="color:red">{{x[0]}}</ion-col> -->
                     <ion-col *ngIf="x[0]==x[5]">{{x[1]}}</ion-col>
