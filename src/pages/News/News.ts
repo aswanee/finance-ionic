@@ -11,6 +11,7 @@ import { newsRefresh,imagPath } from "./../../app/refreshconfig";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import { NewsLangPipe } from "./../../pipes/news-lang/news-lang";
 @Component({
   selector: "page-contact",
   templateUrl: "News.html"

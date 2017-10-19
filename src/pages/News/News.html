@@ -14,7 +14,7 @@
     </ion-segment>    
 
     <ion-list *ngIf="News?.result.V">
-        <ion-item  *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+        <ion-item  *ngFor="let item of News?.result.V|newsLang:SelectedSegment let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
             <button clear class="full" text-start  (click)="getdetails(item[0])">
                 <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/News/NewsImages/{{item[4]}}">
                 <div class="pThumb" item-text-wrap>

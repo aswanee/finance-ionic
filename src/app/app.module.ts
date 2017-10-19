@@ -24,6 +24,7 @@ import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
 import { PopoverPage } from "./../pages/pop-over/pop-over";
 import { SwitchAccountsPage } from "./../pages/switch-accounts/switch-accounts";
 import { LanguagePipe } from "./../pipes/Language/Language.pipe";
+import { NewsLangPipe } from "./../pipes/news-lang/news-lang";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CompanyService } from "./company.service";
@@ -80,7 +81,8 @@ export function highchartsFactory():HighchartsStatic {
     UpdateAlertPage,
     aroundToPipe,
     LanguagePipe,
-    AutocompletePage
+    AutocompletePage,
+    NewsLangPipe
   ],
   imports: [
     BrowserModule,
