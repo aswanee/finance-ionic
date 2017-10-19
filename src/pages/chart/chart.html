@@ -5,4 +5,6 @@
   Ionic pages and navigation.
 -->
 <!-- <chart type="StockChart" [options]="options"></chart> -->
-<chart type="StockChart" [options]="options" style="height: 300px" ></chart>
+<!--bnrashed Chart-->
+<chart *ngIf="isArabic" type="StockChart" [options]="options" style="height: 300px;text-anchor: end !important" ></chart> 
+<chart *ngIf="!isArabic" type="StockChart" [options]="options" style="height: 300px;text-anchor: start !important" ></chart>

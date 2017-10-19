@@ -5,7 +5,6 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import "rxjs/add/operator/map";
 import "rxjs/Rx";
 import { ParentService } from "../../app/parentservice.service";
-
 import { ChartModule } from "angular2-highcharts";
 
 /**
@@ -28,6 +27,8 @@ export class ChartPage extends ParentService{
   @Input() rouiterCode: string = "";
   @Input() ChartType: string = "";
   
+
+  isArabic :boolean = true;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -37,7 +38,13 @@ export class ChartPage extends ParentService{
     super(http);
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetSimpleChartWithinRange?Codes=";
-    
+    if(window["isArabic"])
+    {
+      this.isArabic =  window["isArabic"];
+    }
+    else {
+      this.isArabic =false;
+    }
   }
 
   ionViewDidLoad() {
@@ -80,7 +87,9 @@ export class ChartPage extends ParentService{
       '#F3B32A', '#F3B32A', '#F3B32A'],
       chart: {
         backgroundColor: '#242424'
+        
       },
+
       series: [
           {
             //type: 'candlestick',

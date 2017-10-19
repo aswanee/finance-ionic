@@ -132,7 +132,7 @@
                 </ion-row>
             </ion-item>
             <ion-item *ngFor="let item of portfolioresponse?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
-                <button clear class="full"  (click)="setstockchosen(item)" >
+                <button text-start clear class="full"  (click)="setstockchosen(item)" >
                     <ion-row>
                         <ion-col  style="color:#e67e22;font-weight: bold;">{{item.ReutersCode}}</ion-col>
 
@@ -164,7 +164,7 @@
                 </button>   
             </ion-item>      
             
-            <ion-item padding *ngIf="Detailsresponse">
+            <ion-item text-start padding *ngIf="Detailsresponse">
                 <ion-row  class="GridHeader">
                     <ion-col col>
                     </ion-col>
@@ -349,7 +349,5 @@
             </div>
             </ion-item>
     </ion-list>
-
-
-    
+   
 </ion-content>

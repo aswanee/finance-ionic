@@ -3,7 +3,7 @@
     <name>AFinance</name>
     <description>An awesome ArabFinance app.</description>
     <author email="it@arabfinance" href="https://arabfinance.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://10.14.60.201:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />

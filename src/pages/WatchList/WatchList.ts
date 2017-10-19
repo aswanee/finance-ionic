@@ -57,14 +57,11 @@ export class HomePage implements OnInit {
   dispnames: string[] = new Array();
   WatchListChanged : boolean = false;
 
-
-
   displayList: string[][] = new Array();
   displayListDummy: string[][] = new Array();
   map: { [reuter: string]: Boolean } = {};
 
   hideSplash:boolean=false;
-
 
   presentPopover(myEvent) {
     // let popover = this.popoverCtrl.create(PopoverPage);
@@ -215,6 +212,64 @@ export class HomePage implements OnInit {
     //console.log("Width: " + event.target.innerWidth);
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
+
+  FillCompaniesList(data:any){
+    this.List = data;
+    for (let i = 0; i < this.List.result.length; i++) {
+      // are chosen alias
+      this.map[this.List.result[i][0]] = false; // OK
+      var company:string[] = [this.List.result[i][0],this.List.result[i][1]]
+      this.displayList.push(company);
+      this.displayListDummy.push(company);
+    }
+    this.editpressed = false;
+    this.storage.keys().then(keys => {
+      if (keys) {
+        keys.forEach(key => {
+          if (key === "watchList") {
+            this.storage.get("watchList").then(val => {
+              if(val.length>0)
+              {
+                this.StockService.getstockv2(val,this.StockDetails, this.isArabic).subscribe(
+                  data => {
+                    this.StockDetails = data;
+                    this.dispnames = val;
+                  },
+                  Error => {
+                    if (!this.isFired) {
+                      this.ErrorToast();
+                      this.isFired = true;
+                    }
+                  }
+                );
+                this.editpressed = false;
+              }
+            });
+          }
+        });
+      } 
+      else 
+      {
+        this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
+            data => {
+            this.StockDetails = data;
+            this.dispnames = [
+              this.List.result[0][0],
+              this.List.result[1][0]
+            ];
+           },
+          Error => {
+            if (!this.isFired) {
+              this.ErrorToast();
+              this.isFired = true;
+            }
+          }
+        );
+        this.editpressed = false;
+      }
+    });
+  }
+
   ngOnInit() {
     if(localStorage.getItem("language"))
     {
@@ -243,66 +298,9 @@ export class HomePage implements OnInit {
       window["token"] = val;
     });
 
-    this.StockService.getnames(this.isArabic).subscribe(
+   this.StockService.getnames(this.isArabic).subscribe(
       data => {
-        this.List = data;
-        for (let i = 0; i < this.List.result.length; i++) {
-          // are chosen alias
-          this.map[this.List.result[i][0]] = false; // OK
-          var company:string[] = [this.List.result[i][0],this.List.result[i][1]]
-          this.displayList.push(company);
-          this.displayListDummy.push(company);
-        }
-        this.editpressed = false;
-        this.storage.keys().then(keys => {
-          if (keys) {
-            keys.forEach(key => {
-              if (key === "watchList") {
-                this.storage.get("watchList").then(val => {
-                  if(val.length>0)
-                  {
-                    this.StockService.getstockv2(val,this.StockDetails, this.isArabic).subscribe(
-                      data => {
-                        this.StockDetails = data;
-                        this.dispnames = val;
-                      },
-                      Error => {
-                        if (!this.isFired) {
-                          this.ErrorToast();
-                          this.isFired = true;
-                        }
-                      }
-                    );
-                    this.editpressed = false;
-                  }
-                });
-              }
-            });
-          } 
-          else 
-          {
-            
-            //if(this.dispnames.length>0)
-            //{
-              this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
-                  data => {
-                  this.StockDetails = data;
-                  this.dispnames = [
-                    this.List.result[0][0],
-                    this.List.result[1][0]
-                  ];
-                 },
-                Error => {
-                  if (!this.isFired) {
-                    this.ErrorToast();
-                    this.isFired = true;
-                  }
-                }
-              );
-            //}
-            this.editpressed = false;
-          }
-        });
+        this.FillCompaniesList(data);
       },
       Error => {
         if (!this.isFired) {
@@ -339,17 +337,11 @@ export class HomePage implements OnInit {
           data => {
               var oldStockdata:any = this.StockDetails;
               this.StockDetails = data;
-              // this.StockService.getnames(this.isArabic).subscribe(
-              //   data => {
-              //     this.List = data;
-              //   },
-              //   Error => {
-              //   if (!this.isFired) {
-              //     this.ErrorToast();
-              //     }
-              //   }
-              // );
-           },
+              if(this.List && this.List.result && this.List.result.length<=0)
+              {
+                this.FillCompaniesList(data);
+              }
+          },
           Error => {
             if (!this.isFired) {
               this.ErrorToast();

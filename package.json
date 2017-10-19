@@ -46,6 +46,7 @@
         "ng2-translate": "^5.0.0",
         "rxjs": "5.4.0",
         "sw-toolbox": "3.6.0",
+        "web": "0.0.2",
         "zone.js": "0.8.12"
     },
     "devDependencies": {
@@ -54,7 +55,7 @@
         "@ionic/cli-plugin-ionic-angular": "1.4.1",
         "@types/d3": "^3.5.38",
         "@types/node": "^8.0.24",
-        "ionic": "3.13.1",
+        "ionic": "3.13.2",
         "typescript": "2.3.4"
     },
     "description": "An Ionic project",

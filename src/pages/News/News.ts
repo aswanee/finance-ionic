@@ -34,49 +34,29 @@ export class NewsPage implements OnInit {
   id: string;
   dorefresh: boolean = true;
   isFired = false;
+  nLang:number = 2;
   constructor(
     public navCtrl: NavController,
     private CompanyService: CompanyService,
     public events: Events,
     private ToastController: ToastController
-  ) {
-    // this.CompanyService.getnews(this.NewestDate, 100, window["isArabic"]).subscribe(
-    //   data => {
-    //     var len :number = data.result.V.length;
-    //     var n : string = data.result.V[0][2] + " " + data.result.V[0][2];
-    //     this.NewestDate = new Date(n);
-    //     if(!this.News || this.News.result.V.length==0)
-    //     {
-    //       var l : string = data.result.V[len-1][2] + " " + data.result.V[len-1][2];
-    //       this.OldestDate = new Date(l);
-    //     }
-    //     this.News = data;
-
-    //   },
-    //   Error => {
-    //     if (!this.isFired) {
-    //       this.ErrorToast();
-    //       this.isFired = true;
-    //     }
-    //   }
-    // );
-  }
+  ) {  }
   ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //this.initialized = true;
+
   }
   ionViewDidEnter() {
     this.dorefresh = true;
-    //this.initializetofrom = false;
     this.displayednews = new Array();
     this.refresh();
   }
-  
   ionViewWillLeave() {
     this.dorefresh = false;
   }
+
+
+
   refresh() {
-    this.CompanyService.getnews(this.NewestDate, 100, window["isArabic"]).subscribe(
+    this.CompanyService.getnews(this.NewestDate, 100, this.nLang).subscribe(
       data => {
         console.log(data.result.V);
         var len :number = data.result.V.length;
@@ -111,6 +91,7 @@ export class NewsPage implements OnInit {
     );
 
   }
+
   getdetails(id) {
     this.id = id;
     this.goToNewsDeatils();
@@ -123,10 +104,9 @@ export class NewsPage implements OnInit {
       id: this.id
     });
   }
-  More() 
-  {
-    this.CompanyService
-      .getnewsRange(this.OldestDate, 10, window["isArabic"])
+
+  More()  {
+    this.CompanyService.getnewsRange(this.OldestDate, 10, this.nLang)
       .subscribe(
         data => {
           if(data.result.V.length > 0)
@@ -157,6 +137,36 @@ export class NewsPage implements OnInit {
         }
       );
   }
+
+
+  SelectedSegment:string = "ArabicNews";
+  getArabic()
+  {
+
+  }
+
+  getEnglish()
+  {
+    
+  }
+
+  getAll()
+  {
+    
+  }
+
+  GetFavoret()
+  {
+    
+  }
+  
+  Hide(lang:string ,_SelectedSegment:string ) : boolean
+  {
+    var result :boolean = false;
+
+    return result;
+  }
+
   ErrorToast() {
     let toast = this.ToastController.create({
       message:

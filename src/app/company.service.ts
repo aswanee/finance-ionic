@@ -18,7 +18,7 @@ export class CompanyService extends ParentService {
   getnews(
     strDate: string,
     count: number,
-    isArabic: boolean
+    nLang:number
   ): Observable<Newsresponse> {
     this.getunsecurelink();
     this.link =
@@ -27,8 +27,8 @@ export class CompanyService extends ParentService {
       strDate +
       "&count=" +
       count +
-      "&isArabic=" +
-      isArabic;
+      "&nlang=" + 
+      nLang;
     return this.http
       .get(this.link)
       .map(x => {
@@ -40,7 +40,7 @@ export class CompanyService extends ParentService {
     //from: Date,
     tempto: string,
     count: number,
-    isArabic: boolean
+    nLang:number
   ): Observable<Newsresponse> {
     this.getunsecurelink();
     //let tempfrom = from.getFullYear() + "-" + (from.getMonth() + 1) + "-" + from.getDate();
@@ -52,8 +52,8 @@ export class CompanyService extends ParentService {
       //tempfrom +
       "&count=" +
       count +
-      "&isArabic=" +
-      isArabic;
+      "&nlang=" +
+      nLang;
     return this.http
       .get(this.link)
       .map(x => {
@@ -61,6 +61,7 @@ export class CompanyService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+  
   getnewsdetails(id: number): Observable<Newsdetailsresponse> {
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetNewsDetails?newsId=" + id;
@@ -71,10 +72,11 @@ export class CompanyService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
   getnewsrelated(id: string,isArabic:boolean): Observable<Newsresponse> {
     this.getunsecurelink();
     this.link = this.link + "apis/market/GetNewsRelatedTo?Code=" + id + "&isArabic=" + isArabic;
-;
+
     return this.http
       .get(this.link)
       .map(x => {
