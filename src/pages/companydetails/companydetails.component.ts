@@ -23,7 +23,7 @@ import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { BehaviorSubject } from "rxjs";
-import { TabsPage } from "../tabs/tabs";
+//import { TabsPage } from "../tabs/tabs";
 import { HomePage } from "./../WatchList/WatchList";
 import { MarketPage } from "./../market/market";
 import { ToastController } from "ionic-angular";

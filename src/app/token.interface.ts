@@ -13,4 +13,5 @@ interface result {
   Token: string;
   UserCustodians: string[];
   UserAccounts: string[];
+  UserFavorite?:[{id:number,iid:number}];
 }

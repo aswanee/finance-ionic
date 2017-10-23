@@ -4,6 +4,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { TabsPage } from "../pages/tabs/tabs";
 import { AboutPage } from "../pages/about/about";
+import { SigninPage } from "../pages/signin/signin";
 //import { OneSignal } from "@ionic-native/onesignal";
 
 import {

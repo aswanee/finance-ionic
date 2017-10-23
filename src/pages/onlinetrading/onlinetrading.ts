@@ -1,11 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { IonicPage, NavController, NavParams ,ModalController} from 'ionic-angular';
+import { AuthProvider } from '../../providers/auth/auth';
+import { session ,User} from "../../app/session.interface";
+
 import { portfolioRefresh, ordersRefresh } from "./../../app/refreshconfig";
-import { IonicPage, NavController, NavParams ,ModalController} from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import { AlertController } from "ionic-angular";
-import { LoginComponent } from "./../login/login.component";
-// import { isArabic } from "./../../app/app.module";
 import {
   userorderhistoryresponse,
   userorderresponse,
@@ -28,42 +29,23 @@ import {
 } from "./../../app/Validate.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { ToastController } from "ionic-angular";
-import { token } from "./../../app/token.interface";
-import { LoginService } from "./../../app/login.service";
 import { Storage } from "@ionic/storage";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { CompanydetailsComponent } from "../companydetails/companydetails.component";
 import {AutocompletePage} from '../autocomplete/autocomplete'
 import { StockService } from "./../../app/stock.service";
 import { Equals } from "../../Lib/Compare";
-
-/**
- * Generated class for the TradingPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { SigninPage } from "../signin/signin";
 
 @IonicPage()
 @Component({
-  selector: "page-trading",
-  templateUrl: "trading.html"
+  selector: 'page-onlinetrading',
+  templateUrl: 'onlinetrading.html',
 })
-export class TradingPage implements OnInit {
-  //token: token;
-  private _token: token;
-  get token(): token {
-    var t: token = null;
-    try {
-      t = <token>window["token"];
-    } catch (e) {
-      alert(e);
-    }
-    return t;
-  }
-
+export class OnlinetradingPage {
+  username = '';
+  email = '';
   userorderhistoryresponse: userorderhistoryresponse;
-  //userorderresponse: userorderresponse;
   UserOpenOrderResponse: userorderresponse;
   UserNotOpenOrderResponse: userorderresponse;
   portfolioresponse: portfolioresponse;
@@ -73,7 +55,6 @@ export class TradingPage implements OnInit {
   showorders = false;
   pincode: number = 0;
   showhistory = false;
-  //AllowRefreshOrders = true;
   userorder: userorder = {
     PriceType: PriceType.Market /*Market -  Limited*/,
     TimeTerm: 0 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
@@ -129,85 +110,106 @@ export class TradingPage implements OnInit {
   ShowUpdate: boolean[] = new Array();
   EnablePrice = true;
   timeout: number;
-  loggedIn: boolean = false;
   SelectedSegment: string = "Portfolio";
   isArabic:boolean=true;
   OrderSearchItem:string[]=["","","","","",""];
   DirClass:string = "";
   OrdresData: Array<{id: string ,title: string, details: any, icon: string, showDetails: boolean}> = [];
-  
+  _Session : session ;
+
+  get Session(): session {
+    if(!this._Session || !this._Session.result || this._Session.result.UserID <= 0)
+    {
+      this._Session = this.auth.getUserInfo();
+    }
+    return this._Session;
+  }
+  CheckSession() 
+  {
+    if(!this.Session || !this.Session.result || this.Session.result.UserID <= 0)
+    {
+      this.logout();
+    }
+  }
   constructor(
-    public navCtrl: NavController,
-    public navParams: NavParams,
-    private LoginService: LoginService,
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    private auth: AuthProvider,
     private TradeService: TradeService,
     private storage: Storage,
     public alertCtrl: AlertController,
     private ToastController: ToastController,
     private modalCtrl: ModalController,
     private StockService: StockService,
+
   ) {
-    this.SelectedSegment= "Portfolio";
-    this.showAlert();
-    this.userorder.ReutersCode= '';
-
-    this.OrdresData.push({
-      id:"open",
-      title: 'Open Orders ',
-      details: this.UserOpenOrderResponse,
-      icon: 'ios-remove-circle-outline',
-      showDetails: true
-    });
-    this.OrdresData.push({
-      id:"notopen",
-      title: 'Not Open Orders ',
-      details: this.UserNotOpenOrderResponse,
-      icon: 'ios-add-circle-outline',
-      showDetails: false
-    });
+    let info = this.auth.getUserInfo();
+    if(info && info.result && info.result.UserID > 0)
+    {
+      this.username = info.result.UserName;
+      this.email = info.result.Email;
+      this.SelectedSegment= "Portfolio";
+      this.userorder.ReutersCode= '';
+      this.OrdresData.push({
+        id:"open",
+        title: 'Open Orders ',
+        details: this.UserOpenOrderResponse,
+        icon: 'ios-remove-circle-outline',
+        showDetails: true
+      });
+      this.OrdresData.push({
+        id:"notopen",
+        title: 'Not Open Orders ',
+        details: this.UserNotOpenOrderResponse,
+        icon: 'ios-add-circle-outline',
+        showDetails: false
+      });
+    }
+    else
+    {
+      this.logout();
+    }
   }
-  ngOnInit() {
-    console.log(this.token);
-  }
+  
+  Block : boolean= false;
+count : number = 0;
+  public logout() {
+    this.showhistory = false;
+    this.showInsert = false;
+    this.showorders = false;
+    this.showportfolio = false;
 
-  gotoLogin() {
-    // check when he comes bach if he did login
-    //this.checkLogin();
-    this.isArabic = window["isArabic"];
-    if (this.token == null) {
-      this.navCtrl.push(LoginComponent);
-    } else {
-      if (this.token.Status === "Unauthorized") {
-        this.navCtrl.push(LoginComponent);
-      }
+    if(this.count === 0)
+    {
+      this.count++;
+      this.Block = true
+      this.auth.logout().subscribe(succ => {
+        console.log("logout-subscribe Count : " + this.count);
+        this.navCtrl.setRoot( SigninPage,{ParentPage: OnlinetradingPage})
+      });
     }
   }
 
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad OnlinetradingPage');
+    this.isArabic = window["isArabic"];
+  }
+
   goToorderHistory(orderid) {
+    this.CheckSession();
+
     this.navCtrl.push(OrderhistoryPage, {
-      token: this.token,
+      Session: this.Session,
       orderid: orderid
+    }).catch(err=>{
+      this.logout();
     });
   }
 
-  showAlert() {
-    this.loggedIn = false;
-    if (this.token == null) {
-      setTimeout(() => {
-        this.showAlert();
-      }, portfolioRefresh);
-    } else if (this.token.Status === "Unauthorized") {
-      setTimeout(() => {
-        this.showAlert();
-      }, ordersRefresh);
-    } else this.loggedIn = true;
-  }
-
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad TradingPage");
-  }
-
   ionViewDidEnter() {
+    this.CheckSession();
+    this.Block = false;
+    
     this.showhistory = false;
     this.showInsert = false;
     this.showorders = false;
@@ -227,11 +229,8 @@ export class TradingPage implements OnInit {
       this.getportfolio();
       this.getportfoliosummary();
       this.showportfolio = true;
-    }              
-            
+     }              
 
-
-    this.showAlert();
   }
 
   ionViewWillLeave() {
@@ -244,21 +243,23 @@ export class TradingPage implements OnInit {
     }
   }
 
-  getportfolio() {
-    /* bn Rashed*/
-    //this.checkLogin();
+ getportfolio() {
+    
     this.isArabic = window["isArabic"];
+    this.CheckSession();
     
     this.TradeService
-      .GetPortfolio(this.token, window["isArabic"])
+      .GetPortfolio(this.Session, window["isArabic"])
       .subscribe(data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.ErrorToast("you are not logged in");
-          this.gotoLogin();
+          throw "UnauthorizedOrOverrideToken"; 
         }
-      }, Error => this.ErrorToast("Error")!);
+      }, Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      }
+    );
     this.showportfolio = !this.showportfolio;
     this.showorders = false;
     this.showhistory = false;
@@ -268,19 +269,23 @@ export class TradingPage implements OnInit {
     // this.ShowUpdate = false;
   }
 
+
   refreshPortfolio() {
+
     this.isArabic = window["isArabic"];
-    
-    this.TradeService.GetPortfolio(this.token, window["isArabic"]).subscribe(
+    this.CheckSession();
+
+    this.TradeService.GetPortfolio(this.Session, window["isArabic"]).subscribe(
       data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.ErrorToast("you are not logged in");
-          this.gotoLogin();
+          throw "UnauthorizedOrOverrideToken"; 
         }
       },
-      Error => alert("error")
+      Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      }
     );
     this.getportfoliosummary();
     if (this.showportfolio) {
@@ -291,7 +296,9 @@ export class TradingPage implements OnInit {
   }
 
   getportfoliosummary() { 
-    this.TradeService.GetPortfolioSummary(this.token).subscribe(
+    this.CheckSession();
+    
+    this.TradeService.GetPortfolioSummary(this.Session).subscribe(
       data => {
         //console.log(data);
         if(data.result && data.result.length>0)
@@ -299,51 +306,54 @@ export class TradingPage implements OnInit {
           this.Detailsresponse = data.result[0];
         }
         if (data.status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.gotoLogin();
+          throw "UnauthorizedOrOverrideToken"; 
         }
       },
-      Error => this.ErrorToast("Error!")
+      Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      }
     );
     this.showsummary = !this.showsummary;
   }
 
   getorders() {
     this.isArabic = window["isArabic"];
+    this.CheckSession();
     
-    this.TradeService.getorders(this.token, window["isArabic"], 1).subscribe(
+    this.TradeService.getorders(this.Session, window["isArabic"], 1).subscribe(
       data => {
         this.UserOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.gotoLogin();
-        } else {
+          throw "UnauthorizedOrOverrideToken"; 
+        } 
+        else {
           for (let i = 0; i < this.UserOpenOrderResponse.Status.length; i++) {
             this.ShowUpdate[i] = false;
-            // if (this.ShowUpdate[i] === true) {
-            //   this.All UpdatesNotShown = false;
-            // }
           }
         }
       },
-      Error => this.ErrorToast("Error!")
+      Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      }
     );
-    this.TradeService.getorders(this.token, window["isArabic"], 2).subscribe(
+    this.TradeService.getorders(this.Session, window["isArabic"], 2).subscribe(
       data => {
         this.UserNotOpenOrderResponse = data;
         if (this.UserNotOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.gotoLogin();
-        } else {
+          throw "UnauthorizedOrOverrideToken"; 
+        } 
+        else {
           for (let i = 0; i < this.UserNotOpenOrderResponse.Status.length; i++) {
             this.ShowUpdate[i] = false;
-            // if (this.ShowUpdate[i] === true) {
-            //   this.All UpdatesNotShown = false;
-            // }
           }
         }
       },
-      Error => this.ErrorToast("Error!")
+      Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      }
     );
 
     this.showorders = true;
@@ -356,9 +366,10 @@ export class TradingPage implements OnInit {
 
   refreshOpenOrders() {
     this.isArabic = window["isArabic"];
+    this.CheckSession();
     
     this.TradeService
-      .getorders(this.token, window["isArabic"], 1)
+      .getorders(this.Session, window["isArabic"], 1)
       .subscribe(data => {
         if(this.UserOpenOrderResponse && this.UserOpenOrderResponse.result){
           if(data.result.length != this.UserOpenOrderResponse.result.length)
@@ -380,10 +391,13 @@ export class TradingPage implements OnInit {
         }
         //this.UserOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.gotoLogin();
+          throw "UnauthorizedOrOverrideToken"; 
         }
-      }, Error => this.ErrorToast);
+      }, Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      }
+    );
     if (this.showorders) {
       setTimeout(() => {
         this.refreshOpenOrders();
@@ -393,15 +407,19 @@ export class TradingPage implements OnInit {
 
   refreshNotOpenOrders() {
     this.isArabic = window["isArabic"];
+    this.CheckSession();
+
     this.TradeService
-      .getorders(this.token, window["isArabic"], 2)
+      .getorders(this.Session, window["isArabic"], 2)
       .subscribe(data => {
         this.UserNotOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          window["token"] = null;
-          this.gotoLogin();
+          throw "UnauthorizedOrOverrideToken"; 
         }
-      }, Error => this.ErrorToast);
+      }, Error =>{
+        this.ErrorToast("you are not logged in");
+        this.logout();
+      });
   }
 
   getorderhistory(orderid) {
@@ -411,27 +429,23 @@ export class TradingPage implements OnInit {
   CreateUpdateOrder() {
     // this.InitializeUserOrder();
     this.isArabic = window["isArabic"];
+    this.CheckSession();
     
     if (this.EnablePrice) {
-      // this.userorder.Price = Number(
-      //   document.getElementById("Price").textContent
-      // );
-    } else {
+
+    } 
+    else {
       this.userorder.Price = 0;
     }
-    // this.userorder.Quantity = Number(
-    //   document.getElementById("Quantity").textContent
-    // );
-    // this.userorder.ReutersCode = document.getElementById("Code").textContent;
 
-    if (this.token.result.UserAccounts.length === 0) {
-      this.userorder.BimsUserID = this.token.result.BIMSIAccountNumber;
+    if (this.Session.result.UserAccounts.length === 0) {
+      this.userorder.BimsUserID = this.Session.result.BIMSIAccountNumber;
     } else {
-      this.userorder.BimsUserID = Number(this.token.result.UserAccounts[0]);
+      this.userorder.BimsUserID = Number(this.Session.result.UserAccounts[0]);
     }
-    this.userorder.Username = this.token.result.UserName;
+    this.userorder.Username = this.Session.result.UserName;
     this.TradeService
-      .ValidateOrder(window["isArabic"], false, this.userorder, this.token)
+      .ValidateOrder(window["isArabic"], false, this.userorder, this.Session)
       .subscribe(
         data => {
           this.ValidationResponse = data;
@@ -444,17 +458,24 @@ export class TradingPage implements OnInit {
             } else {
               alert(this.ValidationResponse.result.Message);
             }
-          } else {
+          } 
+          else if (this.ValidationResponse.Status == "UnauthorizedOrOverrideToken") {
+            throw "UnauthorizedOrOverrideToken"; 
+          }
+          else {
             alert("please insert all fields with Valid Values");
           }
         },
-        Error => this.ErrorToast("Error!")
-      );
+        Error =>{
+          this.ErrorToast("you are not logged in");
+          this.logout();
+        });
 
   }
 
   placeOrder() {
     this.isArabic = window["isArabic"];
+    this.CheckSession();
     
     this.pincode = Number(prompt("please enter the pin code"));
     this.TradeService
@@ -462,7 +483,7 @@ export class TradingPage implements OnInit {
         window["isArabic"],
         false,
         this.userorder,
-        this.token,
+        this.Session,
         this.pincode
       )
       .subscribe(
@@ -470,21 +491,24 @@ export class TradingPage implements OnInit {
           this.Createresponse = data;
           alert(this.Createresponse.result.OutMessages);
         },
-        Error => this.ErrorToast("Error!")
+        Error =>{
+          this.ErrorToast("you are not logged in");
+          this.logout();
+        }
       );
   }
 
   UpdateOrder(order: userorder) {
     this.isArabic = window["isArabic"];
     
-    this.updateuserorder.Username = this.token.result.UserName;
+    this.updateuserorder.Username = this.Session.result.UserName;
 
     if (this.EnablePrice) {
     } else {
       this.updateuserorder.Price = 0;
     }
     this.TradeService
-      .ValidateOrder(window["isArabic"], true, this.updateuserorder, this.token)
+      .ValidateOrder(window["isArabic"], true, this.updateuserorder, this.Session)
       .subscribe(
         data => {
           this.ValidationResponse = data;
@@ -504,7 +528,7 @@ export class TradingPage implements OnInit {
                   window["isArabic"],
                   true,
                   this.updateuserorder,
-                  this.token,
+                  this.Session,
                   this.pincode
                 )
                 .subscribe(
@@ -527,8 +551,10 @@ export class TradingPage implements OnInit {
             alert("Please Fill all Fields with valid values");
           }
         },
-        Error => this.ErrorToast("Error!")
-      );
+        Error =>{
+          this.ErrorToast("you are not logged in");
+          this.logout();
+        });
   }
 
   CancelOrder(orderid: number) {
@@ -536,15 +562,20 @@ export class TradingPage implements OnInit {
     
     this.pincode = Number(prompt("please enter your pin code"));
     this.TradeService
-      .CancelOrder(orderid, window["isArabic"], this.pincode, this.token)
+      .CancelOrder(orderid, window["isArabic"], this.pincode, this.Session)
       .subscribe(
         data => {
           this.CancelResponse = data;
           alert(this.CancelResponse.result.OutMessages);
         },
-        Error => this.ErrorToast("Error")
+        Error =>{
+          this.ErrorToast("you are not logged in");
+          this.logout();
+        }
       );
   }
+
+
 
   ChooseDay() {
     this.userorder.TimeTerm = TimeTerm.Day;
@@ -638,6 +669,8 @@ export class TradingPage implements OnInit {
     this.ChooseMarket();
   }
   
+
+
   showTimeTerm(Term: TimeTerm): string {
     return TimeTerm[Term];
   }
@@ -738,6 +771,14 @@ export class TradingPage implements OnInit {
     });
 
   }
+
+
+
+
+
+
+
+
 
 
 }

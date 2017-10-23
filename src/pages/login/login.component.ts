@@ -1,5 +1,5 @@
 export let USERTOKEN: token = null;
-import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { NavController } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { token } from "./../../app/token.interface";
@@ -23,7 +23,7 @@ import { deleteresponse } from "./../../app/delete.interface";
 })
 export class LoginComponent implements OnInit {
   private loginForm: FormGroup;
-  token: boolean = null;
+  isLogin: boolean = null;
   Username: string;
   password: string;
   alertresponse: alertresponse;
@@ -55,12 +55,12 @@ export class LoginComponent implements OnInit {
       .gettoken(this.loginForm.value.username, this.loginForm.value.password)
       .subscribe(
         data => {
-          window["token"] = data;
-          if (data) {
-            this.storage.set("token", data);
-            this.token = true;
-            USERTOKEN = data;
-            this.navCtrl.pop();
+          if (data && data.result && data.result.UserID && data.result.UserID>0) {
+              window["token"] = data;              
+              this.storage.set("token", data);
+              this.isLogin = true;
+              USERTOKEN = data;
+              this.navCtrl.pop();
           }
 
           // check if authentication error

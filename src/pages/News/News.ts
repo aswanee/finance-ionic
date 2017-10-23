@@ -11,7 +11,7 @@ import { newsRefresh,imagPath } from "./../../app/refreshconfig";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import { NewsLangPipe } from "./../../pipes/news-lang/news-lang";
+
 @Component({
   selector: "page-contact",
   templateUrl: "News.html"
@@ -19,7 +19,8 @@ import { NewsLangPipe } from "./../../pipes/news-lang/news-lang";
 export class NewsPage implements OnInit {
   News: Newsresponse;
   displayedMoreNews: Newsresponse;
-  displayednews: string[][] = new Array();
+  ArabicNews: string[][] = new Array();
+  EnglishNews: string[][] = new Array();
   //MoreNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   showdetails = false;
@@ -47,7 +48,6 @@ export class NewsPage implements OnInit {
   }
   ionViewDidEnter() {
     this.dorefresh = true;
-    this.displayednews = new Array();
     this.refresh();
   }
   ionViewWillLeave() {
@@ -59,7 +59,6 @@ export class NewsPage implements OnInit {
   refresh() {
     this.CompanyService.getnews(this.NewestDate, 100, this.nLang).subscribe(
       data => {
-        console.log(data.result.V);
         var len :number = data.result.V.length;
         if(data.result.V.length>0)
         {
@@ -69,12 +68,37 @@ export class NewsPage implements OnInit {
         {
           this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
           this.News = data;
+          data.result.V.forEach(el => {
+            if(el[5] == "True")
+            {
+              this.ArabicNews.push(el)
+            }
+            else
+            {
+              this.EnglishNews.push(el)
+            }
+          });
         }
         else
         {
           this.News.result.V = [...data.result.V,...this.News.result.V];
           this.News.result.N = data.result.N;
           this.News.status = data.status;
+          var arnews : string[][] = new Array(); 
+          var ennews : string[][] = new Array(); 
+          data.result.V.forEach(el => {
+            if(el[5] == "True")
+            {
+              arnews.push(el)
+            }
+            else
+            {
+              ennews.push(el)
+            }
+          });
+          this.ArabicNews = [...arnews , ...this.ArabicNews];
+          this.EnglishNews = [...ennews , ...this.EnglishNews];
+          
         }
       },
       Error => {
@@ -121,10 +145,41 @@ export class NewsPage implements OnInit {
             var len :number = data.result.V.length;
             this.NewestDate = data.result.V[0][2] + ":" + data.result.V[0][3];
             this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
+
             this.News = data;
+            data.result.V.forEach(el => {
+              if(el[5] == "True")
+              {
+                this.ArabicNews.push(el)
+              }
+              else
+              {
+                this.EnglishNews.push(el)
+              }
+            });
           }
           else
           {
+
+
+            var arnews : string[][] = new Array(); 
+            var ennews : string[][]= new Array(); 
+            var allnews : string[][]= new Array(); 
+            allnews = data.result.V;
+            allnews.forEach(el => {
+              if(el[5] == "True")
+              {
+                arnews.push(el)
+              }
+              else
+              {
+                ennews.push(el)
+              }
+            });
+            this.ArabicNews = [...this.ArabicNews , ...arnews];
+            this.EnglishNews = [...this.EnglishNews, ...ennews];
+            
+
             this.News.result.V =[...this.News.result.V,...data.result.V];
             this.News.result.N = data.result.N;
             this.News.status = data.status;

@@ -36,7 +36,7 @@ export let ArabicDictionary: Dictionary =
   Change: "التغير",
   Percentage: "النسبة",
   Trend: "الاتجاه",
-  Trading: "التجارة",
+  Trading: "التداول",
   "Show Orders": "الأوامر",
   "Show Portfolio": "الحافظة",
   "View History": "أظهر تاريخ الأمر",

@@ -10,64 +10,66 @@ import { SettingsPage } from "./../settings/settings";
 import { AlertPage } from "./../alert/alert";
 import { HomePage } from "./../WatchList/WatchList";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import { token } from "./../../app/token.interface";
+import { AuthProvider } from "./../../providers/auth/auth";
+import { session , User } from "./../../app/session.interface";
+import { SigninPage } from "../signin/signin";
+import { TabsPage } from "../tabs/tabs";
+
 import { SwitchAccountsPage } from "./../switch-accounts/switch-accounts";
 @Component({
   templateUrl:"pop-over.html"
-//   template: `
-//    <ion-list>
-//     <button ion-item *ngIf="!loggedIn" (click)="login()">{{'Login' | Language}}</button>
-//     <button ion-item *ngIf="loggedIn" (click)="logout()">{{'Logout' | Language}}</button>
-//     <button ion-item *ngIf="loggedIn" (click)="goToAlerts()">{{'Alerts' | Language}}</button>
-//     <button ion-item (click)="goToSettings()">{{'Change Language' | Language}}</button>
-//     <button ion-item (click)="goToAbout()">{{'About Us title' | Language}}</button>
-//     <button ion-item  (click)="gotoSwitch()" *ngIf="loggedIn&&(token?.result.UserAccounts.length>0)">{{'SwitchAccounts' | Language}}</button>
-// </ion-list>
-//   `
 })
 export class PopoverPage {
   @Output() onLogout = new EventEmitter<boolean>();
-  loggedIn: boolean = false;
+  get loggedIn(): boolean {
+    if(this.Session && this.Session.result && this.Session.result.UserID > 0)
+    return true;
+    else return false;
+  }
+  rootPage: any = TabsPage;
   multiaccounts: boolean = false;
-  token: token = window["token"];
+  Session: session ;
   ChosenAccount: string = "";
   constructor(
     public viewCtrl: ViewController,
     private navController: NavController,
     private storage: Storage,
-    private toastCtrl: ToastController
-  ) {
+    private toastCtrl: ToastController,
+    private Auth : AuthProvider
+  ) 
+  {
     // this.navController.setRoot(HomePage);
+    this.Session = Auth.getUserInfo();
   }
 
   ngOnInit() {
-    this.storage.keys().then(keys => {
-      if (keys) {
-        keys.forEach(key => {
-          if (key === "token" && window["token"] && this.token) {
-            if (this.token.Status === "Unauthorized") {
-              this.loggedIn = false;
-            } else {
-              this.loggedIn = true;
-              if (this.token.result.UserAccounts.length === 0) {
-                this.multiaccounts = false;
-              } else {
-                this.multiaccounts = true;
-              }
-            }
-          }
-        });
+    // this.storage.keys().then(keys => {
+    //   if (keys) {
+    //     keys.forEach(key => {
+    //       if (key === "session" && window["session"] && this.Session) {
+
+    //       }
+    //     });
+    //   }
+    // });
+    
+    if (this.loggedIn  ) {
+      
+      if (this.Session.result.UserAccounts.length === 0) {
+        this.multiaccounts = false;
+      } 
+      else {
+        this.multiaccounts = true;
       }
-    });
+    }
   }
 
   logout() {
-    this.loggedIn = false;
-    this.storage.remove("token").then(val => {
-      window["token"] = null;
+    this.Auth.logout().subscribe(succ => {
       this.navController.popToRoot();
       this.close();
       this.menuToast("out");
+      this.navController.setRoot(this.rootPage)
     });
   }
 
@@ -86,11 +88,11 @@ export class PopoverPage {
   }
 
   login() {
-    this.navController.push(LoginComponent);
+    this.navController.push(SigninPage);
     this.close();
   }
   gotoSwitch() {
-    this.navController.push(SwitchAccountsPage, { token: this.token });
+    this.navController.push(SwitchAccountsPage, { Session: this.Session });
     this.close();
   }
   close() {

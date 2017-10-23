@@ -14,7 +14,7 @@ import { ChartPage } from "../pages/chart/chart";
 import { MarketPage } from "../pages/market/market";
 import { TradeService } from "./trade.service";
 import { SettingsPage } from "../pages/settings/settings";
-import { TradingPage } from "./../pages/trading/trading";
+//import { OnlinetradingPage } from "./../pages/onlinetrading/onlinetrading";
 import { CompanydetailsComponent } from "../pages/companydetails/companydetails.component";
 import { TabsPage } from "../pages/tabs/tabs";
 import { MarketService } from "./market.service";
@@ -24,7 +24,6 @@ import { OrderhistoryPage } from "./../pages/orderhistory/orderhistory";
 import { PopoverPage } from "./../pages/pop-over/pop-over";
 import { SwitchAccountsPage } from "./../pages/switch-accounts/switch-accounts";
 import { LanguagePipe } from "./../pipes/Language/Language.pipe";
-import { NewsLangPipe } from "./../pipes/news-lang/news-lang";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import { CompanyService } from "./company.service";
@@ -38,8 +37,8 @@ import { IonicStorageModule } from "@ionic/storage";
 import { AlertService } from "./alert.service";
 import { PopOverPageModule } from "../pages/pop-over/pop-over.module";
 import { Badge } from '@ionic-native/badge';
+import { FavoritesService } from "./favorite.service";
 
-//import { OneSignal } from '@ionic-native/onesignal';
 
 //pipes
 import { LimitToPipe } from "./../pipes/limit-to/limit-to";
@@ -48,6 +47,10 @@ import { aroundToPipe } from "./../pipes/around-to/around-to";
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 
 import {AutocompletePage} from '../pages/autocomplete/autocomplete'
+import { AuthProvider } from '../providers/auth/auth';
+import { SigninPage } from "../pages/signin/signin";
+import { OnlinetradingPage } from "../pages/onlinetrading/onlinetrading";
+//import { OnlinetradingPageModule } from "../pages/onlinetrading/onlinetrading.module";
 
 export function highchartsFactory():HighchartsStatic {
   const hc =  require("highcharts/highstock");
@@ -73,7 +76,7 @@ export function highchartsFactory():HighchartsStatic {
     AlertPage,
     PopoverPage,
     SettingsPage,
-    TradingPage,
+    OnlinetradingPage,
     SwitchAccountsPage,
     OrderhistoryPage,
     LimitToPipe,
@@ -82,7 +85,7 @@ export function highchartsFactory():HighchartsStatic {
     aroundToPipe,
     LanguagePipe,
     AutocompletePage,
-    NewsLangPipe
+    SigninPage
   ],
   imports: [
     BrowserModule,
@@ -90,7 +93,8 @@ export function highchartsFactory():HighchartsStatic {
     IonicModule.forRoot(MyApp),
     ChartModule, 
     IonicStorageModule.forRoot(),
-    PopOverPageModule
+    PopOverPageModule,
+    //OnlinetradingPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -107,12 +111,14 @@ export function highchartsFactory():HighchartsStatic {
     MarketPage,
     AlertPage,
     SettingsPage,
-    TradingPage,
+    OnlinetradingPage,
     CreateAlertPage,
     PopoverPage,
     UpdateAlertPage,
     OrderhistoryPage,
-    AutocompletePage
+    AutocompletePage,
+    OnlinetradingPage,
+    SigninPage
   ],
   providers: [
     StatusBar,
@@ -123,13 +129,16 @@ export function highchartsFactory():HighchartsStatic {
     CompanyService,
     LoginService,
     MarketService,
-    //OneSignal,
     GetService,
     SplashScreen,
     {
       provide: HighchartsStatic,
       useFactory: highchartsFactory
-    },Badge
+    },
+    Badge,
+    FavoritesService,
+    AuthProvider
+    
     //{ provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

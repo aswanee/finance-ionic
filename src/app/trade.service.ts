@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Http, Headers, RequestOptions } from "@angular/http";
-import { token } from "./token.interface";
+import { session } from "./session.interface";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/do";
@@ -25,7 +25,7 @@ import {
 } from "./Validate.interface";
 @Injectable()
 export class TradeService extends ParentService {
-  GetPortfolioSummary(token: token): Observable<Detailsresponse> {
+  GetPortfolioSummary(Session: session): Observable<Detailsresponse> {
     this.getsecurelink();
     this.link = this.link + "apis/trading/GetPortfolioSummary?bimsid=";
     let headers = new Headers();
@@ -33,15 +33,15 @@ export class TradeService extends ParentService {
     let useraccounts = 0;
     let tokensymbol = "";
     let Uname = "";
-    if (token) {
-      useraccounts = token.result.UserAccounts.length;
-      tokensymbol = token.result.Token;
-      Uname = token.result.UserName;
+    if (Session) {
+      useraccounts = Session.result.UserAccounts.length;
+      tokensymbol = Session.result.Token;
+      Uname = Session.result.UserName;
     }
-    if (useraccounts === 0 && token) {
-      this.link = this.link + token.result.BIMSIAccountNumber;
-    } else if (useraccounts !== 0 && token) {
-      this.link = this.link + token.result.UserAccounts[0];
+    if (useraccounts === 0 && Session) {
+      this.link = this.link + Session.result.BIMSIAccountNumber;
+    } else if (useraccounts !== 0 && Session) {
+      this.link = this.link + Session.result.UserAccounts[0];
     }
     let body =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
@@ -53,7 +53,7 @@ export class TradeService extends ParentService {
       .catch((t: Response) => t.json());
   }
 
-  GetPortfolio(token: token, isArabic: boolean): Observable<portfolioresponse> {
+  GetPortfolio(Session: session, isArabic: boolean): Observable<portfolioresponse> {
     // htis.getlink();
     this.getsecurelink();
     this.link = this.link + "apis/trading/GetUserPortfolio?BimsUserID=";
@@ -62,17 +62,17 @@ export class TradeService extends ParentService {
     let useraccounts = 0;
     let tokensymbol = "";
     let Uname = "";
-    if (token) {
-      useraccounts = token.result.UserAccounts.length;
-      tokensymbol = token.result.Token;
-      Uname = token.result.UserName;
+    if (Session) {
+      useraccounts = Session.result.UserAccounts.length;
+      tokensymbol = Session.result.Token;
+      Uname = Session.result.UserName;
     }
-    if (useraccounts === 0 && token) {
+    if (useraccounts === 0 && Session) {
       this.link =
-        this.link + token.result.BIMSIAccountNumber + "&isArabic=" + isArabic;
-    } else if (useraccounts !== 0 && token) {
+        this.link + Session.result.BIMSIAccountNumber + "&isArabic=" + isArabic;
+    } else if (useraccounts !== 0 && Session) {
       this.link =
-        this.link + token.result.UserAccounts[0] + "&isArabic=" + isArabic;
+        this.link + Session.result.UserAccounts[0] + "&isArabic=" + isArabic;
     }
 
     let body =
@@ -85,7 +85,7 @@ export class TradeService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getorderhistory(
-    token: token,
+    Session: session,
     isArabic: boolean,
     orderid: number
   ): Observable<userorderhistoryresponse> {
@@ -97,23 +97,23 @@ export class TradeService extends ParentService {
     let useraccounts = 0;
     let tokensymbol = "";
     let Uname = "";
-    if (token) {
-      useraccounts = token.result.UserAccounts.length;
-      tokensymbol = token.result.Token;
-      Uname = token.result.UserName;
+    if (Session) {
+      useraccounts = Session.result.UserAccounts.length;
+      tokensymbol = Session.result.Token;
+      Uname = Session.result.UserName;
     }
-    if (useraccounts === 0 && token) {
+    if (useraccounts === 0 && Session) {
       this.link =
         this.link +
-        token.result.BIMSIAccountNumber +
+        Session.result.BIMSIAccountNumber +
         "&orderID=" +
         orderid +
         "&isArabic=" +
         isArabic;
-    } else if (useraccounts !== 0 && token) {
+    } else if (useraccounts !== 0 && Session) {
       this.link =
         this.link +
-        token.result.UserAccounts[0] +
+        Session.result.UserAccounts[0] +
         "&orderID=" +
         orderid +
         "&isArabic=" +
@@ -130,7 +130,7 @@ export class TradeService extends ParentService {
       .catch((t: Response) => t.json());
   }
   getorders(
-    token: token,
+    Session: session,
     isArabic: boolean,
     view: number
   ): Observable<userorderresponse> {
@@ -142,24 +142,24 @@ export class TradeService extends ParentService {
     let useraccounts = 0;
     let Uname = "";
     let tokensymbol = "";
-    if (token) {
-      useraccounts = token.result.UserAccounts.length;
-      Uname = token.result.UserName;
-      tokensymbol = token.result.Token;
+    if (Session) {
+      useraccounts = Session.result.UserAccounts.length;
+      Uname = Session.result.UserName;
+      tokensymbol = Session.result.Token;
     }
 
-    if (useraccounts === 0 && token) {
+    if (useraccounts === 0 && Session) {
       this.link =
         this.link +
-        token.result.BIMSIAccountNumber +
+        Session.result.BIMSIAccountNumber +
         "&view=" +
         view +
         "&isArabic=" +
         isArabic;
-    } else if (useraccounts !== 0 && token) {
+    } else if (useraccounts !== 0 && Session) {
       this.link =
         this.link +
-        token.result.UserAccounts[0] +
+        Session.result.UserAccounts[0] +
         "&view=" +
         view +
         "&isArabic=" +
@@ -179,7 +179,7 @@ export class TradeService extends ParentService {
     isArabic: boolean,
     UpdateOrder: boolean,
     order: userorder,
-    token: token,
+    Session: session,
     Pin: number
   ): Observable<PlaceResponse> {
     this.getsecurelink();
@@ -195,9 +195,9 @@ export class TradeService extends ParentService {
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let Uname = "";
     let tokensymbol = "";
-    if (token) {
-      Uname = token.result.UserName;
-      tokensymbol = token.result.Token;
+    if (Session) {
+      Uname = Session.result.UserName;
+      tokensymbol = Session.result.Token;
     }
     let value =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
@@ -241,7 +241,7 @@ export class TradeService extends ParentService {
     isArabic: boolean,
     UpdateOrder: boolean,
     order: userorder,
-    token: token
+    Session: session
   ): Observable<ValidationResponse> {
     this.getsecurelink();
     this.link =
@@ -254,9 +254,9 @@ export class TradeService extends ParentService {
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let Uname = "";
     let tokensymbol = "";
-    if (token) {
-      Uname = token.result.UserName;
-      tokensymbol = token.result.Token;
+    if (Session) {
+      Uname = Session.result.UserName;
+      tokensymbol = Session.result.Token;
     }
     let value =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
@@ -300,7 +300,7 @@ export class TradeService extends ParentService {
     orderid: number,
     isArabic: boolean,
     pin: number,
-    token
+    Session
   ): Observable<CancelResponse> {
     this.getsecurelink();
     this.link =
@@ -315,9 +315,9 @@ export class TradeService extends ParentService {
     headers.append("Content-Type", "application/x-www-form-urlencoded");
     let Uname = "";
     let tokensymbol = "";
-    if (token) {
-      Uname = token.result.UserName;
-      tokensymbol = token.result.Token;
+    if (Session) {
+      Uname = Session.result.UserName;
+      tokensymbol = Session.result.Token;
     }
     let value =
       "username=" + Uname + "&token=" + encodeURIComponent(tokensymbol);
