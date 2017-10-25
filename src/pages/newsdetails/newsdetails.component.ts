@@ -1,6 +1,6 @@
 import { Component, Input, Output, OnInit } from "@angular/core";
 import { CompanyService } from "./../../app/company.service";
-import { token } from "./../../app/token.interface";
+import { session } from "./../../app/session.interface";
 import { News } from "./../../app/news.interface";
 import { Newsbody } from "./../../app/newsbody.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
@@ -9,6 +9,7 @@ import { Observable } from "rxjs/Rx";
 import { ToastController } from "ionic-angular";
 import { NavController, NavParams } from "ionic-angular";
 import { FavoritesService } from "./../../app/favorite.service";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @Component({
   // moduleId: module.id,
@@ -17,12 +18,34 @@ import { FavoritesService } from "./../../app/favorite.service";
   // styleUrls: ["newsdetails.component.scss"]
 })
 export class NewsdetailsComponent implements OnInit {
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
 
-  private _token: token;
-  get token(): token {
-    var t: token = null;
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
+  
+  private _session: session;
+  get token(): session {
+    var t: session = null;
     try {
-      t = <token>window["token"];
+      t = <session>window["session"];
     } catch (e) {
       this.ErrorToast("You Are Not Logged in!");
     }
@@ -92,7 +115,7 @@ export class NewsdetailsComponent implements OnInit {
       if(this.token && !this.pinned)
       {
         this.pinned = true;
-        this.FavoritesService.AddFavorite(this.token.result.UserID.toString(),this.Newsbody.result.V[0]).subscribe(
+        this.FavoritesService.AddFavorite(this.token.result.GeneralInfo.UserID.toString(),this.Newsbody.result.V[0]).subscribe(
           data => {
             var locDate :any = data;
             console.log(locDate);
@@ -112,7 +135,7 @@ export class NewsdetailsComponent implements OnInit {
     if(this.token && this.pinned)
     {
       this.pinned = false;
-      this.FavoritesService.RemoveFavorite(this.token.result.UserID.toString(),this.Newsbody.result.V[0]).subscribe(
+      this.FavoritesService.RemoveFavorite(this.token.result.GeneralInfo.UserID.toString(),this.Newsbody.result.V[0]).subscribe(
         data => {
           var locDate :any = data;
           console.log(locDate);

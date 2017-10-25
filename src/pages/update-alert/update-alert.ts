@@ -10,14 +10,8 @@ import {
   Field
 } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
-import { token } from "./../../app/token.interface";
-
-/**
- * Generated class for the UpdateAlertPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {session } from "./../../app/Session.interface";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
 @Component({
@@ -25,6 +19,29 @@ import { token } from "./../../app/token.interface";
   templateUrl: "update-alert.html"
 })
 export class UpdateAlertPage {
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
+  
   Types: String[] = ["Index", "Stock", "OTC"];
   Fields: String[] = [
     "Last Trade",

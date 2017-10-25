@@ -1,8 +1,10 @@
+
 export interface session {
     Status: string;
     result: result;
   }
-  interface result {
+
+  interface GeneralInfo {
     UserID: number;
     UserName: string;
     UserSecurityType: number;
@@ -10,10 +12,14 @@ export interface session {
     Email: string;
     IsTrader: boolean;
     BIMSIAccountNumber: number;
+  }
+
+  interface result {
     Token: string;
+    GeneralInfo: GeneralInfo;
     UserCustodians: string[];
     UserAccounts: string[];
-    UserFavorite?:[{id:number,iid:number}];
+    UserFavorite?:[{id:number , iid:string , tid:number}];
   }
   
   export class User {
@@ -25,3 +31,4 @@ export interface session {
       this.password = _password;
     }
   }
+

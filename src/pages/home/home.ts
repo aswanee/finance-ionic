@@ -1,12 +1,10 @@
 export let language: string = "en";
-import {
-  Component,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  HostListener
-} from "@angular/core";
-import { NavController,AlertController ,PopoverController} from "ionic-angular";
+import {OnChanges,SimpleChanges,HostListener} from "@angular/core";
+import { Component ,ViewChild,OnInit} from '@angular/core';
+
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController ,PopoverController} from "ionic-angular";
+
 import { watchlistRefresh } from "./../../app/refreshconfig";
 import { ToastController,Platform } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
@@ -23,13 +21,21 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { Badge } from '@ionic-native/badge';
 import { PopoverPage } from "../pop-over/pop-over";
 import { SplashScreen } from "@ionic-native/splash-screen";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
+
+
+
+@IonicPage()
 @Component({
-  selector: "page-home",
-  templateUrl: "WatchList.html"
+  selector: 'page-home',
+  templateUrl: 'home.html',
 })
-export class HomePage implements OnInit {
-
+export class HomePage {
+  
+  //@ViewChild(CustNavComponent) cld : CustNavComponent
+  ButtonName :string ;
+    
   isSmall: boolean = false;
   List: SerResponse;
   StockDetails: SerResponse;
@@ -173,8 +179,7 @@ export class HomePage implements OnInit {
     }
   }
 
-  async onNotification_XXX()
-  {
+  async onNotification_XXX()  {
     try{
  
       //console.log("--- Begin Notification ---")
@@ -269,8 +274,37 @@ export class HomePage implements OnInit {
       }
     });
   }
-
+  buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        this.buttons[1].visable = false;
+        this.buttons[2].visable = true;
+        this.addToWatchlist();
+        break;
+      case "checkmark":
+        console.log(event);
+        this.buttons[1].visable = true;
+        this.buttons[2].visable = false;
+        this.falsepressed();
+        break;
+    }
+  }
+  
   ngOnInit() {
+    
+    this.buttons = [
+      {BName: "notifications", IconName: "notifications", visable:true},
+      {BName: "add", IconName: "add", visable:true},
+      {BName: "checkmark", IconName: "checkmark", visable:false}
+    ];
+    
+
     if(localStorage.getItem("language"))
     {
       if(localStorage.getItem("language")== "ar")
@@ -292,10 +326,11 @@ export class HomePage implements OnInit {
         localStorage.setItem('language', "ar");
         localStorage.setItem('isArabic', "true");
     }
+
     this.isArabic = window["isArabic"];
   
-    this.storage.get("token").then(val => {
-      window["token"] = val;
+    this.storage.get("Session").then(val => {
+      window["Session"] = val;
     });
 
    this.StockService.getnames(this.isArabic).subscribe(
@@ -311,6 +346,7 @@ export class HomePage implements OnInit {
     );
     this.initializedref = true;
   }
+  
   ionViewDidEnter() {
     this.dorefresh = true;
     if (this.dispnames) {
@@ -319,6 +355,7 @@ export class HomePage implements OnInit {
     this.splashScreen.hide();
 
   }
+
   ionViewWillLeave() {
     this.dorefresh = false;
   }

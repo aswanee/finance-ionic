@@ -1,10 +1,4 @@
-<ion-header>
-    <ion-navbar>
-        <ion-title>
-            {{reuter}}
-        </ion-title>
-    </ion-navbar>
-</ion-header>
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="reuter"></cust-nav></ion-header>
 
 <ion-content padding>
     <ion-card>
@@ -96,7 +90,6 @@
             <ion-list *ngIf=shownews>
                 <ion-item *ngFor="let item of relNews?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                     <button text-start clear class="full"  (click)="getdetails(item[0])">
-                            <!-- <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/News/NewsImages/{{item[4]}}"> -->
                             <div class="pThumb" item-text-wrap>
                                 <p text-wrap>{{item[1]}}</p>
                                 <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>

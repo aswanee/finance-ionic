@@ -10,16 +10,10 @@ import {
 } from "./../../app/userorder.interface";
 import { ToastController } from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
-// import { language, isArabic } from "./../../app/app.module";
 import { session ,User} from "../../app/session.interface";
-import { LoginComponent } from "./../login/login.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-/**
- * Generated class for the OrderhistoryPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+
 
 @IonicPage()
 @Component({
@@ -27,6 +21,33 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
   templateUrl: "orderhistory.html"
 })
 export class OrderhistoryPage implements OnInit {
+    
+  GetTitleWithOrderid (title: string ): string {
+    var t = title + " - " + this.orderid.toString()
+    return t;
+  }
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
   userorderhistoryresponse: userorderhistoryresponse;
   Session: session;
   orderid: number;
@@ -55,7 +76,7 @@ export class OrderhistoryPage implements OnInit {
         data => {
           this.userorderhistoryresponse = data;
           if (this.userorderhistoryresponse.Status =="UnauthorizedOrOverrideToken") {
-            throw "UnauthorizedOrOverrideToken"; 
+            throw "UnauthorizedOrOverrideToken at getorderhistory at Line 79"; 
           }
         },
         Error =>{

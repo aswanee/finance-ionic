@@ -36,10 +36,10 @@ export class TradeService extends ParentService {
     if (Session) {
       useraccounts = Session.result.UserAccounts.length;
       tokensymbol = Session.result.Token;
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
     }
     if (useraccounts === 0 && Session) {
-      this.link = this.link + Session.result.BIMSIAccountNumber;
+      this.link = this.link + Session.result.GeneralInfo.BIMSIAccountNumber;
     } else if (useraccounts !== 0 && Session) {
       this.link = this.link + Session.result.UserAccounts[0];
     }
@@ -65,11 +65,11 @@ export class TradeService extends ParentService {
     if (Session) {
       useraccounts = Session.result.UserAccounts.length;
       tokensymbol = Session.result.Token;
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
     }
     if (useraccounts === 0 && Session) {
       this.link =
-        this.link + Session.result.BIMSIAccountNumber + "&isArabic=" + isArabic;
+        this.link + Session.result.GeneralInfo.BIMSIAccountNumber + "&isArabic=" + isArabic;
     } else if (useraccounts !== 0 && Session) {
       this.link =
         this.link + Session.result.UserAccounts[0] + "&isArabic=" + isArabic;
@@ -100,12 +100,12 @@ export class TradeService extends ParentService {
     if (Session) {
       useraccounts = Session.result.UserAccounts.length;
       tokensymbol = Session.result.Token;
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
     }
     if (useraccounts === 0 && Session) {
       this.link =
         this.link +
-        Session.result.BIMSIAccountNumber +
+        Session.result.GeneralInfo.BIMSIAccountNumber +
         "&orderID=" +
         orderid +
         "&isArabic=" +
@@ -144,14 +144,14 @@ export class TradeService extends ParentService {
     let tokensymbol = "";
     if (Session) {
       useraccounts = Session.result.UserAccounts.length;
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
       tokensymbol = Session.result.Token;
     }
 
     if (useraccounts === 0 && Session) {
       this.link =
         this.link +
-        Session.result.BIMSIAccountNumber +
+        Session.result.GeneralInfo.BIMSIAccountNumber +
         "&view=" +
         view +
         "&isArabic=" +
@@ -196,7 +196,7 @@ export class TradeService extends ParentService {
     let Uname = "";
     let tokensymbol = "";
     if (Session) {
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
       tokensymbol = Session.result.Token;
     }
     let value =
@@ -255,7 +255,7 @@ export class TradeService extends ParentService {
     let Uname = "";
     let tokensymbol = "";
     if (Session) {
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
       tokensymbol = Session.result.Token;
     }
     let value =
@@ -300,7 +300,7 @@ export class TradeService extends ParentService {
     orderid: number,
     isArabic: boolean,
     pin: number,
-    Session
+    Session: session
   ): Observable<CancelResponse> {
     this.getsecurelink();
     this.link =
@@ -316,7 +316,7 @@ export class TradeService extends ParentService {
     let Uname = "";
     let tokensymbol = "";
     if (Session) {
-      Uname = Session.result.UserName;
+      Uname = Session.result.GeneralInfo.UserName;
       tokensymbol = Session.result.Token;
     }
     let value =

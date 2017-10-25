@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit ,ViewChild} from "@angular/core";
 import { NavController } from "ionic-angular";
 import { CompanyService } from "./../../app/company.service";
 import { News } from "./../../app/news.interface";
@@ -11,28 +11,27 @@ import { newsRefresh,imagPath } from "./../../app/refreshconfig";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-
+import {CustNavComponent} from '../../components/cust-nav/cust-nav';
+import { Storage } from "@ionic/storage";
+import  { AuthProvider } from './../../providers/auth/auth';
 @Component({
   selector: "page-contact",
   templateUrl: "News.html"
 })
 export class NewsPage implements OnInit {
+  @ViewChild(CustNavComponent) cld : CustNavComponent
   News: Newsresponse;
   displayedMoreNews: Newsresponse;
   ArabicNews: string[][] = new Array();
   EnglishNews: string[][] = new Array();
+  //FavoriteNews: string[][] = new Array();
   //MoreNews: Newsresponse;
   Newsbody: Newsdetailsresponse;
   showdetails = false;
   NewestDate: string = "2017-7-1";
   OldestDate: string ;
-  
-  //date: Date = new Date("2017-7-1");
+  FavoriteNews: string[][] = new Array();
   elements: Element;
-  //initialized = false;
-  //to: Date = new Date();
-  //from: Date = new Date();
-  //initializetofrom = false;
   id: string;
   dorefresh: boolean = true;
   isFired = false;
@@ -41,11 +40,36 @@ export class NewsPage implements OnInit {
     public navCtrl: NavController,
     private CompanyService: CompanyService,
     public events: Events,
-    private ToastController: ToastController
+    private ToastController: ToastController,
+    private Storage: Storage,
+    private Auth: AuthProvider
   ) {  }
   ngOnInit() {
-
+    var buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+    buttons = [
+      {BName: "notifications", IconName: "notifications",visable :true},
+      {BName: "add", IconName: "add",visable :true},
+      {BName: "checkmark", IconName: "checkmark",visable :false}
+    ];
+    this.cld.buttons = buttons;
+    this.GetFavoriteNews();
   }
+
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+  
   ionViewDidEnter() {
     this.dorefresh = true;
     this.refresh();
@@ -53,8 +77,48 @@ export class NewsPage implements OnInit {
   ionViewWillLeave() {
     this.dorefresh = false;
   }
+  
+  GetFavoriteNews()
+  {
+    var UserID = 0;
+    if(this.Auth.CurrentSession && this.Auth.CurrentSession.result 
+      && this.Auth.CurrentSession.result && this.Auth.CurrentSession.result.GeneralInfo.UserID)
+      {
+        UserID = this.Auth.CurrentSession.result.GeneralInfo.UserID
+      }
+      if(UserID>0)
+      {
+        this.CompanyService.GetFavoriteNews(UserID.toString())
+        .subscribe(
+          data => {
+            if(data.result.V.length > 0)
+            {
+              this.FavoriteNews = data.result.V
+            }
+          },
+          Error => {
+            if (!this.isFired) {
+              this.ErrorToast();
+              this.isFired = true;
+            }
+          }
+        );
+      }
+  }
 
+  RemoveFavoriteNews(key:number)
+  {
 
+    this.Storage.get("Favorite").then(Favorites => {
+      if(Favorites.length>0)
+      {
+        this.FavoriteNews = Favorites.filter((item)=> item.tid != key.toString());
+      }
+    });
+    
+    if(this.FavoriteNews)
+        this.Storage.set("Favorite",this.FavoriteNews)
+  }
 
   refresh() {
     this.CompanyService.getnews(this.NewestDate, 100, this.nLang).subscribe(

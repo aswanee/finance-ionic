@@ -2,7 +2,7 @@ import {
   Component,
   OnChanges,
   SimpleChanges,
-  HostListener
+  HostListener, ViewChild , OnInit
 } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
@@ -11,31 +11,50 @@ import { AlertService } from "./../../app/alert.service";
 import { alertresponse, alert } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
 import { ToastController } from "ionic-angular";
-import { token } from "./../../app/token.interface";
+import { session } from "./../../app/session.interface";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { CreateAlertPage } from "./../create-alert/create-alert";
 import { UpdateAlertPage } from "./../update-alert/update-alert";
-
-/**
- * Generated class for the AlertPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
 @Component({
   selector: "page-alert",
   templateUrl: "alert.html"
 })
-export class AlertPage {
+export class AlertPage implements OnInit {
+
+   
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+ buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+ [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+];
+
+
   isSmall: boolean = false;
   private alertForm: FormGroup;
   addAlertForm: boolean = false;
   dispnames: any[][] = new Array();
   userAlerts: alertresponse;
   userId: number;
-  token: token;
+  Session: session;
   alertsLastDate = new Date("2017-1-10");
   matchedAlerts: alert[] = new Array();
   nonMatchedAlerts: alert[] = new Array();
@@ -82,14 +101,15 @@ export class AlertPage {
     this.isSmall = event.target.innerWidth < 414 ? true : false;
   }
   ngOnInit() {
+
     this.storage.keys().then(keys => {
       if (keys) {
         keys.forEach(key => {
-          if (key === "token") {
+          if (key === "session") {
             this.storage.get(key).then(val => {
-              this.token = val;
+              this.Session = val;
               this.loggedin = true;
-              this.userId = this.token.result.UserID;
+              this.userId = this.Session.result.GeneralInfo.UserID;
               this.getAlerts();
             });
           } else if (key === "alerts") {
@@ -115,10 +135,6 @@ export class AlertPage {
   }
 
   getAlerts() {
-    // TODO: Add alerts Notifications
-
-    // TODO: should handle if a none user sent a that request.
-    // show sth like "you are not a user"
 
     this.AlertService.getUseralerts(this.userId, this.alertsLastDate).subscribe(
       data => {

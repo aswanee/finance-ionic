@@ -1,9 +1,5 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>
-            {{'News' | Language}}
-        </ion-title>
-    </ion-navbar>
+    <cust-nav (pin)="GetCustNavID($event)" [title]="'News' | Language"></cust-nav>
 </ion-header>
 <ion-content>
     <ion-segment [(ngModel)]="SelectedSegment">
@@ -17,7 +13,7 @@
         <ion-list *ngSwitchCase="'AllNews'" >
             <ion-item  *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                 <button clear class="full" text-start  (click)="getdetails(item[0])">
-                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/News/NewsImages/{{item[4]}}">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
                     <div class="pThumb" item-text-wrap>
                         <p text-wrap>{{item[1]}}</p>
                         <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
@@ -28,7 +24,7 @@
         <ion-list *ngSwitchCase="'ArabicNews'" >
             <ion-item  *ngFor="let item of ArabicNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                 <button clear class="full" text-start  (click)="getdetails(item[0])">
-                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/News/NewsImages/{{item[4]}}">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
                     <div class="pThumb" item-text-wrap>
                         <p text-wrap>{{item[1]}}</p>
                         <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
@@ -39,7 +35,7 @@
         <ion-list *ngSwitchCase="'EnglishNews'" >
             <ion-item  *ngFor="let item of EnglishNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                 <button clear class="full" text-start  (click)="getdetails(item[0])">
-                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/News/NewsImages/{{item[4]}}">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
                     <div class="pThumb" item-text-wrap>
                         <p text-wrap>{{item[1]}}</p>
                         <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
@@ -48,7 +44,21 @@
             </ion-item>
         </ion-list>
         <ion-list *ngSwitchCase="'Favoret'" >
-            <div>Favoret Still Empty....</div>        
+           
+            
+            
+            <ion-item  *ngFor="let item of FavoriteNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
+                <button clear class="full" text-start  (click)="getdetails(item[0])">
+                    <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
+                    <div class="pThumb" item-text-wrap>
+                        <p text-wrap>{{item[1]}}</p>
+                        <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
+                    </div>
+                </button> 
+            </ion-item>
+
+
+            
         </ion-list>        
     </div>
     <ion-item (click)="More()">{{'More' | Language}}</ion-item>

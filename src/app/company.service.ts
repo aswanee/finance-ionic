@@ -84,4 +84,22 @@ export class CompanyService extends ParentService {
       })
       .catch((t: Response) => t.json());
   }
+
+  OldFavoriteNewsID:string="0";
+
+  GetFavoriteNews(userid : string): Observable<Newsresponse> {
+    this.getunsecurelink();
+    //let tempfrom = from.getFullYear() + "-" + (from.getMonth() + 1) + "-" + from.getDate();
+    this.link += "apis/market/GetFavoriteNews?userid=" + userid + "&id=" + this.OldFavoriteNewsID ;
+    return this.http
+      .get(this.link)
+      .map(x => {
+        var favs = <Newsresponse>x.json();
+        this.OldFavoriteNewsID = favs.result.N
+        return favs;
+      })
+      .catch((t: Response) => t.json());
+  }
+  
+
 }

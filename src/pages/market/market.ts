@@ -8,13 +8,8 @@ import { CompanydetailsComponent } from "./../companydetails/companydetails.comp
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { ToastController } from "ionic-angular";
 import { marketRefresh } from "./../../app/refreshconfig";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
-/**
- * Generated class for the MarketPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -23,6 +18,30 @@ import { marketRefresh } from "./../../app/refreshconfig";
   templateUrl: "market.html"
 })
 export class MarketPage {
+
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
+
   lastFveDays: boolean = false;
   // lstFveDays70: boolean = false;
   // lstFveDays100: boolean = false;

@@ -1,14 +1,12 @@
 import { Component, Output, EventEmitter } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { ViewController } from "ionic-angular";
-import { LoginComponent } from "./../login/login.component";
-import { USERTOKEN } from "./../login/login.component";
 import { Storage } from "@ionic/storage";
 import { ToastController } from "ionic-angular";
 import { AboutPage } from "./../about/about";
 import { SettingsPage } from "./../settings/settings";
 import { AlertPage } from "./../alert/alert";
-import { HomePage } from "./../WatchList/WatchList";
+//import { HomePage } from "./../WatchList/WatchList";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { AuthProvider } from "./../../providers/auth/auth";
 import { session , User } from "./../../app/session.interface";
@@ -22,7 +20,7 @@ import { SwitchAccountsPage } from "./../switch-accounts/switch-accounts";
 export class PopoverPage {
   @Output() onLogout = new EventEmitter<boolean>();
   get loggedIn(): boolean {
-    if(this.Session && this.Session.result && this.Session.result.UserID > 0)
+    if(this.Session && this.Session.result && this.Session.result.GeneralInfo.UserID > 0)
     return true;
     else return false;
   }
@@ -43,16 +41,7 @@ export class PopoverPage {
   }
 
   ngOnInit() {
-    // this.storage.keys().then(keys => {
-    //   if (keys) {
-    //     keys.forEach(key => {
-    //       if (key === "session" && window["session"] && this.Session) {
 
-    //       }
-    //     });
-    //   }
-    // });
-    
     if (this.loggedIn  ) {
       
       if (this.Session.result.UserAccounts.length === 0) {
@@ -65,16 +54,18 @@ export class PopoverPage {
   }
 
   logout() {
+    console.log("Goodbay pop-over - logout")
     this.Auth.logout().subscribe(succ => {
-      this.navController.popToRoot();
-      this.close();
       this.menuToast("out");
-      this.navController.setRoot(this.rootPage)
+      //this.navController.setRoot(this.rootPage);
+      //this.navController.popToRoot();
+      this.close();
     });
   }
 
   goToAbout() {
     this.navController.push(AboutPage);
+    this.close();
   }
 
   goToSettings() {

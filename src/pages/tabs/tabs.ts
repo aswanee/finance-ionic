@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 
 import { AboutPage } from "../about/about";
-import { NewsPage } from "../News/News";
-import { HomePage } from "../WatchList/WatchList";
+import { NewsPage } from "../news/news";
+//import { WatchList } from "../WatchList/WatchList";
+import { HomePage } from "../home/home";
 import { MarketPage } from "../market/market";
 import { AlertPage } from "../alert/alert";
 import { SigninPage } from "./../signin/signin";

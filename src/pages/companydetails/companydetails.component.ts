@@ -24,11 +24,14 @@ import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { BehaviorSubject } from "rxjs";
 //import { TabsPage } from "../tabs/tabs";
-import { HomePage } from "./../WatchList/WatchList";
+//import { WatchList } from "../WatchList/WatchList";
+import { HomePage } from "../home/home";
 import { MarketPage } from "./../market/market";
 import { ToastController } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+
 @Component({
   // moduleId: module.id,
   selector: "companydetails",
@@ -40,6 +43,28 @@ import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
 })
 export class CompanydetailsComponent implements OnInit, OnChanges {
   // private _items = new BehaviorSubject<String[]>([]);
+
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+ buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+ [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+];
 
   @Input() id: string;
   rootid: number;

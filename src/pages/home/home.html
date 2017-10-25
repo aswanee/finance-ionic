@@ -1,24 +1,7 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title *ngIf="!isArabic">WatchList</ion-title>
-        <ion-title *ngIf="isArabic">قائمة المراقبة </ion-title>
-
-        <ion-buttons end>
-                <button  *ngIf="!editpressed" ion-button icon-only  (click)="addToWatchlist()">
-                    <ion-icon name="add"></ion-icon>
-                </button>
-                <button *ngIf="editpressed" ion-button icon-only  (click)="falsepressed()">
-                    <ion-icon name="checkmark"></ion-icon>
-                </button>
-                <button style="margin-top:1.5%;background-color: rgba(0, 0, 0, 0);" clear ion-button item-end icon-only>
-                        <ion-icon name="notifications" style="color:rgba(0, 0, 0, 0)" ></ion-icon>
-                </button>
-                <button style="margin-top:1.5%;background-color: rgba(0, 0, 0, 0);" clear ion-button item-end icon-only>
-                  <ion-icon name="more" style="color:rgba(0, 0, 0, 0)" ></ion-icon>
-                </button>
-        </ion-buttons>
-    </ion-navbar>
+    <cust-nav (pin)="GetCustNavID($event)" [buttons]="buttons" [title]="isArabic? 'قائمة المراقبة': 'WatchList'"></cust-nav>
 </ion-header>
+
 
 <ion-content>
     <!-- Start Search-->

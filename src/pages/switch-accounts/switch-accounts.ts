@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { session } from "./../../app/session.interface";
 import { Storage } from "@ionic/storage";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()
@@ -11,6 +12,31 @@ import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
   templateUrl:"switch-accounts.html" 
 })
 export class SwitchAccountsPage {
+
+  
+   GetCustNavID(event) {
+     switch(event)
+     {
+       case "notifications":
+         console.log(event);
+         break;
+       case "add":
+         console.log(event);
+         break;
+       case "checkmark":
+         console.log(event);
+         break;
+     }
+   }
+ 
+   buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+   [
+     // {BName: "notifications", IconName: "notifications"},
+     // {BName: "add", IconName: "add"},
+     // {BName: "checkmark", IconName: "checkmark"}
+   ];
+ 
+   
   Session: session;
   constructor(
     public navCtrl: NavController,
@@ -26,6 +52,10 @@ export class SwitchAccountsPage {
         this.Session.result.UserAccounts[0] = this.Session.result.UserAccounts[i];
         this.Session.result.UserAccounts[i] = temp;
         this.Storage.set("session", this.Session);
+
+        this.Storage.set("SelectedBIMS", this.Session.result.UserAccounts[0]);
+        this.Storage.set("Accounts", this.Session.result.UserAccounts);
+        
         break;
       }
     }

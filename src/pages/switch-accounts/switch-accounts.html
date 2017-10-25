@@ -1,8 +1,5 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>{{'SwitchAccounts' | Language}}</ion-title>
-  </ion-navbar>
-</ion-header>
+
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'SwitchAccounts' | Language"></cust-nav></ion-header>
 
 
 <ion-content padding>

@@ -1,11 +1,4 @@
-
-<ion-header>
-    <ion-navbar>
-        <ion-title>
-            {{'Market' | Language}}
-        </ion-title>
-    </ion-navbar>
-</ion-header>
+<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'Market' | Language"></cust-nav></ion-header>
 
 <ion-content>
     <ion-item *ngIf="Indices&&BP&&WP&&BV">

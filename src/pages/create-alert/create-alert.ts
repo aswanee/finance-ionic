@@ -11,16 +11,10 @@ import {
   Field
 } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
-import { token } from "./../../app/token.interface";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { ToastController } from "ionic-angular";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
-/**
- * Generated class for the CreateAlertPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -28,6 +22,30 @@ import { ToastController } from "ionic-angular";
   templateUrl: "create-alert.html"
 })
 export class CreateAlertPage {
+
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
+  
   Types: String[] = ["Index", "Stock", "OTC"];
   Fields: any = new Array(
     "Last Trade",

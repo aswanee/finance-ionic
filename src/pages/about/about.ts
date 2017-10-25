@@ -1,21 +1,41 @@
-import { Component } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-// import { language } from "./../../app/app.module";
-/**
- * Generated class for the AboutPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
+import { Component,ViewChild, OnInit } from "@angular/core";
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 
+@IonicPage()
 @Component({
-  selector: "page-about",
-  templateUrl: "about.html"
+  selector: 'page-about',
+  templateUrl: 'about.html',
 })
-export class AboutPage {
+export class AboutPage implements OnInit{
+
   dorefresh = false;
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
+
+  ngOnInit() {
+    var buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+    //buttons = [
+    //  {BName: "notifications", IconName: "notifications"},
+    //  {BName: "add", IconName: "add"},
+    //  {BName: "checkmark", IconName: "checkmark"}
+    //];
+    //this.cld.buttons = buttons;
+}
+
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
 
   ionViewDidLoad() {
     console.log("ionViewDidLoad AboutPage");

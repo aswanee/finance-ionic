@@ -10,7 +10,6 @@ import { SigninPage } from "../pages/signin/signin";
 import {
   IonicPage,
   NavController,
-  NavParams,
   PopoverController,
   AlertController,
   ToastController
@@ -35,7 +34,9 @@ export class MyApp {
     private alertCtrl: AlertController,
     //private oneSignal: OneSignal
   ) {
-    this.alert = this.alertCtrl.create({
+
+
+      this.alert = this.alertCtrl.create({
       title: "Exit?",
       message: "Do you want to exit the app?",
       buttons: [
@@ -137,6 +138,6 @@ export class MyApp {
     popover.present({
       ev: myEvent
     });
-  }
-  // this.nav.push(Page1);
+  } 
+   // this.nav.push(Page1);
 }

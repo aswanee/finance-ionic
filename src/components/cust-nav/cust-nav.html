@@ -1,0 +1,13 @@
+<!-- Generated template for the CustNavComponent component -->
+    <ion-navbar>
+        <ion-title >{{title}}</ion-title>
+        <ion-buttons end>
+  
+            <button clear ion-button item-end icon-only *ngFor="let b of Visablebuttons() " (click)="addNewEntry(b.BName)">
+                <ion-icon name="{{b.IconName}}"></ion-icon>
+            </button>      
+            <button clear ion-button item-end icon-only (click)="presentPopover($event)">
+                <ion-icon name="menu"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>

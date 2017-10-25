@@ -36,6 +36,7 @@ import {AutocompletePage} from '../autocomplete/autocomplete'
 import { StockService } from "./../../app/stock.service";
 import { Equals } from "../../Lib/Compare";
 import { SigninPage } from "../signin/signin";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
 @Component({
@@ -43,6 +44,29 @@ import { SigninPage } from "../signin/signin";
   templateUrl: 'onlinetrading.html',
 })
 export class OnlinetradingPage {
+  
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
   username = '';
   email = '';
   userorderhistoryresponse: userorderhistoryresponse;
@@ -115,18 +139,14 @@ export class OnlinetradingPage {
   OrderSearchItem:string[]=["","","","","",""];
   DirClass:string = "";
   OrdresData: Array<{id: string ,title: string, details: any, icon: string, showDetails: boolean}> = [];
-  _Session : session ;
+  //_Session : session ;
 
   get Session(): session {
-    if(!this._Session || !this._Session.result || this._Session.result.UserID <= 0)
-    {
-      this._Session = this.auth.getUserInfo();
-    }
-    return this._Session;
+    return this.auth.getUserInfo();
   }
   CheckSession() 
   {
-    if(!this.Session || !this.Session.result || this.Session.result.UserID <= 0)
+    if(!this.Session || !this.Session.result || this.Session.result.GeneralInfo.UserID <= 0)
     {
       this.logout();
     }
@@ -143,11 +163,15 @@ export class OnlinetradingPage {
     private StockService: StockService,
 
   ) {
+
+    this.UserOpenOrderResponse = {Status: "",result: []}
+    this.UserNotOpenOrderResponse = {Status: "",result: []}
+    
     let info = this.auth.getUserInfo();
-    if(info && info.result && info.result.UserID > 0)
+    if(info && info.result && info.result.GeneralInfo.UserID > 0)
     {
-      this.username = info.result.UserName;
-      this.email = info.result.Email;
+      this.username = info.result.GeneralInfo.UserName;
+      this.email = info.result.GeneralInfo.Email;
       this.SelectedSegment= "Portfolio";
       this.userorder.ReutersCode= '';
       this.OrdresData.push({
@@ -172,7 +196,7 @@ export class OnlinetradingPage {
   }
   
   Block : boolean= false;
-count : number = 0;
+  count : number = 0;
   public logout() {
     this.showhistory = false;
     this.showInsert = false;
@@ -253,7 +277,7 @@ count : number = 0;
       .subscribe(data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at GetPortfolio line 280"; 
         }
       }, Error =>{
         this.ErrorToast("you are not logged in");
@@ -279,7 +303,7 @@ count : number = 0;
       data => {
         this.portfolioresponse = data;
         if (this.portfolioresponse.Status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at GetPortfolio at Line 306"; 
         }
       },
       Error =>{
@@ -306,7 +330,7 @@ count : number = 0;
           this.Detailsresponse = data.result[0];
         }
         if (data.status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at GetPortfolioSummary at Line 333"; 
         }
       },
       Error =>{
@@ -325,7 +349,7 @@ count : number = 0;
       data => {
         this.UserOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at getorders at Line 351"; 
         } 
         else {
           for (let i = 0; i < this.UserOpenOrderResponse.Status.length; i++) {
@@ -342,7 +366,7 @@ count : number = 0;
       data => {
         this.UserNotOpenOrderResponse = data;
         if (this.UserNotOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at getorders at Line 369"; 
         } 
         else {
           for (let i = 0; i < this.UserNotOpenOrderResponse.Status.length; i++) {
@@ -371,7 +395,8 @@ count : number = 0;
     this.TradeService
       .getorders(this.Session, window["isArabic"], 1)
       .subscribe(data => {
-        if(this.UserOpenOrderResponse && this.UserOpenOrderResponse.result){
+        if(data && data.result)
+        {
           if(data.result.length != this.UserOpenOrderResponse.result.length)
           {
             this.UserOpenOrderResponse = data;
@@ -389,9 +414,13 @@ count : number = 0;
             }
           }
         }
+        else
+        {
+          throw "ERROR  at if else at Line 418"; 
+        }
         //this.UserOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at Line 422"; 
         }
       }, Error =>{
         this.ErrorToast("you are not logged in");
@@ -414,7 +443,7 @@ count : number = 0;
       .subscribe(data => {
         this.UserNotOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
-          throw "UnauthorizedOrOverrideToken"; 
+          throw "UnauthorizedOrOverrideToken at Line 445"; 
         }
       }, Error =>{
         this.ErrorToast("you are not logged in");
@@ -439,11 +468,11 @@ count : number = 0;
     }
 
     if (this.Session.result.UserAccounts.length === 0) {
-      this.userorder.BimsUserID = this.Session.result.BIMSIAccountNumber;
+      this.userorder.BimsUserID = this.Session.result.GeneralInfo.BIMSIAccountNumber;
     } else {
       this.userorder.BimsUserID = Number(this.Session.result.UserAccounts[0]);
     }
-    this.userorder.Username = this.Session.result.UserName;
+    this.userorder.Username = this.Session.result.GeneralInfo.UserName;
     this.TradeService
       .ValidateOrder(window["isArabic"], false, this.userorder, this.Session)
       .subscribe(
@@ -460,7 +489,7 @@ count : number = 0;
             }
           } 
           else if (this.ValidationResponse.Status == "UnauthorizedOrOverrideToken") {
-            throw "UnauthorizedOrOverrideToken"; 
+            throw "UnauthorizedOrOverrideToken at Line 491"; 
           }
           else {
             alert("please insert all fields with Valid Values");
@@ -501,7 +530,7 @@ count : number = 0;
   UpdateOrder(order: userorder) {
     this.isArabic = window["isArabic"];
     
-    this.updateuserorder.Username = this.Session.result.UserName;
+    this.updateuserorder.Username = this.Session.result.GeneralInfo.UserName;
 
     if (this.EnablePrice) {
     } else {

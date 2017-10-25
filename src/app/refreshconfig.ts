@@ -5,5 +5,5 @@ export let tradesRefresh = 15000;
 export let relnewsRefresh = 1000 * 60 * 60;
 export let newsRefresh = 15000 * 60;
 export let ordersRefresh = 30000;
-export let portfolioRefresh = 100000;
-export let imagPath ="https://www.arabfinance.com/News/NewsImages/";
+export let portfolioRefresh = 10000;
+export let imagPath ="https://www.arabfinance.com/news/newsimages/";

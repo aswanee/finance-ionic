@@ -17,22 +17,17 @@ import {
   ValidationResponse,
   CancelResponse
 } from "./../../app/Validate.interface";
-import { Detailsresponse } from "./../../app/details.interface";
-import { portfolioresponse } from "./../../app/portfolio.interface";
-import { USERTOKEN } from "./../login/login.component";
-import { LoginService } from "./../../app/login.service";
-import { token } from "./../../app/token.interface";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import { HomePage } from "./../WatchList/WatchList";
+ import { Detailsresponse } from "./../../app/details.interface";
+ import { portfolioresponse } from "./../../app/portfolio.interface";
+// //import { LoginService } from "./../../app/login.service";
+import { session } from "./../../app/session.interface";
+// import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+// //import { WatchList } from "../WatchList/WatchList";
+// import { HomePage } from "../home/home";
 import { StockService } from "./../../app/stock.service";
 import { Platform } from "ionic-angular";
+import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
-/**
- * Generated class for the SettingsPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -40,6 +35,28 @@ import { Platform } from "ionic-angular";
   templateUrl: "settings.html"
 })
 export class SettingsPage implements OnInit {
+  GetCustNavID(event) {
+    switch(event)
+    {
+      case "notifications":
+        console.log(event);
+        break;
+      case "add":
+        console.log(event);
+        break;
+      case "checkmark":
+        console.log(event);
+        break;
+    }
+  }
+
+  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  [
+    // {BName: "notifications", IconName: "notifications"},
+    // {BName: "add", IconName: "add"},
+    // {BName: "checkmark", IconName: "checkmark"}
+  ];
+
   pepperoni;
   sausage;
   mushrooms;
@@ -51,7 +68,7 @@ export class SettingsPage implements OnInit {
   openlanguage: boolean = false;
   showabout = false;
   ValidationResponse: ValidationResponse;
-  usertoken: token;
+  userSession: session;
   userorder: userorder = {
     PriceType: 2 /*Market -  Limited*/,
     TimeTerm: 2 /*2- Good Till Day -4 Good Till week -5 Good Till month*/,
@@ -81,7 +98,7 @@ export class SettingsPage implements OnInit {
     public navCtrl: NavController,
     public navParams: NavParams,
     private TradeService: TradeService,
-    private LoginService: LoginService,
+    //private LoginService: LoginService,
     private storage: Storage,
     private StockService: StockService,
     private platform: Platform
