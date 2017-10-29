@@ -138,7 +138,7 @@ export class OnlinetradingPage {
   isArabic:boolean=true;
   OrderSearchItem:string[]=["","","","","",""];
   DirClass:string = "";
-  OrdresData: Array<{id: string ,title: string, details: any, icon: string, showDetails: boolean}> = [];
+  OrdresData: Array<{id: string ,title: string, details: userorderresponse, icon: string, showDetails: boolean}> = [];
   //_Session : session ;
 
   get Session(): session {
@@ -290,7 +290,6 @@ export class OnlinetradingPage {
     this.showInsert = false;
     this.refreshPortfolio();
 
-    // this.ShowUpdate = false;
   }
 
 
@@ -352,6 +351,11 @@ export class OnlinetradingPage {
           throw "UnauthorizedOrOverrideToken at getorders at Line 351"; 
         } 
         else {
+          this.OrdresData[0].details = this.UserOpenOrderResponse;
+          if(this.UserOpenOrderResponse.result.length <= 0)
+          {
+            this.OrdresData[0].showDetails = false;
+          }
           for (let i = 0; i < this.UserOpenOrderResponse.Status.length; i++) {
             this.ShowUpdate[i] = false;
           }
@@ -362,6 +366,7 @@ export class OnlinetradingPage {
         this.logout();
       }
     );
+
     this.TradeService.getorders(this.Session, window["isArabic"], 2).subscribe(
       data => {
         this.UserNotOpenOrderResponse = data;
@@ -369,6 +374,11 @@ export class OnlinetradingPage {
           throw "UnauthorizedOrOverrideToken at getorders at Line 369"; 
         } 
         else {
+          if(this.UserOpenOrderResponse.result.length>0 && this.UserNotOpenOrderResponse.result.length>0 )
+          {
+            this.OrdresData[0].showDetails = true;
+          }
+          this.OrdresData[1].details = this.UserNotOpenOrderResponse;
           for (let i = 0; i < this.UserNotOpenOrderResponse.Status.length; i++) {
             this.ShowUpdate[i] = false;
           }
@@ -397,6 +407,7 @@ export class OnlinetradingPage {
       .subscribe(data => {
         if(data && data.result)
         {
+          
           if(data.result.length != this.UserOpenOrderResponse.result.length)
           {
             this.UserOpenOrderResponse = data;
@@ -413,12 +424,12 @@ export class OnlinetradingPage {
               }
             }
           }
+          this.OrdresData[0].details = this.UserOpenOrderResponse;
         }
         else
         {
           throw "ERROR  at if else at Line 418"; 
         }
-        //this.UserOpenOrderResponse = data;
         if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
           throw "UnauthorizedOrOverrideToken at Line 422"; 
         }
@@ -442,9 +453,11 @@ export class OnlinetradingPage {
       .getorders(this.Session, window["isArabic"], 2)
       .subscribe(data => {
         this.UserNotOpenOrderResponse = data;
-        if (this.UserOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
+        if (this.UserNotOpenOrderResponse.Status == "UnauthorizedOrOverrideToken") {
           throw "UnauthorizedOrOverrideToken at Line 445"; 
         }
+        this.OrdresData[1].details = this.UserNotOpenOrderResponse;
+        
       }, Error =>{
         this.ErrorToast("you are not logged in");
         this.logout();
@@ -804,7 +817,12 @@ export class OnlinetradingPage {
 
 
 
-
+  GetOrdresData()
+  {
+    var xxx;
+    xxx = this.OrdresData.filter(item => {item.details.result.length>0});
+    return xxx;
+  }
 
 
 

@@ -229,13 +229,9 @@
     </ion-list>
  
     <ion-list *ngIf="showorders && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
-            <!-- <ion-list-header>
-              Orders Views There is {{UserOpenOrderResponse?.result.length}} Open Order.
-            </ion-list-header> -->
-            <ion-item class="ToggelOrdersItem" *ngFor="let d of OrdresData" (click)="toggleDetails(d)">
+            <ion-item class="ToggelOrdersItem" *ngFor="let d of OrdresData" (click)="toggleDetails(d)" [hidden]="d.details.result.length<=0" >
                 <ion-item color="Toggel">
                     <ion-icon class="ToggelOrdersicon" color="light" item-right [name]="d.icon"></ion-icon>
-                    <!-- {{d.title}} -->
                     <span *ngIf="UserOpenOrderResponse && d.id=='open'">
                           There is {{UserOpenOrderResponse?.result.length}} Open Order.
                     </span>

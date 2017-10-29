@@ -4,6 +4,8 @@ import { Http, Response } from "@angular/http";
 import { SerResponse } from "./response.interface";
 import { MarketResponse } from "./Marketresponse.interface";
 import { ParentService } from "./parentservice.service";
+import { Subject } from 'rxjs/Subject';
+
 @Injectable()
 export class MarketService extends ParentService {
   getperformers(id: string, isArabaic: boolean): Observable<SerResponse> {
@@ -45,5 +47,37 @@ export class MarketService extends ParentService {
         return <MarketResponse>x.json();
       })
       .catch((t: Response) => t.json());
+  }
+
+
+
+  MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
+
+  // private subject = new Subject<any>();
+  
+  // getMessage(): Observable<any> {
+  //   return this.subject.asObservable();
+  // }
+
+
+
+  getmarketstatus(): Observable<any> {
+    //this.subject.next({ MarketStatus: this.MarketStatus });
+    
+    this.getunsecurelink();
+    return this.http 
+      .get(this.link + "apis/market/GetMarketStatus")
+      .map(x => {
+        var data = <any>x.json();
+        this.MarketStatus.Status = data.result.MarketStatuse;
+        this.MarketStatus.Datetime = this.JsonToDate(data.result.RegTime);
+        this.MarketStatus.Time =  this.MarketStatus.Datetime.toLocaleTimeString();
+        return this.MarketStatus;
+      })
+      .catch((t: Response) => t.json());
+  }
+
+  JsonToDate (param):Date{
+    return new Date(parseInt(param.substr(6)));
   }
 }

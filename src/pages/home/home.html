@@ -6,6 +6,7 @@
 <ion-content>
     <!-- Start Search-->
     <div class="list" *ngIf="editpressed && displayListDummy &&displayList">
+        <!-- <ion-input type="text" [(ngModel)]="SelectedWatchList.Name"></ion-input>  -->
         <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
             <ion-item *ngFor="let item of displayList; let i=index;">

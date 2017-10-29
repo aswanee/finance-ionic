@@ -246,7 +246,7 @@ export class NewsPage implements OnInit,OnDestroy {
       this.subscription.unsubscribe();
     }
   
-    GetFavoret()  {
+    GetFavorite()  {
       
     }
   

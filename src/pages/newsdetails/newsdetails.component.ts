@@ -65,7 +65,7 @@ export class NewsdetailsComponent implements OnInit {
     private NavController: NavController,
     public navParams: NavParams,
     private ToastController: ToastController,
-    private FavoritesService : FavoritesService,
+    private Favo : FavoritesService,
     private Auth: AuthProvider
     
   ) {
@@ -144,7 +144,7 @@ export class NewsdetailsComponent implements OnInit {
       if(!this.pinned && UserID > 0)
       {
         this.pinned = true;
-        this.FavoritesService.AddFavorite(UserID.toString(),this.Newsbody.result.V[0]).subscribe(
+        this.Favo.AddFavorite(UserID.toString(),this.Newsbody.result.V[0]).subscribe(
           data => {
             //////////////var locData :any = data.Detail;
            //////////////////////// this.CompanyService.
@@ -171,20 +171,20 @@ export class NewsdetailsComponent implements OnInit {
 
     if(this.pinned && UserID > 0)
     {
-      this.FavoritesService.RemoveFavorite_test(this.Newsbody.result.V[0]);
-      // this.FavoritesService.RemoveFavorite(this.Newsbody.result.V[0], UserID.toString(), this.Newsbody.result.V[8]).subscribe(
-      //   data => {
-      //     var locDate :any = data;
-      //     this.pinned = false;
-      //     console.log(locDate);
-      //   },
-      //   Error => {
-      //     if (!this.isFired) {
-      //       this.ErrorToast("Error!Please Check your Connectivity and restart the application");
-      //       this.isFired = true;
-      //     }
-      //   }
-      //);      
+      //this.Favo.RemoveFavorite_test(this.Newsbody.result.V[0]);
+      this.Favo.RemoveFavorite(this.Newsbody.result.V[0], UserID.toString(), this.Newsbody.result.V[8]).subscribe(
+        data => {
+          var locDate :any = data;
+          this.pinned = false;
+          console.log(locDate);
+        },
+        Error => {
+          if (!this.isFired) {
+            this.ErrorToast("Error!Please Check your Connectivity and restart the application");
+            this.isFired = true;
+          }
+        }
+      );      
       console.log("this.pinned =" + this.pinned);
     }
   }

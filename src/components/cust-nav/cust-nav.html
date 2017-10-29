@@ -1,6 +1,11 @@
 <!-- Generated template for the CustNavComponent component -->
     <ion-navbar>
-        <ion-title >{{title}}</ion-title>
+        <ion-title >
+                <ion-icon *ngIf="!this.marketservice.MarketStatus.Status=='Open'" name="checkmark-circle" color="secondary"></ion-icon>
+                <ion-icon *ngIf="this.marketservice.MarketStatus.Status=='Close'" name="close-circle" color="danger"></ion-icon> 
+            <label style="font-size: 1.16rem">{{this.marketservice.MarketStatus.Time}}</label>
+            {{title}}
+        </ion-title>
         <ion-buttons end>
   
             <button clear ion-button item-end icon-only *ngFor="let b of Visablebuttons() " (click)="addNewEntry(b.BName)">

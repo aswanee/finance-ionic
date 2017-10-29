@@ -22,6 +22,7 @@ import { Badge } from '@ionic-native/badge';
 import { PopoverPage } from "../pop-over/pop-over";
 import { SplashScreen } from "@ionic-native/splash-screen";
 import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+import { MarketService } from "./../../app/market.service";
 
 
 
@@ -33,7 +34,9 @@ import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 })
 export class HomePage {
   
-  //@ViewChild(CustNavComponent) cld : CustNavComponent
+  //MarketStatus :{Status:string, Time:string}= {Status:"OK", Time:"xxxx"} ;
+  MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
+  
   ButtonName :string ;
     
   isSmall: boolean = false;
@@ -70,10 +73,7 @@ export class HomePage {
   hideSplash:boolean=false;
 
   presentPopover(myEvent) {
-    // let popover = this.popoverCtrl.create(PopoverPage);
-    // popover.present({
-    //   ev: myEvent
-    // });
+
   }
   constructor(
     public navCtrl: NavController,
@@ -87,9 +87,7 @@ export class HomePage {
     private alert:AlertController,
     private badge: Badge,
     public popoverCtrl: PopoverController,
-    public splashScreen: SplashScreen,
-  ) 
-  {
+    public splashScreen: SplashScreen, private MarketService: MarketService)   {
     //this.onNotification();
     platform.ready().then(() => {
       //this.requestPremission();
@@ -211,6 +209,19 @@ export class HomePage {
       console.error(e);
     }
   }
+  
+  getMarketStatus() {
+    this.MarketService.getmarketstatus().subscribe(
+      data => {
+        console.log(data);
+        this.MarketStatus.Status = data.MarketStatuse;
+        this.MarketStatus.Time = data.Time;
+        this.MarketStatus.Datetime = data.Datetime;
+      },
+      Error => console.log(Error)
+    );
+    setTimeout(() => {this.getMarketStatus();}, 5000);
+}
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -351,6 +362,7 @@ export class HomePage {
     this.dorefresh = true;
     if (this.dispnames) {
       this.refresh();
+      this.getMarketStatus()
     }
     this.splashScreen.hide();
 
@@ -429,12 +441,6 @@ export class HomePage {
     this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
       data => {
         this.StockDetails = data;
-        // for (let i = 0; i < this.StockDetails.result.length; i++) {
-        //   this.StockDetails.result[i].push(this.dispnames[i]);
-        //   this.StockDetails.result[i].push("");
-        //   this.StockDetails.result[i].push(data.result[i][0]);
-          
-        // }
       },
       Error => {
         if (!this.isFired) {

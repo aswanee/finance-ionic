@@ -101,10 +101,16 @@ RemoveFavorite_test(NewsID : string)
       .get(this.link)
       .map(x => {
         var i = 0;
-        var temp : string[];
-        for(i=0; i<this.FavoriteNews.result.V.length ; i++)
+        var len : number= this.FavoriteNews2.length
+        for(i=0; i<len ; i++)
         {
-          console.log(this.FavoriteNews.result.V[i]);
+          if(this.FavoriteNews2[i][0]==id)
+          {
+            this.FavoriteNews2[i] = this.FavoriteNews2[len -1];
+            this.FavoriteNews2.pop();
+            break;
+          }
+          console.log(this.FavoriteNews2[i]);
         }
         return <Favorites>x.json();
       })
@@ -127,7 +133,7 @@ RemoveFavorite_test(NewsID : string)
       .post(this.link, sent, { headers: headers })
       .map(x => {
        var FavItem :any = <AddFavorites>x.json().result;
-        this.FavoriteNews2.push(FavItem.Fav);
+        this.FavoriteNews2.push(FavItem.Detail);
         return FavItem;
       })
       .catch((t: Response) => t.json());
