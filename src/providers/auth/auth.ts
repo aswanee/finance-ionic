@@ -49,7 +49,7 @@ export class AuthProvider extends ParentService {
             this.storage.set("GeneralInfo", this.CurrentSession.result.GeneralInfo);
             this.storage.set("Custodians", this.CurrentSession.result.UserCustodians);
             this.storage.set("Accounts", this.CurrentSession.result.UserAccounts);
-            this.storage.set("Favorite", this.CurrentSession.result.UserFavorite);
+            //this.storage.set("Favorite", this.CurrentSession.result.UserFavorite);
             this.storage.set("SelectedBIMS", this.CurrentSession.result.GeneralInfo.BIMSIAccountNumber);
             observer.next(true)
           }

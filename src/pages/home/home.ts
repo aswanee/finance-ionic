@@ -467,7 +467,12 @@ export class HomePage {
     this.editpressed = true;
     if (this.initialized === true) {
       for (let k = 0; k < this.dispnames.length; k++) {
-        for (let i = 0; i < this.List.result.length; i++) {
+        for (let i = 0; i < this.displayListDummy.length; i++) {
+          console.log("k: " + k + "i: " + i);
+          if(this.displayListDummy.length - 1 == i )
+          {
+            var breakboint = "break";
+          }
           if (this.dispnames[k] === this.displayListDummy[i][0]) {
             this.map[this.displayListDummy[i][0]] = true;
             this.displayListDummy[i] = this.displayListDummy[this.displayListDummy.length - 1];
