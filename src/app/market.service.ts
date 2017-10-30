@@ -69,12 +69,15 @@ export class MarketService extends ParentService {
       .get(this.link + "apis/market/GetMarketStatus")
       .map(x => {
         var data = <any>x.json();
-        this.MarketStatus.Status = data.result.MarketStatuse;
-        this.MarketStatus.Datetime = this.JsonToDate(data.result.RegTime);
-        this.MarketStatus.Time =  this.MarketStatus.Datetime.toLocaleTimeString();
+        if(data && data.result){
+          this.MarketStatus.Status = data.result.MarketStatuse;
+          this.MarketStatus.Datetime = this.JsonToDate(data.result.RegTime);
+          this.MarketStatus.Time =  this.MarketStatus.Datetime.toLocaleTimeString();  
+        }
         return this.MarketStatus;
       })
-      .catch((t: Response) => t.json());
+      .catch(error => Observable.throw(error));
+      //.catch((t: Response) => t.json());
   }
 
   JsonToDate (param):Date{

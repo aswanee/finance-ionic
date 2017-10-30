@@ -36,7 +36,7 @@ export class CustNavComponent  {
           this.MarketStatus.Datetime = new Date(this.MarketStatus.Datetime.setMilliseconds(1000));
           this.MarketStatus.Time =  new Date(this.MarketStatus.Datetime).toLocaleTimeString();
           this.counter += 1000;
-          console.log("Calc Time IS------->" + this.MarketStatus.Time)
+          //console.log("Calc Time IS------->" + this.MarketStatus.Time)
         }
         else
         {
@@ -49,7 +49,7 @@ export class CustNavComponent  {
     {
       console.log(err);
     }
-    setTimeout(() => {this.getstatus();}, 1000);
+    setTimeout(() => {this.getstatus();}, 10000);
     
   }
  
