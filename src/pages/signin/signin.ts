@@ -6,6 +6,7 @@ import {OnlinetradingPage} from '../onlinetrading/onlinetrading'
 import { LanguagePipe } from "../../pipes/Language/Language.pipe";
 import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
+
 @Component({
   selector: 'page-signin',
   templateUrl: 'signin.html',

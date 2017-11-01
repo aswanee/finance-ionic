@@ -7,6 +7,9 @@ $font-path: "../assets/fonts";
 
 $fa-font-path: "../assets/font-awesome-4.7.0/fonts";
 
+// @import url(http://fonts.googleapis.com/earlyaccess/notokufiarabic.css);
+// $font-family-base: "Noto Kufi Arabic", sans-serif !default;
+
 // The app direction is used to include
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
@@ -54,7 +57,7 @@ $colors: (
   $background-color:           #191919 !default;
   $subdued-text-color:         #A1DDA6 !default;
 
-  $font-family-base:           -apple-system, "Helvetica Neue", "Roboto", sans-serif !default;
+  $font-family-base:           "DroidSansArabicRegular" , "Helvetica Neue", "Roboto", sans-serif !default;
   $font-size-base:             1.4rem !default; // 1.4rem == 14px
   
   $content-padding:            16px !default;
@@ -88,7 +91,7 @@ $colors: (
   $background-md-color:                 $background-color !default;
   $subdued-text-md-color:               $subdued-text-color !default;
   
-  $font-family-md-base:                 "Roboto", "Helvetica Neue", sans-serif !default;
+  $font-family-md-base:                 "DroidSansArabicRegular" , "Roboto", "Helvetica Neue", sans-serif !default;
   $font-size-md-base:                   $font-size-base !default;
   
   
@@ -417,3 +420,24 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+/* droid_sans_arabicregular*/ 
+@font-face {
+  font-family:Droid Arabic Kufi;
+  src: url('../assets/fonts/DroidKufi-Regular-webfont.eot')
+       url('../assets/fonts/DroidKufi-Regular-webfont.woff') format("woff");
+  
+  src: url('../assets/fonts/DroidKufi-Regular-webfont.eot') format('embedded-opentype'),
+       url('../assets/fonts/DroidKufi-Regular-webfont.ttf') format('truetype');
+       
+}
+
+@font-face {
+  font-family:DroidSansArabicRegular;
+  src: url('../assets/fonts/droidsansarabic.eot'),
+       url('../assets/fonts/droidsansarabic.woff') format("woff");
+  
+  src: url('../assets/fonts/droidsansarabic.eot') format('embedded-opentype'),
+       url('../assets/fonts/droidsansarabic.ttf') format('truetype'),
+       url('../assets/fonts/droidsansarabic.svg#DroidSansArabicRegular') format('svg');
+       
+}

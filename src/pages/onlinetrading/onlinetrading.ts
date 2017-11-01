@@ -86,7 +86,7 @@ export class OnlinetradingPage {
     ReutersCode: "",
     Side: 0 /*(2)Buy -(3) Sell -(4) Sell Same Day -(5) T+1*/,
     Price: 0,
-    Quantity: 0,
+    Quantity: 1,
     Username: "",
     CurrencyCode: "EGP",
     Status: 1 /*(1)Open, (2)Completed, (3)Expired, (4)Cancelled, (5)Partially Executed, (6)Pending Approval, (7)Rejected, (8)Suspended, (9)Invalid Order, (-2)Cancelled With Error*/,

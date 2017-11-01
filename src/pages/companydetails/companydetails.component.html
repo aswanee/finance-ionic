@@ -1,18 +1,17 @@
 <ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="reuter"></cust-nav></ion-header>
 
-<ion-content padding>
-    <ion-card>
+<ion-content>
         <!-- <ion-card-header>
             {{reuter}}
         </ion-card-header> -->
         <ion-segment [(ngModel)]="ChartParts">
                 <ion-segment-button value="IntraDay" (click)="showIntraDays()">
                         <ion-icon name="cart" item-start></ion-icon>
-                        IntraDay
+                        {{'Intra' | Language}}
                     </ion-segment-button>
                     <ion-segment-button value="Historical" (click)="showHistoricalDays()">
                         <ion-icon name="cart"></ion-icon>
-                        Historical
+                        {{'Hist' | Language}}
                     </ion-segment-button>
         </ion-segment>
         <div [ngSwitch]="ChartParts">
@@ -23,23 +22,21 @@
                     <page-chart [isIntraDays] = "isIntraDays" [rouiterCode]="reuter"></page-chart>
                 </ion-list>                        
         </div>
-    </ion-card>
-        <div padding>
-            <ion-segment [(ngModel)]="QueteParts">
-                <ion-segment-button value="News" (click)="setnews()">
-                    <ion-icon name="cart" item-start></ion-icon>
-                    {{'Related News' | Language}}
-                </ion-segment-button>
-                <ion-segment-button value="Orders" (click)="setasksbids()">
-                    <ion-icon name="cart"></ion-icon>
-                    {{'Asks' | Language}}/{{'Bids' | Language}}
-                </ion-segment-button>
-                <ion-segment-button value="Trades" (click)="settrades()">
-                    <ion-icon name="cart"></ion-icon>
-                    {{'Trades' | Language}}
-                </ion-segment-button>
-            </ion-segment>
-        </div>
+    
+        <ion-segment [(ngModel)]="QueteParts">
+            <ion-segment-button value="News" (click)="setnews()">
+                <ion-icon name="cart" item-start></ion-icon>
+                {{'News' | Language}}
+            </ion-segment-button>
+            <ion-segment-button value="Orders" (click)="setasksbids()">
+                <ion-icon name="cart"></ion-icon>
+                {{'Show Orders' | Language}}
+            </ion-segment-button>
+            <ion-segment-button value="Trades" (click)="settrades()">
+                <ion-icon name="cart"></ion-icon>
+                {{'Trades' | Language}}
+            </ion-segment-button>
+        </ion-segment>
         <div [ngSwitch]="QueteParts">
             <ion-list *ngSwitchCase="'Orders'">
                 <ion-grid>

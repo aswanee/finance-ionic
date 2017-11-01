@@ -3,23 +3,23 @@
 </ion-header>
 <ion-content>
     <ion-segment [(ngModel)]="SelectedSegment">
-        <ion-segment-button value="AllNews" (click)="getAll()">ALL</ion-segment-button>
-        <ion-segment-button value="ArabicNews" (click)="getArabic()">Arabic</ion-segment-button>
-        <ion-segment-button value="EnglishNews" (click)="getEnglish()">English</ion-segment-button>
-        <ion-segment-button value="Favorite" (click)="GetFavorite()">Favicon</ion-segment-button>
+        <ion-segment-button value="AllNews" (click)="getAll()">{{'ALL' | Language}}</ion-segment-button>
+        <ion-segment-button value="ArabicNews" (click)="getArabic()">{{'Arabic' | Language}}</ion-segment-button>
+        <ion-segment-button value="EnglishNews" (click)="getEnglish()">{{'English' | Language}}</ion-segment-button>
+        <ion-segment-button value="Favorite" (click)="GetFavorite()">{{'Favicon' | Language}}</ion-segment-button>
     </ion-segment>    
     <div [ngSwitch]="SelectedSegment">
 
         <ion-list *ngSwitchCase="'AllNews'" >
-            <ion-item  *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
-                <button clear class="full" text-start  (click)="getdetails(item[0])">
+            <ion-item *ngFor="let item of News?.result.V let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" >
+                 <button clear class="full" text-start  (click)="getdetails(item[0])">
                     <img class="imgThumb" style="width: 75px;" src="https://www.arabfinance.com/news/newsimages/{{item[4]}}">
                     <div class="pThumb" item-text-wrap>
                         <p text-wrap>{{item[1]}}</p>
                         <p style="color:#ffa500;font-size: 0.8em">{{item[2]}}</p>
                     </div>
-                </button> 
-            </ion-item>
+                </button>  
+                </ion-item>
         </ion-list>
         <ion-list *ngSwitchCase="'ArabicNews'" >
             <ion-item  *ngFor="let item of ArabicNews let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">

@@ -9,29 +9,31 @@
         <ion-segment-button value="Insert" (click)="ChangeInsert()">{{'Add Order' | Language}}</ion-segment-button>
     </ion-segment>
 
-    <ion-card *ngIf="showInsert && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
-        <!-- <ion-card-header>
-            <span>{{"Add Order" | Language}}</span>
-        </ion-card-header> -->
+    <ion-card style="border: 0px" *ngIf="showInsert && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
         <ion-card-content>
             <form>
                 <ion-item>
-                    <ion-label>{{'Reuter' | Language}}</ion-label>
-                    <ion-input (click)="showAddressModal(userorder.ReutersCode)" required [ngModel]="userorder.ReutersCode"  name="Code" type="text" placeholder="Add Reuters">{{userorder.ReutersCode}}</ion-input>
+                    <ion-label *ngIf="OrderSearchItem && OrderSearchItem[0].length>0" floating>{{'Reuter' | Language}} - {{OrderSearchItem[1]}}</ion-label>
+                    <ion-label *ngIf="!OrderSearchItem || !OrderSearchItem[0].length>0" floating>{{'Reuter' | Language}}</ion-label>
+                    <!--  placeholder="{{'Add_Reuters' | Language}}" -->
+                    <ion-input (click)="showAddressModal(userorder.ReutersCode)" required [ngModel]="userorder.ReutersCode"  name="Code" type="text">{{userorder.ReutersCode}}</ion-input>
                 </ion-item>
+                <!-- SEARCH Reuter -->
                 <ion-item *ngIf="OrderSearchItem && OrderSearchItem[0].length>0">
                         <ion-row  [ngClass]="[DirClass]">
                             <ion-col style="color:#e67e22;font-weight: bold;">{{OrderSearchItem[3]}}</ion-col>
                             <ion-col>{{OrderSearchItem[4]}}</ion-col>
                             <ion-col>{{OrderSearchItem[5]}}</ion-col>
                         </ion-row>
-                        <ion-row>
-                            <ion-col style="color:#e67e22">{{OrderSearchItem[1]}}</ion-col>
-                        </ion-row>
+                        <!-- <ion-row>
+                            <ion-col style="color:#ffffff">{{OrderSearchItem[1]}}</ion-col>
+                        </ion-row> -->
                 </ion-item>
+                <!-- END SEARCH REUTER -->
                 <ion-item>
-                    <ion-label>{{'Quantity' | Language}}</ion-label>
-                    <ion-input [(ngModel)]="userorder.Quantity" name="Quantity"></ion-input>
+                    <!-- placeholder="{{'Place_QTY' | Language}}" -->
+                    <ion-label floating>{{'Quantity' | Language}}</ion-label>
+                    <ion-input  min="1" [(ngModel)]="userorder.Quantity" type="number" name="Quantity" ></ion-input>
                 </ion-item>
                 <ion-card>
                     <ion-card-header>
@@ -73,7 +75,6 @@
                         </ion-segment>
                     </ion-card-content>
                 </ion-card>
-
                 <ion-card>
                     <ion-card-header>
                         <span>{{'Price Type' | Language}}</span>
@@ -89,7 +90,7 @@
                         </ion-segment>
                         <ion-item *ngIf="EnablePrice">
                             <ion-label>{{'Price' | Language}}</ion-label>
-                            <ion-input [(ngModel)]="userorder.Price" name="Price"></ion-input>
+                            <ion-input floating [(ngModel)]="userorder.Price" name="Price"></ion-input>
                         </ion-item>
                     </ion-card-content>
                 </ion-card>
@@ -145,10 +146,10 @@
                     </ion-row>
                     <ion-row>
                             
-                            <ion-col style="color:#E6224D" *ngIf="isArabic">
+                            <ion-col  *ngIf="isArabic">
                                     {{item.ARB_Name | limitTo: 30}}
                             </ion-col>
-                            <ion-col style="color:#e67e22" *ngIf="!isArabic">
+                            <ion-col  *ngIf="!isArabic">
                                     {{item.ENG_NAME | limitTo: 30}}
                             </ion-col>
                             </ion-row>
@@ -160,18 +161,18 @@
                     <ion-col col>
                     </ion-col>
                     <ion-col col>
-                        <p >EGP</p>
+                        <p >{{'EGP' | Language}}</p>
                     </ion-col>
                     <ion-col col>
-                        <p >USD</p>
+                        <p >{{'USD' | Language}}</p>
                     </ion-col>
                     <ion-col col>
-                        <p >Total EGP</p>
+                        <p >{{'Total_EGP' | Language}}</p>
                     </ion-col>
                 </ion-row>
                 <ion-row class="odd">
                     <ion-col col>
-                        <p >Cash</p>
+                        <p >{{'Cash' | Language}}</p>
                     </ion-col>
                     <ion-col col>
                         <span>{{Detailsresponse.EGPCashBal}}</span>
@@ -185,7 +186,7 @@
                 </ion-row>
                 <ion-row class="even">
                     <ion-col col>
-                        <p >Stocks</p>
+                        <p >{{'Stocks' | Language}}</p>
                     </ion-col>
                     <ion-col col>
                         <span>{{Detailsresponse.EGPStocksVal}}</span>
@@ -199,7 +200,7 @@
                 </ion-row>
                 <ion-row class="odd">
                     <ion-col col>
-                        <p >Power</p>
+                        <p >{{'Power' | Language}}</p>
                     </ion-col>
                     <ion-col col>
                         <span>{{Detailsresponse.egpPower}}</span>
@@ -213,7 +214,7 @@
                 </ion-row>
                 <ion-row class="even">
                     <ion-col col>
-                        <p >Total</p>
+                        <p >{{'Total' | Language}}</p>
                     </ion-col>
                     <ion-col col>
                         <span>{{Detailsresponse.EGPTotal}}</span>
@@ -233,10 +234,10 @@
                 <ion-item color="Toggel">
                     <ion-icon class="ToggelOrdersicon" color="light" item-right [name]="d.icon"></ion-icon>
                     <span *ngIf="UserOpenOrderResponse && d.id=='open'">
-                          There is {{UserOpenOrderResponse?.result.length}} Open Order.
+                        {{'There_is' | Language}} {{UserOpenOrderResponse?.result.length}} {{'Open_Orde' | Language}} 
                     </span>
                     <span *ngIf="UserNotOpenOrderResponse && d.id=='notopen'">
-                          There is {{UserNotOpenOrderResponse?.result.length}} Close Order.
+                        {{'There_is' | Language}} {{UserNotOpenOrderResponse?.result.length}} {{'Closed_Orde' | Language}} 
                     </span>
                 </ion-item>  
                 <div class="ToggelOrdersDiv" *ngIf="d.showDetails">
@@ -272,11 +273,11 @@
                                     <form *ngIf="ShowUpdate[i]">
                                         <ion-item>
                                             <ion-label>{{'Reuter' | Language}}</ion-label>
-                                            <ion-input [(ngModel)]="updateuserorder.ReutersCode" name="UCode"></ion-input>
+                                            <ion-input floating [(ngModel)]="updateuserorder.ReutersCode" name="UCode"></ion-input>
                                         </ion-item>
                                         <ion-item>
                                             <ion-label>{{'Quantity' | Language}}</ion-label>
-                                            <ion-input [(ngModel)]="updateuserorder.Quantity" name="UQuantity"></ion-input>
+                                            <ion-input floating [(ngModel)]="updateuserorder.Quantity" name="UQuantity"></ion-input>
                                         </ion-item>
                                         <ion-item>
                                             <ion-segment>
@@ -303,7 +304,7 @@
                                         </ion-item>
                                         <ion-item *ngIf="EnablePrice">
                                             <ion-label>{{'Price' | Language}}</ion-label>
-                                            <ion-input ion-input [(ngModel)]="updateuserorder.Price" name="UPrice"></ion-input>
+                                            <ion-input  floating ion-input [(ngModel)]="updateuserorder.Price" name="UPrice"></ion-input>
                                         </ion-item>
                                         <button ion-button block type="submit" (click)="UpdateOrder(item)">{{'Update Order' | Language}}</button>
                                     </form>

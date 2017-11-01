@@ -1,13 +1,16 @@
 page-contact {
-
+    .imgThumb {
+        display: inline-block;
+        width: 33%; /* or waterver you need = w1 */
+        vertical-align: top;
+    }
+    .pThumb {
+        display:inline-block;
+        vertical-align: top;
+        width: 80%; /* or waterver you need = w1 */
+        white-space:normal!important;
+    }
+    .pThumb p{
+        word-wrap: break-word!important;
+    }
 }
-.imgThumb {
-    display: inline-block;
-    width: 33%; /* or waterver you need = w1 */
-    vertical-align: top;
- }
- .pThumb {
-    display:inline-block;
-    // width: 66%; /* (100-w1)% */
-    vertical-align: top;
- }

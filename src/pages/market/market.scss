@@ -1,4 +1,16 @@
 page-market {
+    ion-item , ion-label{
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+    .item-inner ,.label{
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+    .label-md{
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
 }
 .RowDown{
     color:red !important; 
@@ -12,3 +24,4 @@ page-market {
     background-color:#242424; 
     //color:red !important; 
 }
+

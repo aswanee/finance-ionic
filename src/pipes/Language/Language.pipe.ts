@@ -7,10 +7,15 @@ import { Storage } from "@ionic/storage";
 export class LanguagePipe implements PipeTransform {
   constructor(private storage: Storage) {}
   transform(value: string, ...args): string {
-    if (window["language"] === "ar") {
-      return ArabicDictionary[value];
-    } else if (window["language"] === "en") {
-      return EnglishDictionary[value];
+    var lang:string= value
+    if (window["language"] === "ar")
+    {
+      lang = ArabicDictionary[value];
     }
+    else
+    {
+      lang = EnglishDictionary[value];
+    }
+    return lang;
   }
 }
