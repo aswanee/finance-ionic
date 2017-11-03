@@ -46,7 +46,7 @@ export class SigninPage {
     public navParams: NavParams)
   { 
     //this.ParentPage = navParams.get("ParentPage");
-    this.registerCredentials = new User("","");
+    this.registerCredentials = new User("wesimy","Otv@1234");
   }
   
   ionViewDidLoad() {

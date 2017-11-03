@@ -14,7 +14,7 @@ page-onlinetrading {
     .text-input
     {
         padding: 0px 10px 0px 10px!important;
-        border-bottom: 2px solid orange;
+        //border-bottom: 2px solid orange;
     }
     .item-inner{
         border-bottom: 0px none!important;
@@ -22,5 +22,16 @@ page-onlinetrading {
     .label{
         color: orange!important;
         font-size: 1.8rem!important;
+    }
+    .cashtable{
+        border: 1px solid orange!important;
+        border-radius: 10px !important;
+        margin: 10px 0px!important;
+        padding:0px;
+    }
+    .cashtableheader{
+        border: 1px 1px 0px 1px solid orange!important;
+        border-top-left-radius: 10px !important;
+        border-top-right-radius: 10px !important;
     }
 }

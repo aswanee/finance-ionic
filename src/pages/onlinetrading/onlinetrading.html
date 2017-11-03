@@ -90,7 +90,7 @@
                         </ion-segment>
                         <ion-item *ngIf="EnablePrice">
                             <ion-label>{{'Price' | Language}}</ion-label>
-                            <ion-input floating [(ngModel)]="userorder.Price" name="Price"></ion-input>
+                            <ion-input floating [(ngModel)]="userorder.Price" type="number" name="Price"></ion-input>
                         </ion-item>
                     </ion-card-content>
                 </ion-card>
@@ -101,29 +101,100 @@
         </ion-card-content>
     </ion-card>
 
-    <ion-list no-lines *ngIf="portfolioresponse && showportfolio && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
-            <ion-item  class="GridHeader">
-                <ion-row>
-                    <ion-col col>
-                        <p >{{'Reuter'|Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'Value'|Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'Change'|Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'Percentage'|Language | limitTo:5}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'Trend'|Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                    </ion-col>
-                </ion-row>
-            </ion-item>
-            <ion-item *ngFor="let item of portfolioresponse?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+    <ion-grid no-lines *ngIf="portfolioresponse && showportfolio && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
+        <ion-item class="cashtable" text-start *ngIf="Detailsresponse">
+            <ion-row  class="GridHeader cashtableheader">
+                <ion-col col>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'EGP' | Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'USD' | Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'Total_EGP' | Language}}</p>
+                </ion-col>
+            </ion-row>
+            <ion-row class="odd">
+                <ion-col col>
+                    <p >{{'Cash' | Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.EGPCashBal}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.USDCashBal}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.CashBalinEGP}}</span>
+                </ion-col>
+            </ion-row>
+            <ion-row class="even">
+                <ion-col col>
+                    <p >{{'Stocks' | Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.EGPStocksVal}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.USDStocksVal}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.StocksValinEGP}}</span>
+                </ion-col>
+            </ion-row>
+            <ion-row class="odd">
+                <ion-col col>
+                    <p >{{'Power' | Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.egpPower}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.usdPower}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.totalPower}}</span>
+                </ion-col>
+            </ion-row>
+            <ion-row class="">
+                <ion-col col>
+                    <p >{{'Total' | Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.EGPTotal}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.USDTotal}}</span>
+                </ion-col>
+                <ion-col col>
+                    <span>{{Detailsresponse.TotalValinEGP}}</span>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item  class="GridHeader">
+            <ion-row>
+                <ion-col col>
+                    <p >{{'Reuter'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'Value'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'Change'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'Percentage'|Language | limitTo:5}}</p>
+                </ion-col>
+                <ion-col col>
+                    <p >{{'Trend'|Language}}</p>
+                </ion-col>
+                <ion-col col>
+                </ion-col>
+            </ion-row>
+        </ion-item>
+        <ion-item *ngFor="let item of portfolioresponse?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
                 <button text-start clear class="full"  (click)="setstockchosen(item)" >
                     <ion-row>
                         <ion-col  style="color:#e67e22;font-weight: bold;">{{item.ReutersCode}}</ion-col>
@@ -154,80 +225,8 @@
                             </ion-col>
                             </ion-row>
                 </button>   
-            </ion-item>      
-            
-            <ion-item text-start padding *ngIf="Detailsresponse">
-                <ion-row  class="GridHeader">
-                    <ion-col col>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'EGP' | Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'USD' | Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <p >{{'Total_EGP' | Language}}</p>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="odd">
-                    <ion-col col>
-                        <p >{{'Cash' | Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.EGPCashBal}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.USDCashBal}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.CashBalinEGP}}</span>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="even">
-                    <ion-col col>
-                        <p >{{'Stocks' | Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.EGPStocksVal}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.USDStocksVal}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.StocksValinEGP}}</span>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="odd">
-                    <ion-col col>
-                        <p >{{'Power' | Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.egpPower}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.usdPower}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.totalPower}}</span>
-                    </ion-col>
-                </ion-row>
-                <ion-row class="even">
-                    <ion-col col>
-                        <p >{{'Total' | Language}}</p>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.EGPTotal}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.USDTotal}}</span>
-                    </ion-col>
-                    <ion-col col>
-                        <span>{{Detailsresponse.TotalValinEGP}}</span>
-                    </ion-col>
-                </ion-row>
-            </ion-item>
-    </ion-list>
+        </ion-item>      
+    </ion-grid>
  
     <ion-list *ngIf="showorders && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
             <ion-item class="ToggelOrdersItem" *ngFor="let d of OrdresData" (click)="toggleDetails(d)" [hidden]="d.details.result.length<=0" >

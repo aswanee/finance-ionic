@@ -1,6 +1,16 @@
 <ion-header>
     <ion-toolbar>
-      <ion-title>{{'Add_Reuters' | Language}}</ion-title>
+      <ion-row>
+        <ion-col>
+          <ion-title>{{'Add_Reuters' | Language}}</ion-title>
+        </ion-col>
+        <ion-col text-end>
+            
+      <button ion-button clear (click)="dismiss()">
+          <ion-icon name="close" item-end></ion-icon>
+      </button>
+        </ion-col>
+    </ion-row>
       <ion-searchbar placeholder="{{'Add_Reuters' | Language}}"  #SearchInput [(ngModel)]="autocomplete.query" [showCancelButton]="true" (ionInput)="updateSearch()" (ionCancel)="dismiss()"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
