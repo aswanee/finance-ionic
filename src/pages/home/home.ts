@@ -87,15 +87,13 @@ export class HomePage {
     private alert:AlertController,
     private badge: Badge,
     public popoverCtrl: PopoverController,
-    public splashScreen: SplashScreen, private MarketService: MarketService)   {
+    private MarketService: MarketService)   {
     //this.onNotification();
     platform.ready().then(() => {
       //this.requestPremission();
       
       if(!this.platform.is('core') && !this.platform.is('mobileweb')) 
       {
-        
-        // this.hideSplash = true;
         //FCMPlugin.onTokenRefresh( onTokenRefreshCallback(token) );
         //Note that this callback will be fired everytime a new token is generated, including the first time.
         FCMPlugin.onTokenRefresh(function(token){
@@ -364,7 +362,6 @@ export class HomePage {
       this.refresh();
       this.getMarketStatus()
     }
-    this.splashScreen.hide();
 
   }
 
@@ -390,10 +387,11 @@ export class HomePage {
               {
                 this.FillCompaniesList(data);
               }
+              
           },
           Error => {
             if (!this.isFired) {
-              this.ErrorToast();
+              //this.ErrorToast();
             }
           }
         );

@@ -15,7 +15,11 @@ import { TabsPage } from "../tabs/tabs";
 
 import { SwitchAccountsPage } from "./../switch-accounts/switch-accounts";
 @Component({
-  templateUrl:"pop-over.html"
+  templateUrl:"pop-over.html",
+  styles:[`.mnuitem, .mnuitem button {
+        color: #222!important;
+        background-color: #a9a2a2!important;
+    }`]
 })
 export class PopoverPage {
   @Output() onLogout = new EventEmitter<boolean>();

@@ -5,7 +5,7 @@ import { MyApp } from "./app.component";
 import { CommonModule } from "@angular/common";
 import { NewsdetailsComponent } from "./../pages/newsdetails/newsdetails.component";
 import { AboutPage } from "../pages/about/about";
-import { NewsPage } from "../pages/news/news";
+//import { NewsPage } from "../pages/news/news";
 import { AlertPage } from "../pages/alert/alert";
 //import { WatchList } from "../pages/WatchList/WatchList";
 import { HomePageModule } from "../pages/home/home.module";
@@ -57,7 +57,7 @@ export function highchartsFactory():HighchartsStatic {
   declarations: [
     MyApp,
     AboutPage,
-    NewsPage,
+    //NewsPage,
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,
@@ -91,7 +91,7 @@ export function highchartsFactory():HighchartsStatic {
   entryComponents: [
     MyApp,
     AboutPage,
-    NewsPage,
+    //NewsPage,
     TabsPage,
     NewsdetailsComponent,
     CompanydetailsComponent,

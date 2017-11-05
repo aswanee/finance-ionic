@@ -16,7 +16,7 @@
                     <ion-label *ngIf="OrderSearchItem && OrderSearchItem[0].length>0" floating>{{'Reuter' | Language}} - {{OrderSearchItem[1]}}</ion-label>
                     <ion-label *ngIf="!OrderSearchItem || !OrderSearchItem[0].length>0" floating>{{'Reuter' | Language}}</ion-label>
                     <!--  placeholder="{{'Add_Reuters' | Language}}" -->
-                    <ion-input (click)="showAddressModal(userorder.ReutersCode)" required [ngModel]="userorder.ReutersCode"  name="Code" type="text">{{userorder.ReutersCode}}</ion-input>
+                    <ion-input (focus)="showAddressModal(userorder.ReutersCode)" (click)="showAddressModal(userorder.ReutersCode)" required [ngModel]="userorder.ReutersCode"  name="Code" type="text">{{userorder.ReutersCode}}</ion-input>
                 </ion-item>
                 <!-- SEARCH Reuter -->
                 <ion-item *ngIf="OrderSearchItem && OrderSearchItem[0].length>0">

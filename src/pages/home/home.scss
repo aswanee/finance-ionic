@@ -18,3 +18,11 @@ page-home {
     direction: left;
     background-color: rgba(255, 255, 255, 0);
   }
+  .even .checkbox-icon{
+    border: 1px solid orange;
+    border-radius: 10px!important;
+  }
+  .odd .checkbox-icon{
+    background-color: #242424;
+    border: 1px solid orange;
+  }

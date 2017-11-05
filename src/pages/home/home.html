@@ -9,10 +9,8 @@
         <!-- <ion-input type="text" [(ngModel)]="SelectedWatchList.Name"></ion-input>  -->
         <ion-searchbar placeholder="{{'Add_Reuters' | Language}}" (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
-            <ion-item *ngFor="let item of displayList; let i=index;">
-                <ion-label> {{item[0]}}
-                    <br>{{item[1]}}
-                </ion-label>
+            <ion-item style="display: flex;"  *ngFor="let item of displayList; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
+                <ion-label> {{item[0]}} - {{item[1]}}</ion-label>
                 <ion-checkbox [(ngModel)]="map[item[0]]">{{ map[item[0]] }}</ion-checkbox>
             </ion-item>
         </ion-list>

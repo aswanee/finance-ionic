@@ -1,5 +1,5 @@
 import { Component, OnInit ,ViewChild,OnDestroy} from "@angular/core";
-import { NavController } from "ionic-angular";
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CompanyService } from "./../../app/company.service";
 import { News } from "./../../app/news.interface";
 import { Newsbody,Favorites } from "./../../app/newsbody.interface";
@@ -17,9 +17,10 @@ import  { AuthProvider } from './../../providers/auth/auth';
 import  { FavoritesService } from './../../app/favorite.service';
 import { Subscription } from 'rxjs/Subscription';
 
+@IonicPage()
 @Component({
-  selector: "page-contact",
-  templateUrl: "News.html"
+  selector: 'page-news',
+  templateUrl: 'news.html',
 })
 export class NewsPage implements OnInit,OnDestroy {
     @ViewChild(CustNavComponent) cld : CustNavComponent
@@ -56,7 +57,7 @@ export class NewsPage implements OnInit,OnDestroy {
       ];
       this.cld.buttons = buttons;
     }
-  
+
     GetCustNavID(event) {
       switch(event)
       {
