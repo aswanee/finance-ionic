@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { NavController, NavParams ,AlertController, LoadingController, Loading} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
 import { User , session } from '../../app/session.interface';
-import {OnlinetradingPage} from '../onlinetrading/onlinetrading'
-import { LanguagePipe } from "../../pipes/Language/Language.pipe";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+import { ViewChild, OnInit } from "@angular/core";
+import { IonicPage, } from 'ionic-angular';
 
-
+@IonicPage()
 @Component({
   selector: 'page-signin',
   templateUrl: 'signin.html',
 })
 export class SigninPage {
+
   GetCustNavID(event) {
     switch(event)
     {
@@ -46,7 +46,7 @@ export class SigninPage {
     public navParams: NavParams)
   { 
     //this.ParentPage = navParams.get("ParentPage");
-    this.registerCredentials = new User("wesimy","Otv@1234");
+    this.registerCredentials = new User("","");
   }
   
   ionViewDidLoad() {

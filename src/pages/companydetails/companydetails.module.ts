@@ -1,24 +1,23 @@
-// Angular Imports
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import {NewsdetailsComponent} from './../newsdetails/newsdetails.component';
-// This Module's Components
-import { CompanydetailsComponent } from './companydetails.component';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+import { PipesModule } from '../../pipes/pipes.module';
+
+import { CompanydetailsPage } from './companydetails';
+import { CustNavModule } from '../../components/cust-nav/custnav.module';
+import { ChartComponentModule } from '../../components/chart/chart.module';
 
 @NgModule({
-    imports: [
-    CommonModule,BrowserModule ,IonicModule
-    ],
-    declarations: [
-        CompanydetailsComponent,
-        NewsdetailsComponent
-    ],
-    exports: [
-        CompanydetailsComponent,
-    ]
+  declarations: [
+    CompanydetailsPage,
+],
+  imports: [
+    IonicPageModule.forChild(CompanydetailsPage),
+    PipesModule,
+    CustNavModule,
+    ChartComponentModule,
+  ],
+  entryComponents:[    
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
-export class CompanydetailsModule {
-
-}
+export class CompanydetailsPageModule {}

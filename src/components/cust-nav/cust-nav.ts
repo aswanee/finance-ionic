@@ -2,9 +2,10 @@ import { Component,EventEmitter,Output, Input  } from '@angular/core';
 
 
 import {PopoverController } from "ionic-angular";
-import { PopoverPage } from "../../pages/pop-over/pop-over";
+//import { PopoverPage } from "../../pages/pop-over/pop-over";
 import { HideButtonPipe } from "../../pipes/hide-button/hide-button";
 import { MarketService } from "./../../app/market.service";
+import { PopoverComponent, } from '../popover/popover';
 
 
 @Component({
@@ -59,11 +60,12 @@ export class CustNavComponent  {
   
   Visablebuttons(): Array<{BName: string, IconName: string, visable: boolean}>
   {
+    if(this.buttons)
     return this.buttons.filter((item) => item.visable);
   }
   
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverPage);
+    let popover = this.popoverCtrl.create(PopoverComponent);
     popover.present({
       ev: myEvent
     });

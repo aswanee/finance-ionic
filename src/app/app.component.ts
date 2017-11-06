@@ -1,27 +1,16 @@
 import { Component, ViewChild, Inject,Output } from "@angular/core";
+import { IonicPage, NavController, PopoverController, AlertController, ToastController } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
-import { TabsPage } from "../pages/tabs/tabs";
-import { AboutPage } from "../pages/about/about";
-import { SigninPage } from "../pages/signin/signin";
-//import { OneSignal } from "@ionic-native/onesignal";
 
-import {
-  IonicPage,
-  NavController,
-  PopoverController,
-  AlertController,
-  ToastController
-} from "ionic-angular";
 
-import { PopoverPage } from "../pages/pop-over/pop-over";
 @Component({
   templateUrl: "app.html"
 })
 export class MyApp {
   @ViewChild(NavController) nav;
-  rootPage: any = TabsPage;
+  rootPage: string = "tabs-page";
   language: any;
   alert: any;
   constructor(
@@ -29,10 +18,8 @@ export class MyApp {
     statusBar: StatusBar,
     splashScreen: SplashScreen,
     public popoverCtrl: PopoverController,
-    // public navCtrl: Nav,
     private toastCtrl: ToastController,
     private alertCtrl: AlertController,
-    //private oneSignal: OneSignal
   ) {
 
 
@@ -134,10 +121,10 @@ export class MyApp {
   }
 
   presentPopover(myEvent) {
-    let popover = this.popoverCtrl.create(PopoverPage);
-    popover.present({
-      ev: myEvent
-    });
+    // let popover = this.popoverCtrl.create(PopoverPage);
+    // popover.present({
+    //   ev: myEvent
+    // });
   } 
    // this.nav.push(Page1);
 }

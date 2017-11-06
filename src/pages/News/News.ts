@@ -8,10 +8,10 @@ import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Observable } from "rxjs/Rx";
 import { ToastController } from "ionic-angular";
 import { newsRefresh,imagPath } from "./../../app/refreshconfig";
-import { NewsdetailsComponent } from "./../newsdetails/newsdetails.component";
+//import { NewsdetailsComponent } from "./../../components/newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav';
+//import {CustNavComponent} from '../../components/cust-nav/cust-nav';
 import { Storage } from "@ionic/storage";
 import  { AuthProvider } from './../../providers/auth/auth';
 import  { FavoritesService } from './../../app/favorite.service';
@@ -23,7 +23,7 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'news.html',
 })
 export class NewsPage implements OnInit,OnDestroy {
-    @ViewChild(CustNavComponent) cld : CustNavComponent
+    //@ViewChild(CustNavComponent) cld : CustNavComponent
     News: Newsresponse;
     displayedMoreNews: Newsresponse;
     ArabicNews: string[][] = new Array();
@@ -39,6 +39,8 @@ export class NewsPage implements OnInit,OnDestroy {
     dorefresh: boolean = true;
     isFired = false;
     nLang:number = 2;
+    buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+    
     constructor(
       public navCtrl: NavController,
       private CompanyService: CompanyService,
@@ -49,15 +51,14 @@ export class NewsPage implements OnInit,OnDestroy {
       private Favo: FavoritesService
     ) {  }
     ngOnInit() {
-      var buttons: Array<{BName: string, IconName: string, visable: boolean}>;
-      buttons = [
+      this.buttons = [
         {BName: "notifications", IconName: "notifications",visable :true},
         {BName: "add", IconName: "add",visable :true},
         {BName: "checkmark", IconName: "checkmark",visable :false}
       ];
-      this.cld.buttons = buttons;
+      //this.cld.buttons = buttons;
     }
-
+  
     GetCustNavID(event) {
       switch(event)
       {
@@ -154,7 +155,7 @@ export class NewsPage implements OnInit,OnDestroy {
     }
   
     goToNewsDeatils() {
-      this.navCtrl.push(NewsdetailsComponent, {
+      this.navCtrl.push("NewsdetailsPage", {
         id: this.id
       });
     }

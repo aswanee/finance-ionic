@@ -1,21 +1,33 @@
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+
+import { CustNavComponent } from '../../components/cust-nav/cust-nav'
+import { PipesModule } from "../../pipes/pipes.module";
+import { CustNavModule } from '../../components/cust-nav/custnav.module';
+
 import { HomePage } from './home';
-import { LanguagePipe } from "../../pipes/Language/Language.pipe";
-import { LimitToPipe } from "../../pipes/limit-to/limit-to";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+import { CompanydetailsPageModule } from '../companydetails/companydetails.module';
 
 @NgModule({
   declarations: [
     HomePage,
-    LanguagePipe,
-    LimitToPipe,CustNavComponent
-    
   ],
   imports: [
     IonicPageModule.forChild(HomePage),
+    PipesModule,
+    CustNavModule,
+    //CompanydetailsModule,
+    //CompanydetailsPageModule,
+    
   ],
-  exports: [HomePage,LanguagePipe,LimitToPipe,CustNavComponent]
-  
+  entryComponents:[
+    //CustNavComponent
+  ],
+  exports: [
+    HomePage,
+    //CustNavComponent,
+    //PipesModule
+  ],
+	schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class HomePageModule {}

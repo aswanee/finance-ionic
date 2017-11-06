@@ -13,8 +13,8 @@ import { Storage } from "@ionic/storage";
 import { ToastController } from "ionic-angular";
 import { session } from "./../../app/session.interface";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import { CreateAlertPage } from "./../create-alert/create-alert";
-import { UpdateAlertPage } from "./../update-alert/update-alert";
+// import { AlertCreatePage } from "./../create-alert/create-alert";
+// import { UpdateAlertPage } from "./../update-alert/update-alert";
 import { CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
@@ -47,7 +47,7 @@ export class AlertPage implements OnInit {
     // {BName: "checkmark", IconName: "checkmark"}
 ];
 
-
+  SelectedSegment:string= "MatchedAlerts";
   isSmall: boolean = false;
   private alertForm: FormGroup;
   addAlertForm: boolean = false;
@@ -146,10 +146,13 @@ export class AlertPage implements OnInit {
             return !item.IsMatched;
           });
         }
+        console.log(this.SelectedSegment);
         if (this.newNonMatchedAlerts || this.newMatchedAlerts) {
           this.storage.set("alerts", {
-            m: this.matchedAlerts.concat(this.newMatchedAlerts),
-            nm: this.nonMatchedAlerts.concat(this.newNonMatchedAlerts),
+            m: this.matchedAlerts = [...this.matchedAlerts , ...this.newMatchedAlerts],
+            nm: this.nonMatchedAlerts = [...this.nonMatchedAlerts , ...this.newNonMatchedAlerts],
+            // m: this.matchedAlerts.concat(this.newMatchedAlerts),
+            // nm: this.nonMatchedAlerts.concat(this.newNonMatchedAlerts),
             lastUpdate: new Date()
           });
         }
@@ -157,13 +160,27 @@ export class AlertPage implements OnInit {
       Error => this.ErrorToast()
     );
   }
-
+  JsonToDateString (param:string):string{
+    if(param && param.length >10)
+    {
+      var toDate :Date = new Date(parseInt(param.substr(6)));
+      var toStr:string = toDate.toLocaleDateString("en-US");
+      //return toStr.replace("/","-")
+      var newstr = toStr.split('/').reverse().join('-')
+      return newstr;//toStr.replace(/\//g, "-");
+      
+    }
+    else
+    {
+      return "";
+    }
+  }
   ionViewDidLoad() {
     console.log("ionViewDidLoad AlertPage");
   }
 
   showcreateAlertForm() {
-    this.navCtrl.push(CreateAlertPage, {
+    this.navCtrl.push("AlertCreatePage", {
       userId: this.userId,
       update: false
     });
@@ -205,7 +222,7 @@ export class AlertPage implements OnInit {
       alertId = this.nonMatchedAlerts[index].AlertID;
       reuter = this.matchedAlerts[index].Code;
     }
-    this.navCtrl.push(UpdateAlertPage, {
+    this.navCtrl.push("AlertUpdatePage", {
       userId: this.userId,
       alertId: alertId,
       reuter: reuter

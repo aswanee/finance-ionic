@@ -2,14 +2,9 @@ import {Component, Input,ViewChild} from '@angular/core';
 import {ViewController} from 'ionic-angular';
 import { StockService } from "./../../app/stock.service";
 import { SerResponse } from "./../../app/response.interface";
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the AutocompletePage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
+@IonicPage()
 @Component({
   selector: 'page-autocomplete',
   templateUrl: 'autocomplete.html',
@@ -73,6 +68,4 @@ export class AutocompletePage {
     );
           
   }
-
-
 }

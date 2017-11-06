@@ -79,20 +79,20 @@
                 </ion-segment-button>
             </ion-segment>
 
-            <page-chart *ngIf="lastFveDays && show30"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX30.result[0][0]">
-            </page-chart>
-            <page-chart *ngIf="!lastFveDays && show30"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX30.result[0][0]">
-            </page-chart>
+            <Com-chart *ngIf="lastFveDays && show30"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX30.result[0][0]">
+            </Com-chart>
+            <Com-chart *ngIf="!lastFveDays && show30"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX30.result[0][0]">
+            </Com-chart>
 
-            <page-chart *ngIf="lastFveDays && show70"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX70.result[0][0]">
-            </page-chart>
-            <page-chart *ngIf="lastFveDays && show70"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX70.result[0][0]">
-            </page-chart>
+            <Com-chart *ngIf="lastFveDays && show70"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX70.result[0][0]">
+            </Com-chart>
+            <Com-chart *ngIf="lastFveDays && show70"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX70.result[0][0]">
+            </Com-chart>
 
-            <page-chart *ngIf="!lastFveDays && show100"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX100.result[0][0]">
-            </page-chart>
-            <page-chart *ngIf="lastFveDays && show100"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX100.result[0][0]">
-            </page-chart>
+            <Com-chart *ngIf="!lastFveDays && show100"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX100.result[0][0]">
+            </Com-chart>
+            <Com-chart *ngIf="lastFveDays && show100"  [isIntraDays] = "isIntraDays" [rouiterCode]="EGX100.result[0][0]">
+            </Com-chart>
         </ion-item>
     </div>
 

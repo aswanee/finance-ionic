@@ -1,10 +1,8 @@
-// import { language, isArabic } from "./../../app/app.module";
 import { Component, OnInit, HostListener } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
 import { NavController, IonicPage, NavParams } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
-import { CompanydetailsComponent } from "./../companydetails/companydetails.component";
 import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { ToastController } from "ionic-angular";
 import { marketRefresh } from "./../../app/refreshconfig";
@@ -397,7 +395,7 @@ export class MarketPage {
     this.lastFveDays = !this.lastFveDays;
   }
   goToCompanyDeatils() {
-    this.navCtrl.push(CompanydetailsComponent, {
+    this.navCtrl.push("CompanydetailsPage", {
       reuter: this.reuter,
       rootid: this.rootid,
       stockchosen: this.stockchosen

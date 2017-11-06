@@ -16,12 +16,7 @@ import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 import { Storage } from "@ionic/storage";
-import { CompanydetailsComponent } from "../companydetails/companydetails.component";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { Badge } from '@ionic-native/badge';
-import { PopoverPage } from "../pop-over/pop-over";
-import { SplashScreen } from "@ionic-native/splash-screen";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 import { MarketService } from "./../../app/market.service";
 
 
@@ -33,7 +28,6 @@ import { MarketService } from "./../../app/market.service";
   templateUrl: 'home.html',
 })
 export class HomePage {
-  
   //MarketStatus :{Status:string, Time:string}= {Status:"OK", Time:"xxxx"} ;
   MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
   
@@ -87,13 +81,19 @@ export class HomePage {
     private alert:AlertController,
     private badge: Badge,
     public popoverCtrl: PopoverController,
+    //public splashScreen: SplashScreen, 
     private MarketService: MarketService)   {
     //this.onNotification();
     platform.ready().then(() => {
       //this.requestPremission();
+      if(window["language"]=="ar")
+      {
+        this.platform.setDir('rtl', true)
+      }
       
       if(!this.platform.is('core') && !this.platform.is('mobileweb')) 
       {
+        // this.hideSplash = true;
         //FCMPlugin.onTokenRefresh( onTokenRefreshCallback(token) );
         //Note that this callback will be fired everytime a new token is generated, including the first time.
         FCMPlugin.onTokenRefresh(function(token){
@@ -320,11 +320,13 @@ export class HomePage {
       {
         window["language"] =  "ar";
         window["isArabic"] = true;
+        this.platform.setDir('rtl', true)
       }
       else if(localStorage.getItem("language")== "en")
       {
         window["language"] =  "en";
         window["isArabic"] = false;
+        this.platform.setDir('ltr', true)
       }
     }
 
@@ -334,7 +336,8 @@ export class HomePage {
         window["isArabic"] = true;       
         localStorage.setItem('language', "ar");
         localStorage.setItem('isArabic', "true");
-    }
+        this.platform.setDir('rtl', true)
+      }
 
     this.isArabic = window["isArabic"];
   
@@ -362,7 +365,7 @@ export class HomePage {
       this.refresh();
       this.getMarketStatus()
     }
-
+    //this.splashScreen.hide();
   }
 
   ionViewWillLeave() {
@@ -387,11 +390,10 @@ export class HomePage {
               {
                 this.FillCompaniesList(data);
               }
-              
           },
           Error => {
             if (!this.isFired) {
-              //this.ErrorToast();
+              this.ErrorToast();
             }
           }
         );
@@ -509,7 +511,7 @@ export class HomePage {
   }
 
   goToCompanyDeatils() {
-    this.navCtrl.push(CompanydetailsComponent, {
+    this.navCtrl.push("CompanydetailsPage", {
       reuter: this.reuter,
       rootid: this.rootid,
       stockchosen: this.stockchosen

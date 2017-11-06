@@ -6,7 +6,6 @@
 <ion-content>
     <!-- Start Search-->
     <div class="list" *ngIf="editpressed && displayListDummy &&displayList">
-        <!-- <ion-input type="text" [(ngModel)]="SelectedWatchList.Name"></ion-input>  -->
         <ion-searchbar placeholder="{{'Add_Reuters' | Language}}" (ionInput)="getItems($event)"></ion-searchbar>
         <ion-list>
             <ion-item style="display: flex;"  *ngFor="let item of displayList; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
@@ -30,7 +29,7 @@
                     <p>{{'Change'|Language}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p>{{'Percentage'|Language | limitTo:5}}</p>
+                    <p>{{'Percentage'|Language}}</p>
                 </ion-col>
                 <ion-col col>
                     <p>{{'Trend'|Language}}</p>

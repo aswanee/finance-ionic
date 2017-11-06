@@ -7,36 +7,16 @@ import { portfolioRefresh, ordersRefresh } from "./../../app/refreshconfig";
 import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import { AlertController } from "ionic-angular";
-import {
-  userorderhistoryresponse,
-  userorderresponse,
-  userorder,
-  checkupdatability,
-  TimeTerm,
-  OrderSide,
-  OrderStatus,
-  PriceType
-} from "./../../app/userorder.interface";
+import { userorderhistoryresponse, userorderresponse, userorder,   } from "./../../app/userorder.interface";
+import { checkupdatability,TimeTerm, OrderSide, OrderStatus, PriceType } from "./../../app/userorder.interface";
 import { OrderhistoryPage } from "./../orderhistory/orderhistory";
-import {
-  ValidationResponse,
-  CancelResponse,
-  OrderOperationResult,
-  Place,
-  PlaceOrderStatus,
-  PlaceResponse,
-  CancelOrderStatus
-} from "./../../app/Validate.interface";
+import { ValidationResponse, CancelResponse, OrderOperationResult, Place, } from "./../../app/Validate.interface";
+import { PlaceOrderStatus, PlaceResponse, CancelOrderStatus } from "./../../app/Validate.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { ToastController } from "ionic-angular";
 import { Storage } from "@ionic/storage";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import { CompanydetailsComponent } from "../companydetails/companydetails.component";
-import {AutocompletePage} from '../autocomplete/autocomplete'
 import { StockService } from "./../../app/stock.service";
 import { Equals } from "../../Lib/Compare";
-import { SigninPage } from "../signin/signin";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
 @Component({
@@ -209,7 +189,7 @@ export class OnlinetradingPage {
       this.Block = true
       this.auth.logout().subscribe(succ => {
         console.log("logout-subscribe Count : " + this.count);
-        this.navCtrl.setRoot( SigninPage,{ParentPage: OnlinetradingPage})
+        this.navCtrl.setRoot( "SigninPage",{ParentPage: OnlinetradingPage})
       });
     }
   }
@@ -748,7 +728,7 @@ export class OnlinetradingPage {
   }
 
   goToCompanyDeatils(ReutersCode:string,rootid:number,stockchosen: boolean) {
-    this.navCtrl.push(CompanydetailsComponent, {
+    this.navCtrl.push("CompanydetailsPage", {
       reuter: ReutersCode,
       rootid: rootid,
       stockchosen: stockchosen
@@ -756,7 +736,7 @@ export class OnlinetradingPage {
   }
 
   showAddressModal(){
-    let modal = this.modalCtrl.create(AutocompletePage);
+    let modal = this.modalCtrl.create("AutocompletePage");
     let me = this;
     modal.onDidDismiss(data => {
       this.OrderSearchItem = data;

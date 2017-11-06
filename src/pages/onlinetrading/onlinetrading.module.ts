@@ -1,20 +1,30 @@
-import { NgModule } from '@angular/core';
+import { NgModule , CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-//import { OnlinetradingPage } from './onlinetrading';
-//import { SigninPage } from "../signin/signin";
-//import { LanguagePipe } from "../../pipes/Language/Language.pipe";
+
+import { PipesModule } from "../../pipes/pipes.module";
+import { CustNavModule } from '../../components/cust-nav/custnav.module';
+import { OnlinetradingPage } from './onlinetrading';
+import { LimitToPipe } from "../../pipes/limit-to/limit-to";
+import { SigninPageModule } from '../signin/signin.module';
 
 @NgModule({
   declarations: [
-    //OnlinetradingPage,
-    //SigninPage,
-    //LanguagePipe,
+    OnlinetradingPage,
+    //LimitToPipe,
   ],
   imports: [
-    //IonicPageModule.forChild(OnlinetradingPage),
+    IonicPageModule.forChild(OnlinetradingPage),
+    PipesModule,
+    CustNavModule,
+    SigninPageModule,
+  ],
+  entryComponents:[
   ],
   exports: [
-    //OnlinetradingPage,
-  ]
+    OnlinetradingPage,
+    //LimitToPipe,
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  
 })
 export class OnlinetradingPageModule {}

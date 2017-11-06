@@ -1,40 +1,24 @@
-//export let isArabic: boolean = false;
+//import { ViewChild} from "@angular/core";
 import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
-import {
-  userorderhistoryresponse,
-  userorderresponse,
-  userorder,
-  OrderSide,
-  OrderStatus,
-  TimeTerm,
-  PriceType
-} from "./../../app/userorder.interface";
+import { userorderhistoryresponse, userorderresponse, userorder, OrderSide, OrderStatus, TimeTerm, PriceType} from "./../../app/userorder.interface";
 import { Storage } from "@ionic/storage";
-
-import {
-  ValidationResponse,
-  CancelResponse
-} from "./../../app/Validate.interface";
- import { Detailsresponse } from "./../../app/details.interface";
- import { portfolioresponse } from "./../../app/portfolio.interface";
-// //import { LoginService } from "./../../app/login.service";
+import { ValidationResponse, CancelResponse } from "./../../app/Validate.interface";
+import { Detailsresponse } from "./../../app/details.interface";
+import { portfolioresponse } from "./../../app/portfolio.interface";
 import { session } from "./../../app/session.interface";
-// import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-// //import { WatchList } from "../WatchList/WatchList";
-// import { HomePage } from "../home/home";
 import { StockService } from "./../../app/stock.service";
 import { Platform } from "ionic-angular";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+import { CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()
 @Component({
-  selector: "page-settings",
-  templateUrl: "settings.html"
+  selector: 'page-settings',
+  templateUrl: 'settings.html',
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage implements OnInit{
   GetCustNavID(event) {
     switch(event)
     {
@@ -137,6 +121,4 @@ export class SettingsPage implements OnInit {
   setshowabout() {
     this.showabout = !this.showabout;
   }
-
 }
-

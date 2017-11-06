@@ -1,21 +1,25 @@
 import { NgModule ,CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { PipesModule } from '../../pipes/pipes.module';
 
-import { NewsdetailsPage } from './newsdetails';
+import { PipesModule } from "../../pipes/pipes.module";
 import { CustNavModule } from '../../components/cust-nav/custnav.module';
+
+import { AlertCreatePage } from './alert-create';
 
 @NgModule({
   declarations: [
-    NewsdetailsPage,
+    AlertCreatePage,
   ],
   imports: [
-    IonicPageModule.forChild(NewsdetailsPage),
+    IonicPageModule.forChild(AlertCreatePage),
     PipesModule,
     CustNavModule,
- ],
+  ],
+  exports: [
+    AlertCreatePage,
+  ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA,
   ]
 })
-export class NewsdetailsPageModule {}
+export class AlertCreatePageModule {}
