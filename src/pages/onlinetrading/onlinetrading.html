@@ -9,33 +9,38 @@
         <ion-segment-button value="Insert" (click)="ChangeInsert()">{{'Add Order' | Language}}</ion-segment-button>
     </ion-segment>
 
-    <ion-card style="border: 0px" *ngIf="showInsert && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
-        <ion-card-content>
-            <form>
-                <ion-item>
-                    <ion-label *ngIf="OrderSearchItem && OrderSearchItem[0].length>0" floating>{{'Reuter' | Language}} - {{OrderSearchItem[1]}}</ion-label>
-                    <ion-label *ngIf="!OrderSearchItem || !OrderSearchItem[0].length>0" floating>{{'Reuter' | Language}}</ion-label>
-                    <!--  placeholder="{{'Add_Reuters' | Language}}" -->
-                    <ion-input (focus)="showAddressModal(userorder.ReutersCode)" (click)="showAddressModal(userorder.ReutersCode)" required [ngModel]="userorder.ReutersCode"  name="Code" type="text">{{userorder.ReutersCode}}</ion-input>
-                </ion-item>
+    <div class="form-div"  *ngIf="showInsert && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
+        <!-- <ion-card-content> -->
+        <form>
                 <!-- SEARCH Reuter -->
-                <ion-item *ngIf="OrderSearchItem && OrderSearchItem[0].length>0">
-                        <ion-row  [ngClass]="[DirClass]">
-                            <ion-col style="color:#e67e22;font-weight: bold;">{{OrderSearchItem[3]}}</ion-col>
-                            <ion-col>{{OrderSearchItem[4]}}</ion-col>
-                            <ion-col>{{OrderSearchItem[5]}}</ion-col>
-                        </ion-row>
-                        <!-- <ion-row>
-                            <ion-col style="color:#ffffff">{{OrderSearchItem[1]}}</ion-col>
-                        </ion-row> -->
-                </ion-item>
+                <div class="search-result" *ngIf="OrderSearchItem && OrderSearchItem[0].length>0">
+                    <ion-row  [ngClass]="[DirClass]">
+                        <ion-col>
+                            <button style="margin: 0px 2px" icon-only ion-button outline small clear (click)="clearSelected()" *ngIf="OrderSearchItem && OrderSearchItem[0].length>0">
+                                <ion-icon name="close-circle" item-start></ion-icon>
+                            </button>
+                        </ion-col>
+                        <ion-col style="color:#e67e22;font-weight: bold;">
+                            <div style="padding-top: 5px;">{{OrderSearchItem[3]}}</div></ion-col>
+                        <ion-col><div style="padding-top: 5px;">{{OrderSearchItem[4]}}</div></ion-col>
+                        <ion-col><div style="padding-top: 5px;">{{OrderSearchItem[5]}}</div></ion-col>
+
+                    </ion-row>
+                </div>
                 <!-- END SEARCH REUTER -->
-                <ion-item>
-                    <!-- placeholder="{{'Place_QTY' | Language}}" -->
-                    <ion-label floating>{{'Quantity' | Language}}</ion-label>
-                    <ion-input  min="1" [(ngModel)]="userorder.Quantity" type="number" name="Quantity" ></ion-input>
+                <ion-item class="custom-cover">
+                    <ion-label *ngIf="OrderSearchItem && OrderSearchItem[0].length>0">{{OrderSearchItem[1]}}</ion-label>
+                    <ion-label *ngIf="!OrderSearchItem || !OrderSearchItem[0].length>0">{{'Reuter' | Language}}</ion-label>
+                    <ion-input placeholder="{{'Add_Reuters' | Language}}" 
+                    class="custom-cover" (focus)="Autocomplet(userorder.ReutersCode)" 
+                    required [ngModel]="userorder.ReutersCode"  name="Code" type="text">{{userorder.ReutersCode}}</ion-input>
                 </ion-item>
-                <ion-card>
+                <ion-item class="custom-cover2">
+                    <!-- placeholder="{{'Place_QTY' | Language}}" -->
+                    <ion-label>{{'Quantity' | Language}}</ion-label>
+                    <ion-input placeholder="{{'Place_QTY' | Language}}" class="custom-cover" min="1" [(ngModel)]="userorder.Quantity" type="number" name="Quantity" ></ion-input>
+                </ion-item>
+                <ion-card class="innerCard">
                     <ion-card-header>
                         <span>{{'Time Term' | Language}}</span>
                     </ion-card-header>
@@ -54,7 +59,7 @@
                     </ion-card-content>
 
                 </ion-card>
-                <ion-card>
+                <ion-card class="innerCard">
                     <ion-card-header>
                         <span>{{'Side' | Language}}</span>
                     </ion-card-header>
@@ -75,7 +80,7 @@
                         </ion-segment>
                     </ion-card-content>
                 </ion-card>
-                <ion-card>
+                <ion-card class="innerCard">
                     <ion-card-header>
                         <span>{{'Price Type' | Language}}</span>
                     </ion-card-header>
@@ -88,18 +93,19 @@
                                 {{'Limit' | Language}}
                             </ion-segment-button>
                         </ion-segment>
-                        <ion-item *ngIf="EnablePrice">
+                        <ion-item class="remov-cover" *ngIf="EnablePrice">
                             <ion-label>{{'Price' | Language}}</ion-label>
                             <ion-input floating [(ngModel)]="userorder.Price" type="number" name="Price"></ion-input>
                         </ion-item>
                     </ion-card-content>
                 </ion-card>
 
-
-                <button ion-button block type="submit" (click)="CreateUpdateOrder()">{{'Make Order' | Language}}</button>
-            </form>
-        </ion-card-content>
-    </ion-card>
+            <div style="width:100%;">
+                <button ion-button block type="submit" class="btnMakeOrder" (click)="CreateUpdateOrder()">{{'Make Order' | Language}}</button>
+            </div>
+        </form>
+        <!-- </ion-card-content> -->
+    </div>
 
     <ion-grid no-lines *ngIf="portfolioresponse && showportfolio && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
         <ion-item class="cashtable" text-start *ngIf="Detailsresponse">

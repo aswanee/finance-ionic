@@ -65,8 +65,8 @@ export class OnlinetradingPage {
     BimsUserID: 0,
     ReutersCode: "",
     Side: 0 /*(2)Buy -(3) Sell -(4) Sell Same Day -(5) T+1*/,
-    Price: 0,
-    Quantity: 1,
+    Price: null,
+    Quantity: null,
     Username: "",
     CurrencyCode: "EGP",
     Status: 1 /*(1)Open, (2)Completed, (3)Expired, (4)Cancelled, (5)Partially Executed, (6)Pending Approval, (7)Rejected, (8)Suspended, (9)Invalid Order, (-2)Cancelled With Error*/,
@@ -734,41 +734,44 @@ export class OnlinetradingPage {
       stockchosen: stockchosen
     });
   }
-
-  showAddressModal(){
+  clearSelected()
+  {
+    this.OrderSearchItem = ["","","","","",""];
+    this.userorder.ReutersCode="";
+  }
+  Autocomplet(){
     let modal = this.modalCtrl.create("AutocompletePage");
     let me = this;
     modal.onDidDismiss(data => {
-      this.OrderSearchItem = data;
-      this.OrderSearchItem.push("");
-      this.OrderSearchItem.push("");
-      this.OrderSearchItem.push("");
-      
-      this.userorder.ReutersCode = this.OrderSearchItem[0];
-       this.StockService.getstock([this.OrderSearchItem[0]], this.isArabic).subscribe(
-        data => {
-          var Change :number = eval(data.result[0][1]);
-          this.DirClass="";
-
-          if(Change > 0)
-          {
-            this.DirClass="gainColor";
+      if(data)
+      {      
+        this.OrderSearchItem = data;
+        this.userorder.ReutersCode = this.OrderSearchItem[0];
+        this.StockService.getstock([this.OrderSearchItem[0]], this.isArabic).subscribe(
+          data => {
+            var Change :number = eval(data.result[0][1]);
+            this.DirClass="";
+  
+            if(Change > 0)
+            {
+              this.DirClass="gainColor";
+            }
+            if(Change < 0)
+            {
+              this.DirClass="loosColor";
+            }
+            this.OrderSearchItem[3] = data.result[0][0];
+            this.OrderSearchItem[4] = data.result[0][1];
+            this.OrderSearchItem[5] = data.result[0][2];
+          },
+          Error => {
+            // if (!this.isFired) {
+            //   this.ErrorToast();
+            //   this.isFired = true;
+            // }
           }
-          if(Change < 0)
-          {
-            this.DirClass="loosColor";
-          }
-          this.OrderSearchItem[3] = data.result[0][0];
-          this.OrderSearchItem[4] = data.result[0][1];
-          this.OrderSearchItem[5] = data.result[0][2];
-        },
-        Error => {
-          // if (!this.isFired) {
-          //   this.ErrorToast();
-          //   this.isFired = true;
-          // }
-        }
-      );
+        );
+      }
     });
     modal.present();
   }

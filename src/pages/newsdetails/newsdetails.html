@@ -2,7 +2,7 @@
     <cust-nav (pin)="GetCustNavID($event)" [title]="reuter"></cust-nav>
 </ion-header>
 
-<ion-content >
+<ion-content [dir]="LangDirection" >
   <ion-item text-wrap  style="color:orange;font-size: 1.2em;font-weight: bold">{{Newsbody?.result.V[1]}}</ion-item>
   <ion-item  no-lines style="color:orange;font-size: 0.8em">
       {{Newsbody?.result.V[6]}}

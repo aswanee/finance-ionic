@@ -77,6 +77,8 @@ export class NewsdetailsPage {
     
   }
   */
+  LangDirection:string 
+  
   ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -91,10 +93,13 @@ export class NewsdetailsPage {
     this.CompanyService.getnewsdetails(parsed,UserID).subscribe(
       data => {
         this.Newsbody = data;
+        
+        this.LangDirection = this.Newsbody.result.V[2].toLowerCase() =='true'?"rtl" : "ltr";
+
         var div = document.createElement("div");
         div.innerHTML = this.Newsbody.result.V[3];
         this.elements = div;
-
+        //this.platform.setDir('rtl', true) 
         var favid :any = this.Newsbody.result.V[8];
         if(!isNaN(favid))
         {

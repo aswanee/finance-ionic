@@ -2,11 +2,22 @@ import { Component,EventEmitter,Output, Input  } from '@angular/core';
 
 
 import {PopoverController } from "ionic-angular";
-//import { PopoverPage } from "../../pages/pop-over/pop-over";
 import { HideButtonPipe } from "../../pipes/hide-button/hide-button";
 import { MarketService } from "./../../app/market.service";
 import { PopoverComponent, } from '../popover/popover';
 
+import { Events, MenuController, Nav, Platform } from 'ionic-angular';
+
+export interface PageInterface {
+  title: string;
+  name: string;
+  component: any;
+  icon: string;
+  logsOut?: boolean;
+  index?: number;
+  tabName?: string;
+  tabComponent?: any;
+}
 
 @Component({
   selector: 'cust-nav',
@@ -19,7 +30,10 @@ export class CustNavComponent  {
   //@Input() MarketStatus :{Status:string, Time:string}= {Status:"OK", Time:"xxxx"} ;
   @Input() MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
   
-  constructor(private popoverCtrl: PopoverController,private marketservice:MarketService) {
+  constructor(
+    private popoverCtrl: PopoverController,
+    private marketservice:MarketService
+  ) {
     console.log('Hello constructor CustNavComponent Component');
     this.getstatus();
 
