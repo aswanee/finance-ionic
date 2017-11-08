@@ -1,6 +1,6 @@
-<ion-tabs #myTabs data-position="fixed">
-    <ion-tab [root]="tab1Root" tabTitle="{{'WatchList'}}" (ionSelect)="ionSelect(0)" tabIcon="pie"> </ion-tab> 
-    <ion-tab [root]="tab2Root" tabTitle="{{'Market'}}"    (ionSelect)="ionSelect(1)" tabIcon="analytics"></ion-tab> 
-    <ion-tab [root]="tab3Root" tabTitle="{{'News'}}"      (ionSelect)="ionSelect(2)" tabIcon="book"></ion-tab>
-    <ion-tab [root]="tab4Root" tabTitle="{{'Trades'}}"    (ionSelect)="ionSelect(3)" tabIcon="cart"></ion-tab>
+<ion-tabs #myTabs >
+    <ion-tab [root]="tab1Root" tabTitle="{{'WatchList'|Language}}" (ionSelect)="ionSelect(0)" tabIcon="pie"> </ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="{{'Market'|Language}}"    (ionSelect)="ionSelect(1)" tabIcon="analytics"></ion-tab>
+    <ion-tab [root]="tab3Root" tabTitle="{{'News'|Language}}"      (ionSelect)="ionSelect(2)" tabIcon="book"></ion-tab>
+    <ion-tab [root]="tab4Root" tabTitle="{{'Trades'|Language}}"    (ionSelect)="ionSelect(3)" tabIcon="cart"></ion-tab>
 </ion-tabs>

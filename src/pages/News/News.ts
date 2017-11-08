@@ -39,7 +39,7 @@ export class NewsPage implements OnInit,OnDestroy {
     dorefresh: boolean = true;
     isFired = false;
     nLang:number = 2;
-    buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+    buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>;
     
     constructor(
       public navCtrl: NavController,
@@ -52,9 +52,9 @@ export class NewsPage implements OnInit,OnDestroy {
     ) {  }
     ngOnInit() {
       this.buttons = [
-        {BName: "notifications", IconName: "notifications",visable :true},
-        {BName: "add", IconName: "add",visable :true},
-        {BName: "checkmark", IconName: "checkmark",visable :false}
+        {BName: "notifications", IconName: "notifications",visable :true, IconColor:""},
+        {BName: "add",           IconName: "add",          visable :true, IconColor:""},
+        {BName: "checkmark",     IconName: "checkmark",    visable :false, IconColor:""}
       ];
       //this.cld.buttons = buttons;
     }
@@ -160,7 +160,7 @@ export class NewsPage implements OnInit,OnDestroy {
       });
     }
   
-    More()  {
+    More(evnt)  {
       this.CompanyService.getnewsRange(this.OldestDate, 10, this.nLang)
         .subscribe(
           data => {
@@ -214,6 +214,8 @@ export class NewsPage implements OnInit,OnDestroy {
               this.News.result.N = data.result.N;
               this.News.status = data.status;
             }
+            evnt.complete();
+            
           },
           Error => {
             if (!this.isFired) {

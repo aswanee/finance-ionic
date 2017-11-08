@@ -40,7 +40,7 @@ export class OnlinetradingPage {
     }
   }
 
-  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}> = 
   [
     // {BName: "notifications", IconName: "notifications"},
     // {BName: "add", IconName: "add"},
@@ -195,7 +195,7 @@ export class OnlinetradingPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad OnlinetradingPage');
+    console.log('ionViewDidLoad Online tradin gPage');
     this.isArabic = window["isArabic"];
   }
 

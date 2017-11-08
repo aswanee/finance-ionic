@@ -1,5 +1,5 @@
 import { Component, ViewChild, Inject,Output } from "@angular/core";
-import { IonicPage, NavController, PopoverController, AlertController, ToastController } from "ionic-angular";
+import { Nav,IonicPage, NavController, PopoverController, AlertController, ToastController } from "ionic-angular";
 import { Platform } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
@@ -9,8 +9,10 @@ import { SplashScreen } from "@ionic-native/splash-screen";
   templateUrl: "app.html"
 })
 export class MyApp {
-  @ViewChild(NavController) nav;
-  rootPage: string = "tabs-page";
+  //@ViewChild(NavController) nav;
+  @ViewChild(Nav) nav: Nav;
+  
+  rootPage: string = "TabsPage";
   language: any;
   alert: any;
   constructor(
@@ -53,23 +55,63 @@ export class MyApp {
         //this.isApp = false;
       } else 
       {
+        //platform.registerBackButtonAction(() => {
+        //  console.log("you have clicked the device back button");
+        //   if (this.nav.canGoBack()) {
+        //     this.showToast();
+        //     platform.exitApp();
+        //     this.nav.pop();
+        //   } else {
+        //     this.showToast_2();
+        //     platform.exitApp();
+        //     if (this.alert) {
+        //       this.alert.dismiss();
+        //       this.alert = null;
+        //     } else {
+        //       this.showAlert();
+        //     }
+        //   }
+        // });
+/////////////////////////////////////////////////////////////////
+        var lastTimeBackPress = 0;
+        var timePeriodToExit  = 2000;
+        
         platform.registerBackButtonAction(() => {
-          console.log("you have clicked the device back button");
-          if (this.nav.canGoBack()) {
-            this.showToast();
-            platform.exitApp();
-            this.nav.pop();
-          } else {
-            this.showToast_2();
-            platform.exitApp();
-            if (this.alert) {
-              this.alert.dismiss();
-              this.alert = null;
-            } else {
-              this.showAlert();
-            }
-          }
+            // get current active page
+           console.log("you have clicked the device back button");
+           let view = this.nav.getActive();
+           console.log(view);
+           if(this.nav.canGoBack())
+           {
+            console.log("you CAN Go Back :)))");
+           }
+           else
+           {
+            console.log("you CAN Not Go Back :((((");
+           }
+           this.nav.pop({});
+            // if (view.component.name == "TabsPage") {
+            //     //Double check to exit app
+            //     if (new Date().getTime() - lastTimeBackPress < timePeriodToExit) {
+            //         console.log("Exit from app");
+            //         this.platform.exitApp(); //Exit from app
+            //     } else {
+            //         let toast = this.toastCtrl.create({
+            //             message:  'Press back again to exit App?',
+            //             duration: 3000,
+            //             position: 'bottom'
+            //         });
+            //         toast.present();
+            //         lastTimeBackPress = new Date().getTime();
+            //     }
+            // } else 
+            // {
+            //     // go to previous page
+            //     console.log("go to previous page");
+            //     this.nav.pop({});
+            // }
         });
+/////////////////////////////////////////////////////////////////
       }
 
       statusBar.styleDefault();

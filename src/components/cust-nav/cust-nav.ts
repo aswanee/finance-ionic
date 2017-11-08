@@ -25,7 +25,7 @@ export interface PageInterface {
 })
 export class CustNavComponent  {
   @Input() title:string;
-  @Input() buttons: Array<{BName: string, IconName: string, visable: boolean}>= [];
+  @Input() buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>= [];
   @Output() pin:EventEmitter<string> = new EventEmitter();
   //@Input() MarketStatus :{Status:string, Time:string}= {Status:"OK", Time:"xxxx"} ;
   @Input() MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
@@ -72,7 +72,7 @@ export class CustNavComponent  {
     this.pin.emit(Bid);
   }
   
-  Visablebuttons(): Array<{BName: string, IconName: string, visable: boolean}>
+  Visablebuttons(): Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>
   {
     if(this.buttons)
     return this.buttons.filter((item) => item.visable);

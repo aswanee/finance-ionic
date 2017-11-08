@@ -24,7 +24,7 @@ export class RegisterPage {
     }
   }
 
-  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}> = 
   [
     // {BName: "notifications", IconName: "notifications"},
     // {BName: "add", IconName: "add"},

@@ -1,5 +1,29 @@
 
+.cusm-alert-style{
+    .alert-wrapper , .loading-wrapper{
+        background-color: #ffa500!important;
+        border-radius: 30px!important;
+    }
+    .alert-head{
+        padding: 11px 22px 4px !important;
+        text-align: center!important;
+        border-bottom: 1px solid black!important;       
+    }
+    .alert-message , .loading-content {
+        font-size: 18px!important;
+        color: black!important;
+        text-align: center!important;
+        padding: 10px 3px!important;
+    }
+    .alert-button {
+        color: black;
+        border-radius: 23px !important;
+        border: 1px solid #000000 !important;
+        font-weight: 600;
+    }
+}
 page-signin {
+
 
     .login-content {
         background: rgb(0, 0, 0);

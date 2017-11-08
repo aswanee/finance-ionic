@@ -27,7 +27,7 @@ export class SigninPage {
     }
   }
 
-  buttons: Array<{BName: string, IconName: string, visable: boolean}> = 
+  buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}> = 
   [
     // {BName: "notifications", IconName: "notifications"},
     // {BName: "add", IconName: "add"},
@@ -65,9 +65,8 @@ export class SigninPage {
         if(!returnPage)
             returnPage = "OnlinetradingPage";
 
-        //this.navCtrl.pop();
-        this.navCtrl.setRoot(returnPage);
-        //this.navCtrl.push(OnlinetradingPage);
+            this.navCtrl.setRoot(returnPage);
+            //this.navCtrl.push(OnlinetradingPage);
         
       } else {
         this.showError("Access Denied");   
@@ -82,7 +81,8 @@ export class SigninPage {
   showLoading() {
     this.loading = this.loadingCtrl.create({
       content: 'Please wait...',
-      dismissOnPageChange: true
+      dismissOnPageChange: true,
+      cssClass:'cusm-alert-style'
     });
     this.loading.present();
   }
@@ -92,7 +92,9 @@ export class SigninPage {
  
     let alert = this.alertCtrl.create({
       title: 'Fail',
-      subTitle: text,
+      message: text,
+      cssClass:'cusm-alert-style',
+      //subTitle: text,
       buttons: ['OK']
     });
     alert.present();

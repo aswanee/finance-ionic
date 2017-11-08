@@ -35,10 +35,12 @@ export class AuthProvider extends ParentService {
         })
         .map(x => {
           let Session = <session>(x.json());
-          if(!Session ||Session.result.GeneralInfo.UserID<=0)
+          if(!Session ||!Session.result || Session.result.GeneralInfo.UserID<=0)
           {
             console.log(Session);
-            throw("Response With Not Session data");
+            this.CurrentSession =   { Status : "", result: null };
+            observer.next(false);
+            //throw("Response With Not Session data");
           }
           else
           {
@@ -54,19 +56,19 @@ export class AuthProvider extends ParentService {
             observer.next(true)
           }
         })
-        .subscribe(
+         .subscribe(
           data =>{
             console.log(data)
           },
-          err=>{
-            console.log(err.json())
-            observer.next(false);
-          },
+        //   // err=>{
+        //   //   console.log(err.json())
+        //   //   observer.next(false);
+        //   // },
           ()=>{
             console.log("COMPLET :)")
             observer.complete();
           }
-        )
+         )
         
 
         // //this.currentUser = new User('Simon', 'saimon@devdactic.com');

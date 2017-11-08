@@ -3,7 +3,7 @@
     <name>AFinance</name>
     <description>An awesome ArabFinance app.</description>
     <author email="it@arabfinance" href="https://arabfinance.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.1.7:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://ionic.local/*" />
     <allow-intent href="http://*/*" />
@@ -78,8 +78,6 @@
         <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320" />
     </platform>
-    <allow-navigation href="http://192.168.1.7:8100" />
-    <engine name="android" spec="^6.2.3" />
     <engine name="browser" spec="^4.1.0" />
     <plugin name="cordova-plugin-badge" spec="^0.8.3" />
     <plugin name="cordova-plugin-console" spec="^1.0.5" />
@@ -90,4 +88,7 @@
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
     <plugin name="cordova-sqlite-storage" spec="^2.0.4" />
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
+    <engine name="android" spec="~6.2.3" />
+    <allow-navigation href="http://10.14.60.201:8100" />
+    <allow-navigation href="http://192.168.17.2:8100" />
 </widget>

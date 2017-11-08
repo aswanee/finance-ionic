@@ -167,7 +167,7 @@ $colors: (
     @return rgba(red($button-color), green($button-color), blue($button-color), .1);
   }
   .button-border{
-    border-bottom: 1px solid orange !important;
+    border-bottom: 0.01em solid orange !important;
     margin-top: 0px !important;
     margin-bottom: 0px !important;
     
@@ -178,7 +178,7 @@ $colors: (
   }
   .odd {
     background-color: #242424 !important;
-    border-bottom: 1px solid orange !important;
+    border-bottom: 0.01em  solid orange !important;
   }
   .odd ion-row{
     color: #fff !important; 
@@ -186,7 +186,7 @@ $colors: (
 
   .even {
     background-color: #000 !important;
-    border-bottom: 1px solid orange !important;
+    border-bottom: 0.01em  solid orange !important;
   }
   .even ion-row{
     color: #fff !important; 
@@ -441,3 +441,5 @@ $colors: (
        url('../assets/fonts/droidsansarabic.svg#DroidSansArabicRegular') format('svg');
        
 }
+//  $fa-font-path: "../assets/font-awesome-4.7.0/fonts";
+//  @import 'FontAwesome';

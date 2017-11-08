@@ -13,7 +13,7 @@ export class AboutPage implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ngOnInit() {
-    var buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+    var buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>;
     //buttons = [
     //  {BName: "notifications", IconName: "notifications"},
     //  {BName: "add", IconName: "add"},

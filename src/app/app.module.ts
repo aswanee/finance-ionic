@@ -23,6 +23,7 @@ import { HideButtonPipe } from "./../pipes/hide-button/hide-button";
 import { NewsPageModule } from "../pages/news/news.module";
 import {CustNavComponent} from '../components/cust-nav/cust-nav'
 import { TabsPageModule } from "../pages/tabs/tabs.module";
+import { OnlinetradingPageModule } from "../pages/onlinetrading/onlinetrading.module";
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { TabsPageModule } from "../pages/tabs/tabs.module";
     HttpModule,
     TabsPageModule,
     NewsPageModule,
+    OnlinetradingPageModule,
   ],
   bootstrap: [
     IonicApp

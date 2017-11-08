@@ -120,38 +120,38 @@ export class HomePage {
   }
 
   async setBadges(num: number){
-    try{
-      let badges = await this.badge.set(num);
-      console.log("badges:");
-      console.log(badges);
-    }catch(e)
-    {
-      console.error(e);
-    }
+    // try{
+    //   let badges = await this.badge.set(num);
+    //   console.log("badges:");
+    //   console.log(badges);
+    // }catch(e)
+    // {
+    //   console.error(e);
+    // }
   }
 
   async increaseBadges(){
-    try{
-      let hasPermissio = await this.badge.hasPermission();
-      console.log(hasPermissio);
+    // try{
+    //   let hasPermissio = await this.badge.hasPermission();
+    //   console.log(hasPermissio);
       
-      if(hasPermissio)
-      {
-        let badges = await this.badge.increase(1);
-        console.log("badges:");
-        console.log(badges);
-      }
-      else{
-        console.log("YOU DONT HAVE PERMISSION!!!");
+    //   if(hasPermissio)
+    //   {
+    //     let badges = await this.badge.increase(1);
+    //     console.log("badges:");
+    //     console.log(badges);
+    //   }
+    //   else{
+    //     console.log("YOU DONT HAVE PERMISSION!!!");
         
-      }
-    }catch(e)
-    {
-      console.error(e);
-    }
+    //   }
+    // }catch(e)
+    // {
+    //   console.error(e);
+    // }
   }
 
-  async requestPremission_XXX() {
+  async requestPremission_XXXXXX() {
     try{
       let hasPermissio = await this.badge.hasPermission();
       console.log("hasPermissio:");
@@ -283,7 +283,7 @@ export class HomePage {
       }
     });
   }
-  buttons: Array<{BName: string, IconName: string, visable: boolean}>;
+  buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>;
   GetCustNavID(event) {
     switch(event)
     {
@@ -308,9 +308,9 @@ export class HomePage {
   ngOnInit() {
     
     this.buttons = [
-      {BName: "notifications", IconName: "notifications", visable:true},
-      {BName: "add", IconName: "add", visable:true},
-      {BName: "checkmark", IconName: "checkmark", visable:false}
+      {BName: "notifications", IconName: "notifications", visable:true, IconColor:""},
+      {BName: "add", IconName: "add", visable:true, IconColor:""},
+      {BName: "checkmark", IconName: "checkmark", visable:false, IconColor:""}
     ];
     
 

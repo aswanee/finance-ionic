@@ -2,7 +2,7 @@ import { Component, OnInit,ViewChild } from "@angular/core";
 import { IonicPage, NavController, Tabs} from "ionic-angular";
 
 @IonicPage({
-  name: 'tabs-page',
+  // name: 'tabs-page',
   priority: 'high'
 })
 @Component({
