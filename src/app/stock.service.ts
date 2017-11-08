@@ -70,12 +70,12 @@ export class StockService extends ParentService {
           {
             for (let ii = 0; ii < OldStockDetails.result.length; ii++)
             {
-              if(nameobj[i] == OldStockDetails.result[ii][3])
+              if(nameobj[i] == OldStockDetails.result[ii][4])
               {
                 isNew = false;
                 //var OldValue:string = OldStockDetails.result[ii][0];
 
-                if(this.List.status!=OldStockDetails.result[ii][6])
+                if(this.List.status!=OldStockDetails.result[ii][7])
                 {
                   loop2:
                   for (let j = 0; j < this.List.result.length; j++) {
@@ -87,7 +87,7 @@ export class StockService extends ParentService {
                 }
                 else
                 {
-                  data.result[i].push(OldStockDetails.result[ii][4]);
+                  data.result[i].push(OldStockDetails.result[ii][5]);
                 }
                 data.result[i].push(OldStockDetails.result[ii][0]);
                 data.result[i].push(this.List.status);

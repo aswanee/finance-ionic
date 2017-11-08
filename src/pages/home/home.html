@@ -60,30 +60,33 @@
             </ion-row>
         </ion-item>
         <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
-                <button text-start clear class="full"  (click)="setstockchosen(x[3])" [hidden]="editpressed">
+                <button text-start clear class="full"  (click)="setstockchosen(x[4])" [hidden]="editpressed">
                     <ion-row text-center>
-                        <ion-col  style="color:#ffa500;font-weight: bold;">{{x[3]}}</ion-col>
+                        <ion-col  style="color:#ffa500;font-weight: bold;">{{x[4]}}</ion-col>
 
-                        <ion-col *ngIf="x[0]>x[5]"  style="color:#32db64; font-weight: bolder;">{{x[0]}}</ion-col>
-                        <ion-col *ngIf="x[0]<x[5]"  style="color: red; font-weight: bolder">{{x[0]}}</ion-col>
-                        <ion-col *ngIf="x[0]==x[5]">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]>x[6]"  style="color:#32db64; font-weight: bolder;">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]<x[6]"  style="color: red; font-weight: bolder">{{x[0]}}</ion-col>
+                        <ion-col *ngIf="x[0]==x[6]">{{x[0]}}</ion-col>
                         
                         <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
                         <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[1]}}</ion-col>
-    
+                        <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                        
                         <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[2]}}</ion-col>
                         <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[1]}}</ion-col>
-    
+                        <ion-col  *ngIf="x[2]<0"  style="color: red; font-weight: bolder">{{x[3]}}</ion-col>
+                        
                         <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
                         <ion-col  *ngIf="x[2]==0">{{x[1]}}</ion-col>
-                        <ion-col  col>
+                        <ion-col  *ngIf="x[2]==0">{{x[3]}}</ion-col>
+                        <!-- <ion-col  col>
                                 <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                                 <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
-                        </ion-col>                        
+                        </ion-col>                         -->
                     </ion-row>
                     <ion-row>
                         <ion-col >
-                            {{x[4]}}
+                            {{x[5]}}
                         </ion-col>
                     </ion-row>
                 </button>   

@@ -44,47 +44,36 @@ export class MyApp {
     });
     platform.ready().then(() => {
       if(window["language"]=="ar")
-            this.platform.setDir('rtl', true)
+      {
+        this.platform.setDir('rtl', true)
+      }
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       if(this.platform.is('core') || this.platform.is('mobileweb')) {
         //this.isApp = false;
       } else 
       {
-          // this.oneSignal.startInit('a0b47b91-106c-4139-9955-ffe07d4f41e4', '12030250491');
-    
-          // this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.InAppAlert);
-    
-          // this.oneSignal.handleNotificationReceived().subscribe(() => {
-          //  // do something when notification is received
-          // });
-    
-          // this.oneSignal.handleNotificationOpened().subscribe(() => {
-          //   // do something when a notification is opened
-          // });
-         
-          // this.oneSignal.endInit();
+        platform.registerBackButtonAction(() => {
+          console.log("you have clicked the device back button");
+          if (this.nav.canGoBack()) {
+            this.showToast();
+            platform.exitApp();
+            this.nav.pop();
+          } else {
+            this.showToast_2();
+            platform.exitApp();
+            if (this.alert) {
+              this.alert.dismiss();
+              this.alert = null;
+            } else {
+              this.showAlert();
+            }
+          }
+        });
       }
-      //For Notification
-
 
       statusBar.styleDefault();
-      platform.registerBackButtonAction(() => {
-        if (this.nav.canGoBack()) {
-          this.showToast();
-          platform.exitApp();
-          this.nav.pop();
-        } else {
-          this.showToast_2();
-          platform.exitApp();
-          if (this.alert) {
-            this.alert.dismiss();
-            this.alert = null;
-          } else {
-            this.showAlert();
-          }
-        }
-      });
+
     });
   }
 
