@@ -139,17 +139,17 @@ export class NewsdetailsPage {
 
   registerBackButton :any;
   ionViewDidEnter() {
-    console.log("ionViewDidEnter");
-    this.registerBackButton = this.platform.registerBackButtonAction(() => {
-      console.log("YOU WILL GO BACK");
-      if (this.navCtrl != undefined && this.registerBackButton!=undefined && this.navCtrl.canGoBack())
-            this.navCtrl.pop();
-   });
+  //   console.log("ionViewDidEnter");
+  //   this.registerBackButton = this.platform.registerBackButtonAction(() => {
+  //     console.log("YOU WILL GO BACK");
+  //     if (this.navCtrl != undefined && this.registerBackButton!=undefined && this.navCtrl.canGoBack())
+  //           this.navCtrl.pop();
+  //  });
   }
 
   ionViewWillLeave() {
-    console.log("ionViewWillLeave");
-    this.registerBackButton = null;
+    // console.log("ionViewWillLeave");
+    // this.registerBackButton = null;
   }
 
   

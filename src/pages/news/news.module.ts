@@ -18,7 +18,7 @@ import { CustNavModule } from '../../components/cust-nav/custnav.module';
     CustNavModule,
   ],
   entryComponents:[
-    //CustNavComponent
+    NewsPage,
   ],
   exports: [
     NewsPage,

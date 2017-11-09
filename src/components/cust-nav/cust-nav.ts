@@ -2,7 +2,6 @@ import { Component,EventEmitter,Output, Input  } from '@angular/core';
 
 
 import {PopoverController } from "ionic-angular";
-import { HideButtonPipe } from "../../pipes/hide-button/hide-button";
 import { MarketService } from "./../../app/market.service";
 import { PopoverComponent, } from '../popover/popover';
 
