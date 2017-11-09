@@ -1,18 +1,18 @@
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Component, Input, Output, OnInit } from "@angular/core";
-import { Observable } from "rxjs/Rx";
-import { ToastController, Platform } from "ionic-angular";
+import { Component } from "@angular/core";
+//import { Observable } from "rxjs/Rx";
+import { ToastController} from "ionic-angular";
 
-import { session } from "./../../app/session.interface";
-import { News } from "./../../app/news.interface";
-import { Newsbody } from "./../../app/newsbody.interface";
-import { Newsresponse } from "./../../app/newsresponse.interface";
+//import { session } from "./../../app/session.interface";
+//import { News } from "./../../app/news.interface";
+//import { Newsbody } from "./../../app/newsbody.interface";
+//import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 
 import { CompanyService } from "./../../app/company.service";
 import { FavoritesService } from "./../../app/favorite.service";
 import { AuthProvider } from './../../providers/auth/auth';
-import { AddFavorites } from './../../app/newsbody.interface';
+//import { AddFavorites } from './../../app/newsbody.interface';
 
 @IonicPage()
 @Component({
@@ -61,12 +61,12 @@ export class NewsdetailsPage {
   isFired = false;
   constructor(
     private CompanyService: CompanyService,
-    private NavController: NavController,
+    //private NavController: NavController,
     public navParams: NavParams,
     private ToastController: ToastController,
     private Favo : FavoritesService,
     private Auth: AuthProvider,
-    private platform: Platform,
+    //private platform: Platform,
     public navCtrl: NavController,
     
   ) {
@@ -111,16 +111,19 @@ export class NewsdetailsPage {
         if(!isNaN(favid))
         {
           this.FavID = +favid;
-          if(this.FavID>0)
+          if(this.buttons.length>0)
           {
-            this.pinned = true;
-            this.buttons[0].visable= true;
-            this.buttons[1].visable= false;
-          }
-          else
-          {
-            this.buttons[0].visable= false;
-            this.buttons[1].visable= true;
+            if(this.FavID>0)
+            {
+              this.pinned = true;
+              this.buttons[0].visable= true;
+              this.buttons[1].visable= false;
+            }
+            else
+            {
+              this.buttons[0].visable= false;
+              this.buttons[1].visable= true;
+            }
           }
         }
         // document.writeln(this.elements.innerHTML);

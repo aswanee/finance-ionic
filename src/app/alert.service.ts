@@ -1,8 +1,8 @@
-import { OnInit } from "@angular/core";
+//import { OnInit } from "@angular/core";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { Http, Response, Headers } from "@angular/http";
-import { alertresponse, alert, Type, Criteria, Field } from "./alert.interface";
+import { Response, Headers } from "@angular/http";
+import { alertresponse, Type, Criteria, Field } from "./alert.interface";
 import { deleteresponse } from "./delete.interface";
 import { add } from "./addresponse.interface";
 import "rxjs/add/operator/map";

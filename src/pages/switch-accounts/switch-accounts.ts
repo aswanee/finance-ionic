@@ -2,8 +2,8 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { session } from "./../../app/session.interface";
 import { Storage } from "@ionic/storage";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+//import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()

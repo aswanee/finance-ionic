@@ -1,10 +1,14 @@
 <!-- Generated template for the CustNavComponent component -->
     <ion-navbar>
-        <ion-title >
-                <ion-icon *ngIf="!this.marketservice.MarketStatus.Status=='Open'" name="circle" color="green"></ion-icon>
-                <ion-icon *ngIf="this.marketservice.MarketStatus.Status=='Close'" name="circle" color="red"></ion-icon> 
-            <label style="font-size: 1.16rem">{{this.marketservice.MarketStatus.Time}}</label>
-            {{title}}
+        <ion-title center>
+           <div class="status">
+                <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="this.marketservice.MarketStatus.Status=='Close'" >Closed</label>
+                <label style="color:green!important;border: 1px solid green!important;"  calss="status open" *ngIf="this.marketservice.MarketStatus.Status!='Close'">Open</label>
+                <span style="color:rgb(255, 255, 255);font-size: 12px"></span>
+                <span class="title">
+                    {{title}}
+                </span>
+            </div>
         </ion-title>
         <ion-buttons end>
   

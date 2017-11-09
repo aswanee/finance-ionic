@@ -3,17 +3,11 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { StockService } from "./../../app/stock.service";
 import { AlertService } from "./../../app/alert.service";
-import {
-  alertresponse,
-  alert,
-  Type,
-  Criteria,
-  Field
-} from "./../../app/alert.interface";
-import { Storage } from "@ionic/storage";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+import {Type, Criteria, Field } from "./../../app/alert.interface";
+//import { Storage } from "@ionic/storage";
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { ToastController } from "ionic-angular";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+//import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()

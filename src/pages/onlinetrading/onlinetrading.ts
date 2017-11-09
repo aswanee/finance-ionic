@@ -1,20 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams ,ModalController} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { session ,User} from "../../app/session.interface";
+import { session } from "../../app/session.interface";
 
 import { portfolioRefresh, ordersRefresh } from "./../../app/refreshconfig";
 import { TradeService } from "./../../app/trade.service";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import { AlertController } from "ionic-angular";
 import { userorderhistoryresponse, userorderresponse, userorder,   } from "./../../app/userorder.interface";
-import { checkupdatability,TimeTerm, OrderSide, OrderStatus, PriceType } from "./../../app/userorder.interface";
+import { TimeTerm, OrderSide, OrderStatus, PriceType } from "./../../app/userorder.interface";
 import { OrderhistoryPage } from "./../orderhistory/orderhistory";
-import { ValidationResponse, CancelResponse, OrderOperationResult, Place, } from "./../../app/Validate.interface";
-import { PlaceOrderStatus, PlaceResponse, CancelOrderStatus } from "./../../app/Validate.interface";
-import { Detailsresponse } from "./../../app/details.interface";
+import { ValidationResponse, CancelResponse, OrderOperationResult } from "./../../app/Validate.interface";
+import { PlaceOrderStatus, PlaceResponse } from "./../../app/Validate.interface";
+//import { Detailsresponse } from "./../../app/details.interface";
 import { ToastController } from "ionic-angular";
-import { Storage } from "@ionic/storage";
+//import { Storage } from "@ionic/storage";
 import { StockService } from "./../../app/stock.service";
 import { Equals } from "../../Lib/Compare";
 
@@ -136,7 +136,7 @@ export class OnlinetradingPage {
     public navParams: NavParams, 
     private auth: AuthProvider,
     private TradeService: TradeService,
-    private storage: Storage,
+    //private storage: Storage,
     public alertCtrl: AlertController,
     private ToastController: ToastController,
     private modalCtrl: ModalController,
@@ -741,7 +741,6 @@ export class OnlinetradingPage {
   }
   Autocomplet(){
     let modal = this.modalCtrl.create("AutocompletePage");
-    let me = this;
     modal.onDidDismiss(data => {
       if(data)
       {      

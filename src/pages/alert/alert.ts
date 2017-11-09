@@ -1,21 +1,20 @@
 import {
   Component,
-  OnChanges,
   SimpleChanges,
-  HostListener, ViewChild , OnInit
+  HostListener, OnInit
 } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { Validators, FormBuilder, FormGroup } from "@angular/forms";
-import { StockService } from "./../../app/stock.service";
+//import { Validators, FormBuilder, FormGroup } from "@angular/forms";
+//import { StockService } from "./../../app/stock.service";
 import { AlertService } from "./../../app/alert.service";
 import { alertresponse, alert } from "./../../app/alert.interface";
 import { Storage } from "@ionic/storage";
 import { ToastController } from "ionic-angular";
 import { session } from "./../../app/session.interface";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 // import { AlertCreatePage } from "./../create-alert/create-alert";
 // import { UpdateAlertPage } from "./../update-alert/update-alert";
-import { CustNavComponent} from '../../components/cust-nav/cust-nav'
+//import { CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
 @Component({
@@ -49,7 +48,7 @@ export class AlertPage implements OnInit {
 
   SelectedSegment:string= "MatchedAlerts";
   isSmall: boolean = false;
-  private alertForm: FormGroup;
+  //private alertForm: FormGroup;
   addAlertForm: boolean = false;
   dispnames: any[][] = new Array();
   userAlerts: alertresponse;
@@ -90,8 +89,8 @@ export class AlertPage implements OnInit {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private formBuilder: FormBuilder,
-    private StockService: StockService,
+    //private formBuilder: FormBuilder,
+    //private StockService: StockService,
     private AlertService: AlertService,
     private storage: Storage,
     private ToastController: ToastController

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, RequestOptions } from "@angular/http";
-import 'rxjs/add/operator/map';
+import { Http, Headers } from "@angular/http";
 import { ParentService } from "../../app/parentservice.service";
 import { Observable } from "rxjs/Observable";
 import { session ,User} from "../../app/session.interface";
 import { Storage } from "@ionic/storage";
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export class AuthProvider extends ParentService {
@@ -29,8 +29,8 @@ export class AuthProvider extends ParentService {
         headers.append("Content-Type", "application/x-www-form-urlencoded");
         let body = "auth={UserName:'" + credentials.username + "',Password:'" + credentials.password + "'}";
 
-        let response = this.http
-        .post(this.link, body, {
+        //let response = 
+        this.http.post(this.link, body, {
           headers: headers
         })
         .map(x => {

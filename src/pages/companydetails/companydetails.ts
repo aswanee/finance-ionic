@@ -1,12 +1,12 @@
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChange, SimpleChanges } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
+import { Component, Input, Output, EventEmitter, SimpleChanges } from "@angular/core";
+//import { BehaviorSubject } from "rxjs";
 import { ToastController } from "ionic-angular";
 
 import { SerResponse } from "./../../app/response.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
-import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
+//import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
 
 import { StockService } from "./../../app/stock.service";
 import { asksbidsRefresh, relnewsRefresh, tradesRefresh } from "./../../app/refreshconfig";

@@ -1,4 +1,4 @@
-import { Component,ViewChild, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 //import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 
@@ -13,7 +13,7 @@ export class AboutPage implements OnInit{
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
 
   ngOnInit() {
-    var buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>;
+    //var buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>;
     //buttons = [
     //  {BName: "notifications", IconName: "notifications"},
     //  {BName: "add", IconName: "add"},

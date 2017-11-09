@@ -1,5 +1,5 @@
-import { Component, ViewChild, Inject,Output } from "@angular/core";
-import { Nav,IonicPage, NavController, PopoverController, AlertController, ToastController } from "ionic-angular";
+import { Component, ViewChild } from "@angular/core";
+import { PopoverController, AlertController, ToastController } from "ionic-angular";
 import { Platform ,App } from "ionic-angular";
 import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
@@ -10,7 +10,7 @@ import { SplashScreen } from "@ionic-native/splash-screen";
 })
 export class MyApp {
   //@ViewChild(NavController) nav;
-  @ViewChild(Nav) nav: Nav;
+  //@ViewChild(Nav) nav: Nav;
   
   rootPage: string = "TabsPage";
   language: any;
@@ -55,8 +55,14 @@ export class MyApp {
       platform.registerBackButtonAction(() => {
         
            let nav = app.getActiveNavs()[0];
-           let activeView = nav.getActive();                
-        
+           let i:number = 0
+           let activeView = nav.getActive(); 
+           var actname = ""; //activeView.name;
+           for(i ; i< app.getActiveNavs.length; i++)
+           {
+              actname += app.getActiveNavs()[i].name + "<br>";
+           }
+           console.log("A-C-T-I-V--V-I-E-W: " + actname + "-----------------------");
            //if(activeView.name === "FirstPage") 
            {
         
@@ -65,7 +71,7 @@ export class MyApp {
                } else {
                    const alert = this.alertCtrl.create({
                        title: 'App termination',
-                       message: 'Do you want to close the app?',
+                       message: 'your Active current pageis:<br>  ' + actname + '<br> Do you want to close the app?',
                        buttons: [{
                            text: 'Cancel',
                            role: 'cancel',
@@ -82,7 +88,7 @@ export class MyApp {
                    alert.present();
                }
            }
-       });
+       },100);
 
       statusBar.styleDefault();
 

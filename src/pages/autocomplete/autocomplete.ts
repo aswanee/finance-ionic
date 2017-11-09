@@ -1,8 +1,8 @@
-import {Component, Input,ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {ViewController} from 'ionic-angular';
 import { StockService } from "./../../app/stock.service";
 import { SerResponse } from "./../../app/response.interface";
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage } from 'ionic-angular';
 
 @IonicPage()
 @Component({

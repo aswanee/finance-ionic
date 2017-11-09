@@ -5,7 +5,7 @@ import {PopoverController } from "ionic-angular";
 import { MarketService } from "./../../app/market.service";
 import { PopoverComponent, } from '../popover/popover';
 
-import { Events, MenuController, Nav, Platform } from 'ionic-angular';
+//import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 
 export interface PageInterface {
   title: string;
@@ -20,7 +20,8 @@ export interface PageInterface {
 
 @Component({
   selector: 'cust-nav',
-  templateUrl: 'cust-nav.html'
+  templateUrl: 'cust-nav.html',
+
 })
 export class CustNavComponent  {
   @Input() title:string;

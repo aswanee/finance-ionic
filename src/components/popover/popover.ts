@@ -1,11 +1,11 @@
 import { Component, Output, EventEmitter } from "@angular/core";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { ViewController ,Platform} from "ionic-angular";
-import { Storage } from "@ionic/storage";
+import { NavController,App } from "ionic-angular";
+import { ViewController } from "ionic-angular";
+//import { Storage } from "@ionic/storage";
 import { ToastController } from "ionic-angular";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { AuthProvider } from "./../../providers/auth/auth";
-import { session , User } from "./../../app/session.interface";
+import { session } from "./../../app/session.interface";
 
 @Component({
   selector: 'popover',
@@ -29,10 +29,11 @@ export class PopoverComponent {
   constructor(
     public viewCtrl: ViewController,
     private navCtrl: NavController,
-    private storage: Storage,
+    //private storage: Storage,
     private toastCtrl: ToastController,
     private Auth : AuthProvider,
-    private platform :Platform,
+    //private platform :Platform,
+    public  app: App,
   ) 
   {
     // this.navCtrl.setRoot(HomePage);
@@ -66,41 +67,50 @@ export class PopoverComponent {
           }
         }
       }
-    
+
+
       logout() {
         console.log("Goodbay pop-over - logout")
-        this.Auth.logout().subscribe(succ => {
-          this.menuToast("out");
-          this.close();
+        this.viewCtrl.dismiss().then(() => {
+          this.Auth.logout().subscribe(succ => {
+            this.menuToast("out");
+          });
         });
+
       }
     
       goToAbout() {
-        this.navCtrl.push("AboutPage");
-        this.close();
+        this.viewCtrl.dismiss().then(() => {
+          this.app.getRootNav().push("AboutPage");
+          // this.navCtrl.push("TabsPage", {PageId: "SettingsPage", TabRoot:2});
+        });
       }
     
       goToSettings() {
-        this.navCtrl.push("SettingsPage");
-        this.close();
+        this.viewCtrl.dismiss().then(() => {
+          this.app.getRootNav().push("SettingsPage");
+        });
       }
     
       goToAlerts() {
-        this.navCtrl.push("AlertPage");
-        this.close();
+        this.viewCtrl.dismiss().then(() => {
+          this.app.getRootNav().push("AlertPage");
+        });
       }
     
       login() {
-        this.navCtrl.push("SigninPage");
-        this.close();
+        this.viewCtrl.dismiss().then(() => {
+          this.app.getRootNav().push("SigninPage");
+        });
       }
       gotoSwitch() {
-        this.navCtrl.push("SwitchAccountsPage", { Session: this.Session });
-        this.close();
+        this.viewCtrl.dismiss().then(() => {
+          this.app.getRootNav().push("SwitchAccountsPage", { Session: this.Session });
+        });
       }
-      close() {
-        this.viewCtrl.dismiss();
-      }
+      // close() {
+      //   this.viewCtrl.dismiss();
+      // }
     
       menuToast(inOrOut: string) {
         let toast = this.toastCtrl.create({

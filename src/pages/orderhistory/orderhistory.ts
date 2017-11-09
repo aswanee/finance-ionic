@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import {
-  userorderhistory,
   userorderhistoryresponse,
   PlaceType,
   OrderStatus,
@@ -10,9 +9,9 @@ import {
 } from "./../../app/userorder.interface";
 import { ToastController } from "ionic-angular";
 import { TradeService } from "./../../app/trade.service";
-import { session ,User} from "../../app/session.interface";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+import { session } from "../../app/session.interface";
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+//import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()

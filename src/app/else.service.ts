@@ -1,14 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs/Observable";
-import { Http, Response } from "@angular/http";
+import { Response } from "@angular/http";
 // import {Rouiter} from './models/rouiter.model';
-import { News } from "./news.interface";
-import { Newsbody } from "./newsbody.interface";
+//import { News } from "./news.interface";
+//import { Newsbody } from "./newsbody.interface";
 import "rxjs/add/operator/map";
 import { ParentService } from "./parentservice.service";
 import "rxjs/add/operator/do";
 import "rxjs/add/operator/catch";
-import { OnInit } from "@angular/core";
+//import { OnInit } from "@angular/core";
 import { Detailsresponse } from "./details.interface";
 import { MarketDetails } from "./marketsummary.interface";
 @Injectable()

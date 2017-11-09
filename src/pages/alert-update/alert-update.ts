@@ -2,16 +2,10 @@ import { Component } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { Validators, FormBuilder, FormGroup } from "@angular/forms";
 import { AlertService } from "./../../app/alert.service";
-import {
-  alertresponse,
-  alert,
-  Type,
-  Criteria,
-  Field
-} from "./../../app/alert.interface";
-import { Storage } from "@ionic/storage";
-import {session } from "./../../app/Session.interface";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+//import { alertresponse,  alert,  Type,  Criteria,  Field} from "./../../app/alert.interface";
+//import { Storage } from "@ionic/storage";
+//import {session } from "./../../app/Session.interface";
+//import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 @IonicPage()
 @Component({

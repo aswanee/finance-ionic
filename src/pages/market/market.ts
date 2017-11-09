@@ -1,12 +1,12 @@
-import { Component, OnInit, HostListener } from "@angular/core";
+import { Component,  HostListener } from "@angular/core";
 import { MarketResponse } from "./../../app/Marketresponse.interface";
 import { MarketService } from "./../../app/market.service";
-import { NavController, IonicPage, NavParams } from "ionic-angular";
+import { NavController, IonicPage } from "ionic-angular";
 import { SerResponse } from "./../../app/response.interface";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 import { ToastController } from "ionic-angular";
 import { marketRefresh } from "./../../app/refreshconfig";
-import {CustNavComponent} from '../../components/cust-nav/cust-nav'
+//import {CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()

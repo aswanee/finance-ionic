@@ -1,16 +1,16 @@
 export let language: string = "en";
-import {OnChanges,SimpleChanges,HostListener} from "@angular/core";
-import { Component ,ViewChild,OnInit} from '@angular/core';
+import {HostListener} from "@angular/core";
+import { Component } from '@angular/core';
 
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { AlertController ,PopoverController} from "ionic-angular";
 
 import { watchlistRefresh } from "./../../app/refreshconfig";
 import { ToastController,Platform } from "ionic-angular";
 import { StockService } from "./../../app/stock.service";
-import { AskBidService } from "./../../app/asksbids.service";
-import { CompanyService } from "./../../app/company.service";
-import { GetService } from "./../../app/else.service";
+//import { AskBidService } from "./../../app/asksbids.service";
+//import { CompanyService } from "./../../app/company.service";
+//import { GetService } from "./../../app/else.service";
 import { SerResponse } from "./../../app/response.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
@@ -72,9 +72,9 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private StockService: StockService,
-    private CompanyService: CompanyService,
-    private AskBidService: AskBidService,
-    private GetService: GetService,
+    //private CompanyService: CompanyService,
+    //private AskBidService: AskBidService,
+    //private GetService: GetService,
     private storage: Storage,
     private ToastController: ToastController,
     private platform:Platform,
@@ -375,7 +375,7 @@ export class HomePage {
     return "test";
   }
   refresh() {
-    var TempStockDetails :SerResponse = <SerResponse>{result: [], status:''};
+    //var TempStockDetails :SerResponse = <SerResponse>{result: [], status:''};
     
     if (this.dispnames && !this.WatchListChanged) {
       if(this.dispnames.length>0)
@@ -384,7 +384,7 @@ export class HomePage {
         //this.StockService.getstock(this.dispnames, this.isArabic).subscribe(
         this.StockService.getstockv2(this.dispnames,this.StockDetails, this.isArabic).subscribe(
           data => {
-              var oldStockdata:any = this.StockDetails;
+              //var oldStockdata:any = this.StockDetails;
               this.StockDetails = data;
               if(this.List && this.List.result && this.List.result.length<=0)
               {
@@ -475,10 +475,7 @@ export class HomePage {
       for (let k = 0; k < this.dispnames.length; k++) {
         for (let i = 0; i < this.displayListDummy.length; i++) {
           console.log("k: " + k + "i: " + i);
-          if(this.displayListDummy.length - 1 == i )
-          {
-            var breakboint = "break";
-          }
+
           if (this.dispnames[k] === this.displayListDummy[i][0]) {
             this.map[this.displayListDummy[i][0]] = true;
             this.displayListDummy[i] = this.displayListDummy[this.displayListDummy.length - 1];

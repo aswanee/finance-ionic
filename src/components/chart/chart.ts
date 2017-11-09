@@ -1,7 +1,7 @@
-import { Component, OnInit, Input,ViewChild } from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { Http } from "@angular/http";
 import { Observable } from "rxjs/Observable";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import { NavParams } from "ionic-angular";
 import "rxjs/add/operator/map";
 import "rxjs/Rx";
 import { ParentService } from "../../app/parentservice.service";

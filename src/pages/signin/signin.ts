@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams ,AlertController, LoadingController, Loading} from 'ionic-angular';
+import { Platform,NavController, NavParams ,AlertController, LoadingController, Loading} from 'ionic-angular';
 import { AuthProvider } from '../../providers/auth/auth';
-import { User , session } from '../../app/session.interface';
-import { ViewChild, OnInit } from "@angular/core";
+import { User } from '../../app/session.interface';
+//import { ViewChild, OnInit } from "@angular/core";
 import { IonicPage, } from 'ionic-angular';
 
 @IonicPage()
@@ -34,7 +34,7 @@ export class SigninPage {
     // {BName: "checkmark", IconName: "checkmark"}
   ];
 
-  
+  perurity = 101;
   loading: Loading;
   registerCredentials :User;
   //ParentPage :string;
@@ -43,12 +43,30 @@ export class SigninPage {
     private auth: AuthProvider, 
     private alertCtrl: AlertController, 
     private loadingCtrl: LoadingController,
-    public navParams: NavParams)
+    public navParams: NavParams,
+    private platform: Platform)
   { 
     //this.ParentPage = navParams.get("ParentPage");
     this.registerCredentials = new User("","");
   }
-  
+  registerBackButton :any;
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter");
+    //
+  //   this.registerBackButton = this.platform.registerBackButtonAction(() => {
+  //     console.log("YOU WILL GO BACK");
+  //     if (this.navCtrl != undefined && this.registerBackButton!=undefined && this.navCtrl.canGoBack())
+  //           this.navCtrl.pop();
+  //  },this.perurity);
+  //  this.perurity-+2;
+  }
+
+  ionViewWillLeave() {
+  //   this.registerBackButton = this.platform.registerBackButtonAction(() => {
+  //     console.log("YOU WILL GO BACK");
+
+  //  },this.perurity);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad SigninPage');
   }

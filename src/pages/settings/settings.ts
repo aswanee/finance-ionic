@@ -1,16 +1,16 @@
 //import { ViewChild} from "@angular/core";
-import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
-import { TradeService } from "./../../app/trade.service";
-import { userorderhistoryresponse, userorderresponse, userorder, OrderSide, OrderStatus, TimeTerm, PriceType} from "./../../app/userorder.interface";
-import { Storage } from "@ionic/storage";
+//import { TradeService } from "./../../app/trade.service";
+import { userorderhistoryresponse, userorderresponse, userorder} from "./../../app/userorder.interface";
+//import { Storage } from "@ionic/storage";
 import { ValidationResponse, CancelResponse } from "./../../app/Validate.interface";
 import { Detailsresponse } from "./../../app/details.interface";
 import { portfolioresponse } from "./../../app/portfolio.interface";
 import { session } from "./../../app/session.interface";
 import { StockService } from "./../../app/stock.service";
 import { Platform } from "ionic-angular";
-import { CustNavComponent} from '../../components/cust-nav/cust-nav'
+//import { CustNavComponent} from '../../components/cust-nav/cust-nav'
 
 
 @IonicPage()
@@ -81,9 +81,9 @@ export class SettingsPage implements OnInit{
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private TradeService: TradeService,
+    //private TradeService: TradeService,
     //private LoginService: LoginService,
-    private storage: Storage,
+    //private storage: Storage,
     private StockService: StockService,
     private platform: Platform
     

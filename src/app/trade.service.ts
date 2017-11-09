@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, RequestOptions } from "@angular/http";
+import { Headers } from "@angular/http";
 import { session } from "./session.interface";
 import { Observable } from "rxjs/Observable";
 import "rxjs/add/operator/map";
@@ -17,12 +17,7 @@ import {
   PriceType,
   TimeTerm
 } from "./userorder.interface";
-import {
-  ValidationResponse,
-  CancelResponse,
-  PlaceOrderStatus,
-  PlaceResponse
-} from "./Validate.interface";
+import { ValidationResponse,  CancelResponse,  PlaceResponse } from "./Validate.interface";
 @Injectable()
 export class TradeService extends ParentService {
   GetPortfolioSummary(Session: session): Observable<Detailsresponse> {

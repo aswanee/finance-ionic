@@ -1,16 +1,16 @@
-import { Component, OnInit ,ViewChild,OnDestroy} from "@angular/core";
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, OnInit ,OnDestroy} from "@angular/core";
+import { IonicPage, NavController } from 'ionic-angular';
 import { CompanyService } from "./../../app/company.service";
-import { News } from "./../../app/news.interface";
-import { Newsbody,Favorites } from "./../../app/newsbody.interface";
+//import { News } from "./../../app/news.interface";
+//import { Newsbody,Favorites } from "./../../app/newsbody.interface";
 import { Newsresponse } from "./../../app/newsresponse.interface";
 import { Newsdetailsresponse } from "./../../app/newsdetailsresponse.interface";
-import { Observable } from "rxjs/Rx";
+//import { Observable } from "rxjs/Rx";
 import { ToastController } from "ionic-angular";
-import { newsRefresh,imagPath } from "./../../app/refreshconfig";
+import { newsRefresh } from "./../../app/refreshconfig";
 //import { NewsdetailsComponent } from "./../../components/newsdetails/newsdetails.component";
 import { Events } from "ionic-angular";
-import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
+//import { LanguagePipe } from "./../../pipes/Language/Language.pipe";
 //import {CustNavComponent} from '../../components/cust-nav/cust-nav';
 import { Storage } from "@ionic/storage";
 import  { AuthProvider } from './../../providers/auth/auth';
@@ -164,15 +164,17 @@ export class NewsPage implements OnInit,OnDestroy {
       this.CompanyService.getnewsRange(this.OldestDate, 10, this.nLang)
         .subscribe(
           data => {
+            var len :number = 0;
             if(data.result.V.length > 0)
             {
-              var len :number = data.result.V.length;
+              len = data.result.V.length;
               this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
             }
-  
+            
             if(!this.News || this.News.result.V.length == 0)
             {
-              var len :number = data.result.V.length;
+              len = 0;
+              len = data.result.V.length;
               this.NewestDate = data.result.V[0][2] + ":" + data.result.V[0][3];
               this.OldestDate = data.result.V[len-1][2] + ":" + data.result.V[len-1][3];
   
