@@ -10,16 +10,21 @@ import "rxjs/add/observable/throw";
 import { ParentService } from "./parentservice.service";
 @Injectable()
 export class AskBidService extends ParentService {
+
   getasks(reuter: string): Observable<SerResponse> {
     this.getunsecurelink();
     this.link = this.link + "apis/market/QuoteAsks?Code=" + reuter;
     return this.http
       .get(this.link)
       .map(x => {
-        return <SerResponse>x.json();
+        var result= <SerResponse>x.json();
+
+
+        return result;
       })
       .catch((t: Response) => t.json());
   }
+
   getbids(reuter: string): Observable<SerResponse> {
     this.getunsecurelink();
     this.link = this.link + "apis/market/QuoteBids?Code=" + reuter;

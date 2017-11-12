@@ -112,24 +112,7 @@
     <div [ngSwitch]="SelectedPerform">
     <div *ngSwitchCase="'BP'">
         <ion-item class="GridHeader">
-            <ion-row *ngIf="!this.isSmall" text-center>
-                <ion-col col >
-                    <p>{{'Reuter'|Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Value' |Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Change' |Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Percentage' | Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Volume' | Language }}</p>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="this.isSmall" text-center >
+            <ion-row text-center >
                 <ion-col col>
                     <p>{{'Reuter'|Language }}</p>
                 </ion-col>
@@ -137,6 +120,9 @@
                     <p>{{'Value' |Language }}</p>
                 </ion-col>
                 <ion-col col>
+                    <p>{{'Percentage' |Language }}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
                     <p>{{'Change' |Language }}</p>
                 </ion-col>
                 <ion-col col>
@@ -148,18 +134,18 @@
             <button clear class="full"  (click)="setstockchosen(x[0])">
                 <ion-row text-center>
                     <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
-                    <ion-col *ngIf="x[0]==x[5]">{{x[1]}}</ion-col>
+                    <ion-col>{{x[1]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0 && !this.isSmall"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[4]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0 && !this.isSmall"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[4]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]==0">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0 && !this.isSmall">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]==0">{{x[4]}}</ion-col>
                     <!-- <ion-col  col>
                             <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
@@ -171,21 +157,7 @@
     </div>
     <div *ngSwitchCase="'BV'">
         <ion-item class="GridHeader">
-            <ion-row *ngIf="!this.isSmall" text-center>
-                <ion-col col>
-                    <p>{{'Reuter'|Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Value' |Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Change' |Language}}</p>
-                </ion-col>
-                <ion-col col>
-                    <p>{{'Volume' | Language }}</p>
-                </ion-col>
-            </ion-row>
-            <ion-row *ngIf="this.isSmall" text-center>
+            <ion-row text-center >
                 <ion-col col>
                     <p>{{'Reuter'|Language }}</p>
                 </ion-col>
@@ -193,36 +165,37 @@
                     <p>{{'Value' |Language }}</p>
                 </ion-col>
                 <ion-col col>
+                    <p>{{'Percentage' |Language }}</p>
+                </ion-col>
+                <ion-col col *ngIf="!this.isSmall">
                     <p>{{'Change' |Language }}</p>
                 </ion-col>
                 <ion-col col>
                     <p>{{'Volume' | Language }}</p>
                 </ion-col>
-            </ion-row>
+            </ion-row> 
         </ion-item>
         <ion-item *ngFor="let x of BV?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
             <button clear class="full"  (click)="setstockchosen(x[0])">
                 <ion-row text-center>
-                    <ion-col  style="color:#e67e22;font-weight: bold;">{{x[0]}}</ion-col>
-                    <!-- <ion-col *ngIf="x[0]>x[5]"  style="color:green">{{x[0]}}</ion-col>
-                    <ion-col *ngIf="x[0]<x[5]"  style="color:red">{{x[0]}}</ion-col> -->
-                    <ion-col *ngIf="x[0]==x[5]">{{x[1]}}</ion-col>
+                    <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
+                    <ion-col>{{x[1]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0 && !this.isSmall"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[4]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0 && !this.isSmall"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[4]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]==0">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0 && !this.isSmall">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]==0">{{x[4]}}</ion-col>
                     <!-- <ion-col  col>
                             <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>
                             <ion-icon *ngIf="x[2]<0" name="md-trending-down" color="danger"></ion-icon>
-                    </ion-col>-->
+                    </ion-col>                         -->
                 </ion-row>
             </button>   
         </ion-item>                     
@@ -268,18 +241,18 @@
             <button clear class="full"  (click)="setstockchosen(x[0])">
                 <ion-row text-center>
                     <ion-col  style="color:#ffa500;font-weight: bold;">{{x[0]}}</ion-col>
-                    <ion-col *ngIf="x[0]==x[5]">{{x[1]}}</ion-col>
+                    <ion-col>{{x[1]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]>0 && !this.isSmall"  style="color:#32db64; font-weight: bolder;">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]>0"  style="color:#32db64; font-weight: bolder;">{{x[4]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]<0 && !this.isSmall"  style="color:red; font-weight: bolder;">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]<0"  style="color:red; font-weight: bolder;">{{x[4]}}</ion-col>
                     
                     <ion-col  *ngIf="x[2]==0">{{x[2]}}</ion-col>
-                    <ion-col  *ngIf="x[2]==0">{{x[3]}}</ion-col>
+                    <ion-col  *ngIf="x[2]==0 && !this.isSmall">{{x[3]}}</ion-col>
                     <ion-col  *ngIf="x[2]==0">{{x[4]}}</ion-col>
                     <!-- <ion-col  col>
                             <ion-icon *ngIf="x[2]>0" name="md-trending-up" color="secondary"></ion-icon>

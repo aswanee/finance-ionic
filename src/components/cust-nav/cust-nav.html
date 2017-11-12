@@ -1,14 +1,14 @@
 <!-- Generated template for the CustNavComponent component -->
     <ion-navbar>
         <ion-title center>
-           <div *ngIf="Session && Session.result && Session.result.GeneralInfo && this.Session.result.UserAccounts" class="status" style="font-size: 1.3rem;">
-                <span style="float:{{'dir' | Language}}" *ngIf="username" >{{'welcome' | Language}} </span>
-                <span style="float:{{'dir' | Language}}" *ngIf="username" >{{Session.result.GeneralInfo.UserName}} </span>
-                <span *ngIf="bimsid" > - {{this.Session.result.UserAccounts[0]}}</span>
+           <div *ngIf="Session && Session.result" class="status info" style="font-size: 1.3rem;">
+                <span style="float:{{'dir' | Language}}" *ngIf="Session.result.GeneralInfo.UserName" >{{'welcome' | Language}} </span>
+                <span style="float:{{'dir' | Language}}" *ngIf="Session.result.GeneralInfo.UserName" >{{Session.result.GeneralInfo.UserName}} </span>
+                <span *ngIf="Session.result.UserAccounts[0]" > - {{Session.result.UserAccounts[0]}}</span>
            </div> 
            <div class="status">
-                <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="this.marketservice.MarketStatus.Status=='Close'" >Closed</label>
-                <label style="color:green!important;border: 1px solid green!important;"  calss="status open" *ngIf="this.marketservice.MarketStatus.Status!='Close'">Open</label>
+                <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="marketservice.MarketStatus.Status=='Close'" >Closed</label>
+                <label style="color:green!important;border: 1px solid green!important;"  calss="status open" *ngIf="marketservice.MarketStatus.Status!='Close'">Open</label>
                 <span style="color:rgb(255, 255, 255);font-size: 12px"></span>
                 <span class="title">
                     {{title}}
