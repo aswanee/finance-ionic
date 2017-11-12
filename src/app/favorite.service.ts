@@ -18,26 +18,8 @@ export class FavoritesService extends ParentService {
   FavoriteNews : Favorites;
   FavoriteNews2 : string [];
 
-  // getUserFavorites(id: number): Observable<Favorites> {
-  //   this.getsecurelink();
-  //   this.link = this.link + "apis/account/getUserFavorites?UserID=" + id + "&TypeID=1";
-  //   return this.http
-  //     .get(this.link)
-  //     .map(x => {
-  //       this.FavoriteNews = (<Favorites>x.json());
-  //       return this.FavoriteNews;
-  //       //return this.FavoriteNews
-  //     })
-  //     .catch((t: Response) => t.json());
-  // }
-
-
   OldFavoriteNewsID:string ="0";
   
-
-
-
-
   getMessage(): Observable<any> {
     return this.subject.asObservable();
   }

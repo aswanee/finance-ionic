@@ -10,17 +10,32 @@ import "rxjs/add/observable/throw";
 import { ParentService } from "./parentservice.service";
 @Injectable()
 export class AskBidService extends ParentService {
-
-  getasks(reuter: string): Observable<SerResponse> {
+//Observable<SerResponse>
+  getasks(reuter: string): Observable<SerResponse>  {
     this.getunsecurelink();
     this.link = this.link + "apis/market/QuoteAsks?Code=" + reuter;
     return this.http
       .get(this.link)
       .map(x => {
-        var result= <SerResponse>x.json();
-
-
-        return result;
+        var temp= <SerResponse>x.json();
+        if(temp.result)
+        {
+          var acc :number;
+          var i:number=0;
+          for(i=0;i<temp.result.length;i++)
+          {
+            if(i==0)
+            {
+              acc = Number(temp.result[i][2])
+              temp.result[i].push(acc.toString());
+            }
+            else{
+              acc =acc+  +temp.result[i][2];
+              temp.result[i].push(acc.toString());
+            }
+          }
+          return temp;
+        }
       })
       .catch((t: Response) => t.json());
   }
@@ -31,7 +46,25 @@ export class AskBidService extends ParentService {
     return this.http
       .get(this.link)
       .map(x => {
-        return <SerResponse>x.json();
+        var temp= <SerResponse>x.json();
+        if(temp.result)
+        {
+          var acc :number;
+          var i:number=0;
+          for(i=0;i<temp.result.length;i++)
+          {
+            if(i==0)
+            {
+              acc = Number(temp.result[i][2])
+              temp.result[i].push(acc.toString());
+            }
+            else{
+              acc =acc+  +temp.result[i][2];
+              temp.result[i].push(acc.toString());
+            }
+          }
+          return temp;
+        }
       })
       .catch((t: Response) => t.json());
   }

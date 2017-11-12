@@ -2,9 +2,9 @@
     <ion-navbar>
         <ion-title center>
            <div *ngIf="Session && Session.result" class="status info" style="font-size: 1.3rem;">
-                <span style="float:{{'dir' | Language}}" *ngIf="Session.result.GeneralInfo.UserName" >{{'welcome' | Language}} </span>
-                <span style="float:{{'dir' | Language}}" *ngIf="Session.result.GeneralInfo.UserName" >{{Session.result.GeneralInfo.UserName}} </span>
-                <span *ngIf="Session.result.UserAccounts[0]" > - {{Session.result.UserAccounts[0]}}</span>
+                <span *ngIf="Session.result.GeneralInfo.UserName" >{{'welcome' | Language}} </span>
+                <!-- <span *ngIf="Session.result.GeneralInfo.UserName" >{{Session.result.GeneralInfo.UserName}} </span> -->
+                <span *ngIf="Session.result.UserAccounts[0]" > {{Session.result.UserAccounts[0]}}</span>
            </div> 
            <div class="status">
                 <label style="color:red!important;border: 1px solid red!important;" calss="status closed" *ngIf="marketservice.MarketStatus.Status=='Close'" >Closed</label>

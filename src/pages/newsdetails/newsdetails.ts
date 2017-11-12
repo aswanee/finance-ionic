@@ -23,11 +23,11 @@ export class NewsdetailsPage {
   GetCustNavID(event) {
     switch(event)
     {
-      case "add":
+      case "add-star":
         console.log(event);
         this.pinThisItem()
         break;
-      case "flag":
+      case "remov-star":
         console.log(event);
         this.unPinThisItem()
         break;

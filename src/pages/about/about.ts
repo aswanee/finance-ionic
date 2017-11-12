@@ -20,7 +20,16 @@ export class AboutPage implements OnInit{
     //  {BName: "checkmark", IconName: "checkmark"}
     //];
     //this.cld.buttons = buttons;
-}
+  }
+
+  get isArabic():boolean
+  {
+    if(window["isArabic"]!=undefined)
+      return window["isArabic"];
+    else
+      return true;
+      
+  }
 
   GetCustNavID(event) {
     switch(event)
@@ -35,9 +44,5 @@ export class AboutPage implements OnInit{
         console.log(event);
         break;
     }
-  }
-
-  ionViewDidLoad() {
-    console.log("ionViewDidLoad AboutPage");
   }
 }

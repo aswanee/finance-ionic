@@ -97,15 +97,15 @@
 
     <ion-segment padding [(ngModel)]="SelectedPerform">
         <ion-segment-button value="BP" (click)="setPerform('BP')">
-            <ion-icon name="ios-thumbs-up-outline" item-start></ion-icon>
+            <ion-icon name="arrow-up" class="icon-padding" item-start></ion-icon>
             {{'BP' | Language}} 
         </ion-segment-button>
         <ion-segment-button value="BV" (click)="setPerform('BV')">
-            <ion-icon name="thumbs-up"></ion-icon>
+            <ion-icon name="list" class="rotate-270 icon-padding"></ion-icon> 
             {{'BV' | Language}} 
         </ion-segment-button>
         <ion-segment-button value="WP" (click)="setPerform('WP')">
-            <ion-icon name="ios-thumbs-down-outline" color="danger"></ion-icon>
+            <ion-icon name="arrow-down" class="icon-padding" color="danger"></ion-icon>
             {{'WP' | Language}}
         </ion-segment-button>
     </ion-segment>

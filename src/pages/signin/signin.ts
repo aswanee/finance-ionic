@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Platform,NavController, NavParams ,AlertController, LoadingController, Loading} from 'ionic-angular';
-import { AuthProvider } from '../../providers/auth/auth';
+import { AuthProvider ,LocalAuth} from '../../providers/auth/auth';
 import { User } from '../../app/session.interface';
 //import { ViewChild, OnInit } from "@angular/core";
 import { IonicPage, } from 'ionic-angular';
@@ -38,7 +38,7 @@ export class SigninPage {
   loading: Loading;
   registerCredentials :User;
   //ParentPage :string;
-  pepperoni:any;
+  saveme:any = false;
   constructor(private navCtrl: NavController, 
     private auth: AuthProvider, 
     private alertCtrl: AlertController, 
@@ -52,6 +52,20 @@ export class SigninPage {
   registerBackButton :any;
   ionViewDidEnter() {
     console.log("ionViewDidEnter");
+    
+    if(this.auth.StorageAuth && this.auth.StorageAuth.save == true)
+    {
+      this.registerCredentials.username = this.auth.StorageAuth.username;
+      this.registerCredentials.password = this.auth.StorageAuth.password;
+      this.saveme = this.auth.StorageAuth.save;
+    }
+    else
+    {
+      this.registerCredentials.username = "";
+      this.registerCredentials.password = "";
+      this.saveme = false;
+    }
+
     //
   //   this.registerBackButton = this.platform.registerBackButtonAction(() => {
   //     console.log("YOU WILL GO BACK");
@@ -74,18 +88,32 @@ export class SigninPage {
   public createAccount() {
     this.navCtrl.push('RegisterPage');
   }
+  loacal_auth:LocalAuth ={ save:false, username:"", password:"" } ;
 
   public login() {
+    
+    
     this.showLoading()
     this.auth.login(this.registerCredentials).subscribe(allowed => {
       if (allowed) {        
-        var returnPage =this.navParams.get("ParentPage");
-        if(!returnPage)
-            returnPage = "OnlinetradingPage";
-
-            this.navCtrl.setRoot(returnPage);
-            //this.navCtrl.push(OnlinetradingPage);
-        
+        //var returnPage =this.navParams.get("ParentPage");
+        //if(!returnPage)
+        //returnPage = "OnlinetradingPage";
+        this.navCtrl.setRoot("OnlinetradingPage");
+        if(this.saveme)
+        {
+          this.auth.StorageAuth.username = this.registerCredentials.username;
+          this.auth.StorageAuth.password = this.registerCredentials.password;
+          this.auth.StorageAuth.save = true;
+        }
+        else
+        {
+          this.auth.StorageAuth.username = "";
+          this.auth.StorageAuth.password = "";
+          this.auth.StorageAuth.save = false;
+        }
+        this.auth.setStorageAuth().subscribe(data=>{});
+        //this.navCtrl.push(OnlinetradingPage);
       } else {
         this.showError("Access Denied");   
       }

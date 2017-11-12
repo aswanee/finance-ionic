@@ -92,32 +92,32 @@ export class ChartComponent extends ParentService {
             }
           }
         ],
-        navigation: {
-          buttonOptions: {
-              enabled: true
-          }
-        },      
-        exporting: {
-          filename: 'event-id-metadata-graph',
-           buttons: {
-               contextButton: {
-                   menuItems: [{
-                       text: 'Download PDF',
-                       onclick: function () {
-                           this.exportChart({
-                               type: 'application/pdf'
-                           });
-                       }
-                   }, {
-                       text: 'Print',
-                       onclick: function () {
-                               alert('Launch Print Table function')
-                       },
-                       separator: false
-                   }]
-               }
+         navigation: {
+           buttonOptions: {
+               enabled: false
            }
-       }         
+        },      
+      //   exporting: {
+      //     filename: 'event-id-metadata-graph',
+      //      buttons: {
+      //          contextButton: {
+      //              menuItems: [{
+      //                  text: 'Download PDF',
+      //                  onclick: function () {
+      //                      this.exportChart({
+      //                          type: 'application/pdf'
+      //                      });
+      //                  }
+      //              }, {
+      //                  text: 'Print',
+      //                  onclick: function () {
+      //                          alert('Launch Print Table function')
+      //                  },
+      //                  separator: false
+      //              }]
+      //          }
+      //      }
+      //  }         
       };
     });
   }

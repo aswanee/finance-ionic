@@ -61,7 +61,7 @@
         </ion-item>
         <ion-item *ngFor="let x of StockDetails?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
                 <button text-start clear class="full"  (click)="setstockchosen(x[4])" [hidden]="editpressed">
-                    <ion-row text-center>
+                    <ion-row text-start>
                         <ion-col  style="color:#ffa500;font-weight: bold;">{{x[4]}}</ion-col>
 
                         <ion-col *ngIf="x[0]>x[6]"  style="color:#32db64; font-weight: bolder;">{{x[0]}}</ion-col>

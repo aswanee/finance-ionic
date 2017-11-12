@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 
 import { IonicPage, NavController } from 'ionic-angular';
 import { AlertController ,PopoverController} from "ionic-angular";
+import { AuthProvider } from '../../providers/auth/auth';
 
 import { watchlistRefresh } from "./../../app/refreshconfig";
 import { ToastController,Platform } from "ionic-angular";
@@ -82,10 +83,16 @@ export class HomePage {
     private badge: Badge,
     public popoverCtrl: PopoverController,
     //public splashScreen: SplashScreen, 
+    public  Auth : AuthProvider,
     private MarketService: MarketService)   {
     //this.onNotification();
+
+    
+
     platform.ready().then(() => {
       //this.requestPremission();
+      this.Auth.getStorageAuth();
+
       if(window["language"]=="ar")
       {
         this.platform.setDir('rtl', true)
@@ -292,14 +299,14 @@ export class HomePage {
         break;
       case "add":
         console.log(event);
-        this.buttons[1].visable = false;
-        this.buttons[2].visable = true;
+        this.buttons[0].visable = false;
+        this.buttons[1].visable = true;
         this.addToWatchlist();
         break;
       case "checkmark":
         console.log(event);
-        this.buttons[1].visable = true;
-        this.buttons[2].visable = false;
+        this.buttons[0].visable = true;
+        this.buttons[1].visable = false;
         this.falsepressed();
         break;
     }
@@ -308,7 +315,6 @@ export class HomePage {
   ngOnInit() {
     
     this.buttons = [
-      {BName: "notifications", IconName: "notifications", visable:true, IconColor:""},
       {BName: "add", IconName: "add", visable:true, IconColor:""},
       {BName: "checkmark", IconName: "checkmark", visable:false, IconColor:""}
     ];

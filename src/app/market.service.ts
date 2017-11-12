@@ -53,15 +53,18 @@ export class MarketService extends ParentService {
 
   MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
 
-  // private subject = new Subject<any>();
+  private subject = new Subject<any>();
   
-  // getMessage(): Observable<any> {
-  //   return this.subject.asObservable();
-  // }
+  getMessage(): Observable<any> {
+    return this.subject.asObservable();
+  }
 
 
 
   getmarketstatus(): Observable<any> {
+
+    this.subject.next({ FavoriteNews: this.MarketStatus });
+    
     this.getunsecurelink();
     return this.http 
       .get(this.link + "apis/market/GetMarketStatus")
@@ -72,10 +75,11 @@ export class MarketService extends ParentService {
           this.MarketStatus.Datetime = this.JsonToDate(data.result.RegTime);
           this.MarketStatus.Time =  this.MarketStatus.Datetime.toLocaleTimeString();  
         }
+        this.subject.next({ FavoriteNews: this.MarketStatus });
+        
         return this.MarketStatus;
       })
       .catch(error => Observable.throw(error));
-      //.catch((t: Response) => t.json());
   }
 
   JsonToDate (param):Date{

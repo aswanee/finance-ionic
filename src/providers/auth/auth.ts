@@ -6,6 +6,8 @@ import { session ,User} from "../../app/session.interface";
 import { Storage } from "@ionic/storage";
 import 'rxjs/add/operator/map';
 
+export interface LocalAuth { save:boolean, username:string, password:string } ;
+
 @Injectable()
 export class AuthProvider extends ParentService {
 
@@ -88,5 +90,28 @@ export class AuthProvider extends ParentService {
       observer.next(true);
       observer.complete();
     });
+  }
+  StorageAuth:LocalAuth ={save: false , username: "" , password: "" };
+
+
+  public getStorageAuth() :any  {
+    return this.storage.get("LocalAuth").then(localAuth => {
+      this.StorageAuth = <LocalAuth>localAuth ;
+      // if(LocalAuth )
+      // {
+      //   this.StorageAuth.save = true;
+      //   this.StorageAuth.username = LocalAuth[0];
+      //   this.StorageAuth.password = true[1];
+      // }
+      return this.StorageAuth;
+    })      
+    .catch((t: Response) => t.json());
+    
+  }
+
+  public setStorageAuth() :any  {
+      return this.storage.set("LocalAuth",this.StorageAuth).then(LocalAuth => {
+        return this.StorageAuth;
+      }).catch((t: Response) => t.json());
   }
 }

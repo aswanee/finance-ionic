@@ -52,9 +52,8 @@ export class NewsPage implements OnInit,OnDestroy {
     ) {  }
     ngOnInit() {
       this.buttons = [
-        {BName: "notifications", IconName: "notifications",visable :true, IconColor:""},
-        {BName: "add",           IconName: "add",          visable :true, IconColor:""},
-        {BName: "checkmark",     IconName: "checkmark",    visable :false, IconColor:""}
+        // {BName: "add",           IconName: "add",          visable :false, IconColor:""},
+        // {BName: "checkmark",     IconName: "checkmark",    visable :false, IconColor:""}
       ];
       //this.cld.buttons = buttons;
     }

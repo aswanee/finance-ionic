@@ -44,23 +44,25 @@
           <ion-grid>
               <ion-row>
                   <ion-col col-6>
-                      <table width="100%">
+                      <table width="100%" class="bidask">
                           <th colspan="3"><strong>{{'Asks' | Language}}</strong></th>
                           <tr *ngFor="let item of Asks?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                               <td>{{item[0]}}</td>
                               <td>{{item[1]}}</td>
                               <td>{{item[2]}}</td>
-                          </tr>
+                              <td>{{item[3]}}</td>
+                            </tr>
                       </table>
                   </ion-col>
                   <ion-col col-6>
-                      <table width="100%">
+                      <table width="100%" class="bidask">
                           <th colspan="3"><strong>{{'Bids' | Language}}</strong></th>
                           <tr *ngFor="let item of Bids?.result  let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }">
                               <td>{{item[0]}}</td>
                               <td>{{item[1]}}</td>
                               <td>{{item[2]}}</td>
-                          </tr>
+                              <td>{{item[3]}}</td>
+                            </tr>
                       </table>
                   </ion-col>
               </ion-row>

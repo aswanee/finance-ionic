@@ -23,8 +23,9 @@ export let ArabicDictionary: Dictionary =
   Place_QTY:"ضع الكمية",
   Search:"إبحت عن سهم ",
   Rememper_me:"حفظ كلمة المرور",
-  welcome :"مرحبا ",
-  dir:"right",
+  welcome :"رقم الحساب :  ",
+  dir:"rtl",
+  float:"right",
   
   "WatchList" : "قوائم",
   "Watch List": "قائمة المراقبة",
@@ -161,9 +162,10 @@ export let EnglishDictionary: Dictionary = {
   Place_QTY:"Place Quantity ",
   Search:"Search ticker ",
   Rememper_me:"Rememper me",
-  welcome :"Welcome ",
-  dir:"left",
-
+  welcome :"account number: ",
+  dir:"ltr",
+  float:"left",
+  
   "WatchList" : "WatchList",
   "Watch List": "WatchList",
   Market: "Market",
@@ -191,7 +193,18 @@ export let EnglishDictionary: Dictionary = {
   Next: "Next",
   "No Trades Yet": "No Trades Yet",
   "About Us":
-    "Arab Finance Brokerage is an online brokerage company focusing on the serving investors and traders in the Egyptian Stock Market (EGX). We offer our customers a variety of services and products to meet their needs to trade and follow the EGX:  • Arab Finance website www.arabfinance.com  • Professional Workstation for Windows (Isharet El-Borsa)  • Arab Finance iPhone application  • Arab Finance Mobile application m.arabfinance.com  Our goal at Arab Finance is to provide you with the tools and products to help you make the best possible investment decisions.  Arab Finance is technologically backed and supported by its parent LINKdotNET, one of the most prominent Internet Service and Solution providers in the Middle East and North Africa.  Please visit www.arabfinance.com, send us an-email (info@arabfinance) or call  19717 to open an account.",
+    `<P>Arab Finance Brokerage is an online brokerage company focusing on the serving investors and traders in the Egyptian Stock Market (EGX). </P> 
+    <P>We offer our customers a variety of services and products to meet their needs to trade and follow the EGX:</P>  
+    <ul>
+    <li> Arab Finance website <a href="www.arabfinance.com">www.arabfinance.com</a>  </li>
+    <li> Professional Workstation for Windows (Isharet El-Borsa)  </li>
+    <li> Arab Finance iPhone application  </li>
+    <li> Arab Finance Mobile application <a href="m.arabfinance.com">m.arabfinance.com</a>  </li>
+    </ul>
+    <P>Our goal at Arab Finance is to provide you with the tools and products to help you make the best possible investment decisions.  </P>
+    <P>Arab Finance is technologically backed and supported by its parent LINKdotNET, one of the most prominent Internet Service and Solution providers <P>in the Middle East and North Africa.  </P>
+    <P>Please visit www.arabfinance.com, send us an-email (info@arabfinance) or call  19717 to open an account.</P>
+    `,
   "About Us title": "About Us",
   Reuter: "Reuter",
   Reuter2: "Reuter",
