@@ -24,7 +24,16 @@
 }
 page-signin {
 
-
+    .toggle-light:checked {
+        background-color: #a7cfdf !important;
+    }
+    .toggle-md{
+        width: 40px!important;
+    }
+    .toggle-icon {
+        border: 0.1em solid rgb(143, 141, 141);        
+    }
+    
     .login-content {
         background: rgb(0, 0, 0);
 

@@ -22,6 +22,9 @@ export let ArabicDictionary: Dictionary =
   Add_Reuters:"أختر كود الورقة",
   Place_QTY:"ضع الكمية",
   Search:"إبحت عن سهم ",
+  Rememper_me:"حفظ كلمة المرور",
+  welcome :"مرحبا ",
+  dir:"right",
   
   "WatchList" : "قوائم",
   "Watch List": "قائمة المراقبة",
@@ -157,6 +160,9 @@ export let EnglishDictionary: Dictionary = {
   Add_Reuters:"Add Ticker",
   Place_QTY:"Place Quantity ",
   Search:"Search ticker ",
+  Rememper_me:"Rememper me",
+  welcome :"Welcome ",
+  dir:"left",
 
   "WatchList" : "WatchList",
   "Watch List": "WatchList",

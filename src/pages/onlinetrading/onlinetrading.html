@@ -1,12 +1,12 @@
 
-<ion-header><cust-nav (pin)="GetCustNavID($event)" [title]="'Trading' | Language"></cust-nav></ion-header>
+<ion-header><cust-nav [Session]="Session" (pin)="GetCustNavID($event)" [title]="'Trading' | Language"></cust-nav></ion-header>
 
 
 <ion-content>
     <ion-segment *ngIf="Session && Session.result && this.Session.result.GeneralInfo.UserID > 0"  [(ngModel)]="SelectedSegment">
         <ion-segment-button value="Portfolio" (click)="getportfolio()">{{'Show Portfolio' | Language}}</ion-segment-button>
         <ion-segment-button value="Orders" (click)="getorders()">{{'Show Orders' | Language}}</ion-segment-button>
-        <ion-segment-button value="Insert" (click)="ChangeInsert()">{{'Add Order' | Language}}</ion-segment-button>
+        <ion-segment-button value="Insert" (click)="ShowPlaceOrder()">{{'Add Order' | Language}}</ion-segment-button>
     </ion-segment>
 
     <div class="form-div"  *ngIf="showInsert && Session && Session.result && this.Session.result.GeneralInfo.UserID > 0">
@@ -181,7 +181,7 @@
         </ion-item>
         
         <ion-item  class="GridHeader">
-            <ion-row>
+            <ion-row text-center>
                 <ion-col col>
                     <p >{{'Reuter'|Language}}</p>
                 </ion-col>
@@ -195,15 +195,13 @@
                     <p >{{'Percentage'|Language | limitTo:5}}</p>
                 </ion-col>
                 <ion-col col>
-                    <p >{{'Trend'|Language}}</p>
-                </ion-col>
-                <ion-col col>
+                    <p >{{'Volume'|Language}}</p>
                 </ion-col>
             </ion-row>
         </ion-item>
         <ion-item *ngFor="let item of portfolioresponse?.result; let i=index; let odd=odd; let even=even;" [ngClass]="{ odd: odd, even: even }" class="row">
                 <button text-start clear class="full"  (click)="setstockchosen(item)" >
-                    <ion-row>
+                    <ion-row text-center>
                         <ion-col  style="color:#e67e22;font-weight: bold;">{{item.ReutersCode}}</ion-col>
 
                         <ion-col *ngIf="item.GainLossPercentage>0"  style="color:#32db64; font-weight: bolder;">{{item.AvailableQuantity}}</ion-col>
@@ -223,14 +221,14 @@
                         <ion-col  *ngIf="item.GainLossPercentage==0"> {{item.GainLossPercentage | aroundTo: 2 }}</ion-col>
                     </ion-row>
                     <ion-row>
-                            
-                            <ion-col  *ngIf="isArabic">
-                                    {{item.ARB_Name | limitTo: 30}}
-                            </ion-col>
-                            <ion-col  *ngIf="!isArabic">
-                                    {{item.ENG_NAME | limitTo: 30}}
-                            </ion-col>
-                            </ion-row>
+                        
+                        <ion-col  *ngIf="isArabic">
+                                {{item.ARB_Name | limitTo: 30}}
+                        </ion-col>
+                        <ion-col  *ngIf="!isArabic">
+                                {{item.ENG_NAME | limitTo: 30}}
+                        </ion-col>
+                        </ion-row>
                 </button>   
         </ion-item>      
     </ion-grid>

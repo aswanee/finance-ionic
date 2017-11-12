@@ -4,6 +4,7 @@ import { Component,EventEmitter,Output, Input  } from '@angular/core';
 import {PopoverController } from "ionic-angular";
 import { MarketService } from "./../../app/market.service";
 import { PopoverComponent, } from '../popover/popover';
+import { session } from "../../app/session.interface";
 
 //import { Events, MenuController, Nav, Platform } from 'ionic-angular';
 
@@ -25,11 +26,15 @@ export interface PageInterface {
 })
 export class CustNavComponent  {
   @Input() title:string;
+  @Input() Session:session;
   @Input() buttons: Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>= [];
   @Output() pin:EventEmitter<string> = new EventEmitter();
   //@Input() MarketStatus :{Status:string, Time:string}= {Status:"OK", Time:"xxxx"} ;
   @Input() MarketStatus :{Status:string, Time:string, Datetime : Date} = {Status:"CLOSE", Time:"00000",Datetime: new Date()};
   
+  username :string ;
+  bimsid :number ;
+  dir = "right";
   constructor(
     private popoverCtrl: PopoverController,
     private marketservice:MarketService
@@ -38,7 +43,7 @@ export class CustNavComponent  {
     this.getstatus();
 
   }
-  
+
   counter:number = 0
   getstatus()
   {
@@ -72,7 +77,7 @@ export class CustNavComponent  {
     this.pin.emit(Bid);
   }
   
-  Visablebuttons(): Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>
+  Visablebuttons(): Array<{BName: string, IconName: string, visable: boolean, IconColor:string}>  
   {
     if(this.buttons)
     return this.buttons.filter((item) => item.visable);

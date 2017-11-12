@@ -224,8 +224,8 @@ export class OnlinetradingPage {
       this.getorders();
     }
     else if(this.SelectedSegment== "Insert" ) {
-      this.showInsert = true;
-      this.ChangeInsert();
+      this.showInsert = true;      
+      this.ShowPlaceOrder();
     }
     else
     {
@@ -681,8 +681,8 @@ export class OnlinetradingPage {
     this.showorders = lShowUpdate;
   }
 
-  ChangeInsert() {
-    this.showInsert = !this.showInsert;
+  ShowPlaceOrder() {
+    this.showInsert = true;
     this.showportfolio = false;
     this.showhistory = false;
     this.showsummary = false;

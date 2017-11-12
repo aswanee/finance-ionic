@@ -38,7 +38,7 @@ export class SigninPage {
   loading: Loading;
   registerCredentials :User;
   //ParentPage :string;
-  
+  pepperoni:any;
   constructor(private navCtrl: NavController, 
     private auth: AuthProvider, 
     private alertCtrl: AlertController, 
