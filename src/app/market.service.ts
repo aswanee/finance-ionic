@@ -4,7 +4,7 @@ import { Response } from "@angular/http";
 import { SerResponse } from "./response.interface";
 import { MarketResponse } from "./Marketresponse.interface";
 import { ParentService } from "./parentservice.service";
-//import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs/Subject';
 
 @Injectable()
 export class MarketService extends ParentService {
@@ -62,8 +62,6 @@ export class MarketService extends ParentService {
 
 
   getmarketstatus(): Observable<any> {
-    //this.subject.next({ MarketStatus: this.MarketStatus });
-    
     this.getunsecurelink();
     return this.http 
       .get(this.link + "apis/market/GetMarketStatus")

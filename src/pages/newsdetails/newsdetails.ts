@@ -92,8 +92,8 @@ export class NewsdetailsPage {
     if(UserID>0)
     {
       this.buttons = [
-         {BName: "flag", IconName: "flag", visable: false , IconColor:"orange"},//0-remove
-         {BName: "add" , IconName: "add"  , visable: false, IconColor:""}//1-add
+        {BName: "remov-star", IconName: "star",  visable: false , IconColor:"orange"},//0-remove
+        {BName: "add-star" , IconName: "star"  , visable: false, IconColor:""}//1-add
         ];
     }
     const parsed = Number(this.id);
