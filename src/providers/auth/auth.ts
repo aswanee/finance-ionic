@@ -15,6 +15,7 @@ export class AuthProvider extends ParentService {
   
   constructor(public http: Http, private storage: Storage) {
     super(http)
+    this.StorageAuth = {save: false , username: "" , password: "" };
     console.log('Hello AuthProvider Provider');
   }
 
@@ -91,7 +92,8 @@ export class AuthProvider extends ParentService {
       observer.complete();
     });
   }
-  StorageAuth:LocalAuth ={save: false , username: "" , password: "" };
+
+  StorageAuth: LocalAuth = {save: false , username: "" , password: "" };
 
 
   public getStorageAuth() :any  {
@@ -105,13 +107,17 @@ export class AuthProvider extends ParentService {
       // }
       return this.StorageAuth;
     })      
-    .catch((t: Response) => t.json());
+    .catch(
+      (t: Response)=>
+        {
+          t.json();
+        }
+    );
     
   }
 
-  public setStorageAuth() :any  {
-      return this.storage.set("LocalAuth",this.StorageAuth).then(LocalAuth => {
-        return this.StorageAuth;
-      }).catch((t: Response) => t.json());
+  public setStorageAuth(storageAuth: LocalAuth) :void  {
+      this.StorageAuth =storageAuth;
+      this.storage.set("LocalAuth",this.StorageAuth).then(LocalAuth => {})    
   }
 }

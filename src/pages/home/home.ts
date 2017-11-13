@@ -90,13 +90,15 @@ export class HomePage {
     
 
     platform.ready().then(() => {
-      //this.requestPremission();
-      this.Auth.getStorageAuth();
+      
+      
 
       if(window["language"]=="ar")
       {
         this.platform.setDir('rtl', true)
       }
+
+      var fake =  this.Auth.getStorageAuth();
       
       if(!this.platform.is('core') && !this.platform.is('mobileweb')) 
       {

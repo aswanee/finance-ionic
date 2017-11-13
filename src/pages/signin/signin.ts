@@ -99,21 +99,22 @@ export class SigninPage {
         //var returnPage =this.navParams.get("ParentPage");
         //if(!returnPage)
         //returnPage = "OnlinetradingPage";
-        this.navCtrl.setRoot("OnlinetradingPage");
         if(this.saveme)
         {
-          this.auth.StorageAuth.username = this.registerCredentials.username;
-          this.auth.StorageAuth.password = this.registerCredentials.password;
-          this.auth.StorageAuth.save = true;
+          this.loacal_auth.username = this.registerCredentials.username;
+          this.loacal_auth.password = this.registerCredentials.password;
+          this.loacal_auth.save = true;
         }
         else
         {
-          this.auth.StorageAuth.username = "";
-          this.auth.StorageAuth.password = "";
-          this.auth.StorageAuth.save = false;
+          this.loacal_auth.username = "";
+          this.loacal_auth.password = "";
+          this.loacal_auth.save = false;
         }
-        this.auth.setStorageAuth().subscribe(data=>{});
-        //this.navCtrl.push(OnlinetradingPage);
+        this.auth.setStorageAuth(this.loacal_auth);
+        
+        this.navCtrl.setRoot("TabsPage",{TabRoot:3});
+        
       } else {
         this.showError("Access Denied");   
       }

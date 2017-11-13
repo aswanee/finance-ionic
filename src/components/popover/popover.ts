@@ -74,6 +74,7 @@ export class PopoverComponent {
         this.viewCtrl.dismiss().then(() => {
           this.Auth.logout().subscribe(succ => {
             this.menuToast("out");
+            this.navCtrl.setRoot("TabsPage",{TabRoot:0});
           });
         });
 

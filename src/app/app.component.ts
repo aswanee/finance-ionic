@@ -73,12 +73,20 @@ export class MyApp {
                        title: 'App termination',
                        message: 'your Active current pageis:<br>  ' + actname + '<br> Do you want to close the app?',
                        buttons: [{
-                           text: 'Cancel',
-                           role: 'cancel',
-                           handler: () => {
-                               console.log('Application exit prevented!');
-                           }
-                       },{
+                          text: 'Cancel',
+                          role: 'cancel',
+                          handler: () => {
+                              console.log('Application exit prevented!');
+                          }
+                        },
+                        {
+                          text: 'Go To Home',
+                          handler: () => {
+                              this.app.getRootNav().setRoot("TabsPage",{TabRoot:0});                            
+                              console.log('Application exit prevented!');
+                          }
+                      },
+                      {
                            text: 'Close App',
                            handler: () => {
                                this.platform.exitApp(); // Close this application

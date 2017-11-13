@@ -17,19 +17,39 @@ export class TabsPage implements OnInit {
   tab3Root = "NewsPage";
   tab4Root = "OnlinetradingPage";
   //PageId :string="";
-  //TabRoot :number = 0;
-  constructor() {
-    // if(navParams.get("PageId"))
-    // {
-    //   var TabRoot = 0;
-    //   if(navParams.get("TabRoot"))
-    //   {
-    //       TabRoot = navParams.get("TabRoot");
-    //   }
-    //   var PageId = navParams.get("PageId");
-    //   this.app.getRootNav().push(PageId);
-    //   this.TabRoot = TabRoot;
-    // }
+  TabRoot :number;
+
+  ionViewDidLoad(){
+    console.log("1- ion View Did Load");
+    if(this.TabRoot!=undefined)
+      this.ionSelect(this.TabRoot) ;
+  }  
+
+  ionViewWillEnter(){
+    console.log("2- ion View Will Enter");
+  }
+
+  ionViewDidEnter(){
+    console.log("3- ion View Did Enter");
+  }
+
+  ionViewDidLeave(){
+    console.log("4- ion View Did Leave");
+  }
+
+  ionViewWillUnload(){
+    console.log("5- ion View  Will Unload");
+  }
+
+  ionViewCanEnter(){
+    console.log("6- ion View  Can Enter");
+  }
+
+  constructor(private navParams:NavParams) {
+    if(navParams && navParams.get("TabRoot")!= undefined)
+    {
+       this.TabRoot = navParams.get("TabRoot");   
+    }
   }
   
   ngOnInit() {
